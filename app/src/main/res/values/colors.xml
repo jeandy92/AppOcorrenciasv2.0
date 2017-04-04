@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0feed4</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="padrao">#03fac5</color>
+    <color name= "cor_fundo">#2e3131</color>
+
+    <color name ="cor_icone">#03e1fa</color>
+
+</resources>

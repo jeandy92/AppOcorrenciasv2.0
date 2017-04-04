@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="appocorrencias.com.appocorrencias.CadastrarOcorrencia">
+
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="139dp"
+        android:layout_height="28dp"
+        android:layout_above="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="25dp"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="28dp" />
+
+
+
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:layout_alignStart="@+id/editText9"
+        android:layout_alignTop="@+id/spinner"
+        android:ems="10"
+        android:hint="Data da Ocorrencia"
+        android:inputType="date"
+        tools:layout_editor_absoluteX="202dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="306dp"
+        android:layout_height="164dp"
+        android:layout_above="@+id/editText7"
+        android:layout_alignStart="@+id/editText7"
+        android:layout_marginBottom="14dp"
+        android:layout_x="32dp"
+        android:layout_y="154dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="111dp" />
+
+    <EditText
+        android:id="@+id/editText9"
+        android:layout_width="143dp"
+        android:layout_height="38dp"
+        android:layout_above="@+id/button9"
+        android:layout_alignEnd="@+id/editText7"
+        android:layout_marginBottom="62dp"
+        android:layout_x="172dp"
+        android:layout_y="348dp"
+        android:ems="10"
+        android:hint="UF"
+        android:inputType="textCapWords|textPersonName"
+        tools:layout_editor_absoluteX="191dp"
+        tools:layout_editor_absoluteY="344dp" />
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="154dp"
+        android:layout_height="38dp"
+        android:layout_alignStart="@+id/editText7"
+        android:layout_below="@+id/editText7"
+        android:layout_x="34dp"
+        android:layout_y="390dp"
+        android:ems="10"
+        android:hint="Cidade"
+        android:inputType="textCapCharacters|textPersonName"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="344dp" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp"
+        android:layout_x="64dp"
+        android:layout_y="388dp"
+        android:text="Salvar Ocorrencia"
+        tools:layout_editor_absoluteX="124dp"
+        tools:layout_editor_absoluteY="459dp" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="309dp"
+        android:layout_height="45dp"
+        android:layout_above="@+id/editText9"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:layout_x="96dp"
+        android:layout_y="406dp"
+        android:ems="10"
+        android:hint="Endereço"
+        android:inputType="textCapWords|textPersonName"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="292dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="305dp"
+        android:layout_height="24dp"
+        android:layout_above="@+id/editText5"
+        android:layout_alignStart="@+id/editText5"
+        android:layout_x="60dp"
+        android:layout_y="344dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="78dp" />
+
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_anexar"
+        app:fab_addButtonColorNormal="@color/padrao"
+        app:fab_addButtonColorPressed="#84ede8"
+        app:fab_addButtonPlusIconColor="@color/cor_fundo"
+        app:fab_labelStyle="@style/menu_labels_style"
+        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+
+
+
+        >
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/cor_fundo"
+            app:fab_colorPressed="#ffffff"
+            app:fab_icon="@drawable/ic_camera"
+            app:fab_size="mini"
+            app:fab_title="Câmera"
+            android:onClick="tirarFoto"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/galeria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="entrar_galeria"
+            app:fab_colorNormal="@color/cor_fundo"
+            app:fab_colorPressed="#ffffff"
+            app:fab_icon="@drawable/ic_galeria"
+            app:fab_size="mini"
+            app:fab_title="Galeria" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <FrameLayout
+        android:layout_width="160dp"
+        android:layout_height="250dp"
+        android:layout_marginLeft="190dp"
+        android:layout_marginTop="250dp">
+
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/localidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button9"
+        android:layout_toStartOf="@+id/button9"
+        android:text="Localidade"
+        android:onClick="localidade_atual"/>
+
+</RelativeLayout>

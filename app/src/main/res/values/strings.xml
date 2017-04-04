@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AppOcorrencias</string>
+    <string name="host_port_hint">192.168.0.164</string>
+    <string name="host_port_label">5678</string>
+    <string name="btn_send">Enviar Dados</string>
+    <string name="address_found">127</string>
+</resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="appocorrencias.com.appocorrencias.CadastrarUsuarioActivity">
+
+    <EditText
+        android:id="@+id/edtNome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Nome Completo"
+        android:inputType="textPersonName"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/edtApelido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Apelido"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/edtNome"
+        android:layout_alignStart="@+id/edtNome"
+        android:layout_marginTop="38dp" />
+
+    <EditText
+        android:id="@+id/edtTelefone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:hint="Telefone"
+        android:inputType="textEmailAddress"
+        android:layout_below="@+id/edtSenha"
+        android:layout_alignStart="@+id/edtSenha" />
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="E-mail"
+        android:inputType="phone"
+        android:layout_below="@+id/edtTelefone"
+        android:layout_alignStart="@+id/edtTelefone" />
+
+    <EditText
+        android:id="@+id/edtEndereco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/edtEmail"
+        android:layout_below="@+id/edtEmail"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Endereço"
+        android:inputType="textPostalAddress" />
+
+    <Button
+        android:id="@+id/CadastrarUsuário"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cadastrarUsuario"
+        android:text="Cadastrar"
+        android:layout_marginTop="34dp"
+        android:layout_below="@+id/edtEndereco"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/edtSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="senha"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/edtApelido"
+        android:layout_alignStart="@+id/edtApelido" />
+</RelativeLayout>
