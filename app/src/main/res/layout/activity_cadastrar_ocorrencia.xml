@@ -26,7 +26,7 @@
         android:id="@+id/editText6"
         android:layout_width="132dp"
         android:layout_height="40dp"
-        android:layout_alignStart="@+id/editText9"
+        android:layout_alignStart="@+id/txtEstado"
         android:layout_alignTop="@+id/spinner"
         android:ems="10"
         android:hint="Data da Ocorrencia"
@@ -38,8 +38,8 @@
         android:id="@+id/editText5"
         android:layout_width="306dp"
         android:layout_height="164dp"
-        android:layout_above="@+id/editText7"
-        android:layout_alignStart="@+id/editText7"
+        android:layout_above="@+id/txtEndereco"
+        android:layout_alignStart="@+id/txtEndereco"
         android:layout_marginBottom="14dp"
         android:layout_x="32dp"
         android:layout_y="154dp"
@@ -49,11 +49,11 @@
         tools:layout_editor_absoluteY="111dp" />
 
     <EditText
-        android:id="@+id/editText9"
+        android:id="@+id/txtEstado"
         android:layout_width="143dp"
-        android:layout_height="38dp"
+        android:layout_height="45dp"
         android:layout_above="@+id/button9"
-        android:layout_alignEnd="@+id/editText7"
+        android:layout_alignEnd="@+id/txtEndereco"
         android:layout_marginBottom="62dp"
         android:layout_x="172dp"
         android:layout_y="348dp"
@@ -64,11 +64,11 @@
         tools:layout_editor_absoluteY="344dp" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/txtCidade"
         android:layout_width="154dp"
-        android:layout_height="38dp"
-        android:layout_alignStart="@+id/editText7"
-        android:layout_below="@+id/editText7"
+        android:layout_height="45dp"
+        android:layout_alignStart="@+id/txtEndereco"
+        android:layout_below="@+id/txtEndereco"
         android:layout_x="34dp"
         android:layout_y="390dp"
         android:ems="10"
@@ -91,10 +91,10 @@
         tools:layout_editor_absoluteY="459dp" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/txtEndereco"
         android:layout_width="309dp"
         android:layout_height="45dp"
-        android:layout_above="@+id/editText9"
+        android:layout_above="@+id/txtEstado"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="17dp"
         android:layout_x="96dp"

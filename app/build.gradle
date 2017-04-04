@@ -32,6 +32,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
      compile 'com.google.android.gms:play-services:8.1.0'
+    compile 'com.google.android.gms:play-services:9.2.1'
     compile 'com.github.shell-software:fab:1.0.5'
     compile 'com.github.clans:fab:1.4.0'
     compile 'me.drakeet.materialdialog:library:1.2.2'

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,22 +16,50 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.identity.intents.Address;
+
+import java.io.IOException;
+import java.util.List;
 
 import me.drakeet.materialdialog.MaterialDialog;
-
-import static android.R.attr.data;
 
 public class CadastrarOcorrencia extends AppCompatActivity implements  LocationListener {
 
     private static final int REQUEST_PERMISSIONS_CODE = 128;
+
     private static final String TAG = "LOG";
     private static final android.util.Log LOG = null;
+
     private static final int SELECIONA_IMAGEM = 1 ;
     private static final int IMAGEM_CAPTURADA = 1 ;
-    private GoogleMap googleMap;
+
+    private EditText txEndereco;
+    private EditText txCidade;
+    private EditText txEstado;
+
+    private Location location;
+    private LocationManager locationmenager;
+    private android.location.Address endereco;
+
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cadastrar_ocorrencia);
+
+        txCidade  = (EditText) findViewById(R.id.txtCidade);
+        txEndereco= (EditText) findViewById(R.id.txtEndereco);
+        txEstado =  (EditText) findViewById(R.id.txtEstado);
+
+
+
+    }
+
 
 
     //Abrir Camera
@@ -56,20 +85,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
             startActivityForResult(selecionacameraIntent,IMAGEM_CAPTURADA);
         }
 
-     }
-//jeand
-
-
-    // Galeria
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastrar_ocorrencia);
-
-
-
     }
 
+    // Galeria
     public void entrar_galeria(View v) {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -162,8 +180,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
 
-
-
                 }
             }
 
@@ -181,7 +197,42 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
             }
         }
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
+
+        try {
+            endereco = buscarEndereco(latitude,longitude);
+
+
+            Log.i(TAG, endereco.getLocality());
+            Log.i(TAG, endereco.getAdminArea());
+            Log.i(TAG, endereco.getAddressLine(1));
+
+             txCidade.setText(endereco.getLocality());
+             txEstado.setText(endereco.getAdminArea());
+             txEndereco.setText(endereco.getThoroughfare());
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public android.location.Address buscarEndereco (double latitude, double longitude) throws IOException {
+
+        Geocoder  geocorder;
+        android.location.Address address = null;
+        List<android.location.Address> addresses;
+
+        geocorder = new Geocoder(getApplicationContext());
+        addresses = geocorder.getFromLocation(latitude,longitude,1);
+        if(addresses.size()>0){
+            address = addresses.get(0);
+        }
+
+
+     return  address;
+    }
+
 
     @Override
     public void onLocationChanged(Location location) {
@@ -227,7 +278,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        Log.i(TAG, "test");
+        Log.i(TAG, "Permissão");
         switch (requestCode) {
             case REQUEST_PERMISSIONS_CODE:
                 for (int i = 0; i < permissions.length; i++) {
