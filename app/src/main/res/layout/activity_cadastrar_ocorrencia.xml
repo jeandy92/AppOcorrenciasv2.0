@@ -12,7 +12,7 @@
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="139dp"
-        android:layout_height="28dp"
+        android:layout_height="29dp"
         android:layout_above="@+id/textView2"
         android:layout_alignStart="@+id/textView2"
         android:layout_marginBottom="40dp"
