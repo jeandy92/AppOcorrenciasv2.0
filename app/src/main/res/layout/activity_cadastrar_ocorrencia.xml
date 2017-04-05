@@ -78,7 +78,7 @@
         tools:layout_editor_absoluteY="344dp" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/salvar_ocorrencia"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_alignParentBottom="true"
