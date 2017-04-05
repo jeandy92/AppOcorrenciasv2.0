@@ -8,59 +8,46 @@
 
     <EditText
         android:id="@+id/edtNome"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:allowUndo="false"
         android:ems="10"
         android:hint="Nome Completo"
-        android:inputType="textPersonName"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/edtApelido"
+        android:id="@+id/edtCPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Apelido"
-        android:inputType="textPersonName"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/edtNome"
-        android:layout_alignStart="@+id/edtNome"
-        android:layout_marginTop="38dp" />
+        android:ems="10"
+        android:hint="CPF"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/edtTelefone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
         android:ems="10"
         android:hint="Telefone"
         android:inputType="textEmailAddress"
         android:layout_below="@+id/edtSenha"
-        android:layout_alignStart="@+id/edtSenha" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/edtEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="E-mail"
-        android:inputType="phone"
+        android:inputType="textEmailAddress"
         android:layout_below="@+id/edtTelefone"
-        android:layout_alignStart="@+id/edtTelefone" />
-
-    <EditText
-        android:id="@+id/edtEndereco"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/edtEmail"
-        android:layout_below="@+id/edtEmail"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Endereço"
-        android:inputType="textPostalAddress" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/CadastrarUsuário"
@@ -68,18 +55,93 @@
         android:layout_height="wrap_content"
         android:onClick="cadastrarUsuario"
         android:text="Cadastrar"
-        android:layout_marginTop="34dp"
-        android:layout_below="@+id/edtEndereco"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp" />
 
     <EditText
         android:id="@+id/edtSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="senha"
         android:inputType="textPersonName"
-        android:layout_below="@+id/edtApelido"
-        android:layout_alignStart="@+id/edtApelido" />
+        android:layout_below="@+id/edtCPF"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/edtCep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/edtTelefone"
+        android:layout_below="@+id/edtEmail"
+        android:ems="10"
+        android:hint="CEP"
+        android:inputType="number"
+        android:selectAllOnFocus="false" />
+
+    <Button
+        android:id="@+id/btnBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buscar"
+        android:onClick="evBuscarCep"
+        android:layout_above="@+id/edtNumero"
+        android:layout_alignStart="@+id/edtNumero" />
+
+    <EditText
+        android:id="@+id/edtRua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:elevation="0dp"
+        android:ems="10"
+        android:hint="Rua"
+        android:inputType="textPostalAddress"
+        android:layout_below="@+id/edtCep"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/edtNumero"
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/edtRua"
+        android:layout_alignBottom="@+id/edtRua"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="9dp"
+        android:ems="10"
+        android:hint="Nº"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/edtBairro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Bairro"
+        android:inputType="textPostalAddress"
+        android:layout_below="@+id/edtRua"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/edtCidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/edtBairro"
+        android:ems="10"
+        android:hint="Cidade"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/edtUF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/edtNumero"
+        android:layout_alignStart="@+id/edtNumero"
+        android:layout_below="@+id/edtBairro"
+        android:ems="10"
+        android:hint="UF"
+        android:inputType="textPostalAddress" />
+
 </RelativeLayout>

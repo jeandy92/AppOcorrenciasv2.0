@@ -16,8 +16,9 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
 
     //Variaveis globais
     Button btnCadastarUsuario;
+    Button btnBuscar;
+    EditText Nome,CPF,Telefone,Email,Senha,Rua, Bairro, Cidade, Numero, CEP, UF;
 
-    EditText Nome,Apelido,Telefone,Email,Endereco,Senha;
 
     private String host = "192.168.0.17";
     private int porta = 2222;
@@ -27,16 +28,31 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
 
-//Cutton cadastrar
+        //Button cadastrar
         btnCadastarUsuario = (Button) findViewById(R.id.CadastrarUsuário);
+        btnBuscar = (Button) findViewById(R.id.btnBuscar);
 
         //Váriaveis para o cadastro
         Nome     = (EditText) findViewById(R.id.edtNome);
-        Apelido  = (EditText) findViewById(R.id.edtApelido);
-        Senha = (EditText) findViewById(R.id.edtSenha);
+        CPF      = (EditText) findViewById(R.id.edtCPF);
+        Senha    = (EditText) findViewById(R.id.edtSenha);
         Email    = (EditText) findViewById(R.id.edtEmail);
-        Endereco = (EditText) findViewById(R.id.edtEndereco);
+        Rua      = (EditText) findViewById(R.id.edtRua);
         Telefone = (EditText) findViewById(R.id.edtTelefone);
+        CEP      = (EditText) findViewById(R.id.edtCep);
+        Bairro   = (EditText) findViewById(R.id.edtBairro);
+        Cidade   = (EditText) findViewById(R.id.edtCidade);
+        UF       = (EditText) findViewById(R.id.edtUF);
+        Numero   = (EditText) findViewById(R.id.edtNumero);
+
+
+
+    }
+
+
+    // Método para buscar Cep
+    public void evBuscarCep(View v){
+
 
 
     }
@@ -61,7 +77,7 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
             PrintStream saida = new PrintStream(cliente.getOutputStream());
             Toast.makeText(getApplicationContext(), "Cadastrando", Toast.LENGTH_SHORT).show();
 
-            String cadastro = "Cadastrar"+"Cadastro"+Apelido.getText()+Senha.getText();
+            String cadastro = "Cadastrar"+"Cadastro"+CPF.getText()+Senha.getText();
 
             //String s = "Cadastrar Cadastro Elenaldo 1234";
 //            String x= "Cadastrar";
@@ -84,4 +100,6 @@ public class CadastrarUsuarioActivity extends AppCompatActivity {
         }
     }
 }
+
+
 

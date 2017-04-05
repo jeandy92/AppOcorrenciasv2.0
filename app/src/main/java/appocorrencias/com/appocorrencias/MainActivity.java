@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,17 +25,17 @@ public class MainActivity extends AppCompatActivity {
 
         //
 
-
-
-
-
-
-
-
-
-
     }
 
+public void evCadastrarSe (View view){
+
+    Button btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
+
+
+    setContentView(R.layout.activity_cadastrar_usuario);
+    this.startActivity(new Intent(this,CadastrarUsuarioActivity.class));
+
+}
 
     public void evEntrar(View view) {
 
