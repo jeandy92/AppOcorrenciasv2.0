@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/teste"
-        android:onClick="valida_conexao"/>
+        android:onClick="valida_conexao"
+            />
 
     <Button
         android:text="Cadastrar Ocorrências"
