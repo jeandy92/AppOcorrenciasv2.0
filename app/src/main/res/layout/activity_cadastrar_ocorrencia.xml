@@ -6,36 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="appocorrencias.com.appocorrencias.CadastrarOcorrencia">
+    tools:context="appocorrencias.com.appocorrencias.Cadastrar_Ocorrencia">
 
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="139dp"
-        android:layout_height="29dp"
-        android:layout_above="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="132dp"
+        android:layout_height="30dp"
         tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="28dp" />
+        tools:layout_editor_absoluteY="28dp"
+        android:layout_marginBottom="18dp"
 
+        android:layout_above="@+id/textView2"
+        android:layout_alignStart="@+id/textView2" />
 
 
     <EditText
-        android:id="@+id/editText6"
-        android:layout_width="132dp"
-        android:layout_height="40dp"
-        android:layout_alignStart="@+id/txtEstado"
-        android:layout_alignTop="@+id/spinner"
+        android:id="@+id/edtData_Ocorrencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/spinner"
+        android:layout_alignBottom="@+id/spinner"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_alignStart="@+id/multiple_actions"
         android:ems="10"
         android:hint="Data da Ocorrencia"
         android:inputType="date"
+        android:maxLength="10"
         tools:layout_editor_absoluteX="202dp"
         tools:layout_editor_absoluteY="16dp" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/edtDescricao"
         android:layout_width="306dp"
         android:layout_height="164dp"
         android:layout_above="@+id/txtEndereco"
@@ -45,6 +47,10 @@
         android:layout_y="154dp"
         android:ems="10"
         android:inputType="textMultiLine"
+        android:text="@string/Exemplo"
+        android:textAlignment="textStart"
+        android:textSize="14sp"
+        android:textStyle="italic"
         tools:layout_editor_absoluteX="28dp"
         tools:layout_editor_absoluteY="111dp" />
 
@@ -86,7 +92,9 @@
         android:layout_marginBottom="21dp"
         android:layout_x="64dp"
         android:layout_y="388dp"
-        android:text="Salvar Ocorrencia"
+        android:text="Salvar Ocorrência"
+        android:background="@color/fundo_botao"
+        android:textColor="@color/texto_botao"
         tools:layout_editor_absoluteX="124dp"
         tools:layout_editor_absoluteY="459dp" />
 
@@ -108,12 +116,15 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="305dp"
-        android:layout_height="24dp"
-        android:layout_above="@+id/editText5"
-        android:layout_alignStart="@+id/editText5"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/edtDescricao"
+        android:layout_alignStart="@+id/edtDescricao"
         android:layout_x="60dp"
         android:layout_y="344dp"
-        android:text="TextView"
+        android:text="@string/Orientacao"
+        android:textAllCaps="false"
+        android:textSize="11sp"
+        android:textStyle="italic"
         tools:layout_editor_absoluteX="28dp"
         tools:layout_editor_absoluteY="78dp" />
 
@@ -164,8 +175,9 @@
         android:layout_width="160dp"
         android:layout_height="250dp"
         android:layout_marginLeft="190dp"
-        android:layout_marginTop="250dp"
-        android:id="@+id/frameLayout">
+        android:id="@+id/frameLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
 
 
     </FrameLayout>
@@ -187,6 +199,11 @@
         fab:srcCompat="@android:drawable/ic_menu_myplaces"
         android:onClick="localidade_atual"
         android:layout_above="@+id/button9"
-        android:layout_alignStart="@+id/txtCidade" />
+        android:layout_alignStart="@+id/txtCidade"
+        />
+
+
+
+
 
 </RelativeLayout>

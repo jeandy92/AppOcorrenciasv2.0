@@ -4,4 +4,12 @@
     <string name="host_port_label">5678</string>
     <string name="btn_send">Enviar Dados</string>
     <string name="address_found">127</string>
+    <string name="Orientacao"> No campo abaixo descrever as caracteristicas principais do sujeito</string>
+
+    <string name="Exemplo"> Ex: Magro, cabelo preto, calça jeans , boné vermelho, estava em uma
+        moto/carro de cor preta.
+    </string>
+
+
+
 </resources>

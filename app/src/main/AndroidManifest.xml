@@ -35,12 +35,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdmActivity" />
-        <activity android:name=".ClienteActivity" />
+        <activity android:name=".Adm" />
+        <activity android:name=".Cliente" />
         <activity android:name=".ClienteSocket" />
         <activity android:name=".EnviaImagem" />
-        <activity android:name=".CadastrarUsuarioActivity" />
-        <activity android:name=".CadastrarOcorrencia"></activity>
+        <activity android:name=".Cadastrar_Usuario" />
+        <activity android:name=".Cadastrar_Ocorrencia"></activity>
 
 
     </application>

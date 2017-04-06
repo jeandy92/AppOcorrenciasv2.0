@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="TIPOS_CRIME">
-        <item>Mercury</item>
-        <item>Venus</item>
+        <item>Assalto</item>
+        <item>Roubo</item>
         <item>Earth</item>
         <item>Mars</item>
         <item>Jupiter</item>

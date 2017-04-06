@@ -10,7 +10,7 @@ import android.os.Bundle;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class ClienteActivity extends AppCompatActivity {
+public class Cliente extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

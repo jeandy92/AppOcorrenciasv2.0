@@ -33,7 +33,7 @@ public void evCadastrarSe (View view){
 
 
     setContentView(R.layout.activity_cadastrar_usuario);
-    this.startActivity(new Intent(this,CadastrarUsuarioActivity.class));
+    this.startActivity(new Intent(this,Cadastrar_Usuario.class));
 
 }
 
@@ -46,7 +46,7 @@ public void evCadastrarSe (View view){
         {
             Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_adm);
-            this.startActivity(new Intent(this,AdmActivity.class));
+            this.startActivity(new Intent(this,Adm.class));
         }
 
 
@@ -55,7 +55,7 @@ public void evCadastrarSe (View view){
            if(usuario.getText().toString().equals("cliente")&& senha.getText().toString().equals("cliente")){}
            Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
            setContentView(R.layout.activity_cliente);
-            this.startActivity(new Intent(this,ClienteActivity.class));
+            this.startActivity(new Intent(this,Cliente.class));
         }
 
 

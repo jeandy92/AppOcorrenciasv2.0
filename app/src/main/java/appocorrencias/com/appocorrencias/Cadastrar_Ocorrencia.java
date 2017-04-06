@@ -10,41 +10,45 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.google.android.gms.identity.intents.Address;
 
 import java.io.IOException;
 import java.util.List;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
-public class CadastrarOcorrencia extends AppCompatActivity implements  LocationListener {
+public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener {
 
     private static final int REQUEST_PERMISSIONS_CODE = 128;
 
     private static final String TAG = "LOG";
     private static final android.util.Log LOG = null;
 
-    private static final int SELECIONA_IMAGEM = 1 ;
-    private static final int IMAGEM_CAPTURADA = 1 ;
+    private static final int SELECIONA_IMAGEM = 1;
+    private static final int IMAGEM_CAPTURADA = 1;
+
 
     private EditText txEndereco;
     private EditText txCidade;
     private EditText txEstado;
+    private EditText txData_Ocorrencia;
+    private ProgressBar pbCarregarLocalidade;
+
 
     private Location location;
     private LocationManager locationmenager;
     private android.location.Address endereco;
-
+    private Spinner spinner;
 
 
 
@@ -53,15 +57,23 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
-        txCidade  = (EditText) findViewById(R.id.txtCidade);
-        txEndereco= (EditText) findViewById(R.id.txtEndereco);
-        txEstado =  (EditText) findViewById(R.id.txtEstado);
+        txCidade = (EditText) findViewById(R.id.txtCidade);
+        txEndereco = (EditText) findViewById(R.id.txtEndereco);
+        txEstado = (EditText) findViewById(R.id.txtEstado);
+        txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
+        spinner = (Spinner) findViewById(R.id.spinner);
 
 
+
+        //criando um ArrayAdapter para usar as strings do array como default
+        ArrayAdapter<CharSequence> adapter;
+        adapter = ArrayAdapter.createFromResource(this, R.array.TIPOS_CRIME, android.R.layout.simple_spinner_item);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
 
     }
-
 
 
     //Abrir Camera
@@ -84,7 +96,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
 
         Intent selecionacameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (selecionacameraIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(selecionacameraIntent,IMAGEM_CAPTURADA);
+            startActivityForResult(selecionacameraIntent, IMAGEM_CAPTURADA);
         }
 
     }
@@ -106,12 +118,12 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
     }
 
     private void abrir_galeria() {
-        
+
         Toast.makeText(getApplicationContext(), "Abrindo galeria", Toast.LENGTH_SHORT).show();
-          Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Selecionar Imagem"), SELECIONA_IMAGEM);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Selecionar Imagem"), SELECIONA_IMAGEM);
 
     }
 
@@ -140,6 +152,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
     //Localidade
 
     public void localidade_atual(View v) {
+
         LOG.i(TAG, "localidade_atual");
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -164,23 +177,28 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
         boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
 
-
         Location location = null;
         double latitude = 0;
         double longitude = 0;
 
         if (!isGPSEnabled && !isNetworkEnabled) {
-            Log.i(TAG, "No geo resource able to be used.");
+            Log.i(TAG, "A geolocalização não pode ser usada.");
         } else {
             if (isNetworkEnabled) {
+
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 0, this);
                 Toast.makeText(this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Network");
 
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+
                 if (location != null) {
+
+
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
+
 
                 }
             }
@@ -201,17 +219,16 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
 
         try {
-            endereco = buscarEndereco(latitude,longitude);
+            endereco = buscarEndereco(latitude, longitude);
 
 
             Log.i(TAG, endereco.getLocality());
             Log.i(TAG, endereco.getAdminArea());
             Log.i(TAG, endereco.getAddressLine(1));
 
-             txCidade.setText(endereco.getLocality());
-             txEstado.setText(endereco.getAdminArea());
-             txEndereco.setText(endereco.getThoroughfare());
-
+            txCidade.setText(endereco.getLocality());
+            txEstado.setText(endereco.getAdminArea());
+            txEndereco.setText(endereco.getThoroughfare());
 
 
         } catch (IOException e) {
@@ -219,26 +236,26 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
         }
     }
 
-    public android.location.Address buscarEndereco (double latitude, double longitude) throws IOException {
+    public android.location.Address buscarEndereco(double latitude, double longitude) throws IOException {
 
-        Geocoder  geocorder;
+        Geocoder geocorder;
         android.location.Address address = null;
         List<android.location.Address> addresses;
 
         geocorder = new Geocoder(getApplicationContext());
-        addresses = geocorder.getFromLocation(latitude,longitude,1);
-        if(addresses.size()>0){
+        addresses = geocorder.getFromLocation(latitude, longitude, 1);
+        if (addresses.size() > 0) {
             address = addresses.get(0);
         }
 
 
-     return  address;
+        return address;
     }
 
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.i(TAG,"Lat: "+location.getLatitude()+"| Long:"+location.getLongitude());
+        Log.i(TAG, "Lat: " + location.getLatitude() + "| Long:" + location.getLongitude());
     }
 
     @Override
@@ -265,7 +282,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
             @Override
             public void onClick(View v) {
 
-                ActivityCompat.requestPermissions(CadastrarOcorrencia.this, permissions, REQUEST_PERMISSIONS_CODE);
+                ActivityCompat.requestPermissions(Cadastrar_Ocorrencia.this, permissions, REQUEST_PERMISSIONS_CODE);
                 mMaterialDialog.dismiss();
             }
         });
@@ -289,25 +306,37 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
                             && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
 
                         selecionandoLocalidadeAtual();
-                    }
-                    else if (permissions[i].equalsIgnoreCase(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    } else if (permissions[i].equalsIgnoreCase(Manifest.permission.READ_EXTERNAL_STORAGE)
                             && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
 
-                    }
-                    else if (permissions[i].equalsIgnoreCase(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    } else if (permissions[i].equalsIgnoreCase(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
 
-                    }
-
-                    else if (permissions[i].equalsIgnoreCase(Manifest.permission.CAMERA)
+                    } else if (permissions[i].equalsIgnoreCase(Manifest.permission.CAMERA)
                             && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
 
 
                     }
+                }
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-}
+
+
+//Abrir Calendário
+
+    public void  evEscolher_Data(View v){
+
+
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
 }
 
 

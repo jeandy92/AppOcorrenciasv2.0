@@ -12,7 +12,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 
-public class CadastrarUsuarioActivity extends AppCompatActivity {
+public class Cadastrar_Usuario extends AppCompatActivity {
 
     //Variaveis globais
     Button btnCadastarUsuario;

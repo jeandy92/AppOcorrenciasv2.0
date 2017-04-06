@@ -27,7 +27,7 @@ import java.net.Socket;
   //      Endereco
 
 
-public class AdmActivity extends AppCompatActivity {
+public class Adm extends AppCompatActivity {
     private Button btnConexao,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
 
@@ -54,7 +54,8 @@ public class AdmActivity extends AppCompatActivity {
     public void cadastrar_usuario(View view) {
 
         setContentView(R.layout.activity_cadastrar_usuario);
-        this.startActivity(new Intent(this,CadastrarUsuarioActivity.class));
+        this.startActivity(new Intent(this,Cadastrar_Usuario.class));
+
 
 
     }
@@ -62,7 +63,8 @@ public class AdmActivity extends AppCompatActivity {
     public void cadastrar_ocorrencia(View v){
 
         setContentView(R.layout.activity_cadastrar_ocorrencia);
-        this.startActivity(new Intent(this,CadastrarOcorrencia.class));
+        this.startActivity(new Intent(this,Cadastrar_Ocorrencia.class));
+        this.finish();
 
 
 
