@@ -57,9 +57,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
         txEndereco= (EditText) findViewById(R.id.txtEndereco);
         txEstado =  (EditText) findViewById(R.id.txtEstado);
 
-        //Thread para que o aplicativo possa se conectar com o servidor na rede
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
 
 
