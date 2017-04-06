@@ -94,5 +94,9 @@ public class Adm extends AppCompatActivity {
        }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
+    }
 }

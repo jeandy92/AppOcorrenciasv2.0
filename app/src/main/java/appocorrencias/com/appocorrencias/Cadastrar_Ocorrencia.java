@@ -25,6 +25,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.List;
 
+import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
 
 public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener {
@@ -41,8 +42,13 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private EditText txEndereco;
     private EditText txCidade;
     private EditText txEstado;
+
+    private EditText txDescricao;
+
+
     private EditText txData_Ocorrencia;
     private ProgressBar pbCarregarLocalidade;
+
 
 
     private Location location;
@@ -57,23 +63,40 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
-        txCidade = (EditText) findViewById(R.id.txtCidade);
-        txEndereco = (EditText) findViewById(R.id.txtEndereco);
-        txEstado = (EditText) findViewById(R.id.txtEstado);
+
+        txCidade  = (EditText) findViewById(R.id.txtCidade);
+        txEndereco= (EditText) findViewById(R.id.txtEndereco);
+        txEstado =  (EditText) findViewById(R.id.txtEstado);
+        txDescricao =  (EditText) findViewById(R.id.edtDescricao);
         txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
 
+        txDescricao.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                txDescricao.setText("");
+            }
+
+
+        });
+
+        // Inserindo Mascaras.
+        MaskEditTextChangedListener maskData = new MaskEditTextChangedListener("##/##/####", txData_Ocorrencia);
+        txData_Ocorrencia.addTextChangedListener(maskData);
 
 
         //criando um ArrayAdapter para usar as strings do array como default
         ArrayAdapter<CharSequence> adapter;
         adapter = ArrayAdapter.createFromResource(this, R.array.TIPOS_CRIME, android.R.layout.simple_spinner_item);
 
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
 
     }
+
 
 
     //Abrir Camera
@@ -151,7 +174,12 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
     //Localidade
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
     public void localidade_atual(View v) {
+
 
         LOG.i(TAG, "localidade_atual");
 
@@ -328,14 +356,13 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     public void  evEscolher_Data(View v){
 
 
-
-
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        this.finish();
+        setContentView(R.layout.activity_main);
+        this.startActivity(new Intent(this,MainActivity.class));
     }
 }
 

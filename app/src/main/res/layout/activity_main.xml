@@ -24,7 +24,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/entrar"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/password" />
+        android:layout_alignStart="@+id/password"
+        android:background="@drawable/botoes_arrendondados"
+        android:textColor="@color/texto_botao"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -80,5 +82,7 @@
         android:text="Cadastrar-se"
         android:onClick="evCadastrarSe"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/imageView2" />
+        android:layout_alignEnd="@+id/imageView2"
+        android:background="@drawable/botoes_arrendondados"
+        android:textColor="@color/texto_botao"/>
 </RelativeLayout>

@@ -48,7 +48,7 @@
         android:ems="10"
         android:inputType="textMultiLine"
         android:text="@string/Exemplo"
-        android:textAlignment="textStart"
+        android:textAlignment="viewStart"
         android:textSize="14sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="28dp"
@@ -89,12 +89,14 @@
         android:layout_height="36dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp"
+        android:layout_marginBottom="19dp"
+
+
         android:layout_x="64dp"
         android:layout_y="388dp"
+        android:background="@drawable/botoes_arrendondados"
         android:text="Salvar Ocorrência"
-        android:background="@color/fundo_botao"
-        android:textColor="@color/texto_botao"
+        android:textColor="@color/padrao"
         tools:layout_editor_absoluteX="124dp"
         tools:layout_editor_absoluteY="459dp" />
 
@@ -114,11 +116,9 @@
         tools:layout_editor_absoluteY="292dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/infoDescricao"
         android:layout_width="305dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/edtDescricao"
-        android:layout_alignStart="@+id/edtDescricao"
+        android:layout_height="24dp"
         android:layout_x="60dp"
         android:layout_y="344dp"
         android:text="@string/Orientacao"
@@ -126,7 +126,9 @@
         android:textSize="11sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="78dp" />
+        tools:layout_editor_absoluteY="78dp"
+        android:layout_above="@+id/edtDescricao"
+        android:layout_alignEnd="@+id/edtDescricao" />
 
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
@@ -175,9 +177,7 @@
         android:layout_width="160dp"
         android:layout_height="250dp"
         android:layout_marginLeft="190dp"
-        android:id="@+id/frameLayout"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true">
+        android:layout_marginTop="250dp">
 
 
     </FrameLayout>
@@ -194,14 +194,14 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        fab:srcCompat="@android:drawable/ic_menu_myplaces"
-        android:onClick="localidade_atual"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
         android:layout_above="@+id/button9"
         android:layout_alignStart="@+id/txtCidade"
-        />
-
+        android:elevation="0dp"
+        android:onClick="localidade_atual"
+        app:srcCompat="@drawable/ic_localizacao" />
 
 
 

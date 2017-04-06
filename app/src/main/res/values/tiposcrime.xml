@@ -3,11 +3,6 @@
     <string-array name="TIPOS_CRIME">
         <item>Assalto</item>
         <item>Roubo</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
+        <item>Furto</item>
+            </string-array>
 </resources>

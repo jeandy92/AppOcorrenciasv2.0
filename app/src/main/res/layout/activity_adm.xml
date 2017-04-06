@@ -17,42 +17,62 @@
 
     <Button
         android:text="Validar Conexão"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/teste"
         android:onClick="valida_conexao"
+        android:textColor="@color/padrao"
+        android:background="@drawable/botoes_arrendondados"
+
             />
 
+    <!--Cadastrar Ocorrências-->
     <Button
         android:text="Cadastrar Ocorrências"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnCadastrarOcorrencias"
-        android:onClick="cadastrar_ocorrencia"/>
-
+        android:onClick="cadastrar_ocorrencia"
+        android:textColor="@color/padrao"
+        android:background="@drawable/botoes_arrendondados"/>
+    <!--Verificar Ocorrências-->
     <Button
         android:text="Verificar Ocorrências"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/padrao"
+        android:background="@drawable/botoes_arrendondados"
         android:id="@+id/button3" />
-
+    <!--Criar Usuário-->
     <Button
         android:text="Criar Usuário"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:id="@+id/button4"
+        android:textColor="@color/padrao"
+        android:background="@drawable/botoes_arrendondados"
         android:onClick="cadastrar_usuario"/>
-
+    <!--Gerar Relatório-->
     <Button
         android:text="Gerar Relatório"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/padrao"
+        android:background="@drawable/botoes_arrendondados"
         android:id="@+id/button5" />
-
+    <!--A definir-->
     <Button
         android:text="A definir"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/padrao"
+        android:background="@drawable/botoes_arrendondados"
         android:id="@+id/button6" />
 
 </LinearLayout>

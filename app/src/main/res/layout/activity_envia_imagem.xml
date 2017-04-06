@@ -18,6 +18,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/TirarFoto"
         android:onClick="TirarFoto"
+        android:background="@drawable/botoes_arrendondados"
+        android:textColor="@color/texto_botao"
         android:layout_x="11dp"
         android:layout_y="74dp" />
 
@@ -26,7 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnEscolherImagem"
-
+        android:background="@drawable/botoes_arrendondados"
+        android:textColor="@color/texto_botao"
         android:layout_marginEnd="45dp"
         android:layout_x="15dp"
         android:layout_y="28dp" />
@@ -36,6 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button13"
+        android:background="@drawable/botoes_arrendondados"
+        android:textColor="@color/texto_botao"
         android:layout_x="-8dp"
         android:layout_y="422dp" />
 

@@ -8,16 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
-
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/cor_icone</item>
-    </style>
-
-    <style name="TemaOcorrencia" parent="Theme.AppCompat.Light.NoActionBar" >
-        <item name="android:statusBarColor">?android:attr/textColorLinkInverse</item>
-        <item name="android:navigationBarColor">?android:attr/statusBarColor</item>
     </style>
 
 </resources>
