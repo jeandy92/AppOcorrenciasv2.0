@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -55,6 +56,10 @@ public class CadastrarOcorrencia extends AppCompatActivity implements  LocationL
         txCidade  = (EditText) findViewById(R.id.txtCidade);
         txEndereco= (EditText) findViewById(R.id.txtEndereco);
         txEstado =  (EditText) findViewById(R.id.txtEstado);
+
+        //Thread para que o aplicativo possa se conectar com o servidor na rede
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
 
 
