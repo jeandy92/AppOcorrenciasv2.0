@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -23,14 +25,24 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        SocketTask st = new SocketTask("127.0.0.1", 2222, 5000) {
+            @Override
+            protected void onProgressUpdate(String... progress) {
+                SimpleDateFormat sdf = new SimpleDateFormat(
+                        "dd/MM/yyyy HH:mm:ss");
+            }
+        };
+
+        st.execute();
+
         //
 
     }
 
+
 public void evCadastrarSe (View view){
 
     Button btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
-
 
     setContentView(R.layout.activity_cadastrar_usuario);
     this.startActivity(new Intent(this,CadastrarUsuarioActivity.class));

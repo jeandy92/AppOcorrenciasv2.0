@@ -50,10 +50,10 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/CadastrarUsuário"
+        android:id="@+id/CadastrarUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="cadastrarUsuario"
+        android:onClick="evCadastrarUsuario"
         android:text="Cadastrar"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

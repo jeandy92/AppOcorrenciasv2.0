@@ -37,4 +37,6 @@ dependencies {
     compile 'com.github.clans:fab:1.4.0'
     compile 'me.drakeet.materialdialog:library:1.2.2'
 
+    compile 'org.jsoup:jsoup:1.10.2'
+
 }
