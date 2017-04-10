@@ -22,7 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.List;
 
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -39,6 +42,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private static final int IMAGEM_CAPTURADA = 1;
 
 
+    private String data_ocorrencia,descricao,enderecos,cidade;
     private EditText txEndereco;
     private EditText txCidade;
     private EditText txEstado;
@@ -93,6 +97,46 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+
+        //String tipo_crime =  spinner.getTop();
+        data_ocorrencia = txData_Ocorrencia.getText().toString();
+        descricao = txDescricao.getText().toString();
+        enderecos = txEndereco.getText().toString();
+        cidade = txCidade.getText().toString();
+        //String sigla_estado =  txSigla.getText().toString();
+
+        public void processarSocket(String dados){
+
+            try {
+                Socket socket  =  new Socket("192.168.0.1",9896);
+
+                DataInputStream in =  new DataInputStream(socket.getInputStream());
+                DataOutputStream out =  new DataOutputStream(socket.getOutputStream());
+
+                String j = in.readUTF();
+
+                //Envio de dados
+                out.writeUTF(data_ocorrencia);
+                out.writeUTF(descricao);
+                out.writeUTF(enderecos);
+                out.writeUTF(cidade);
+                //out.write(Imagem);
+
+
+
+
+
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Falha no Envio do Socket ");
+            }
+
+
+        }
 
 
     }
@@ -209,7 +253,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         double latitude = 0;
         double longitude = 0;
 
-        if (!isGPSEnabled && !isNetworkEnabled) {
+        if (!isGPSEnabled || !isNetworkEnabled) {
             Log.i(TAG, "A geolocalização não pode ser usada.");
         } else {
             if (isNetworkEnabled) {
@@ -361,8 +405,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.activity_main);
-        this.startActivity(new Intent(this,MainActivity.class));
+        setContentView(R.layout.activity_adm);
+        this.startActivity(new Intent(this,Adm.class));
     }
 }
 

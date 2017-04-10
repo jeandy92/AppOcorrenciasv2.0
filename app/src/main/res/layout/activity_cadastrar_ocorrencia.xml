@@ -15,26 +15,25 @@
         android:layout_height="30dp"
         tools:layout_editor_absoluteX="28dp"
         tools:layout_editor_absoluteY="28dp"
-        android:layout_marginBottom="18dp"
 
-        android:layout_above="@+id/textView2"
-        android:layout_alignStart="@+id/textView2" />
+        android:layout_alignTop="@+id/edtData_Ocorrencia"
+        android:layout_alignStart="@+id/edtDescricao" />
 
 
     <EditText
         android:id="@+id/edtData_Ocorrencia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/spinner"
-        android:layout_alignBottom="@+id/spinner"
-        android:layout_alignEnd="@+id/textView2"
-        android:layout_alignStart="@+id/multiple_actions"
         android:ems="10"
         android:hint="Data da Ocorrencia"
         android:inputType="date"
         android:maxLength="10"
         tools:layout_editor_absoluteX="202dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/infoDescricao"
+        android:layout_alignStart="@+id/frameLayout" />
 
     <EditText
         android:id="@+id/edtDescricao"
@@ -177,7 +176,8 @@
         android:layout_width="160dp"
         android:layout_height="250dp"
         android:layout_marginLeft="190dp"
-        android:layout_marginTop="250dp">
+        android:layout_marginTop="250dp"
+        android:id="@+id/frameLayout">
 
 
     </FrameLayout>

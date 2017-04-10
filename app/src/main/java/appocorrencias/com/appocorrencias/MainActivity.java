@@ -61,7 +61,7 @@ private String nome;
     public void evCadastrarSe(View view) {
 
         setContentView(R.layout.activity_cadastrar_usuario);
-        this.startActivity(new Intent(this, CadastrarUsuarioActivity.class));
+        this.startActivity(new Intent(this, Cadastrar_Usuario.class));
 
     }
 
@@ -71,7 +71,7 @@ private String nome;
         if (usuario.getText().toString().equals("adm") && senha.getText().toString().equals("senha")) {
             Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_adm);
-            this.startActivity(new Intent(this, AdmActivity.class));
+            this.startActivity(new Intent(this, Adm.class));
 
         } else {
             if (usuario.getText().toString().equals("cliente") && senha.getText().toString().equals("cliente")) {
@@ -79,7 +79,7 @@ private String nome;
             Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
             nome = usuario.getText().toString();
             setContentView(R.layout.activity_cliente);
-            Intent cliente = new Intent(this, ClienteActivity.class);
+            Intent cliente = new Intent(this, Cliente.class);
 
             Bundle bundle = new Bundle();
             bundle.putString("nome", nome);

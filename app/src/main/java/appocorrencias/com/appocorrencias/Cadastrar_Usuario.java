@@ -1,5 +1,6 @@
 package appocorrencias.com.appocorrencias;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -98,6 +99,13 @@ public class Cadastrar_Usuario extends AppCompatActivity {
         }catch (Exception e ){
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setContentView(R.layout.activity_adm);
+        this.startActivity(new Intent(this,Adm.class));
     }
 }
 

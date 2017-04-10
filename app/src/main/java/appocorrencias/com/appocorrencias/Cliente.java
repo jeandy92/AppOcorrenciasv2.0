@@ -1,14 +1,14 @@
 package appocorrencias.com.appocorrencias;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class Cliente extends AppCompatActivity {
 
@@ -38,6 +38,13 @@ public class Cliente extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setContentView(R.layout.activity_main);
+        this.startActivity(new Intent(this,MainActivity.class));
     }
 }
 
