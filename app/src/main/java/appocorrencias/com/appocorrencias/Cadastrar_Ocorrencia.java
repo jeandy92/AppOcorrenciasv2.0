@@ -68,14 +68,14 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
 
-        txCidade  = (EditText) findViewById(R.id.txtCidade);
-        txEndereco= (EditText) findViewById(R.id.txtEndereco);
-        txEstado =  (EditText) findViewById(R.id.txtEstado);
-        txDescricao =  (EditText) findViewById(R.id.edtDescricao);
+        txCidade = (EditText) findViewById(R.id.txtCidade);
+        txEndereco = (EditText) findViewById(R.id.txtEndereco);
+        txEstado = (EditText) findViewById(R.id.txtEstado);
+        txDescricao = (EditText) findViewById(R.id.edtDescricao);
         txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
 
-        txDescricao.setOnClickListener(new View.OnClickListener(){
+        txDescricao.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -105,6 +105,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         enderecos = txEndereco.getText().toString();
         cidade = txCidade.getText().toString();
         //String sigla_estado =  txSigla.getText().toString();
+    }
 
         public void processarSocket(String dados){
 
@@ -139,7 +140,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         }
 
 
-    }
+
 
 
 

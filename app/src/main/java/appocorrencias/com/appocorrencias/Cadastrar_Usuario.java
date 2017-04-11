@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -52,60 +54,62 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
 
     // Método para buscar Cep
-    public void evBuscarCep(View v){
-
-
-
+    public void evBuscarCep(View v) throws IOException {
+        buscarCEP busca = new buscarCEP();
+        Rua.setText(busca.getEndereco(CEP.getText().toString()));
+        Bairro.setText(busca.getBairro(CEP.getText().toString()));
+        Cidade.setText(busca.getCidade(CEP.getText().toString()));
+        UF.setText(busca.getUF(CEP.getText().toString()));
     }
-
 
     //Cadastrar usuário no servidor
-    public void cadastrarUsuario(View v) {
+    public void evCadastrarUsuario(View v) throws IOException {
+        String cadastro1 = "Cadastrar1" + " " + CPF.getText().toString() + " " + Senha.getText().toString() +
+                " " + Email.getText().toString() + " " + Telefone.getText().toString()+ " " + CEP.getText().toString()+
+                " " + UF.getText().toString()+ " " + Numero.getText().toString();
+        String cadastroNome = "CadastrarNome" + " " + CPF.getText().toString()+ " " + Nome.getText().toString();
+        String cadastroRua = "CadastrarRua" + " " + CPF.getText().toString()+ " " + Rua.getText().toString();
+        String cadastroBairro = "CadastrarBairro" + " " + CPF.getText().toString()+ " " + Bairro.getText().toString();
+        String cadastroCidade = "CadastrarCidade" + " " + CPF.getText().toString()+ " " + Cidade.getText().toString();
 
-        Toast.makeText(getApplicationContext(), "Cadastrado feito com sucesso"+Nome.getText(), Toast.LENGTH_SHORT).show();
+        cadastrar_no_server(cadastro1);
 
-//        if (v == btnCadastarUsuario) {
-//            cadastrarUsuario();
-//        }
-}
+        //Creceber resposta do server sobre CPF
+
+        cadastrar_no_server(cadastroNome);
+        cadastrar_no_server(cadastroRua);
+        cadastrar_no_server(cadastroBairro);
+        cadastrar_no_server(cadastroCidade);
 
 
 
-    public void cadastrarUsuario(){
-        try {
-            Socket cliente = new Socket(this.host, this.porta);
-
-            PrintStream saida = new PrintStream(cliente.getOutputStream());
-            Toast.makeText(getApplicationContext(), "Cadastrando", Toast.LENGTH_SHORT).show();
-
-            String cadastro = "Cadastrar"+"Cadastro"+CPF.getText()+Senha.getText();
-
-            //String s = "Cadastrar Cadastro Elenaldo 1234";
-//            String x= "Cadastrar";
-
-            String texto = "Mensagem Para teste !!!";
-
-            OutputStream outputStream = cliente.getOutputStream();
-            InputStream inputStream = cliente.getInputStream();
-
-            outputStream.write("Cadastrar".getBytes());
-            outputStream.flush();
-
-            int Rec = inputStream.read();
-            System.out.println(Rec);
-            outputStream.write(cadastro.getBytes());
-            outputStream.flush();
-
-        }catch (Exception e ){
-
-        }
+        Toast.makeText(getApplicationContext(), "Cadastrado feito com sucesso " + Nome.getText(), Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        setContentView(R.layout.activity_adm);
-        this.startActivity(new Intent(this,Adm.class));
+    private void cadastrar_no_server(String dados) {
+        try {
+            Socket socket = null;
+
+            OutputStream canalSaida = null;
+            ObjectInputStream canalEntrada = null;
+
+            socket = new Socket("172.20.10.3",2222);
+
+            canalSaida = socket.getOutputStream();
+            canalSaida.write(dados.getBytes());
+
+
+            // canalEntrada = new ObjectInputStream(socket.getInputStream());
+            // Object object = canalEntrada.readObject();
+            // if ((object != null) && (object instanceof String)) {
+            //   txvRetornoSocket.setText(object.toString());
+            // }
+
+
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
     }
 }
 
