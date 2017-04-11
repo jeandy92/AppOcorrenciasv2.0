@@ -106,7 +106,6 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         cidade = txCidade.getText().toString();
         //String sigla_estado =  txSigla.getText().toString();
     }
-
         public void processarSocket(String dados){
 
             try {

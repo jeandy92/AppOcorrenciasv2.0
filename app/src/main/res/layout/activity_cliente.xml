@@ -11,23 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="appocorrencias.com.appocorrencias.Cliente">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/sym_def_app_icon"
-        android:layout_x="20dp"
-        android:layout_y="18dp"
-        android:id="@+id/img_perfil" />
-
-    <EditText
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Bem vindo"
-        android:ems="10"
-        android:layout_x="84dp"
-        android:layout_y="11dp"
-        android:id="@+id/editText" />
 
     <TextView
         android:text="TextView"
@@ -158,4 +141,14 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:layout_x="68dp"
+        android:layout_y="28dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Bem vindo" />
 </AbsoluteLayout>

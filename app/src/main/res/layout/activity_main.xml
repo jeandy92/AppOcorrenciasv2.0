@@ -76,13 +76,12 @@
 
     <Button
         android:id="@+id/btnCadastrarCli"
-        android:layout_width="wrap_content"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="11dp"
         android:text="Cadastrar-se"
         android:onClick="evCadastrarSe"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/imageView2"
         android:background="@drawable/botoes_arrendondados"
-        android:textColor="@color/texto_botao"/>
+        android:textColor="@color/texto_botao"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/imageView2" />
 </RelativeLayout>

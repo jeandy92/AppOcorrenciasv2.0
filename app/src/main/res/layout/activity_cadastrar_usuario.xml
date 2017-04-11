@@ -51,10 +51,12 @@
 
     <Button
         android:id="@+id/CadastrarUsuário"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:onClick="cadastrarUsuario"
+        android:onClick="evCadastrarUsuario"
         android:text="Cadastrar"
+        android:background="@drawable/botoes_arrendondados"
+        android:textColor="@color/padrao"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="14dp" />
@@ -87,7 +89,9 @@
         android:text="Buscar"
         android:onClick="evBuscarCep"
         android:layout_above="@+id/edtNumero"
-        android:layout_alignStart="@+id/edtNumero" />
+        android:layout_alignStart="@+id/edtNumero"
+        android:background="@drawable/botoes_arrendondados"
+        android:textColor="@color/padrao"/>
 
     <EditText
         android:id="@+id/edtRua"
