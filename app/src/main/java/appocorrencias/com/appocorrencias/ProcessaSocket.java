@@ -1,5 +1,7 @@
 package appocorrencias.com.appocorrencias;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -9,20 +11,61 @@ import java.net.Socket;
  */
 
 public class ProcessaSocket {
+    static Socket cliente = null;
+    static OutputStream canalSaida = null;
+    static InputStream canalEntrada = null;
 
+    // public ProcessaSocket(String host, int port){
+    //  try {
+    //    cliente = new Socket(host, port);
+    //    canalSaida = cliente.getOutputStream();
+    //      canalEntrada = cliente.getInputStream();
+
+    //    } catch (Exception e) {
+            //FIXME Tratar a Exception.
+    //       e.printStackTrace();
+    //     }
+
+    // }
+
+
+    public static String recebe_dados(InputStream in) throws IOException {
+        //InputStream canalEntrada = cliente.getInputStream();
+        byte[] resulBuff = new byte[0];
+        byte[] buff = new byte[1024];
+        int k = 0;
+        String str = null;
+        StringBuilder sb = new StringBuilder();
+
+        k = in.read(buff, 0, buff.length);
+        byte[] tbuff = new byte[resulBuff.length + k];
+        System.arraycopy(resulBuff, 0, tbuff, 0, resulBuff.length);
+        System.arraycopy(buff, 0, tbuff, resulBuff.length, k);
+        resulBuff = tbuff;
+        for (int i = 0; i < resulBuff.length; i++) {
+            char t = (char) tbuff[i];
+            sb.append(t);
+            str = sb.toString();
+        }
+        in.close();
+        return str;
+
+    }
 
     //Metodo que envia as informações para o Servidor (Socket)
     public static void cadastrar_no_server(String dados) {
         try {
-            Socket socket = null;
+            //   Socket socket = null;
 
-            OutputStream canalSaida = null;
-            ObjectInputStream canalEntrada = null;
+            cliente = new Socket("192.168.1.13", 2222);
 
-            socket = new Socket("172.20.10.3", 2222);
-
-            canalSaida = socket.getOutputStream();
+            canalSaida = cliente.getOutputStream();
+            canalEntrada = cliente.getInputStream();
             canalSaida.write(dados.getBytes());
+            canalSaida.flush();
+            canalSaida.close();
+            cliente.close();
+
 
 
             // canalEntrada = new ObjectInputStream(socket.getInputStream());
@@ -36,5 +79,33 @@ public class ProcessaSocket {
             //FIXME Tratar a Exception.
             e.printStackTrace();
         }
+    }
+
+
+
+    public static String cadastrar1_no_server(String dados) {
+        String str = null;
+        try {
+            //   Socket socket = null;
+
+            cliente = new Socket("192.168.1.13", 2222);
+
+            canalSaida = cliente.getOutputStream();
+            canalEntrada = cliente.getInputStream();
+            canalSaida.write(dados.getBytes());
+
+            str=  recebe_dados(canalEntrada);
+
+            canalSaida.flush();
+            canalSaida.close();
+            canalEntrada.close();
+            cliente.close();
+
+
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
+        return str;
     }
 }
