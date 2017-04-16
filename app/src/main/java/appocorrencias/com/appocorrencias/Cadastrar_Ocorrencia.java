@@ -38,11 +38,12 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private static final String TAG = "LOG";
     private static final android.util.Log LOG = null;
 
+    //Váriaveis para realizar o controle do ResultActivity
     private static final int SELECIONA_IMAGEM = 1;
     private static final int IMAGEM_CAPTURADA = 1;
 
 
-    private String data_ocorrencia,descricao,enderecos,cidade;
+    private String convDataOcorrencia,convDescricao,convEndereco,convCidade;
     private EditText txEndereco;
     private EditText txCidade;
     private EditText txEstado;
@@ -94,19 +95,22 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         ArrayAdapter<CharSequence> adapter;
         adapter = ArrayAdapter.createFromResource(this, R.array.TIPOS_CRIME, android.R.layout.simple_spinner_item);
 
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
 
         //String tipo_crime =  spinner.getTop();
-        data_ocorrencia = txData_Ocorrencia.getText().toString();
-        descricao = txDescricao.getText().toString();
-        enderecos = txEndereco.getText().toString();
-        cidade = txCidade.getText().toString();
+        convDataOcorrencia = txData_Ocorrencia.getText().toString().replaceAll("[^0123456789]", "");;
+        convDescricao = txDescricao.getText().toString().replaceAll("[^0123456789]", "");;
+        convEndereco = txEndereco.getText().toString().replaceAll("[^0123456789]", "");;
+        convCidade = txCidade.getText().toString().replaceAll("[^0123456789]", "");;
         //String sigla_estado =  txSigla.getText().toString();
+
     }
-        public void processarSocket(String dados){
+
+
+
+    public void processarSocket(String dados){
 
             try {
                 Socket socket  =  new Socket("192.168.0.1",9896);
@@ -116,18 +120,18 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
                 String j = in.readUTF();
 
+
+
                 //Envio de dados
-                out.writeUTF(data_ocorrencia);
-                out.writeUTF(descricao);
-                out.writeUTF(enderecos);
-                out.writeUTF(cidade);
-                //out.write(Imagem);
+               String cadastrarDataOcorrencia  = "CadastrarDataOcorrencia" + " "+ convDataOcorrencia+ " " + convDataOcorrencia;
+               String cadastrarDescricao  = "CadastrarDataOcorrencia" + " "+ convDataOcorrencia+ " " + convDataOcorrencia;
+               String cadastrarEndereco  = "CadastrarDataOcorrencia" + " "+ convDataOcorrencia+ " " + convDataOcorrencia;
+               String cadastrarCidade     = "CadastrarDataOcorrencia" + " "+ convDataOcorrencia+ " " + convDataOcorrencia;
 
-
-
-
-
-
+                ProcessaSocket.cadastrar_no_server(cadastrarDataOcorrencia);
+                ProcessaSocket.cadastrar_no_server(cadastrarDescricao);
+                ProcessaSocket.cadastrar_no_server(cadastrarEndereco);
+                ProcessaSocket.cadastrar_no_server(cadastrarCidade);
 
 
             } catch (IOException e) {
