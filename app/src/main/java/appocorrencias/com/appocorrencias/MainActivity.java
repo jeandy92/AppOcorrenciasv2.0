@@ -12,7 +12,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
 private byte[] imagem ;
-private String nome;
+private String nome,RESULTADO,APELIDO,NOME,SENHA;
     private   EditText usuario;
     private   EditText senha;
     private   Button btnCadastrarCli;
@@ -23,6 +23,7 @@ private String nome;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         usuario = (EditText) findViewById(R.id.usuario);
         senha = (EditText) findViewById(R.id.password);
@@ -52,6 +53,8 @@ private String nome;
 //        int age = intent.getIntExtra("my_age", 0);
 //        byte[] random = intent.getByteArrayExtra("random");
 
+
+
         //Thread para que o aplicativo possa se conectar com o servidor na rede
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -67,29 +70,39 @@ private String nome;
 
     public void evEntrar(View view) {
 
+        //Inserindo dados no banco local
+        APELIDO = usuario.getText().toString();
+        NOME = usuario.getText().toString();
+        SENHA = senha.getText().toString();
+        ControleDoBanco crud = new ControleDoBanco(getBaseContext());
+        RESULTADO = crud.insereDado(APELIDO,NOME,SENHA);
 
-        if (usuario.getText().toString().equals("adm") && senha.getText().toString().equals("senha")) {
-            Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
-            setContentView(R.layout.activity_adm);
-            this.startActivity(new Intent(this, Adm.class));
+        Toast.makeText(this, RESULTADO, Toast.LENGTH_SHORT).show();
+        setContentView(R.layout.activity_adm);
+        this.startActivity(new Intent(this, Adm.class));
 
-        } else {
-            if (usuario.getText().toString().equals("cliente") && senha.getText().toString().equals("cliente")) {
-            }
-            Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
-            nome = usuario.getText().toString();
-            setContentView(R.layout.activity_cliente);
-            Intent cliente = new Intent(this, Cliente.class);
-
-            Bundle bundle = new Bundle();
-            bundle.putString("nome", nome);
-
-            cliente.putExtras(bundle);
-
-            this.startActivity(cliente);
-
-
-        }
+//        if (usuario.getText().toString().equals("adm") && senha.getText().toString().equals("senha")) {
+//            Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
+//            setContentView(R.layout.activity_adm);
+//            this.startActivity(new Intent(this, Adm.class));
+//
+//        } else {
+//            if (usuario.getText().toString().equals("cliente") && senha.getText().toString().equals("cliente")) {
+//            }
+//            Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
+//            nome = usuario.getText().toString();
+//            setContentView(R.layout.activity_cliente);
+//            Intent cliente = new Intent(this, Cliente.class);
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putString("nome", nome);
+//
+//            cliente.putExtras(bundle);
+//
+//            this.startActivity(cliente);
+//
+//
+//        }
 
 
     }

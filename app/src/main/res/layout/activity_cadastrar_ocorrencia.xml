@@ -96,7 +96,7 @@
         android:background="@drawable/botoes_arrendondados"
         android:textColor="@color/padrao"
         android:text="Salvar Ocorrência"
-
+        android:onClick="salvar_ocorrencia"
         tools:layout_editor_absoluteX="124dp"
         tools:layout_editor_absoluteY="459dp" />
 

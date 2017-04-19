@@ -38,8 +38,7 @@
         </activity>
         <activity android:name=".Adm" />
         <activity android:name=".Cliente" />
-        <activity android:name=".ClienteSocket" />
-        <activity android:name=".EnviaImagem" />
+        <activity android:name=".Cliente_Socket" />
         <activity android:name=".Cadastrar_Usuario" />
         <activity android:name=".Cadastrar_Ocorrencia"></activity>
 

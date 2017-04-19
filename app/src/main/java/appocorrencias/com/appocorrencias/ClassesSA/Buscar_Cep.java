@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.ClassesSA;
 
 
 import org.jsoup.HttpStatusException;

@@ -1,8 +1,9 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.ClassesSA;
+
+import android.widget.EditText;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
@@ -27,7 +28,10 @@ public class ProcessaSocket {
     //     }
 
     // }
+    public static  void executar(){
+///
 
+}
 
     public static String recebe_dados(InputStream in) throws IOException {
         //InputStream canalEntrada = cliente.getInputStream();
@@ -68,6 +72,8 @@ public class ProcessaSocket {
 
 
 
+
+
             // canalEntrada = new ObjectInputStream(socket.getInputStream());
             // Object object = canalEntrada.readObject();
             // if ((object != null) && (object instanceof String)) {
@@ -80,8 +86,6 @@ public class ProcessaSocket {
             e.printStackTrace();
         }
     }
-
-
 
     public static String cadastrar1_no_server(String dados) {
         String str = null;
@@ -108,4 +112,53 @@ public class ProcessaSocket {
         }
         return str;
     }
+
+    public static void cadastrarOcorrencia(String convDataOcorrencia, String convDescricao, String convEndereco, String dados) {
+
+
+
+        //Envio de dados
+        String cadastrarId_ocorrencia = "CadastrarId_ocorrencia" + " ";
+        String cadastrarDataOcorrencia = "CadastrarDataOcorrencia" + " " + convDataOcorrencia + " " + convDataOcorrencia;
+        String cadastrarDescricao = "CadastarDescricao" + " " + convDataOcorrencia + " " + convDataOcorrencia;
+        String cadastrarEndereco = "CadastrarEndereco" + " " + convDataOcorrencia + " " + convDataOcorrencia;
+        String cadastrarCidade = "CadastrarCidade" + " " + convDataOcorrencia + " " + convDataOcorrencia;
+
+        ProcessaSocket.cadastrar_no_server(cadastrarId_ocorrencia);
+        ProcessaSocket.cadastrar_no_server(cadastrarDataOcorrencia);
+        ProcessaSocket.cadastrar_no_server(cadastrarDescricao);
+        ProcessaSocket.cadastrar_no_server(cadastrarEndereco);
+        ProcessaSocket.cadastrar_no_server(cadastrarCidade);
+
+
+    }
+
+    public static  boolean cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,String convCep,EditText UF,String numero, String rua, String bairro,String nome, String cidade){
+
+        String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha +
+                " " + email + " " + convTelefone + " " + convCep +
+                " " + UF.getText().toString() + " " + numero;
+        String cadastroNome = "CadastrarNome" + " " + convCpf + " " + nome;
+        String cadastroRua = "CadastrarRua" + " " + convCpf + " " + rua;
+        String cadastroBairro = "CadastrarBairro" + " " + convCpf + " " + bairro;
+        String cadastroCidade = "CadastrarCidade" + " " + convCpf + " " + cidade;
+
+
+        String retorno = cadastrar1_no_server(cadastro1);
+
+        if(retorno.equals("true")) {
+            cadastrar_no_server(cadastroNome);
+            cadastrar_no_server(cadastroRua);
+            cadastrar_no_server(cadastroBairro);
+            cadastrar_no_server(cadastroCidade);
+
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+
+
+

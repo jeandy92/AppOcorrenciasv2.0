@@ -8,13 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 
+import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
+import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
 public class Cadastrar_Usuario extends AppCompatActivity {
@@ -28,16 +27,17 @@ public class Cadastrar_Usuario extends AppCompatActivity {
     private EditText Nome,CPF,Telefone,Email,Senha,Rua, Bairro, Cidade, Numero, CEP, UF;
 
     //Variaveis para conversão e  referencia nula
-    private String  convCpf,convTelefone,convCep,email;
+    private String  convCpf,convTelefone,convCep,email,senha,numero,rua,bairro,cidade,uf,nome;
 
     //Váriaveis para serem utilizadas  no envio do cadastro
     protected String cadastro1,cadastroNome,cadastroRua,cadastroBairro,cadastroCidade;
+
 
     //Dados para o envio do socket.
     String host = "192.168.1.11";
     int port = 2222;
     ProcessaSocket processa =  new ProcessaSocket();
-    String retorno;
+    boolean retorno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +77,25 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
     // Método para buscar Cep
     public void evBuscarCep(View v) throws IOException {
+
         convCep = CEP.getText().toString().replaceAll("[^0123456789]", "");
+
         Buscar_Cep busca = new Buscar_Cep();
+
+
+
         Rua.setText(busca.getEndereco(convCep));
         Bairro.setText(busca.getBairro(convCep));
         Cidade.setText(busca.getCidade(convCep));
         UF.setText(busca.getUF(convCep));
+
+         rua = busca.getEndereco(convCep);
+         bairro = busca.getBairro(convCep);
+         cidade = busca.getCidade(convCep);
+         uf = busca.getUF(convCep);
+
+
+
     }
 
     //Cadastrar usuário no servidor
@@ -95,6 +108,9 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
         //Retirando referencia null
         email = Email.getText().toString();
+        senha = Senha.getText().toString();
+        numero = Numero.getText().toString();
+        nome =  Nome.getText().toString();
 
         Log.i(TAG,  "Cadastrar...."+convCpf);
 
@@ -118,40 +134,29 @@ public class Cadastrar_Usuario extends AppCompatActivity {
                         CEP.setFocusable(true);
                         CEP.requestFocus();
                     } else {
+                        if (processa.cadastrarUsuario(convCpf, senha, email, convTelefone, convCep, UF, numero, rua, bairro, cidade, nome)) {
+
+                            Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
+
+                            setContentView(R.layout.activity_main);
+                            this.startActivity(new Intent(this,MainActivity.class));
 
 
-                        cadastro1 = "Cadastrar1" + " " + CPF.getText().toString() + " " + Senha.getText().toString() +
-                                " " + Email.getText().toString() + " " + Telefone.getText().toString() + " " + CEP.getText().toString() +
-                                " " + UF.getText().toString() + " " + Numero.getText().toString();
-                        cadastroNome = "CadastrarNome" + " " + CPF.getText().toString() + " " + Nome.getText().toString();
-                        cadastroRua = "CadastrarRua" + " " + CPF.getText().toString() + " " + Rua.getText().toString();
-                        cadastroBairro = "CadastrarBairro" + " " + CPF.getText().toString() + " " + Bairro.getText().toString();
-                        cadastroCidade = "CadastrarCidade" + " " + CPF.getText().toString() + " " + Cidade.getText().toString();
+                        } else {
+                            CPF.setError("CPF Já Cadastrado");
+                            CPF.setFocusable(true);
+                            CPF.requestFocus();
+                        }
 
-
-
-
-                        retorno = processa.cadastrar1_no_server(cadastro1);
-
-                         if(retorno.equals("true")) {
-                             processa.cadastrar_no_server(cadastroNome);
-                             processa.cadastrar_no_server(cadastroRua);
-                             processa.cadastrar_no_server(cadastroBairro);
-                             processa.cadastrar_no_server(cadastroCidade);
-
-                               setContentView(R.layout.activity_main);
-                               this.startActivity(new Intent(this, MainActivity.class));
-                            }
-                          else{
-                             CPF.setError("CPF Já Cadastrado");
-                             CPF.setFocusable(true);
-                             CPF.requestFocus();
-                            }
+                        }
                     }
                 }
             }
         }
-    }
+
+
+
+
 
     //Método para Validar CPF
     public static boolean validarCPF(String CPF) {

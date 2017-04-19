@@ -18,16 +18,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -38,21 +37,17 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private static final String TAG = "LOG";
     private static final android.util.Log LOG = null;
 
+
+
     //Váriaveis para realizar o controle do ResultActivity
     private static final int SELECIONA_IMAGEM = 1;
     private static final int IMAGEM_CAPTURADA = 1;
 
 
     private String convDataOcorrencia,convDescricao,convEndereco,convCidade;
-    private EditText txEndereco;
-    private EditText txCidade;
-    private EditText txEstado;
+    private EditText txEndereco,txCidade,txEstado,txDescricao,txData_Ocorrencia;
 
-    private EditText txDescricao;
-
-
-    private EditText txData_Ocorrencia;
-    private ProgressBar pbCarregarLocalidade;
+    //private ProgressBar pbCarregarLocalidade;
 
 
 
@@ -60,6 +55,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private LocationManager locationmenager;
     private android.location.Address endereco;
     private Spinner spinner;
+
+    private Date data;
+
+    public static ProcessaSocket processasocket  = new ProcessaSocket();
 
 
 
@@ -98,6 +97,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        //Colocando data defaul
+        data = new Date(System.currentTimeMillis());
+        SimpleDateFormat formatarData = new SimpleDateFormat("dd-MM-yyyy");
+        txData_Ocorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
 
         //String tipo_crime =  spinner.getTop();
         convDataOcorrencia = txData_Ocorrencia.getText().toString().replaceAll("[^0123456789]", "");;
@@ -106,46 +109,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         convCidade = txCidade.getText().toString().replaceAll("[^0123456789]", "");;
         //String sigla_estado =  txSigla.getText().toString();
 
+
+
+
     }
-
-
-
-    public void processarSocket(String dados){
-
-            try {
-                Socket socket  =  new Socket("192.168.0.1",9896);
-
-                DataInputStream in =  new DataInputStream(socket.getInputStream());
-                DataOutputStream out =  new DataOutputStream(socket.getOutputStream());
-
-                String j = in.readUTF();
-
-
-
-                //Envio de dados
-               String cadastrarDataOcorrencia  = "CadastrarDataOcorrencia" + " "+ convDataOcorrencia+ " " + convDataOcorrencia;
-               String cadastrarDescricao  = "CadastrarDataOcorrencia" + " "+ convDataOcorrencia+ " " + convDataOcorrencia;
-               String cadastrarEndereco  = "CadastrarDataOcorrencia" + " "+ convDataOcorrencia+ " " + convDataOcorrencia;
-               String cadastrarCidade     = "CadastrarDataOcorrencia" + " "+ convDataOcorrencia+ " " + convDataOcorrencia;
-
-                ProcessaSocket.cadastrar_no_server(cadastrarDataOcorrencia);
-                ProcessaSocket.cadastrar_no_server(cadastrarDescricao);
-                ProcessaSocket.cadastrar_no_server(cadastrarEndereco);
-                ProcessaSocket.cadastrar_no_server(cadastrarCidade);
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Falha no Envio do Socket ");
-            }
-
-
-        }
-
-
-
-
-
 
     //Abrir Camera
     public void tirarFoto(View v) {
@@ -222,10 +189,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
     //Localidade
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
+
+
     public void localidade_atual(View v) {
 
 
@@ -399,7 +364,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     }
 
 
-//Abrir Calendário
+    //Abrir Calendário
 
     public void  evEscolher_Data(View v){
 
@@ -412,9 +377,14 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         setContentView(R.layout.activity_adm);
         this.startActivity(new Intent(this,Adm.class));
     }
+
+
+    public void salvar_ocorrencia(View v) {
+
+        processasocket.cadastrarOcorrencia(convDataOcorrencia,convDescricao,convEndereco,convCidade);
+
+    }
 }
-
-
 
 
 

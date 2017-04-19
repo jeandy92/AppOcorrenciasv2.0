@@ -12,143 +12,20 @@
     tools:context="appocorrencias.com.appocorrencias.Cliente">
 
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_cliente"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_x="190dp"
-        android:layout_y="24dp"
-        android:id="@+id/txtnome_cliente" />
+        android:layout_x="10dp"
+        android:layout_y="0dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
 
-    <Button
-        android:text="Button"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_x="16dp"
-        android:layout_y="215dp"
-        android:textColor="@color/padrao"
-        android:background="@drawable/botoes_arrendondados"
-        android:id="@+id/button8" />
-
-    <Button
-        android:text="Button"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_x="238dp"
-        android:layout_y="415dp"
-        android:id="@+id/button"
-        android:textColor="@color/padrao"
-        android:background="@drawable/botoes_arrendondados"
-        android:onClick="cliente"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_x="19dp"
-        android:layout_y="421dp"
-        android:id="@+id/editText2" />
-
-    <Button
-        android:text="Button"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_x="16dp"
-        android:layout_y="144dp"
-        android:textColor="@color/padrao"
-        android:background="@drawable/botoes_arrendondados"
-        android:id="@+id/button7" />
-
-    <ScrollView
-        android:layout_width="139dp"
-        android:layout_height="275dp"
-        android:layout_x="183dp"
-        android:layout_y="137dp"
-        >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="388dp"
+        android:layout_x="4dp"
+        android:layout_y="85dp" />
 
 
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:layout_x="68dp"
-        android:layout_y="28dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Bem vindo" />
 </AbsoluteLayout>

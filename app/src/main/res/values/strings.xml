@@ -10,6 +10,11 @@
         moto/carro de cor preta.
     </string>
 
+    
+    //Notificações 
+    <string name="TituloNotificação">Um novo crime registrado</string>
+    <string name="TextoNotificação">Um novo crime foi registrado próximo ao lugar onde mora</string>
+
 
 
 </resources>

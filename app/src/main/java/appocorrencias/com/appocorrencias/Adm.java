@@ -45,7 +45,7 @@ public class Adm extends AppCompatActivity {
     public void valida_conexao(View view) {
 
         setContentView(R.layout.activity_cliente_socket);
-        this.startActivity(new Intent(this,ClienteSocket.class));
+        this.startActivity(new Intent(this,Cliente_Socket.class));
 
 
 
