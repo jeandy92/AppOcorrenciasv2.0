@@ -16,25 +16,8 @@ public class ProcessaSocket {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
-    // public ProcessaSocket(String host, int port){
-    //  try {
-    //    cliente = new Socket(host, port);
-    //    canalSaida = cliente.getOutputStream();
-    //      canalEntrada = cliente.getInputStream();
-
-    //    } catch (Exception e) {
-            //FIXME Tratar a Exception.
-    //       e.printStackTrace();
-    //     }
-
-    // }
-    public static  void executar(){
-///
-
-}
 
     public static String recebe_dados(InputStream in) throws IOException {
-        //InputStream canalEntrada = cliente.getInputStream();
         byte[] resulBuff = new byte[0];
         byte[] buff = new byte[1024];
         int k = 0;
@@ -59,10 +42,7 @@ public class ProcessaSocket {
     //Metodo que envia as informações para o Servidor (Socket)
     public static void cadastrar_no_server(String dados) {
         try {
-            //   Socket socket = null;
-
-            cliente = new Socket("192.168.1.13", 2222);
-
+            cliente = new Socket("192.168.1.15", 2222);
             canalSaida = cliente.getOutputStream();
             canalEntrada = cliente.getInputStream();
             canalSaida.write(dados.getBytes());
@@ -70,53 +50,45 @@ public class ProcessaSocket {
             canalSaida.close();
             cliente.close();
 
-
-
-
-
-            // canalEntrada = new ObjectInputStream(socket.getInputStream());
-            // Object object = canalEntrada.readObject();
-            // if ((object != null) && (object instanceof String)) {
-            //   txvRetornoSocket.setText(object.toString());
-            // }
-
-
         } catch (Exception e) {
             //FIXME Tratar a Exception.
             e.printStackTrace();
         }
     }
 
-    public static String cadastrar1_no_server(String dados) {
+    public static String cadastrar1_no_server(String dados) throws IOException {
         String str = null;
+
         try {
-            //   Socket socket = null;
-
-            cliente = new Socket("192.168.1.13", 2222);
-
-            canalSaida = cliente.getOutputStream();
-            canalEntrada = cliente.getInputStream();
-            canalSaida.write(dados.getBytes());
-
-            str=  recebe_dados(canalEntrada);
-
-            canalSaida.flush();
-            canalSaida.close();
-            canalEntrada.close();
-            cliente.close();
-
-
+            cliente = new Socket("192.168.43.44", 3333);
         } catch (Exception e) {
-            //FIXME Tratar a Exception.
-            e.printStackTrace();
+            // MainActivity m = new MainActivity();
+            // m.erro_de_conexao();
+            //e.printStackTrace();
+            str= "erro/";
+            return str;
         }
-        return str;
+                try {
+                    canalSaida = cliente.getOutputStream();
+                    canalEntrada = cliente.getInputStream();
+                    canalSaida.write(dados.getBytes());
+
+                    str = recebe_dados(canalEntrada);
+
+                    canalSaida.flush();
+                    canalSaida.close();
+                    canalEntrada.close();
+                    cliente.close();
+
+                } catch (Exception e) {
+                    //FIXME Tratar a Exception.
+                    e.printStackTrace();
+                }
+                return str;
     }
+
 
     public static void cadastrarOcorrencia(String convDataOcorrencia, String convDescricao, String convEndereco, String dados) {
-
-
-
         //Envio de dados
         String cadastrarId_ocorrencia = "CadastrarId_ocorrencia" + " ";
         String cadastrarDataOcorrencia = "CadastrarDataOcorrencia" + " " + convDataOcorrencia + " " + convDataOcorrencia;
@@ -129,11 +101,11 @@ public class ProcessaSocket {
         ProcessaSocket.cadastrar_no_server(cadastrarDescricao);
         ProcessaSocket.cadastrar_no_server(cadastrarEndereco);
         ProcessaSocket.cadastrar_no_server(cadastrarCidade);
-
-
     }
 
-    public static  boolean cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,String convCep,EditText UF,String numero, String rua, String bairro,String nome, String cidade){
+    public static  boolean cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
+                                            String convCep,EditText UF,String numero, String rua, String bairro,
+                                            String nome, String cidade) throws IOException {
 
         String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha +
                 " " + email + " " + convTelefone + " " + convCep +
@@ -143,7 +115,6 @@ public class ProcessaSocket {
         String cadastroBairro = "CadastrarBairro" + " " + convCpf + " " + bairro;
         String cadastroCidade = "CadastrarCidade" + " " + convCpf + " " + cidade;
 
-
         String retorno = cadastrar1_no_server(cadastro1);
 
         if(retorno.equals("true")) {
@@ -152,12 +123,14 @@ public class ProcessaSocket {
             cadastrar_no_server(cadastroBairro);
             cadastrar_no_server(cadastroCidade);
 
-
             return true;
         } else {
             return false;
         }
     }
+
+
+
 }
 
 

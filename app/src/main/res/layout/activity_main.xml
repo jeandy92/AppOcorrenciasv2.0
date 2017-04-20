@@ -49,30 +49,29 @@
 
     <EditText
 
+        android:id="@+id/usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:text="adm"
 
-        android:ems="10"
-        android:id="@+id/usuario"
-        android:layout_marginBottom="11dp"
         android:layout_above="@+id/password"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginBottom="11dp"
+        android:ems="10"
+        android:hint="CPF"
+        android:inputType="text" />
 
     <EditText
+        android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="senha"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/password"
+        android:layout_above="@+id/entrar"
+        android:layout_alignStart="@+id/usuario"
 
         android:layout_marginBottom="23dp"
 
-        android:layout_above="@+id/entrar"
-        android:layout_alignStart="@+id/usuario" />
+        android:ems="10"
+        android:hint="******"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btnCadastrarCli"

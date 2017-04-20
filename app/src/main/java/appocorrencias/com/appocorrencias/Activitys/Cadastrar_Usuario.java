@@ -35,8 +35,6 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
 
     //Dados para o envio do socket.
-    String host = "192.168.1.11";
-    int port = 2222;
     ProcessaSocket processa =  new ProcessaSocket();
     boolean retorno;
 
@@ -71,8 +69,6 @@ public class Cadastrar_Usuario extends AppCompatActivity {
         CPF.addTextChangedListener(maskCPF);
         Telefone.addTextChangedListener(maskTelefone);
         CEP.addTextChangedListener(maskCEP);
-
-
     }
 
 
@@ -82,9 +78,6 @@ public class Cadastrar_Usuario extends AppCompatActivity {
         convCep = CEP.getText().toString().replaceAll("[^0123456789]", "");
 
         Buscar_Cep busca = new Buscar_Cep();
-
-
-
         Rua.setText(busca.getEndereco(convCep));
         Bairro.setText(busca.getBairro(convCep));
         Cidade.setText(busca.getCidade(convCep));
@@ -94,9 +87,6 @@ public class Cadastrar_Usuario extends AppCompatActivity {
          bairro = busca.getBairro(convCep);
          cidade = busca.getCidade(convCep);
          uf = busca.getUF(convCep);
-
-
-
     }
 
     //Cadastrar usuário no servidor
@@ -154,10 +144,6 @@ public class Cadastrar_Usuario extends AppCompatActivity {
                 }
             }
         }
-
-
-
-
 
     //Método para Validar CPF
     public static boolean validarCPF(String CPF) {
