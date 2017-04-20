@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="appocorrencias.com.appocorrencias.Cadastrar_Ocorrencia">
+    tools:context="appocorrencias.com.appocorrencias.Activitys.Cadastrar_Ocorrencia">
 
 
     <Spinner

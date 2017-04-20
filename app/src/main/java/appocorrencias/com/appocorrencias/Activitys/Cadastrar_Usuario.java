@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
 public class Cadastrar_Usuario extends AppCompatActivity {

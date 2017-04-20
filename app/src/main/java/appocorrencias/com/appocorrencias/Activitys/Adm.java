@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import appocorrencias.com.appocorrencias.R;
 
 //Cadastrar usuario
 

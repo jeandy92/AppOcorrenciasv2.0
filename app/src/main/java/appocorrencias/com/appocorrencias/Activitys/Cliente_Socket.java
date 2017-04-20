@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import appocorrencias.com.appocorrencias.R;
 
 public class Cliente_Socket extends AppCompatActivity {
 

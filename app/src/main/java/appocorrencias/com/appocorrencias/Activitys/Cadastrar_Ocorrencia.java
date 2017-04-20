@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Activitys;
 
 import android.Manifest;
 import android.content.Intent;
@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
 

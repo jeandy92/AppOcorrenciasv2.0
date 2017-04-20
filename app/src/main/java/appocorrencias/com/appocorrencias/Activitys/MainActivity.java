@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import appocorrencias.com.appocorrencias.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,39 +72,29 @@ private String nome,RESULTADO,APELIDO,NOME,SENHA;
 
     public void evEntrar(View view) {
 
-        //Inserindo dados no banco local
-        APELIDO = usuario.getText().toString();
-        NOME = usuario.getText().toString();
-        SENHA = senha.getText().toString();
-        ControleDoBanco crud = new ControleDoBanco(getBaseContext());
-        RESULTADO = crud.insereDado(APELIDO,NOME,SENHA);
 
-        Toast.makeText(this, RESULTADO, Toast.LENGTH_SHORT).show();
-        setContentView(R.layout.activity_adm);
-        this.startActivity(new Intent(this, Adm.class));
+        if (usuario.getText().toString().equals("adm") && senha.getText().toString().equals("senha")) {
+            Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_adm);
+            this.startActivity(new Intent(this, Adm.class));
 
-//        if (usuario.getText().toString().equals("adm") && senha.getText().toString().equals("senha")) {
-//            Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
-//            setContentView(R.layout.activity_adm);
-//            this.startActivity(new Intent(this, Adm.class));
-//
-//        } else {
-//            if (usuario.getText().toString().equals("cliente") && senha.getText().toString().equals("cliente")) {
-//            }
-//            Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
-//            nome = usuario.getText().toString();
-//            setContentView(R.layout.activity_cliente);
-//            Intent cliente = new Intent(this, Cliente.class);
-//
-//            Bundle bundle = new Bundle();
-//            bundle.putString("nome", nome);
-//
-//            cliente.putExtras(bundle);
-//
-//            this.startActivity(cliente);
-//
-//
-//        }
+        } else {
+            if (usuario.getText().toString().equals("cliente") && senha.getText().toString().equals("cliente")) {
+            }
+            Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
+            nome = usuario.getText().toString();
+            setContentView(R.layout.activity_cliente);
+            Intent cliente = new Intent(this, Cliente.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", nome);
+
+            cliente.putExtras(bundle);
+
+            this.startActivity(cliente);
+
+
+        }
 
 
     }

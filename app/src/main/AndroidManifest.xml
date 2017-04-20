@@ -29,18 +29,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activitys.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Adm" />
-        <activity android:name=".Cliente" />
-        <activity android:name=".Cliente_Socket" />
-        <activity android:name=".Cadastrar_Usuario" />
-        <activity android:name=".Cadastrar_Ocorrencia"></activity>
+        <activity android:name=".Activitys.Adm" />
+        <activity android:name=".Activitys.Cliente" />
+        <activity android:name=".Activitys.Cliente_Socket" />
+        <activity android:name=".Activitys.Cadastrar_Usuario" />
+        <activity android:name=".Activitys.Cadastrar_Ocorrencia"></activity>
 
 
     </application>

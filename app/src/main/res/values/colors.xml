@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#111211</color>
     <color name="colorPrimaryDark">#595757</color>
-    <color name="colorAccent">#151414</color>
+    <color name="colorAccent">#54FF9F</color>
     <color name="padrao">#03fac5</color>
     <color name= "cor_fundo">#2e3131</color>
     <color name= "fundo_botao">#2e3131</color>

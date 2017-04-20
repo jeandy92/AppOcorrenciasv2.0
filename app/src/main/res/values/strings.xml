@@ -10,11 +10,13 @@
         moto/carro de cor preta.
     </string>
 
-    
-    //Notificações 
+
+    //Notificações
     <string name="TituloNotificação">Um novo crime registrado</string>
     <string name="TextoNotificação">Um novo crime foi registrado próximo ao lugar onde mora</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
