@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="appocorrencias.com.appocorrencias.Cadastrar_Ocorrencia">
+    tools:context="appocorrencias.com.appocorrencias.Activitys.Cadastrar_Ocorrencia">
 
 
     <Spinner
@@ -96,7 +96,7 @@
         android:background="@drawable/botoes_arrendondados"
         android:textColor="@color/padrao"
         android:text="Salvar Ocorrência"
-
+        android:onClick="salvar_ocorrencia"
         tools:layout_editor_absoluteX="124dp"
         tools:layout_editor_absoluteY="459dp" />
 

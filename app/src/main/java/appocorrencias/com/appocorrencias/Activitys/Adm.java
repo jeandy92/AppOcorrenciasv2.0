@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import appocorrencias.com.appocorrencias.R;
 
 //Cadastrar usuario
 
@@ -45,7 +47,7 @@ public class Adm extends AppCompatActivity {
     public void valida_conexao(View view) {
 
         setContentView(R.layout.activity_cliente_socket);
-        this.startActivity(new Intent(this,ClienteSocket.class));
+        this.startActivity(new Intent(this,Cliente_Socket.class));
 
 
 

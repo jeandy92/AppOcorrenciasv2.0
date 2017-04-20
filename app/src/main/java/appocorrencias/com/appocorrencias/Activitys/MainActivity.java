@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import appocorrencias.com.appocorrencias.R;
+
 public class MainActivity extends AppCompatActivity {
 
 private byte[] imagem ;
-private String nome;
+private String nome,RESULTADO,APELIDO,NOME,SENHA;
     private   EditText usuario;
     private   EditText senha;
     private   Button btnCadastrarCli;
@@ -23,6 +25,7 @@ private String nome;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         usuario = (EditText) findViewById(R.id.usuario);
         senha = (EditText) findViewById(R.id.password);
@@ -51,6 +54,8 @@ private String nome;
 //        String name = intent.getStringExtra("my_name");
 //        int age = intent.getIntExtra("my_age", 0);
 //        byte[] random = intent.getByteArrayExtra("random");
+
+
 
         //Thread para que o aplicativo possa se conectar com o servidor na rede
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

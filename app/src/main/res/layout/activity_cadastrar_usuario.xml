@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="appocorrencias.com.appocorrencias.Cadastrar_Usuario">
+    tools:context="appocorrencias.com.appocorrencias.Activitys.Cadastrar_Usuario">
 
     <EditText
         android:id="@+id/edtNome"

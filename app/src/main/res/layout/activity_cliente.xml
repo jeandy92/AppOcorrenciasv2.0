@@ -1,154 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_cliente"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="appocorrencias.com.appocorrencias.Cliente">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    tools:context="appocorrencias.com.appocorrencias.Activitys.Cliente">
 
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
+    <appocorrencias.com.appocorrencias.ClassesSA.SlidingTabLayout
         android:layout_height="wrap_content"
-        android:layout_x="190dp"
-        android:layout_y="24dp"
-        android:id="@+id/txtnome_cliente" />
+        android:layout_width="match_parent"
+        android:id="@+id/stl_tabs"
+        android:background="@color/colorPrimary"
+        />
 
-    <Button
-        android:text="Button"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_x="16dp"
-        android:layout_y="215dp"
-        android:textColor="@color/padrao"
-        android:background="@drawable/botoes_arrendondados"
-        android:id="@+id/button8" />
 
-    <Button
-        android:text="Button"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_x="238dp"
-        android:layout_y="415dp"
-        android:id="@+id/button"
-        android:textColor="@color/padrao"
-        android:background="@drawable/botoes_arrendondados"
-        android:onClick="cliente"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_x="19dp"
-        android:layout_y="421dp"
-        android:id="@+id/editText2" />
-
-    <Button
-        android:text="Button"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_x="16dp"
-        android:layout_y="144dp"
-        android:textColor="@color/padrao"
-        android:background="@drawable/botoes_arrendondados"
-        android:id="@+id/button7" />
-
-    <ScrollView
-        android:layout_width="139dp"
-        android:layout_height="275dp"
-        android:layout_x="183dp"
-        android:layout_y="137dp"
-        >
-
-        <LinearLayout
+        <android.support.v4.view.ViewPager
+            android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_x="20dp"
-                android:layout_y="18dp"
-                 />
+            android:id="@+id/vp_pagina"
+            android:layout_weight="1"/>
 
 
 
-        </LinearLayout>
 
-    </ScrollView>
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:layout_x="68dp"
-        android:layout_y="28dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Bem vindo" />
-</AbsoluteLayout>
+</LinearLayout>

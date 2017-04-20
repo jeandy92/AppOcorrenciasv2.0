@@ -1,0 +1,57 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="appocorrencias.com.appocorrencias.Fragments.CadastrarOcorrenciasFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <ImageButton
+        android:id="@+id/roubo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="90dp"
+        android:elevation="0dp"
+        android:onClick="cadastrar_ocorrencia"
+        app:srcCompat="@drawable/ic_roubo1"
+        />
+
+    <ImageButton
+        android:id="@+id/assalto"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="90dp"
+        android:elevation="0dp"
+        android:onClick="cadastrar_ocorrencia"
+        app:srcCompat="@drawable/ic_assalto" />
+
+    <TextView
+        android:id="@+id/txtAssalto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="170dp"
+
+        android:text="Assalto" />
+
+    <TextView
+        android:id="@+id/txtRoubo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="170dp"
+
+
+        android:text="Roubo" />
+
+</FrameLayout>

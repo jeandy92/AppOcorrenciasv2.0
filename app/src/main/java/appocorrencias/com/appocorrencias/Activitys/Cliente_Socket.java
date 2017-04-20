@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,7 +16,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ClienteSocket extends AppCompatActivity {
+import appocorrencias.com.appocorrencias.R;
+
+public class Cliente_Socket extends AppCompatActivity {
 
     private Button btnConexao, btnEnviarImagem, btnEnviaImagemServidor;
     private TextView txvRetornoSocket;
@@ -81,13 +83,8 @@ public class ClienteSocket extends AppCompatActivity {
         }
     }
 
-//Metodo para cadastrar usuario no servidor.
 
-    public void btnEnviarImagem(View v){
-        setContentView(R.layout.activity_envia_imagem);
-        this.startActivity(new Intent(this,EnviaImagem.class));
 
-    }
 
     public void selecionarImagemGaleria(){
         Intent intent =  new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
