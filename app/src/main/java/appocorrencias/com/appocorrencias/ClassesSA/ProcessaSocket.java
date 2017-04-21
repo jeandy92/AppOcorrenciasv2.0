@@ -5,6 +5,7 @@ import android.widget.EditText;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /**
@@ -12,7 +13,7 @@ import java.net.Socket;
  */
 
 public class ProcessaSocket {
-    static Socket cliente = null;
+    static Socket cliente =  new Socket();
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
@@ -58,33 +59,33 @@ public class ProcessaSocket {
 
     public static String cadastrar1_no_server(String dados) throws IOException {
         String str = null;
+        Socket cliente2 =  new Socket();
+
+        int millisecondsTimeOut = 3000;
+        InetSocketAddress adress = new InetSocketAddress("192.168.1.18", 2222);
 
         try {
-            cliente = new Socket("192.168.43.44", 3333);
+            cliente2.connect(adress, millisecondsTimeOut);
         } catch (Exception e) {
-            // MainActivity m = new MainActivity();
-            // m.erro_de_conexao();
-            //e.printStackTrace();
-            str= "erro/";
+            str= "erro";
             return str;
         }
-                try {
-                    canalSaida = cliente.getOutputStream();
-                    canalEntrada = cliente.getInputStream();
-                    canalSaida.write(dados.getBytes());
+          try {
+              canalSaida = cliente2.getOutputStream();
+              canalEntrada = cliente2.getInputStream();
+              canalSaida.write(dados.getBytes());
+              str = recebe_dados(canalEntrada);
 
-                    str = recebe_dados(canalEntrada);
+              canalSaida.flush();
+              canalSaida.close();
+              canalEntrada.close();
+              cliente2.close();
 
-                    canalSaida.flush();
-                    canalSaida.close();
-                    canalEntrada.close();
-                    cliente.close();
-
-                } catch (Exception e) {
-                    //FIXME Tratar a Exception.
-                    e.printStackTrace();
-                }
-                return str;
+           } catch (Exception e) {
+               //FIXME Tratar a Exception.
+                e.printStackTrace();
+             }
+        return str;
     }
 
 

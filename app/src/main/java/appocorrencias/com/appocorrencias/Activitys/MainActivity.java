@@ -101,41 +101,45 @@ private String nome,RESULTADO,APELIDO,NOME,SENHA;
 
         } else {
             String convCpf = usuario.getText().toString().replaceAll("[^0123456789]", "");
-            LoginServer = "LoginServer"+ " " + convCpf + " " + senha.getText().toString();
+            LoginServer = "LoginServer" + " " + convCpf + " " + senha.getText().toString();
 
-            retorno = processa.cadastrar1_no_server(LoginServer);
-
-            String retorno2[] = retorno.split("/");
-            String Status = retorno2[0];
-
-            if(Status.equals("erro")){
-                usuario.setError("Erro de Conexao");
+            if (Cadastrar_Usuario.validarCPF(convCpf)) {
+                usuario.setError("CPF Inválido");
                 usuario.setFocusable(true);
                 usuario.requestFocus();
-                //erro_de_conexao();
+            } else {
+                retorno = processa.cadastrar1_no_server(LoginServer);
+                String retorno2[] = retorno.split("/");
+                String Status = retorno2[0];
+
+                if (Status.equals("erro")) {
+                    usuario.setError("Erro de Conexao");
+                    usuario.setFocusable(true);
+                    usuario.requestFocus();
+                    //erro_de_conexao();
+                } else {
+                    if (Status.equals("false")) {
+                        usuario.setError("Usuario ou senha Invalido");
+                        usuario.setFocusable(true);
+                        usuario.requestFocus();
+                    } else {
+                        CPF = retorno2[1];
+                        Nome = retorno2[2];
+
+                        Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
+                        setContentView(R.layout.activity_cliente);
+                        Intent cliente = new Intent(this, Cliente.class);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("nome", Nome);
+
+                        cliente.putExtras(bundle);
+                        this.startActivity(cliente);
+
+                    }
+                }
             }
-
-            if(Status.equals("false")){
-                usuario.setError("Usuario ou senha Invalido");
-                usuario.setFocusable(true);
-                usuario.requestFocus();
-            }
-            else{
-                CPF = retorno2[1];
-                Nome = retorno2[2];
-
-                Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_cliente);
-                Intent cliente = new Intent(this, Cliente.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putString("nome", Nome);
-
-                cliente.putExtras(bundle);
-                this.startActivity(cliente);
-
-            }
-         }
+        }
     }
 
         //atributo da classe.
