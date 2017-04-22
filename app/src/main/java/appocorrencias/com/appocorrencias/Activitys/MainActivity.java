@@ -50,26 +50,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //******Create by Jeanderson  22/04/2017*****//
+
         //Thread para que o aplicativo possa se conectar com o servidor na rede
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //******Create by Jeanderson  22/04/2017*****//
+
         //Cria shared preference para armazemar os dados de preferencid do usuário
         SharedPreferences sp1 = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-//******Create by Jeanderson  22/04/2017*****//
+
         //Recupera as string armazenadas no shared Preference
         String cpf = sp1.getString("login", "");
         String senha = sp1.getString("senha", "");
-//******Create by Jeanderson  22/04/2017*****//
+
         //Quando a atividade inicial for ativada ele veirifica se existe preferences salva e a compara com a ja armazenada no erlang
         //Caso encontre chama a tela do cliente
         if (cpf.equals("adm") && senha.equals("senha")) {
-//******Create by Jeanderson  22/04/2017*****//
+
             //Chama Layout client
             setContentView(R.layout.activity_cliente);
-//******Create by Jeanderson  22/04/2017*****//
+
             //Chama tela cliente
             Intent intent = new Intent(this, Cliente.class);
             startActivity(intent);
