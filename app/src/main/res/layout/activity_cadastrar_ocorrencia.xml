@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
@@ -9,141 +9,67 @@
     tools:context="appocorrencias.com.appocorrencias.Activitys.Cadastrar_Ocorrencia">
 
 
+    <EditText
+        android:id="@+id/edtData_Ocorrencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_x="179dp"
+        android:layout_y="6dp"
+        android:hint="Data da Ocorrencia"
+        android:inputType="date"
+        android:maxLength="10" />
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="132dp"
         android:layout_height="30dp"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="28dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_x="15dp"
+        android:layout_y="12dp" />
 
-        android:layout_alignTop="@+id/edtData_Ocorrencia"
-        android:layout_alignStart="@+id/edtDescricao" />
-
-
-    <EditText
-        android:id="@+id/edtData_Ocorrencia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Data da Ocorrencia"
-        android:inputType="date"
-        android:maxLength="10"
-        tools:layout_editor_absoluteX="202dp"
-        tools:layout_editor_absoluteY="16dp"
-        android:layout_marginTop="18dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/infoDescricao"
-        android:layout_alignStart="@+id/frameLayout" />
 
     <EditText
         android:id="@+id/edtDescricao"
         android:layout_width="306dp"
         android:layout_height="164dp"
-        android:layout_above="@+id/txtEndereco"
-        android:layout_alignStart="@+id/txtEndereco"
-        android:layout_marginBottom="14dp"
-        android:layout_x="32dp"
-        android:layout_y="154dp"
-        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="200dp"
+        android:layout_x="25dp"
+        android:layout_y="116dp"
         android:inputType="textMultiLine"
+
         android:text="@string/Exemplo"
-        android:textAlignment="viewStart"
         android:textSize="14sp"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="111dp" />
-
-    <EditText
-        android:id="@+id/txtEstado"
-        android:layout_width="143dp"
-        android:layout_height="45dp"
-        android:layout_above="@+id/button9"
-        android:layout_alignEnd="@+id/txtEndereco"
-        android:layout_marginBottom="62dp"
-        android:layout_x="172dp"
-        android:layout_y="348dp"
-        android:ems="10"
-        android:hint="UF"
-        android:inputType="textCapWords|textPersonName"
-        tools:layout_editor_absoluteX="191dp"
-        tools:layout_editor_absoluteY="344dp" />
-
-    <EditText
-        android:id="@+id/txtCidade"
-        android:layout_width="154dp"
-        android:layout_height="45dp"
-        android:layout_alignStart="@+id/txtEndereco"
-        android:layout_below="@+id/txtEndereco"
-        android:layout_x="34dp"
-        android:layout_y="390dp"
-        android:ems="10"
-        android:hint="Cidade"
-        android:inputType="textCapCharacters|textPersonName"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="344dp" />
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="19dp"
-
-
-        android:layout_x="64dp"
-        android:layout_y="388dp"
-        android:background="@drawable/botoes_arrendondados"
-        android:textColor="@color/padrao"
-        android:text="Salvar Ocorrência"
-        android:onClick="salvar_ocorrencia"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="459dp" />
-
-    <EditText
-        android:id="@+id/txtEndereco"
-        android:layout_width="309dp"
-        android:layout_height="45dp"
-        android:layout_above="@+id/txtEstado"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
-        android:layout_x="96dp"
-        android:layout_y="406dp"
-        android:ems="10"
-        android:hint="Endereço"
-        android:inputType="textCapWords|textPersonName"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="292dp" />
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/infoDescricao"
         android:layout_width="305dp"
-        android:layout_height="24dp"
-        android:layout_x="60dp"
-        android:layout_y="344dp"
+        android:layout_height="26dp"
+        android:layout_x="25dp"
+        android:layout_y="84dp"
         android:text="@string/Orientacao"
         android:textAllCaps="false"
         android:textSize="11sp"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="78dp"
-        android:layout_above="@+id/edtDescricao"
-        android:layout_alignEnd="@+id/edtDescricao" />
+        android:textStyle="italic" />
 
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_x="205dp"
+        android:layout_y="250dp"
+        app:menu_labels_showAnimation="@anim/fab_roll_from_down"
         android:src="@drawable/ic_anexar"
         app:fab_addButtonColorNormal="@color/padrao"
         app:fab_addButtonColorPressed="#84ede8"
         app:fab_addButtonPlusIconColor="@color/cor_fundo"
         app:fab_labelStyle="@style/menu_labels_style"
-        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+
 
 
 
@@ -173,38 +99,91 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="160dp"
         android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="190dp"
-        android:layout_marginTop="250dp"
-        android:id="@+id/frameLayout">
+        android:layout_marginStart="7dp"
+        android:layout_toEndOf="@+id/edtBairro"
+        android:layout_x="196dp"
+        android:layout_y="253dp">
 
 
     </FrameLayout>
 
-    <!--<Button-->
-    <!--android:id="@+id/localidade"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_above="@+id/button9"-->
-    <!--android:layout_toStartOf="@+id/button9"-->
-    <!--android:text="Localidade"-->
-    <!--android:onClick="localidade_atual"-->
-    <!--/>-->
-
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-
-        android:layout_above="@+id/button9"
-        android:layout_alignStart="@+id/txtCidade"
+        android:id="@+id/ibtnLocalidade"
+        android:layout_width="303dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/btnSalvarOcorrencia"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="18dp"
+        android:layout_x="25dp"
+        android:layout_y="285dp"
         android:elevation="0dp"
         android:onClick="localidade_atual"
         app:srcCompat="@drawable/ic_localizacao" />
 
+    <EditText
+        android:id="@+id/edtEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="280dp"
+        android:layout_marginRight="50dp"
+        android:layout_x="28dp"
+        android:layout_y="319dp"
+        android:hint="UF"
+        android:inputType="textCapWords|textPersonName" />
+
+    <EditText
+        android:id="@+id/edtBairro"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/edtDescricao"
+        android:layout_below="@+id/edtEstado"
+        android:layout_x="26dp"
+        android:layout_y="368dp"
+        android:ems="10"
+        android:hint="Bairro"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/edtEndereco"
+        android:layout_width="252dp"
+        android:layout_height="45dp"
+        android:layout_x="25dp"
+        android:layout_y="418dp"
+        android:ems="10"
+        android:hint="Endereço"
+        android:inputType="textCapWords|textPersonName"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="292dp" />
+
+    <Button
+        android:id="@+id/btnSalvarOcorrencia"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="19dp"
+        android:layout_x="101dp"
+        android:layout_y="470dp"
+        android:background="@drawable/botoes_arrendondados"
+        android:onClick="salvar_ocorrencia"
+        android:text="Salvar Ocorrência"
+        android:textColor="@color/padrao" />
+
+    <EditText
+        android:id="@+id/edtCidade"
+        android:layout_width="256dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="30dp"
+        android:layout_x="68dp"
+        android:layout_y="318dp"
+        android:ems="10"
+        android:hint="Cidade"
+        android:inputType="textCapCharacters|textPersonName" />
 
 
-
-</RelativeLayout>
+</AbsoluteLayout>

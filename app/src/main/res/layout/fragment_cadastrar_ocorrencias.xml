@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     tools:context="appocorrencias.com.appocorrencias.Fragments.CadastrarOcorrenciasFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
 
     <TextView
         android:id="@+id/textView"
@@ -20,8 +22,9 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="90dp"
         android:elevation="0dp"
-        android:onClick="cadastrar_ocorrencia"
+        android:onClick="cad"
         app:srcCompat="@drawable/ic_roubo1"
+
         />
 
     <ImageButton
@@ -33,7 +36,8 @@
         android:layout_marginTop="90dp"
         android:elevation="0dp"
         android:onClick="cadastrar_ocorrencia"
-        app:srcCompat="@drawable/ic_assalto" />
+        app:srcCompat="@drawable/ic_assalto"
+        />
 
     <TextView
         android:id="@+id/txtAssalto"

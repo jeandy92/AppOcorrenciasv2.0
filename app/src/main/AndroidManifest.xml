@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="appocorrencias.com.appocorrencias"
-    >
+    package="appocorrencias.com.appocorrencias">
 
     <!-- Permissões normais -->
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!--  Permissões Perigosas -->
+    <!-- Permissões Perigosas -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-
-
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
 
     <application
         android:allowBackup="true"
@@ -32,20 +26,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".Activitys.MainActivity">
+        <activity android:name=".Activitys.MainActivity"
+            android:label="MainActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
         <activity android:name=".Activitys.Adm" />
         <activity android:name=".Activitys.Cliente" />
         <activity android:name=".Activitys.Cliente_Socket" />
         <activity android:name=".Activitys.Cadastrar_Usuario" />
-        <activity android:name=".Activitys.Cadastrar_Ocorrencia"></activity>
-
-
+        <activity android:name=".Activitys.Cadastrar_Ocorrencia" />
     </application>
 
 </manifest>

@@ -24,7 +24,8 @@
         android:layout_marginLeft="75dp"
         android:layout_marginTop="225dp"
         android:text="Alterar Dados Cadastrais"
-        android:onClick="cadastrar"/>
+        android:onClick="cadastrar"
+        android:background="@drawable/botoes_arrendondados"/>
 
 
 </FrameLayout>

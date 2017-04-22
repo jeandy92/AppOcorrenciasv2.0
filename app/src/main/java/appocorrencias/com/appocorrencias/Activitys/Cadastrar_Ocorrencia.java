@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -45,11 +46,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private static final int IMAGEM_CAPTURADA = 1;
 
 
-    private String convDataOcorrencia,convDescricao,convEndereco,convCidade;
-    private EditText txEndereco,txCidade,txEstado,txDescricao,txData_Ocorrencia;
+    private String convDataOcorrencia,convDescricao,convEndereco,convCidade,convBairro;
+    private EditText txEndereco,txCidade,txEstado,txDescricao,txData_Ocorrencia,txtBairro;
 
-    //private ProgressBar pbCarregarLocalidade;
-
+    private Buscar_Cep buscauf = new Buscar_Cep();
 
 
     private Location location;
@@ -69,9 +69,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
 
-        txCidade = (EditText) findViewById(R.id.txtCidade);
-        txEndereco = (EditText) findViewById(R.id.txtEndereco);
-        txEstado = (EditText) findViewById(R.id.txtEstado);
+        txCidade = (EditText) findViewById(R.id.edtCidade);
+        txEndereco = (EditText) findViewById(R.id.edtEndereco);
+        txtBairro = (EditText) findViewById(R.id.edtBairro);
+        txEstado = (EditText) findViewById(R.id.edtEstado);
         txDescricao = (EditText) findViewById(R.id.edtDescricao);
         txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -104,10 +105,11 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         txData_Ocorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
 
         //String tipo_crime =  spinner.getTop();
-        convDataOcorrencia = txData_Ocorrencia.getText().toString().replaceAll("[^0123456789]", "");;
-        convDescricao = txDescricao.getText().toString().replaceAll("[^0123456789]", "");;
-        convEndereco = txEndereco.getText().toString().replaceAll("[^0123456789]", "");;
-        convCidade = txCidade.getText().toString().replaceAll("[^0123456789]", "");;
+        convDataOcorrencia = txData_Ocorrencia.getText().toString().replaceAll("[^0123456789]", "");
+        convDescricao = txDescricao.getText().toString().replaceAll("[^0123456789]", "");
+        convEndereco = txEndereco.getText().toString().replaceAll("[^0123456789]", "");
+        convCidade = txCidade.getText().toString().replaceAll("[^0123456789]", "");
+        convBairro = txtBairro.getText().toString().replaceAll("[^0123456789]", "");
         //String sigla_estado =  txSigla.getText().toString();
 
 
@@ -261,16 +263,20 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
 
         try {
-            endereco = buscarEndereco(latitude, longitude);
+            endereco = buscarEndereco(latitude   ,  longitude);
 
 
             Log.i(TAG, endereco.getLocality());
-            Log.i(TAG, endereco.getAdminArea());
+            //Log.i(TAG, endereco.getAdminArea());
             Log.i(TAG, endereco.getAddressLine(1));
+            Log.i(TAG, endereco.getSubLocality());
+
+
 
             txCidade.setText(endereco.getLocality());
-            txEstado.setText(endereco.getAdminArea());
+            txEstado.setText(buscauf.getUF(endereco.getPostalCode()));
             txEndereco.setText(endereco.getThoroughfare());
+            txtBairro.setText(endereco.getSubLocality());
 
 
         } catch (IOException e) {
@@ -288,6 +294,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         addresses = geocorder.getFromLocation(latitude, longitude, 1);
         if (addresses.size() > 0) {
             address = addresses.get(0);
+
         }
 
 
@@ -375,8 +382,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.activity_adm);
-        this.startActivity(new Intent(this,Adm.class));
+        setContentView(R.layout.activity_cliente);
+        this.startActivity(new Intent(this,Cliente.class));
     }
 
 

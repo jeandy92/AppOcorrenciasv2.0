@@ -15,7 +15,7 @@ import appocorrencias.com.appocorrencias.Fragments.PerfilFragment;
 
 public class TabAdapter extends FragmentStatePagerAdapter{
 
-    private String[] tituloAbas = {"PERFIL", "CADASTRAR OCOORÊNCIA"};
+    private String[] tituloAbas = {"PERFIL", "CADASTRAR OCORRÊNCIA"};
     Fragment fragment = null;
     public TabAdapter(FragmentManager fm) {
         super(fm);
