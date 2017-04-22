@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import appocorrencias.com.appocorrencias.ClassesSA.AdapterParaOcorrencias;
 import appocorrencias.com.appocorrencias.ClassesSA.OcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.R;
 
@@ -39,10 +39,12 @@ public class CadastrarOcorrenciasFragment extends Fragment {
 //        prueba.add("Element2");
 //        prueba.add("Element3");
 
-        ArrayAdapter<OcorrenciasRegistradas> allItemsAdapter =
-                new ArrayAdapter<OcorrenciasRegistradas>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1,prueba);
+        //ArrayAdapter<OcorrenciasRegistradas> allItemsAdapter =
+        // new ArrayAdapter<OcorrenciasRegistradas>(getActivity().getBaseContext(),
+        // android.R.layout.simple_list_item_1,prueba);
+        AdapterParaOcorrencias adapter = new AdapterParaOcorrencias(prueba,getActivity());
 
-        lstItems.setAdapter(allItemsAdapter);
+        lstItems.setAdapter(adapter);
 
         return v;
 
