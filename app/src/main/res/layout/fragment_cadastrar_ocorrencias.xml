@@ -14,48 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-    <ImageButton
-        android:id="@+id/roubo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="90dp"
-        android:elevation="0dp"
-        android:onClick="cad"
-        app:srcCompat="@drawable/ic_roubo1"
-
-        />
-
-    <ImageButton
-        android:id="@+id/assalto"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="90dp"
-        android:elevation="0dp"
-        android:onClick="cadastrar_ocorrencia"
-        app:srcCompat="@drawable/ic_assalto"
-        />
-
-    <TextView
-        android:id="@+id/txtAssalto"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="210dp"
-        android:layout_marginTop="170dp"
+        android:layout_height="wrap_content">
+    <ListView
 
-        android:text="Assalto" />
+        android:id="@+id/lvListaOcorrencias"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txtRoubo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="170dp"
-
-
-        android:text="Roubo" />
-
+    </ListView>
+    </LinearLayout>
 </FrameLayout>

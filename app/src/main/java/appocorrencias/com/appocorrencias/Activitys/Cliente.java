@@ -21,6 +21,7 @@ public class Cliente extends AppCompatActivity {
         private SlidingTabLayout slidingTabLayout;
         private ViewPager viewPager;
         private ImageButton cadastrarocorrencia;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,6 +31,7 @@ public class Cliente extends AppCompatActivity {
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.stl_tabs);
         viewPager = (ViewPager) findViewById(R.id.vp_pagina);
         //cadastrarocorrencia = (ImageButton) findViewById(R.id.roubo);
+
 
         //Configurar sliding tabs
         slidingTabLayout.setDistributeEvenly(true);
