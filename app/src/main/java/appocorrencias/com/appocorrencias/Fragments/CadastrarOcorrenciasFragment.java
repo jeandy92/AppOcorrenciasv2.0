@@ -30,7 +30,7 @@ public class CadastrarOcorrenciasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 
-        View v = inflater.inflate(R.layout.fragment_cadastrar_ocorrencias, container, false);
+        View v = inflater.inflate(R.layout.fragment_ocorrencias_registradas, container, false);
         ListView lstItems = (ListView)v.findViewById(R.id.lvListaOcorrencias);
 
         ArrayList<OcorrenciasRegistradas> prueba = criarocorrencias();
@@ -49,7 +49,7 @@ public class CadastrarOcorrenciasFragment extends Fragment {
         return v;
 
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_cadastrar_ocorrencias, container, false);
+        //return inflater.inflate(R.layout.fragment_ocorrencias_registradas, container, false);
 
 
 
