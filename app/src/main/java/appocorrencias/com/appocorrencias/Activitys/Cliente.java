@@ -22,11 +22,20 @@ public class Cliente extends AppCompatActivity {
         private ViewPager viewPager;
         private ImageButton cadastrarocorrencia;
 
+        static String Nome;
+        static String CPF;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
+
+        //Pegando valores que vem do Login
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Nome = bundle.getString("nome");
+        CPF = bundle.getString("cpf");
 
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.stl_tabs);
         viewPager = (ViewPager) findViewById(R.id.vp_pagina);
@@ -54,9 +63,13 @@ public class Cliente extends AppCompatActivity {
 
         this.startActivity(new Intent(this,Cadastrar_Ocorrencia.class));
 
+    }
 
-
-
+    public static String getNome(){
+        return Nome;
+    }
+    public static String getCPF(){
+        return CPF;
     }
 
 

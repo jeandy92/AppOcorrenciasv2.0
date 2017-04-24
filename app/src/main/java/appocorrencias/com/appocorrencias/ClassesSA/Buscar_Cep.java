@@ -14,23 +14,19 @@ import java.text.ParseException;
 public class Buscar_Cep {
 
     public String getEndereco(String CEP) throws IOException{
-
-        try{
-
-            Document doc = Jsoup
-                    .connect("http://www.qualocep.com/busca-cep/"+CEP).timeout(120000).get();
-
-            Elements urlPesquisa = doc.select("span[itemprop=streetAddress]");
-            for(Element urlEndereco : urlPesquisa){
-                return urlEndereco.text();
-            }
-
-
-        }catch (SocketTimeoutException e ){
-
-        }catch (HttpStatusException w ){
-
+        String status = null;
+        Document doc;
+        try {
+            doc = Jsoup
+                    .connect("http://www.qualocep.com/busca-cep/" + CEP).timeout(3000).get();
+        }catch (Exception e){
+            status = "erro";
+            return status;
         }
+        Elements urlPesquisa = doc.select("span[itemprop=streetAddress]");
+                for(Element urlEndereco : urlPesquisa) {
+                    return urlEndereco.text();
+            }
         return CEP;
     }
 

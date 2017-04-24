@@ -43,7 +43,7 @@ public class ProcessaSocket {
     //Metodo que envia as informações para o Servidor (Socket)
     public static void cadastrar_no_server(String dados) {
         try {
-            cliente = new Socket("192.168.1.15", 2222);
+            cliente = new Socket("172.20.10.3", 2222);
             canalSaida = cliente.getOutputStream();
             canalEntrada = cliente.getInputStream();
             canalSaida.write(dados.getBytes());
@@ -62,7 +62,7 @@ public class ProcessaSocket {
         Socket cliente2 =  new Socket();
 
         int millisecondsTimeOut = 3000;
-        InetSocketAddress adress = new InetSocketAddress("192.168.1.18", 2222);
+        InetSocketAddress adress = new InetSocketAddress("172.20.10.3", 2222);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
@@ -104,9 +104,9 @@ public class ProcessaSocket {
         ProcessaSocket.cadastrar_no_server(cadastrarCidade);
     }
 
-    public static  boolean cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
-                                            String convCep,EditText UF,String numero, String rua, String bairro,
-                                            String nome, String cidade) throws IOException {
+    public static  String cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
+                                           String convCep,EditText UF,String numero, String rua, String bairro,
+                                           String nome, String cidade) throws IOException {
 
         String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha +
                 " " + email + " " + convTelefone + " " + convCep +
@@ -118,20 +118,21 @@ public class ProcessaSocket {
 
         String retorno = cadastrar1_no_server(cadastro1);
 
-        if(retorno.equals("true")) {
-            cadastrar_no_server(cadastroNome);
-            cadastrar_no_server(cadastroRua);
-            cadastrar_no_server(cadastroBairro);
-            cadastrar_no_server(cadastroCidade);
-
-            return true;
+        if (retorno.equals("erro")) {
+            return "erro";
         } else {
-            return false;
+            if (retorno.equals("true")) {
+                cadastrar_no_server(cadastroNome);
+                cadastrar_no_server(cadastroRua);
+                cadastrar_no_server(cadastroBairro);
+                cadastrar_no_server(cadastroCidade);
+
+                return "true";
+            } else {
+                return "false";
+            }
         }
     }
-
-
-
 }
 
 

@@ -63,7 +63,7 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
         // Inserindo Mascaras.
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", CPF);
-        MaskEditTextChangedListener maskTelefone = new MaskEditTextChangedListener("(##)####-####", Telefone);
+        MaskEditTextChangedListener maskTelefone = new MaskEditTextChangedListener("(##)#####-####", Telefone);
         MaskEditTextChangedListener maskCEP = new MaskEditTextChangedListener("#####-###", CEP);
 
         CPF.addTextChangedListener(maskCPF);
@@ -78,15 +78,22 @@ public class Cadastrar_Usuario extends AppCompatActivity {
         convCep = CEP.getText().toString().replaceAll("[^0123456789]", "");
 
         Buscar_Cep busca = new Buscar_Cep();
-        Rua.setText(busca.getEndereco(convCep));
-        Bairro.setText(busca.getBairro(convCep));
-        Cidade.setText(busca.getCidade(convCep));
-        UF.setText(busca.getUF(convCep));
 
-         rua = busca.getEndereco(convCep);
-         bairro = busca.getBairro(convCep);
-         cidade = busca.getCidade(convCep);
-         uf = busca.getUF(convCep);
+        String Status  = busca.getEndereco(convCep);
+        if(Status.equals("erro")){
+            Toast.makeText(this, "Erro na Conexão", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Rua.setText(busca.getEndereco(convCep));
+            Bairro.setText(busca.getBairro(convCep));
+            Cidade.setText(busca.getCidade(convCep));
+            UF.setText(busca.getUF(convCep));
+
+            rua = busca.getEndereco(convCep);
+            bairro = busca.getBairro(convCep);
+            cidade = busca.getCidade(convCep);
+            uf = busca.getUF(convCep);
+        }
     }
 
     //Cadastrar usuário no servidor
@@ -125,25 +132,27 @@ public class Cadastrar_Usuario extends AppCompatActivity {
                         CEP.setFocusable(true);
                         CEP.requestFocus();
                     } else {
-                        if (processa.cadastrarUsuario(convCpf, senha, email, convTelefone, convCep, UF, numero, rua, bairro, cidade, nome)) {
-
-                            Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
-
-                            setContentView(R.layout.activity_main);
-                            this.startActivity(new Intent(this,MainActivity.class));
-
-
+                        String retorno = processa.cadastrarUsuario(convCpf, senha, email, convTelefone, convCep, UF, numero, rua, bairro, cidade, nome);
+                        if (retorno.equals("erro")) {
+                            Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                         } else {
-                            CPF.setError("CPF Já Cadastrado");
-                            CPF.setFocusable(true);
-                            CPF.requestFocus();
-                        }
+                            if (retorno.equals("true")) {
+                                Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
+
+                                setContentView(R.layout.activity_main);
+                                this.startActivity(new Intent(this, MainActivity.class));
+                            } else {
+                                CPF.setError("CPF Já Cadastrado");
+                                CPF.setFocusable(true);
+                                CPF.requestFocus();
+                            }
 
                         }
                     }
                 }
             }
         }
+    }
 
     //Método para Validar CPF
     public static boolean validarCPF(String CPF) {

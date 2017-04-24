@@ -263,13 +263,17 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
 
         try {
-            endereco = buscarEndereco(latitude   ,  longitude);
+            //NAO DA PRA BUSCAR LATITUDE E LONGITUDE COM EMULADOR
 
+            //endereco = buscarEndereco(latitude, longitude);
+            endereco = buscarEndereco(-23.736082, -46.708403);
 
             Log.i(TAG, endereco.getLocality());
             //Log.i(TAG, endereco.getAdminArea());
             Log.i(TAG, endereco.getAddressLine(1));
             Log.i(TAG, endereco.getSubLocality());
+
+
 
 
 

@@ -171,10 +171,8 @@ public class MainActivity extends AppCompatActivity {
                 String Status = retorno2[0];
 
                 if (Status.equals("erro")) {
-                    txtUsuario.setError("Erro de Conexao");
-                    txtUsuario.setFocusable(true);
-                    txtUsuario.requestFocus();
-                    //erro_de_conexao();
+                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+
                 } else {
                     if (Status.equals("false")) {
                         txtUsuario.setError("Usuario ou senha Invalido");
@@ -190,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Bundle bundle = new Bundle();
                         bundle.putString("nome", Nome);
+                        bundle.putString("cpf" , CPF);
 
                         cliente.putExtras(bundle);
                         this.startActivity(cliente);
@@ -200,27 +199,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //atributo da classe.
-    private AlertDialog alerta;
 
-    public void erro_de_conexao() {
-        //Cria o gerador do AlertDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //define o titulo
-        builder.setTitle("Erro de Conexao");
-        //define a mensagem
-        builder.setMessage("Servidor não encontrado");
-        //define um botão como positivo
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(MainActivity.this, "ok=" + arg1, Toast.LENGTH_SHORT).show();
-            }
-        });
-        //cria o AlertDialog
-        alerta = builder.create();
-        //Exibe
-        alerta.show();
-    }
 
     @Override
     public void onBackPressed() {
