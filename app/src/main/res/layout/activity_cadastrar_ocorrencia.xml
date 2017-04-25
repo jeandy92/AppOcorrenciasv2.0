@@ -73,9 +73,10 @@
         android:layout_width="306dp"
         android:layout_height="201dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="200dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginRight="100dp"
         android:layout_marginTop="200dp"
-        android:layout_x="22dp"
+        android:layout_x="40dp"
         android:layout_y="179dp"
         android:inputType="textMultiLine"
 
@@ -87,7 +88,7 @@
         android:id="@+id/infoDescricao"
         android:layout_width="305dp"
         android:layout_height="26dp"
-        android:layout_x="23dp"
+        android:layout_x="40dp"
         android:layout_y="148dp"
         android:text="@string/Orientacao"
         android:textAllCaps="false"
@@ -101,32 +102,19 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="19dp"
         android:layout_x="124dp"
-        android:layout_y="686dp"
+        android:layout_y="690dp"
         android:background="@drawable/botoes_arrendondados"
         android:onClick="salvar_ocorrencia"
         android:text="Salvar Ocorrência"
         android:textColor="@color/padrao"
          />
 
-    <ImageButton
-        android:id="@+id/ibtnLocalidade"
-        android:layout_width="53dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btnSalvarOcorrencia"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="18dp"
-        android:layout_x="27dp"
-        android:layout_y="388dp"
-        android:elevation="0dp"
-        android:onClick="localidade_atual"
-        app:srcCompat="@drawable/ic_localizacao" />
-
     <TextView
         android:id="@+id/tvCidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="29dp"
-        android:layout_y="522dp"
+        android:layout_y="545dp"
         android:text="Cidade:" />
 
     <TextView
@@ -134,51 +122,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="29dp"
-        android:layout_y="575dp"
+        android:layout_y="600dp"
         android:text="Bairro:" />
-
-    <TextView
-        android:id="@+id/tvEndereco"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="29dp"
-        android:layout_y="630dp"
-        android:text="END:" />
 
     <EditText
         android:id="@+id/edtCidade"
-        android:layout_width="178dp"
+        android:layout_width="209dp"
         android:layout_height="45dp"
         android:layout_marginLeft="30dp"
         android:layout_x="81dp"
-        android:layout_y="511dp"
+        android:layout_y="531dp"
         android:ems="10"
         android:hint="Cidade"
         android:inputType="textCapCharacters|textPersonName" />
 
     <EditText
         android:id="@+id/edtBairro"
-        android:layout_width="173dp"
+        android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/edtDescricao"
         android:layout_below="@+id/edtEstado"
         android:layout_x="81dp"
-        android:layout_y="564dp"
+        android:layout_y="584dp"
         android:ems="10"
         android:hint="Bairro"
         android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/edtEndereco"
-        android:layout_width="210dp"
-        android:layout_height="45dp"
-        android:layout_x="79dp"
-        android:layout_y="618dp"
-        android:ems="10"
-        android:hint="Endereço"
-        android:inputType="textCapWords|textPersonName"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="292dp" />
 
     <EditText
         android:id="@+id/edtEstado"
@@ -187,7 +155,7 @@
         android:layout_marginLeft="280dp"
         android:layout_marginRight="50dp"
         android:layout_x="81dp"
-        android:layout_y="461dp"
+        android:layout_y="480dp"
         android:hint="UF"
         android:inputType="textCapWords|textPersonName" />
 
@@ -196,8 +164,41 @@
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_x="29dp"
-        android:layout_y="479dp"
+        android:layout_y="490dp"
         android:text="Sigla:" />
+
+    <EditText
+        android:id="@+id/edtEndereco"
+        android:layout_width="210dp"
+        android:layout_height="45dp"
+        android:layout_x="80dp"
+        android:layout_y="637dp"
+        android:ems="10"
+        android:hint="Endereço"
+        android:inputType="textCapWords|textPersonName"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="292dp" />
+
+    <TextView
+        android:id="@+id/tvEndereco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="38dp"
+        android:layout_y="650dp"
+        android:text="END:" />
+
+    <ImageButton
+        android:id="@+id/ibtnLocalidade"
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnSalvarOcorrencia"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="18dp"
+        android:layout_x="147dp"
+        android:layout_y="391dp"
+        android:elevation="0dp"
+        android:onClick="localidade_atual"
+        app:srcCompat="@drawable/ic_localizacao" />
 
 </AbsoluteLayout>
 </ScrollView>
