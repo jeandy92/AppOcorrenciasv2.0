@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="appocorrencias.com.appocorrencias.Activitys.Cadastrar_Ocorrencia">
-
-
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<AbsoluteLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <EditText
         android:id="@+id/edtData_Ocorrencia"
         android:layout_width="wrap_content"
@@ -30,49 +28,19 @@
         android:layout_y="12dp" />
 
 
-    <EditText
-        android:id="@+id/edtDescricao"
-        android:layout_width="306dp"
-        android:layout_height="164dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="200dp"
-        android:layout_x="25dp"
-        android:layout_y="116dp"
-        android:inputType="textMultiLine"
-
-        android:text="@string/Exemplo"
-        android:textSize="14sp"
-        android:textStyle="italic" />
-
-    <TextView
-        android:id="@+id/infoDescricao"
-        android:layout_width="305dp"
-        android:layout_height="26dp"
-        android:layout_x="25dp"
-        android:layout_y="84dp"
-        android:text="@string/Orientacao"
-        android:textAllCaps="false"
-        android:textSize="11sp"
-        android:textStyle="italic" />
-
-
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="205dp"
-        android:layout_y="250dp"
+        android:layout_x="200dp"
+        android:layout_y="440dp"
+        android:contentDescription="s"
         app:menu_labels_showAnimation="@anim/fab_roll_from_down"
-        android:src="@drawable/ic_anexar"
+
         app:fab_addButtonColorNormal="@color/padrao"
         app:fab_addButtonColorPressed="#84ede8"
         app:fab_addButtonPlusIconColor="@color/cor_fundo"
         app:fab_labelStyle="@style/menu_labels_style"
-
-
-
-
         >
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -100,90 +68,136 @@
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="160dp"
-        android:layout_height="250dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="190dp"
-        android:layout_marginStart="7dp"
-        android:layout_toEndOf="@+id/edtBairro"
-        android:layout_x="196dp"
-        android:layout_y="253dp">
+    <EditText
+        android:id="@+id/edtDescricao"
+        android:layout_width="306dp"
+        android:layout_height="201dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="200dp"
+        android:layout_x="22dp"
+        android:layout_y="179dp"
+        android:inputType="textMultiLine"
+
+        android:text="@string/Exemplo"
+        android:textSize="14sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/infoDescricao"
+        android:layout_width="305dp"
+        android:layout_height="26dp"
+        android:layout_x="23dp"
+        android:layout_y="148dp"
+        android:text="@string/Orientacao"
+        android:textAllCaps="false"
+        android:textSize="11sp"
+        android:textStyle="italic" />
 
 
-    </FrameLayout>
+    <Button
+        android:id="@+id/btnSalvarOcorrencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="19dp"
+        android:layout_x="124dp"
+        android:layout_y="686dp"
+        android:background="@drawable/botoes_arrendondados"
+        android:onClick="salvar_ocorrencia"
+        android:text="Salvar Ocorrência"
+        android:textColor="@color/padrao"
+         />
 
     <ImageButton
         android:id="@+id/ibtnLocalidade"
-        android:layout_width="303dp"
-        android:layout_height="20dp"
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/btnSalvarOcorrencia"
         android:layout_alignParentStart="true"
         android:layout_marginStart="18dp"
-        android:layout_x="25dp"
-        android:layout_y="285dp"
+        android:layout_x="27dp"
+        android:layout_y="388dp"
         android:elevation="0dp"
         android:onClick="localidade_atual"
         app:srcCompat="@drawable/ic_localizacao" />
 
-    <EditText
-        android:id="@+id/edtEstado"
+    <TextView
+        android:id="@+id/tvCidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="280dp"
-        android:layout_marginRight="50dp"
-        android:layout_x="28dp"
-        android:layout_y="319dp"
-        android:hint="UF"
-        android:inputType="textCapWords|textPersonName" />
+        android:layout_x="29dp"
+        android:layout_y="522dp"
+        android:text="Cidade:" />
+
+    <TextView
+        android:id="@+id/tvBairro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="29dp"
+        android:layout_y="575dp"
+        android:text="Bairro:" />
+
+    <TextView
+        android:id="@+id/tvEndereco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="29dp"
+        android:layout_y="630dp"
+        android:text="END:" />
+
+    <EditText
+        android:id="@+id/edtCidade"
+        android:layout_width="178dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="30dp"
+        android:layout_x="81dp"
+        android:layout_y="511dp"
+        android:ems="10"
+        android:hint="Cidade"
+        android:inputType="textCapCharacters|textPersonName" />
 
     <EditText
         android:id="@+id/edtBairro"
-        android:layout_width="250dp"
+        android:layout_width="173dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/edtDescricao"
         android:layout_below="@+id/edtEstado"
-        android:layout_x="26dp"
-        android:layout_y="368dp"
+        android:layout_x="81dp"
+        android:layout_y="564dp"
         android:ems="10"
         android:hint="Bairro"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/edtEndereco"
-        android:layout_width="252dp"
+        android:layout_width="210dp"
         android:layout_height="45dp"
-        android:layout_x="25dp"
-        android:layout_y="418dp"
+        android:layout_x="79dp"
+        android:layout_y="618dp"
         android:ems="10"
         android:hint="Endereço"
         android:inputType="textCapWords|textPersonName"
         tools:layout_editor_absoluteX="28dp"
         tools:layout_editor_absoluteY="292dp" />
 
-    <Button
-        android:id="@+id/btnSalvarOcorrencia"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginBottom="19dp"
-        android:layout_x="101dp"
-        android:layout_y="470dp"
-        android:background="@drawable/botoes_arrendondados"
-        android:onClick="salvar_ocorrencia"
-        android:text="Salvar Ocorrência"
-        android:textColor="@color/padrao" />
-
     <EditText
-        android:id="@+id/edtCidade"
-        android:layout_width="256dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="30dp"
-        android:layout_x="68dp"
-        android:layout_y="318dp"
-        android:ems="10"
-        android:hint="Cidade"
-        android:inputType="textCapCharacters|textPersonName" />
+        android:id="@+id/edtEstado"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="280dp"
+        android:layout_marginRight="50dp"
+        android:layout_x="81dp"
+        android:layout_y="461dp"
+        android:hint="UF"
+        android:inputType="textCapWords|textPersonName" />
 
+    <TextView
+        android:id="@+id/tvUF"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_x="29dp"
+        android:layout_y="479dp"
+        android:text="Sigla:" />
 
 </AbsoluteLayout>
+</ScrollView>

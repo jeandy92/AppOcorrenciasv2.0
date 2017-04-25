@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import appocorrencias.com.appocorrencias.ClassesSA.AdapterParaOcorrencias;
+import appocorrencias.com.appocorrencias.Adapters.AdapterParaOcorrencias;
 import appocorrencias.com.appocorrencias.ClassesSA.OcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.R;
 
@@ -33,7 +33,7 @@ public class CadastrarOcorrenciasFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_ocorrencias_registradas, container, false);
         ListView lstItems = (ListView)v.findViewById(R.id.lvListaOcorrencias);
 
-        ArrayList<OcorrenciasRegistradas> prueba = criarocorrencias();
+        ArrayList<OcorrenciasRegistradas> listadeocorrencias = criarocorrencias();
 
 //        prueba.add("Element1");
 //        prueba.add("Element2");
@@ -42,7 +42,7 @@ public class CadastrarOcorrenciasFragment extends Fragment {
         //ArrayAdapter<OcorrenciasRegistradas> allItemsAdapter =
         // new ArrayAdapter<OcorrenciasRegistradas>(getActivity().getBaseContext(),
         // android.R.layout.simple_list_item_1,prueba);
-        AdapterParaOcorrencias adapter = new AdapterParaOcorrencias(prueba,getActivity());
+        AdapterParaOcorrencias adapter = new AdapterParaOcorrencias(listadeocorrencias,getActivity());
 
         lstItems.setAdapter(adapter);
 

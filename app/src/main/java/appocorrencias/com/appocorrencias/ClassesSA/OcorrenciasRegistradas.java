@@ -13,6 +13,7 @@ public class OcorrenciasRegistradas {
     public int Id_ocorrencias;
     public String Descricao;
     public String Tipocrime;
+    public String CPF;
 
     public static List<OcorrenciasRegistradas> lista;
      public static Random random = new Random();
@@ -26,8 +27,17 @@ public class OcorrenciasRegistradas {
         Id_ocorrencias = id_ocorrencias;
     }
 
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
     public String getTipocrime() {
         return Tipocrime;
+
     }
 
     public void setTipocrime(String tipocrime) {
@@ -45,23 +55,23 @@ public class OcorrenciasRegistradas {
 
 
 
-    public OcorrenciasRegistradas(int id_ocorrencias,String descricao,String tipocrime){
+    public OcorrenciasRegistradas(int id_ocorrencias,String descricao,String tipocrime,String cpf){
 
         Id_ocorrencias = id_ocorrencias;
         Descricao = descricao;
         Tipocrime = tipocrime;
-
+        CPF = cpf;
     }
 
     public static ArrayList<OcorrenciasRegistradas> criarocorrencias (){
 
         ArrayList<OcorrenciasRegistradas> cursosList = new ArrayList();
 
-        cursosList.add(0,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ROUBO"));
-        cursosList.add(1,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO"));
-        cursosList.add(2,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO"));
-        cursosList.add(3,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ROUBO"));
-        cursosList.add(4,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO"));
+        cursosList.add(0,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ROUBO","431313868"));
+        cursosList.add(1,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
+        cursosList.add(2,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
+        cursosList.add(3,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ROUBO","431313868"));
+        cursosList.add(4,new OcorrenciasRegistradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
 
 
         return cursosList;

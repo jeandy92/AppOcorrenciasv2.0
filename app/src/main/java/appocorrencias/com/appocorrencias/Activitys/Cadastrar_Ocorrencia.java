@@ -28,6 +28,7 @@ import java.util.List;
 
 import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.Fragments.CadastrarOcorrenciasFragment;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -76,6 +77,11 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         txDescricao = (EditText) findViewById(R.id.edtDescricao);
         txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
+
+
+        //ArrayList<TiposDeCrime> list = criarcrimes();
+        //AdapterSpinner adaptero = new AdapterSpinner(this,list);
+        //listadecrimes.setAdapter(adaptero);
 
         txDescricao.setOnClickListener(new View.OnClickListener() {
 
@@ -263,10 +269,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
 
         try {
-            //NAO DA PRA BUSCAR LATITUDE E LONGITUDE COM EMULADOR
+            endereco = buscarEndereco(latitude   ,  longitude);
 
-            //endereco = buscarEndereco(latitude, longitude);
-            endereco = buscarEndereco(-23.736082, -46.708403);
 
             Log.i(TAG, endereco.getLocality());
             //Log.i(TAG, endereco.getAdminArea());
@@ -276,11 +280,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
 
 
-
-            txCidade.setText(endereco.getLocality());
-            txEstado.setText(buscauf.getUF(endereco.getPostalCode()));
-            txEndereco.setText(endereco.getThoroughfare());
-            txtBairro.setText(endereco.getSubLocality());
+            txCidade.setText("CIDADE:"+endereco.getLocality());
+            txEstado.setText(endereco.getAdminArea());
+            txEndereco.setText("END:" +endereco.getThoroughfare());
+            txtBairro.setText("BAIRRO:"+endereco.getSubLocality());
 
 
         } catch (IOException e) {
@@ -386,8 +389,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.activity_cliente);
-        this.startActivity(new Intent(this,Cliente.class));
+        setContentView(R.layout.fragment_ocorrencias_registradas);
+        this.startActivity(new Intent(this,CadastrarOcorrenciasFragment.class));
     }
 
 

@@ -7,14 +7,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import appocorrencias.com.appocorrencias.ClassesSA.SlidingTabLayout;
-import appocorrencias.com.appocorrencias.ClassesSA.TabAdapter;
+import appocorrencias.com.appocorrencias.Adapters.TabAdapter;
+import appocorrencias.com.appocorrencias.Fragments.PerfilFragment;
 import appocorrencias.com.appocorrencias.R;
 
-public class Cliente extends AppCompatActivity {
+public class Cliente extends AppCompatActivity implements PerfilFragment.CriarReferencia {
 
         private Toolbar mToolbar;
         private Toolbar mToolbarBottom;
@@ -22,20 +24,25 @@ public class Cliente extends AppCompatActivity {
         private ViewPager viewPager;
         private ImageButton cadastrarocorrencia;
 
-        static String Nome;
-        static String CPF;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
-        //Pegando valores que vem do Login
+
+        PerfilFragment fragment = new PerfilFragment();
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Nome = bundle.getString("nome");
-        CPF = bundle.getString("cpf");
+        String nomecompleto = bundle.getString("nomecompleto");
+
+        Log.i("RESULTADO",nomecompleto);
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("nomecompleto",nomecompleto);
+        fragment.setArguments(bundle1);
+
 
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.stl_tabs);
         viewPager = (ViewPager) findViewById(R.id.vp_pagina);
@@ -63,21 +70,18 @@ public class Cliente extends AppCompatActivity {
 
         this.startActivity(new Intent(this,Cadastrar_Ocorrencia.class));
 
-    }
 
-    public static String getNome(){
-        return Nome;
-    }
-    public static String getCPF(){
-        return CPF;
+
+
     }
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.activity_main);
-        this.startActivity(new Intent(this,MainActivity.class));
+           finish();
+        //setContentView(R.layout.activity_main);
+        //this.startActivity(new Intent(this,MainActivity.class));
     }
 
     protected  void CriaNotificaçoes(){
@@ -89,8 +93,18 @@ public class Cliente extends AppCompatActivity {
 
     }
 
+    public  void evCadastrarOcorrencia(){
+
+        setContentView(R.layout.activity_cadastrar_ocorrencia);
+        this.startActivity(new Intent(this,Cadastrar_Ocorrencia.class));
+    }
 
 
+    public void onCreateOcorrencia() {
+
+        setContentView(R.layout.activity_cadastrar_ocorrencia);
+        this.startActivity(new Intent(this,Cadastrar_Ocorrencia.class));
+    }
 }
 
 

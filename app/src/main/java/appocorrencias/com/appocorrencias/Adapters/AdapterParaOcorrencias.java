@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias.ClassesSA;
+package appocorrencias.com.appocorrencias.Adapters;
 
 import android.app.Activity;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import appocorrencias.com.appocorrencias.ClassesSA.OcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.R;
 
 /**

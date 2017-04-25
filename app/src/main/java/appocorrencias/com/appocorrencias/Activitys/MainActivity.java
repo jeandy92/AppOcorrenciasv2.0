@@ -1,7 +1,5 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +15,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.Fragments.PerfilFragment;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
@@ -28,10 +27,11 @@ public class MainActivity extends AppCompatActivity {
     private ProcessaSocket processa = new ProcessaSocket();
     private String retorno;
     private View view;
-
+    private String nomecompleto = "Jeanderson de Almeeida Dyorgenes";
     private EditText txtUsuario, txtSenha;
     private CheckBox salvarlogin;
     private Button btnCadastrarCli;
+    private PerfilFragment perfil = new PerfilFragment();
     private static final String PREF_NAME = "MainActivityPreferences";
     private int count1;
     private int count2;
@@ -68,12 +68,30 @@ public class MainActivity extends AppCompatActivity {
         if (cpf.equals("adm") && senha.equals("senha")) {
 
             //Chama Layout client
-            setContentView(R.layout.activity_cliente);
+          // enviaDadosparafragment(nomecompleto,perfil);
 
-            //Chama tela cliente
             Intent intent = new Intent(this, Cliente.class);
+
+            Bundle bundle  =  new Bundle();
+            bundle.putString("nomecompleto", nomecompleto);
+            intent.putExtras(bundle);
+
             startActivity(intent);
+
+
         }
+
+    }
+
+    private void enviaDadosparafragment(String nomecompleto, PerfilFragment fragment) {
+
+
+
+        Bundle bundle  =  new Bundle();
+        bundle.putString("nomecompleto", nomecompleto);
+        fragment.setArguments(bundle);
+
+
 
     }
 

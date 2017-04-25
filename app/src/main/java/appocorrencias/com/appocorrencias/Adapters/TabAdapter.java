@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias.ClassesSA;
+package appocorrencias.com.appocorrencias.Adapters;
 
 /**
  * Created by Jeanderson on 20/04/2017.
