@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -27,13 +29,13 @@ import java.util.Date;
 import java.util.List;
 
 import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
+import appocorrencias.com.appocorrencias.ClassesSA.CustomSwiperAdapter;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
-import appocorrencias.com.appocorrencias.Fragments.CadastrarOcorrenciasFragment;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
 
-public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener {
+public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener, View.OnClickListener {
 
     private static final int REQUEST_PERMISSIONS_CODE = 128;
 
@@ -57,6 +59,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private LocationManager locationmenager;
     private android.location.Address endereco;
     private Spinner spinner;
+    ViewFlipper viewFlipper;
+
+    ViewPager viewPager;
+    CustomSwiperAdapter customSwiperAdapter;
 
     private Date data;
 
@@ -67,9 +73,15 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastrar_ocorrencia);
+        setContentView(R.layout.ocorrencias_final);
 
-
+        viewFlipper = (ViewFlipper) this.findViewById(R.id.viewFlipper4);
+        viewFlipper.hasOnClickListeners();
+//////////////
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        customSwiperAdapter = new CustomSwiperAdapter(this);
+        viewPager.setAdapter(customSwiperAdapter);
+//////////////
         txCidade = (EditText) findViewById(R.id.edtCidade);
         txEndereco = (EditText) findViewById(R.id.edtEndereco);
         txtBairro = (EditText) findViewById(R.id.edtBairro);
@@ -77,11 +89,6 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         txDescricao = (EditText) findViewById(R.id.edtDescricao);
         txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
-
-
-        //ArrayList<TiposDeCrime> list = criarcrimes();
-        //AdapterSpinner adaptero = new AdapterSpinner(this,list);
-        //listadecrimes.setAdapter(adaptero);
 
         txDescricao.setOnClickListener(new View.OnClickListener() {
 
@@ -111,11 +118,11 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         txData_Ocorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
 
         //String tipo_crime =  spinner.getTop();
-        convDataOcorrencia = txData_Ocorrencia.getText().toString().replaceAll("[^0123456789]", "");
-        convDescricao = txDescricao.getText().toString().replaceAll("[^0123456789]", "");
-        convEndereco = txEndereco.getText().toString().replaceAll("[^0123456789]", "");
-        convCidade = txCidade.getText().toString().replaceAll("[^0123456789]", "");
-        convBairro = txtBairro.getText().toString().replaceAll("[^0123456789]", "");
+//        convDataOcorrencia = txData_Ocorrencia.getText().toString().replaceAll("[^0123456789]", "");
+//        convDescricao = txDescricao.getText().toString().replaceAll("[^0123456789]", "");
+//        convEndereco = txEndereco.getText().toString().replaceAll("[^0123456789]", "");
+//        convCidade = txCidade.getText().toString().replaceAll("[^0123456789]", "");
+//        convBairro = txtBairro.getText().toString().replaceAll("[^0123456789]", "");
         //String sigla_estado =  txSigla.getText().toString();
 
 
@@ -279,11 +286,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
 
 
-
-            txCidade.setText("CIDADE:"+endereco.getLocality());
-            txEstado.setText(endereco.getAdminArea());
-            txEndereco.setText("END:" +endereco.getThoroughfare());
-            txtBairro.setText("BAIRRO:"+endereco.getSubLocality());
+            txCidade.setText(endereco.getLocality());
+            txEstado.setText(buscauf.getUF(endereco.getPostalCode()));
+            txEndereco.setText(endereco.getThoroughfare());
+            txtBairro.setText(endereco.getSubLocality());
 
 
         } catch (IOException e) {
@@ -389,8 +395,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.fragment_ocorrencias_registradas);
-        this.startActivity(new Intent(this,CadastrarOcorrenciasFragment.class));
+        setContentView(R.layout.activity_cliente);
+        this.startActivity(new Intent(this,Cliente.class));
     }
 
 
@@ -398,6 +404,11 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
         processasocket.cadastrarOcorrencia(convDataOcorrencia,convDescricao,convEndereco,convCidade);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        viewFlipper.startFlipping();
     }
 }
 

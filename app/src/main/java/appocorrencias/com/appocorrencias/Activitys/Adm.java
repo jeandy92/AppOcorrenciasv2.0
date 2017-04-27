@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -32,6 +34,7 @@ import appocorrencias.com.appocorrencias.R;
 public class Adm extends AppCompatActivity {
     private Button btnConexao,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
+    private TextView txtTesteAdm, Nome;
 
 
     @Override
@@ -64,8 +67,10 @@ public class Adm extends AppCompatActivity {
 
     public void cadastrar_ocorrencia(View v){
 
-        setContentView(R.layout.activity_cadastrar_ocorrencia);
+        setContentView(R.layout.ocorrencias_final);
+        //setContentView(R.layout.cad_ocorrencias);
         this.startActivity(new Intent(this,Cadastrar_Ocorrencia.class));
+
         this.finish();
 
 

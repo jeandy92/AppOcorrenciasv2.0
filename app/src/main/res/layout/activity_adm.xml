@@ -75,4 +75,11 @@
         android:background="@drawable/botoes_arrendondados"
         android:id="@+id/button6" />
 
+    <TextView
+        android:id="@+id/txtTesteAdm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="TextView"
+        android:textSize="24sp" />
+
 </LinearLayout>

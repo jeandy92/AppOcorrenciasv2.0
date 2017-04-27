@@ -89,6 +89,25 @@ public class ProcessaSocket {
     }
 
 
+
+
+
+
+
+    public static void testeCadastrarOcorrencia(String convEndereco) {
+        String endereco = "Ocorrencia" + " " + convEndereco;
+
+        ProcessaSocket.cadastrar_no_server(endereco);
+    }
+
+    public static void chama_telas(){
+
+    }
+
+
+
+
+
     public static void cadastrarOcorrencia(String convDataOcorrencia, String convDescricao, String convEndereco, String dados) {
         //Envio de dados
         String cadastrarId_ocorrencia = "CadastrarId_ocorrencia" + " ";

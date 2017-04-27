@@ -100,10 +100,14 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_cadastrar_usuario);
         this.startActivity(new Intent(this, Cadastrar_Usuario.class));
-
-
     }
+////////////////////////////////////////////////////////////////////////////////////////////////
+    public void adm(View view) {
 
+        setContentView(R.layout.activity_adm);
+        this.startActivity(new Intent(this, Adm.class));
+    }
+///////////////////////////////////////////////////////////////////////////////////////////
     public void evEntrar(View view) throws IOException {
 
         //******Create by Jeanderson  22/04/2017*****//
@@ -167,8 +171,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //Chama tela de Cliente
                 Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_cliente);
-                this.startActivity(new Intent(this, Cliente.class));
+                setContentView(R.layout.activity_adm);
+                this.startActivity(new Intent(this, Adm.class));
             }
 
         }
