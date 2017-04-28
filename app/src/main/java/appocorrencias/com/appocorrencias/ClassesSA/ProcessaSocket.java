@@ -43,7 +43,7 @@ public class ProcessaSocket {
     //Metodo que envia as informações para o Servidor (Socket)
     public static void cadastrar_no_server(String dados) {
         try {
-            cliente = new Socket("172.20.10.3", 2222);
+            cliente = new Socket("192.168.1.15", 2222);
             canalSaida = cliente.getOutputStream();
             canalEntrada = cliente.getInputStream();
             canalSaida.write(dados.getBytes());
@@ -62,7 +62,7 @@ public class ProcessaSocket {
         Socket cliente2 =  new Socket();
 
         int millisecondsTimeOut = 3000;
-        InetSocketAddress adress = new InetSocketAddress("172.20.10.3", 2222);
+        InetSocketAddress adress = new InetSocketAddress("192.168.1.15", 2222);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
@@ -94,33 +94,33 @@ public class ProcessaSocket {
 
 
 
-    public static void testeCadastrarOcorrencia(String convEndereco) {
-        String endereco = "Ocorrencia" + " " + convEndereco;
-
-        ProcessaSocket.cadastrar_no_server(endereco);
-    }
-
-    public static void chama_telas(){
-
-    }
-
-
-
-
-
-    public static void cadastrarOcorrencia(String convDataOcorrencia, String convDescricao, String convEndereco, String dados) {
+    public static String cadastrar_Ocorrencia(String ID, String CPFCliente, String tipo_crime, String convDataOcorrencia,
+                                              String UF, String convDescricao, String convEndereco, String convCidade,
+                                              String convBairro ) throws IOException {
         //Envio de dados
-        String cadastrarId_ocorrencia = "CadastrarId_ocorrencia" + " ";
-        String cadastrarDataOcorrencia = "CadastrarDataOcorrencia" + " " + convDataOcorrencia + " " + convDataOcorrencia;
-        String cadastrarDescricao = "CadastarDescricao" + " " + convDataOcorrencia + " " + convDataOcorrencia;
-        String cadastrarEndereco = "CadastrarEndereco" + " " + convDataOcorrencia + " " + convDataOcorrencia;
-        String cadastrarCidade = "CadastrarCidade" + " " + convDataOcorrencia + " " + convDataOcorrencia;
+        String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF +
+                " " + convDataOcorrencia + " " + tipo_crime;
 
-        ProcessaSocket.cadastrar_no_server(cadastrarId_ocorrencia);
-        ProcessaSocket.cadastrar_no_server(cadastrarDataOcorrencia);
-        ProcessaSocket.cadastrar_no_server(cadastrarDescricao);
-        ProcessaSocket.cadastrar_no_server(cadastrarEndereco);
-        ProcessaSocket.cadastrar_no_server(cadastrarCidade);
+        String OcorrenciaRua = "OcorrenciaRua" + " " + ID + " " + convEndereco;
+        String OcorrenciaBairro = "OcorrenciaBairro" + " " + ID + " " + convBairro;
+        String OcorrenciaCidade = "OcorrenciaCidade" + " " + ID + " " + convCidade;
+        String OcorrenciaDescricao = "OcorrenciaDescricao" + " " + ID + " " + convDescricao;
+
+        String retorno = cadastrar1_no_server(CadastrarOcorrencia);
+
+        if (retorno.equals("erro")) {
+            return "erro";
+        } else {
+            if (retorno.equals("true")) {
+                cadastrar_no_server(OcorrenciaRua);
+                cadastrar_no_server(OcorrenciaBairro);
+                cadastrar_no_server(OcorrenciaCidade);
+                cadastrar_no_server(OcorrenciaDescricao);
+                return "true";
+            } else {
+                return "false";
+            }
+        }
     }
 
     public static  String cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,

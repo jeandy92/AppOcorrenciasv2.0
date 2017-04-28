@@ -34,7 +34,8 @@ import appocorrencias.com.appocorrencias.R;
 public class Adm extends AppCompatActivity {
     private Button btnConexao,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
-    private TextView txtTesteAdm, Nome;
+    static String NomeCli, CPF;
+    private TextView txtTesteAdm;
 
 
     @Override
@@ -42,39 +43,42 @@ public class Adm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adm);
 
+        //Pegando valores que vem do Login
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        NomeCli = bundle.getString("nome");
+        CPF = bundle.getString("cpf");
+
         btnConexao  = (Button) findViewById(R.id.teste);
         txvRetornoSocket = (TextView) findViewById(R.id.txvRetornoSocket);
         btnCadastrarOcorrencias =  (Button) findViewById(R.id.btnCadastrarOcorrencias);
 
+        txtTesteAdm = (TextView) findViewById(R.id.txtTesteAdm);
+        txtTesteAdm.setText("Bem Vindo Adm " + NomeCli + " CPF: " + CPF);
     }
     public void valida_conexao(View view) {
 
         setContentView(R.layout.activity_cliente_socket);
         this.startActivity(new Intent(this,Cliente_Socket.class));
-
-
-
     }
 
     public void cadastrar_usuario(View view) {
-
         setContentView(R.layout.activity_cadastrar_usuario);
         this.startActivity(new Intent(this,Cadastrar_Usuario.class));
-
-
-
     }
 
     public void cadastrar_ocorrencia(View v){
 
-        setContentView(R.layout.ocorrencias_final);
-        //setContentView(R.layout.acitivity_cad_ocorrencias);
-        this.startActivity(new Intent(this,Cadastrar_Ocorrencia.class));
+        setContentView(R.layout.activity_cadastrar_ocorrencia);
+
+        Intent cadastrarOcorrencia = new Intent(this, Cadastrar_Ocorrencia.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("cpf", CPF);
+        cadastrarOcorrencia.putExtras(bundle);
+        this.startActivity(cadastrarOcorrencia);
 
         this.finish();
-
-
-
     }
 
    private void conectarSocket()  {

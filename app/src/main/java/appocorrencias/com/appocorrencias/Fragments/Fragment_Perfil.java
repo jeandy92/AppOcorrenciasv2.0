@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import appocorrencias.com.appocorrencias.Activitys.Cliente;
 import appocorrencias.com.appocorrencias.R;
 
 
@@ -16,6 +18,7 @@ public class Fragment_Perfil extends Fragment{
 
     private CriarReferencia referencia;
     private FloatingActionButton btnCriarOcorrencia,btnAlteraDados;
+    private TextView tvNomeCompleto;
 
 
     private static final String PREF_NAME = "MainActivityPreferences";
@@ -32,6 +35,8 @@ public class Fragment_Perfil extends Fragment{
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
         btnCriarOcorrencia = (FloatingActionButton) view.findViewById(R.id.btnCadastrarOcorrencias);
 
+        tvNomeCompleto = (TextView) view.findViewById(R.id.tvNomeCompleto);
+        tvNomeCompleto.setText(Cliente.getNome());
 
         btnCriarOcorrencia.setOnClickListener(new View.OnClickListener(){
             @Override

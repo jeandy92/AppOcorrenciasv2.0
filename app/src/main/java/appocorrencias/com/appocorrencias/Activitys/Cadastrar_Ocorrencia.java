@@ -40,18 +40,15 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private static final String TAG = "LOG";
     private static final android.util.Log LOG = null;
 
-
-
     //Váriaveis para realizar o controle do ResultActivity
     private static final int SELECIONA_IMAGEM = 1;
     private static final int IMAGEM_CAPTURADA = 1;
 
 
-    private String convDataOcorrencia,convDescricao,convEndereco,convCidade,convBairro;
-    private EditText txEndereco,txCidade,txEstado,txDescricao,txData_Ocorrencia,txtBairro;
+    private String convDataOcorrencia,convDescricao,convEndereco,convCidade,convBairro , tipo_crime, UF;;
+    private EditText txRua,txCidade,txEstado,txDescricao,txData_Ocorrencia,txtBairro, txReferencia;
 
     private Buscar_Cep buscauf = new Buscar_Cep();
-
 
     private Location location;
     private LocationManager locationmenager;
@@ -60,20 +57,25 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
     private Date data;
 
+    String CPFCliente;
+
     public static ProcessaSocket processasocket  = new ProcessaSocket();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        CPFCliente = bundle.getString("cpf");
+
 
         txCidade = (EditText) findViewById(R.id.edtCidade);
-        //txEndereco = (EditText) findViewById(R.id.edtEndereco);
+        txRua = (EditText) findViewById(R.id.edtRua);
         txtBairro = (EditText) findViewById(R.id.edtBairro);
         txEstado = (EditText) findViewById(R.id.edtEstado);
+        txReferencia = (EditText) findViewById(R.id.edtReferencia);
         txDescricao = (EditText) findViewById(R.id.edtDescricao);
         txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -109,18 +111,6 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         data = new Date(System.currentTimeMillis());
         SimpleDateFormat formatarData = new SimpleDateFormat("dd-MM-yyyy");
         txData_Ocorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
-
-        //String tipo_crime =  spinner.getTop();
-        convDataOcorrencia = txData_Ocorrencia.getText().toString().replaceAll("[^0123456789]", "");
-        convDescricao = txDescricao.getText().toString().replaceAll("[^0123456789]", "");
-        convEndereco = txEndereco.getText().toString().replaceAll("[^0123456789]", "");
-        convCidade = txCidade.getText().toString().replaceAll("[^0123456789]", "");
-        convBairro = txtBairro.getText().toString().replaceAll("[^0123456789]", "");
-        //String sigla_estado =  txSigla.getText().toString();
-
-
-
-
     }
 
     //Abrir Camera
@@ -269,7 +259,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
 
         try {
-            endereco = buscarEndereco(latitude   ,  longitude);
+            //endereco = buscarEndereco(latitude   ,  longitude);
+            endereco = buscarEndereco(-23.540827   ,  -46.761993);
 
 
             Log.i(TAG, endereco.getLocality());
@@ -278,11 +269,9 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
             Log.i(TAG, endereco.getSubLocality());
 
 
-
-
             txCidade.setText(endereco.getLocality());
             txEstado.setText(endereco.getAdminArea());
-            txEndereco.setText(endereco.getThoroughfare());
+            txRua.setText(endereco.getThoroughfare());
             txtBairro.setText(endereco.getSubLocality());
 
 
@@ -382,8 +371,6 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     //Abrir Calendário
 
     public void  evEscolher_Data(View v){
-
-
     }
 
     @Override
@@ -394,10 +381,36 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     }
 
 
-    public void salvar_ocorrencia(View v) {
+    public void salvar_ocorrencia(View v) throws IOException {
 
-        processasocket.cadastrarOcorrencia(convDataOcorrencia,convDescricao,convEndereco,convCidade);
+        tipo_crime =  "Assalto";
+        UF = "SP";
+        convDataOcorrencia = txData_Ocorrencia.getText().toString();
+        convDescricao = txDescricao.getText().toString();
+        convEndereco = txRua.getText().toString();
+        convCidade = txCidade.getText().toString();
+        convBairro = txtBairro.getText().toString();
 
+        String BuscaId = "IDocorrencia teste";
+        String ID = processasocket.cadastrar1_no_server(BuscaId);
+
+        String retorno = processasocket.cadastrar_Ocorrencia(ID, CPFCliente,tipo_crime,convDataOcorrencia,UF, convDescricao,
+                convEndereco,convCidade,convBairro);
+
+        if (retorno.equals("erro")) {
+            Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+        } else {
+            if (retorno.equals("true")) {
+                Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
+
+                setContentView(R.layout.activity_cliente);
+                this.startActivity(new Intent(this, Cliente.class));
+            } else {
+                txRua.setError("Erro Retorno do Server False");
+                txRua.setFocusable(true);
+                txRua.requestFocus();
+            }
+        }
     }
 }
 

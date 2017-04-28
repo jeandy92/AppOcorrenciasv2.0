@@ -22,7 +22,7 @@ import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 public class MainActivity extends AppCompatActivity {
 
     private byte[] imagem;
-    private String nome, RESULTADO, APELIDO, NOME, SENHA, LoginServer, CPF, Nome;
+    private String nome, RESULTADO, APELIDO, NOME, SENHA, LoginServer, CPF, Nome, Bairro;
     private String convCpf;
     private ProcessaSocket processa = new ProcessaSocket();
     private String retorno;
@@ -80,18 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-
-    }
-
-    private void enviaDadosparafragment(String nomecompleto, Fragment_Perfil fragment) {
-
-
-
-        Bundle bundle  =  new Bundle();
-        bundle.putString("nomecompleto", nomecompleto);
-        fragment.setArguments(bundle);
-
-
 
     }
 
@@ -154,9 +142,17 @@ public class MainActivity extends AppCompatActivity {
         //Verifica se o usuario esta com o cpf e senha cadastrados.
         if (txtUsuario.getText().toString().equals("adm") && senha.equals("senha")) {
 
-            setContentView(R.layout.activity_cliente);
-            Intent cliente = new Intent(this, Cliente.class);
+            Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_adm);
 
+            Intent adm = new Intent(this, Adm.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", "Elenaldo Ferreira");
+            bundle.putString("cpf", "39728970811");
+
+            adm.putExtras(bundle);
+            this.startActivity(adm);
 
             //Verifica se o salvar login foi marcado
 
@@ -172,11 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //faz o commit das preferencias
                 editor.commit();
-
-                //Chama tela de Cliente
-                Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_adm);
-                this.startActivity(new Intent(this, Adm.class));
             }
 
         }
@@ -215,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("nome", Nome);
                         bundle.putString("cpf" , CPF);
+                        bundle.putString("bairro" , Bairro);
 
                         cliente.putExtras(bundle);
                         this.startActivity(cliente);

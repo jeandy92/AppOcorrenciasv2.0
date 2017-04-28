@@ -26,12 +26,21 @@ public class Cliente extends AppCompatActivity implements Fragment_Perfil.CriarR
         private ImageButton cadastrarocorrencia;
         private Toolbar toolbar;
 
+    static String  Nome, CPF, Bairro;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
+
+        //Pegando valores que vem do Login
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Nome = bundle.getString("nome");
+        CPF = bundle.getString("cpf");
+        Bairro = bundle.getString("bairro");
 
         Fragment_Perfil fragment = new Fragment_Perfil();
         toolbar  =  (Toolbar) findViewById(R.id.toolbar);
@@ -56,6 +65,19 @@ public class Cliente extends AppCompatActivity implements Fragment_Perfil.CriarR
 
 
     }
+
+    public static String getNome(){
+        return Nome;
+    }
+
+    public static String getCPF(){
+        return CPF;
+    }
+
+    public static String getBairro(){
+        return Bairro;
+    }
+
 
     public void cadastrarroubo (View v){
 
@@ -90,6 +112,21 @@ public class Cliente extends AppCompatActivity implements Fragment_Perfil.CriarR
 
         setContentView(R.layout.activity_cadastrar_usuario);
         this.startActivity(new Intent(this,Cadastrar_Usuario.class));
+    }
+
+
+    // OBS FUNCAO ESTAVA FORA DO CODIGGO JEAN VERIFICAR
+    public  void evCadastrarOcorrencia(View view){
+        setContentView(R.layout.activity_cadastrar_ocorrencia);
+
+        Intent cadastrarOcorrencia = new Intent(this, Cadastrar_Ocorrencia.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("cpf", CPF);
+
+        cadastrarOcorrencia.putExtras(bundle);
+        this.startActivity(cadastrarOcorrencia);
+
     }
 
 
