@@ -9,8 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import appocorrencias.com.appocorrencias.Fragments.CadastrarOcorrenciasFragment;
-import appocorrencias.com.appocorrencias.Fragments.PerfilFragment;
+import appocorrencias.com.appocorrencias.Fragments.Fragment_Ocorrencias_Registradas;
+import appocorrencias.com.appocorrencias.Fragments.Fragment_Perfil;
 
 
 public class TabAdapter extends FragmentStatePagerAdapter{
@@ -28,10 +28,10 @@ public class TabAdapter extends FragmentStatePagerAdapter{
 
         switch (position){
             case 0:
-                fragment = new PerfilFragment();
+                fragment = new Fragment_Perfil();
                 break;
             case 1:
-                fragment = new CadastrarOcorrenciasFragment();
+                fragment = new Fragment_Ocorrencias_Registradas();
                 break;
         }
 

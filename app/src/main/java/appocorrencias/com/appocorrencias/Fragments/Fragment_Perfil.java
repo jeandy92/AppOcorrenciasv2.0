@@ -2,25 +2,25 @@ package appocorrencias.com.appocorrencias.Fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import appocorrencias.com.appocorrencias.R;
 
 
-public class PerfilFragment extends Fragment{
+public class Fragment_Perfil extends Fragment{
 
     private CriarReferencia referencia;
-    private Button btnCriarOcorrencia;
+    private FloatingActionButton btnCriarOcorrencia,btnAlteraDados;
 
 
     private static final String PREF_NAME = "MainActivityPreferences";
 
-    public PerfilFragment() {
+    public Fragment_Perfil() {
         // Required empty public constructor
     }
 
@@ -30,7 +30,8 @@ public class PerfilFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
-        btnCriarOcorrencia = (Button) view.findViewById(R.id.btnCadastrarOcorrencias);
+        btnCriarOcorrencia = (FloatingActionButton) view.findViewById(R.id.btnCadastrarOcorrencias);
+
 
         btnCriarOcorrencia.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -84,6 +85,7 @@ public class PerfilFragment extends Fragment{
     public interface CriarReferencia{
 
         public void onCreateOcorrencia();
+
 
     }
 }

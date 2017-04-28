@@ -56,7 +56,7 @@
         android:onClick="evCadastrarUsuario"
         android:text="Cadastrar"
         android:background="@drawable/botoes_arrendondados"
-        android:textColor="@color/padrao"
+        android:textColor="@color/primary_text"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="14dp" />
@@ -91,7 +91,7 @@
         android:layout_above="@+id/edtNumero"
         android:layout_alignStart="@+id/edtNumero"
         android:background="@drawable/botoes_arrendondados"
-        android:textColor="@color/padrao"/>
+        android:textColor="@color/primary_text"/>
 
     <EditText
         android:id="@+id/edtRua"

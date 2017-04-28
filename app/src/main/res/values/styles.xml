@@ -7,12 +7,19 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/colorAccent</item>
 
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
 
     </style>
 
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/cor_icone</item>
+        <item name="android:src">@drawable/ic_anexar</item>
 
 
     </style>

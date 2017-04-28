@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias.ClassesSA;
+package appocorrencias.com.appocorrencias.ListView;
 
 import java.util.ArrayList;
 

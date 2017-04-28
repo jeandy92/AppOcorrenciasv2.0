@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="13dp"
+        android:layout_y="380dp"
+        app:srcCompat="@drawable/ic_assalto" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:layout_x="-7dp"
+        android:layout_y="338dp"
+        android:text="IMAGENS DA OCORRENCIA" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_x="-3dp"
+        android:layout_y="110dp"
+        android:text="DESCRIÇÃO DA OCORRÊNCIA" />
+
+    <EditText
+        android:id="@+id/edt_id_ocorrencia"
+        android:layout_width="137dp"
+        android:layout_height="wrap_content"
+        android:layout_x="183dp"
+        android:layout_y="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="161dp"
+        android:layout_height="28dp"
+        android:layout_x="12dp"
+        android:layout_y="26dp"
+        android:text="NUMERO OCORRÊNCIA" />
+
+    <EditText
+        android:id="@+id/edt_desc_ocorrencia"
+        android:layout_width="match_parent"
+        android:layout_height="193dp"
+        android:layout_weight="0.23"
+        android:layout_x="-4dp"
+        android:layout_y="132dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+</AbsoluteLayout>

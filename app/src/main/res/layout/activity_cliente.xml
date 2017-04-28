@@ -9,6 +9,9 @@
 
     tools:context="appocorrencias.com.appocorrencias.Activitys.Cliente">
 
+<include android:id="@+id/toolbar"
+    layout="@layout/toolbar"
+    ></include>
 
     <appocorrencias.com.appocorrencias.ClassesSA.SlidingTabLayout
         android:layout_height="wrap_content"
@@ -23,6 +26,7 @@
             android:layout_width="match_parent"
             android:id="@+id/vp_pagina"
             android:layout_weight="1"/>
+
 
 
 

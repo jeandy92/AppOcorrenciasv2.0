@@ -68,7 +68,7 @@ public class Adm extends AppCompatActivity {
     public void cadastrar_ocorrencia(View v){
 
         setContentView(R.layout.ocorrencias_final);
-        //setContentView(R.layout.cad_ocorrencias);
+        //setContentView(R.layout.acitivity_cad_ocorrencias);
         this.startActivity(new Intent(this,Cadastrar_Ocorrencia.class));
 
         this.finish();

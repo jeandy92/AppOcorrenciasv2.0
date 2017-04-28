@@ -43,8 +43,8 @@
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
-        android:layout_width="184dp"
-        android:layout_height="238dp"
+        android:layout_width="170dp"
+        android:layout_height="237dp"
 
 
         android:src="@drawable/ic_anexar"
@@ -53,7 +53,7 @@
         app:fab_addButtonPlusIconColor="@color/cor_fundo"
         app:fab_labelStyle="@style/menu_labels_style"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="-28dp">
+        tools:layout_editor_absoluteY="-26dp">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/camera"
@@ -138,12 +138,13 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtDescricao"
-                app:srcCompat="@drawable/ic_localizacao" />
+                app:srcCompat="@drawable/ic_action_location"
+                android:background="#ffffff"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -153,12 +154,12 @@
                 android:text="Rua"
                 android:textSize="24sp"
                 app:layout_constraintLeft_toRightOf="@+id/imageButton2"
-                tools:layout_editor_absoluteY="472dp"
+                tools:layout_editor_absoluteY="729dp"
                 android:layout_marginStart="8dp" />
 
             <EditText
                 android:id="@+id/edtRua"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_marginEnd="8dp"
 
@@ -272,7 +273,7 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="1302dp" />
+                tools:layout_editor_absoluteY="1559dp" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

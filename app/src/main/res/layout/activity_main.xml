@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/entrar"
         android:background="@drawable/botoes_arrendondados"
-        android:textColor="@color/texto_botao"
+        android:textColor="@color/primary_text"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/imageView" />
 
@@ -79,7 +79,7 @@
         android:text="Cadastrar-se"
         android:onClick="evCadastrarSe"
         android:background="@drawable/botoes_arrendondados"
-        android:textColor="@color/texto_botao"
+        android:textColor="@color/primary_text"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/imageView2" />
 

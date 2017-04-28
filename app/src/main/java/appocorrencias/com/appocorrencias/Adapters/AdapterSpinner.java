@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import appocorrencias.com.appocorrencias.ClassesSA.TiposDeCrime;
+import appocorrencias.com.appocorrencias.ListView.TiposDeCrime;
 import appocorrencias.com.appocorrencias.R;
 
 /**
@@ -50,9 +50,9 @@ public class AdapterSpinner extends BaseAdapter {
         TiposDeCrime tiposdecrime = listadecrimes.get(position);
 
         //pegando as referências das Views
-        TextView nome = (TextView) view.findViewById(R.id.lista_curso_personalizada_nome);
-        EditText descricao = (EditText) view.findViewById(R.id.lista_curso_personalizada_descricao);
-        ImageView imagem = (ImageView)  view.findViewById(R.id.lista_curso_personalizada_imagem);
+        TextView nome = (TextView) view.findViewById(R.id.id_ocorrencia);
+        EditText descricao = (EditText) view.findViewById(R.id.desc_ocorrencia);
+        ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_ocorrencia);
 
 
 

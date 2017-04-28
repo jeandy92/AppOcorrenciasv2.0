@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
-import appocorrencias.com.appocorrencias.Fragments.PerfilFragment;
+import appocorrencias.com.appocorrencias.Fragments.Fragment_Perfil;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtUsuario, txtSenha;
     private CheckBox salvarlogin;
     private Button btnCadastrarCli;
-    private PerfilFragment perfil = new PerfilFragment();
+    private Fragment_Perfil perfil = new Fragment_Perfil();
     private static final String PREF_NAME = "MainActivityPreferences";
     private int count1;
     private int count2;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void enviaDadosparafragment(String nomecompleto, PerfilFragment fragment) {
+    private void enviaDadosparafragment(String nomecompleto, Fragment_Perfil fragment) {
 
 
 
@@ -153,6 +153,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Verifica se o usuario esta com o cpf e senha cadastrados.
         if (txtUsuario.getText().toString().equals("adm") && senha.equals("senha")) {
+
+            setContentView(R.layout.activity_cliente);
+            Intent cliente = new Intent(this, Cliente.class);
+
 
             //Verifica se o salvar login foi marcado
 

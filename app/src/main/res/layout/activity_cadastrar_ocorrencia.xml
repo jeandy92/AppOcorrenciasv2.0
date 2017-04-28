@@ -8,75 +8,79 @@
     android:weightSum="1">
 
 
-    <!--<com.getbase.floatingactionbutton.FloatingActionsMenu-->
-    <!--android:id="@+id/multiple_actions"-->
-    <!--android:layout_width="131dp"-->
-    <!--android:layout_height="194dp"-->
-
-
-    <!--android:layout_marginRight="-10dp"-->
-    <!--android:src="@drawable/ic_anexar"-->
-    <!--app:fab_addButtonColorNormal="@color/padrao"-->
-    <!--app:fab_addButtonColorPressed="#84ede8"-->
-    <!--app:fab_addButtonPlusIconColor="@color/cor_fundo"-->
-    <!--app:fab_labelStyle="@style/menu_labels_style"-->
-    <!--app:layout_constraintRight_toRightOf="parent"-->
-    <!--tools:layout_editor_absoluteY="-30dp">-->
-
-    <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-    <!--android:id="@+id/camera"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:onClick="tirarFoto"-->
-    <!--app:fab_colorNormal="@color/cor_fundo"-->
-    <!--app:fab_colorPressed="#ffffff"-->
-    <!--app:fab_icon="@drawable/ic_camera"-->
-    <!--app:fab_size="mini"-->
-    <!--app:fab_title="Câmera"-->
-    <!--android:paddingBottom="5dp"/>-->
-
-    <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-    <!--android:id="@+id/galeria"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:onClick="entrar_galeria"-->
-    <!--app:fab_colorNormal="@color/cor_fundo"-->
-    <!--app:fab_colorPressed="#ffffff"-->
-    <!--app:fab_icon="@drawable/ic_galeria"-->
-    <!--app:fab_size="mini"-->
-    <!--app:fab_title="Galeria" />-->
-
-    <!--</com.getbase.floatingactionbutton.FloatingActionsMenu>&ndash;&gt;-->
-
     <ViewFlipper
         android:id="@+id/viewFlipper4"
         android:layout_width="0dp"
         android:layout_height="200dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
-        >
+        tools:layout_constraintRight_creator="1">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/assalto" />
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/roubo" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.v4.view.ViewPager>
+
 
     </ViewFlipper>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions"
+        android:layout_width="170dp"
+        android:layout_height="237dp"
+
+
+        android:src="@drawable/ic_anexar"
+        app:fab_addButtonColorNormal="@color/padrao"
+        app:fab_addButtonColorPressed="#84ede8"
+        app:fab_addButtonPlusIconColor="@color/cor_fundo"
+        app:fab_labelStyle="@style/menu_labels_style"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="-26dp">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="tirarFoto"
+            app:fab_colorNormal="@color/cor_fundo"
+            app:fab_colorPressed="#ffffff"
+            app:fab_icon="@drawable/ic_camera"
+            app:fab_size="mini"
+            app:fab_title="Câmera"
+            android:paddingBottom="5dp"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/galeria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="entrar_galeria"
+            app:fab_colorNormal="@color/cor_fundo"
+            app:fab_colorPressed="#ffffff"
+            app:fab_icon="@drawable/ic_galeria"
+            app:fab_size="mini"
+            app:fab_title="Galeria" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu><![CDATA[-->
+
+    ]]>
 
     <ScrollView
         android:layout_width="0dp"
@@ -87,7 +91,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewFlipper4"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1">
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginTop="32dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -121,7 +126,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 android:inputType="textMultiLine"
                 android:textSize="14sp"
                 android:textStyle="italic"
@@ -133,28 +138,39 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtDescricao"
-                app:srcCompat="@drawable/ic_localizacao" />
+                app:srcCompat="@drawable/ic_action_location"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Rua"
+                android:textSize="24sp"
+                app:layout_constraintLeft_toRightOf="@+id/imageButton2"
+                tools:layout_editor_absoluteY="729dp"
+                android:layout_marginStart="8dp" />
 
             <EditText
                 android:id="@+id/edtRua"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="2dp"
                 android:layout_marginEnd="8dp"
 
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 android:hint="Rua"
-                app:layout_constraintLeft_toRightOf="@+id/imageButton2"
+                app:layout_constraintLeft_toRightOf="@+id/textView3"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtDescricao"
-                app:layout_constraintHorizontal_bias="0.0" />
+                android:layout_marginStart="8dp" />
 
             <EditText
                 android:id="@+id/edtBairro"
@@ -162,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:hint="Bairro          "
                 android:inputType="text"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -173,21 +189,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="32dp"
                 android:hint="Cidade        "
                 app:layout_constraintLeft_toRightOf="@+id/edtBairro"
                 app:layout_constraintTop_toBottomOf="@+id/edtRua"
                 android:layout_marginStart="8dp" />
 
             <EditText
-                android:id="@+id/edtUF"
+                android:id="@+id/edtEstado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:hint="UF          "
                 app:layout_constraintLeft_toRightOf="@+id/edtCidade"
                 app:layout_constraintRight_toRightOf="parent"
@@ -202,7 +218,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:text="Tipo de ocorrência"
                 android:textAlignment="textStart"
                 android:textColor="@color/cast_expanded_controller_background_color"
@@ -218,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:hint="Tipo de Ocorrência"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtTipoOcorrencia" />
@@ -229,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:ems="10"
                 android:hint="DATA      "
                 android:inputType="date"
@@ -242,7 +258,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:text="Anonimo"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtData_Ocorrencia" />
@@ -257,7 +273,7 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="676dp" />
+                tools:layout_editor_absoluteY="1559dp" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

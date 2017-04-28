@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import appocorrencias.com.appocorrencias.ClassesSA.OcorrenciasRegistradas;
+import appocorrencias.com.appocorrencias.ListView.OcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.R;
 
 /**
@@ -49,9 +49,9 @@ public class AdapterParaOcorrencias extends BaseAdapter {
         OcorrenciasRegistradas ocorrenciasRegistradas = ocorrenciasregistradas.get(position);
 
         //pegando as referências das Views
-        TextView nome = (TextView) view.findViewById(R.id.lista_curso_personalizada_nome);
-        TextView descricao = (TextView)view.findViewById(R.id.lista_curso_personalizada_descricao);
-        ImageView imagem = (ImageView)  view.findViewById(R.id.lista_curso_personalizada_imagem);
+        TextView nome = (TextView) view.findViewById(R.id.id_ocorrencia);
+        TextView descricao = (TextView)view.findViewById(R.id.desc_ocorrencia);
+        ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_ocorrencia);
 
 
 
