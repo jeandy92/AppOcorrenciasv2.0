@@ -25,7 +25,7 @@ import static appocorrencias.com.appocorrencias.ListView.OcorrenciasRegistradas.
 
 public class Fragment_Ocorrencias_Registradas extends Fragment {
 
-    private Fragment_Perfil.CriarReferencia referencia;
+    private Fragment_Perfil.OnDataPass referencia;
 
 
     public Fragment_Ocorrencias_Registradas() {
@@ -94,15 +94,6 @@ public class Fragment_Ocorrencias_Registradas extends Fragment {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_ocorrencias_registradas, container, false);
 
-    }
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try{
-            referencia =(Fragment_Perfil.CriarReferencia) activity;
-
-        }catch (ClassCastException e){
-            throw new ClassCastException(getActivity().toString()+"Deve Implementar a CriarReferencia");
-        }
     }
 
     public interface CriarReferencia{

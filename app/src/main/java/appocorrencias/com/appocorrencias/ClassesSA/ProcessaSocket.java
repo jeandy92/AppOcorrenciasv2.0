@@ -89,22 +89,18 @@ public class ProcessaSocket {
     }
 
 
-
-
-
-
-
     public static String cadastrar_Ocorrencia(String ID, String CPFCliente, String tipo_crime, String convDataOcorrencia,
                                               String UF, String convDescricao, String convEndereco, String convCidade,
-                                              String convBairro ) throws IOException {
+                                              String convBairro, String Anonimo ) throws IOException {
         //Envio de dados
-        String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF +
-                " " + convDataOcorrencia + " " + tipo_crime;
+        String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF + " " + convDataOcorrencia +
+                " " + Anonimo;
 
         String OcorrenciaRua = "OcorrenciaRua" + " " + ID + " " + convEndereco;
         String OcorrenciaBairro = "OcorrenciaBairro" + " " + ID + " " + convBairro;
         String OcorrenciaCidade = "OcorrenciaCidade" + " " + ID + " " + convCidade;
         String OcorrenciaDescricao = "OcorrenciaDescricao" + " " + ID + " " + convDescricao;
+        String OcorrenciaTipo = "OcorrenciaTipo" + " " + ID + " " + tipo_crime;
 
         String retorno = cadastrar1_no_server(CadastrarOcorrencia);
 
@@ -116,6 +112,7 @@ public class ProcessaSocket {
                 cadastrar_no_server(OcorrenciaBairro);
                 cadastrar_no_server(OcorrenciaCidade);
                 cadastrar_no_server(OcorrenciaDescricao);
+                cadastrar_no_server(OcorrenciaTipo);
                 return "true";
             } else {
                 return "false";

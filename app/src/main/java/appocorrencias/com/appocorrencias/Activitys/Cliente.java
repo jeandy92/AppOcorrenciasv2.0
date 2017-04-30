@@ -1,5 +1,6 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -17,7 +18,7 @@ import appocorrencias.com.appocorrencias.ClassesSA.SlidingTabLayout;
 import appocorrencias.com.appocorrencias.Fragments.Fragment_Perfil;
 import appocorrencias.com.appocorrencias.R;
 
-public class Cliente extends AppCompatActivity implements Fragment_Perfil.CriarReferencia {
+public class Cliente extends AppCompatActivity implements Fragment_Perfil.OnDataPass {
 
         private Toolbar mToolbar;
         private Toolbar mToolbarBottom;
@@ -116,16 +117,20 @@ public class Cliente extends AppCompatActivity implements Fragment_Perfil.CriarR
 
 
     // OBS FUNCAO ESTAVA FORA DO CODIGGO JEAN VERIFICAR
-    public  void evCadastrarOcorrencia(View view){
+    public void evCadastrarOcorrencia(View view){
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
         Intent cadastrarOcorrencia = new Intent(this, Cadastrar_Ocorrencia.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString("cpf", CPF);
+        bundle.putString("nome", Nome);
+        bundle.putString("cpf" , CPF);
+        bundle.putString("bairro" , Bairro);
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
+
+
 
     }
 
@@ -141,6 +146,11 @@ public class Cliente extends AppCompatActivity implements Fragment_Perfil.CriarR
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_cliente,menu);
         return true;
+    }
+
+    @Override
+    public void OnDataPass(String nome) {
+
     }
 
     //public void deletarSharedPreferences()

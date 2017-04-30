@@ -72,7 +72,7 @@
                 android:layout_y="220dp"
                 android:background="@drawable/botoes_arrendondados"
                 android:clickable="true"
-                android:onClick=""
+                android:onClick="evCadastrarOcorrencia"
                 android:src="@drawable/ic_note_add"
                 android:text="Cadastrar Ocorrência"
                 app:fabSize="mini" />

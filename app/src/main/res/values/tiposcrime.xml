@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="TIPOS_CRIME">
-        <item>Assalto</item>
+        <item>Tráfico de drogas</item>
         <item>Roubo</item>
         <item>Furto</item>
+        <item>Homicídio</item>
+        <item>Latrocínio</item>
+        <item>Abuso Sexual</item>
+
+
             </string-array>
 </resources>

@@ -17,7 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,11 +31,12 @@ import java.util.List;
 import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.Fragments.Fragment_Ocorrencias_Registradas;
+import appocorrencias.com.appocorrencias.Fragments.Fragment_Perfil;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
 
-public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener {
+public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener, Fragment_Perfil.OnDataPass {
 
     private static final int REQUEST_PERMISSIONS_CODE = 128;
 
@@ -45,8 +48,9 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private static final int IMAGEM_CAPTURADA = 1;
 
 
-    private String convDataOcorrencia,convDescricao,convEndereco,convCidade,convBairro , tipo_crime, UF;;
+    private String convDataOcorrencia,convDescricao,convEndereco,convCidade,convBairro , tipo_crime, UF, Anonimo = "false";;
     private EditText txRua,txCidade,txEstado,txDescricao,txData_Ocorrencia,txtBairro, txReferencia;
+    private RadioButton BtnAnonimo;
 
     private Buscar_Cep buscauf = new Buscar_Cep();
 
@@ -57,7 +61,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
     private Date data;
 
-    String CPFCliente;
+
+    static String  Nome, CPFCliente, Bairro;
 
     public static ProcessaSocket processasocket  = new ProcessaSocket();
 
@@ -66,9 +71,12 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
+        //Pegando valores que vem do Login
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        Nome = bundle.getString("nome");
         CPFCliente = bundle.getString("cpf");
+        Bairro = bundle.getString("bairro");
 
 
         txCidade = (EditText) findViewById(R.id.edtCidade);
@@ -85,15 +93,6 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         //AdapterSpinner adaptero = new AdapterSpinner(this,list);
         //listadecrimes.setAdapter(adaptero);
 
-        txDescricao.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                txDescricao.setText("");
-            }
-
-
-        });
 
         // Inserindo Mascaras.
         MaskEditTextChangedListener maskData = new MaskEditTextChangedListener("##/##/####", txData_Ocorrencia);
@@ -268,11 +267,13 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
             Log.i(TAG, endereco.getAddressLine(1));
             Log.i(TAG, endereco.getSubLocality());
 
+            Buscar_Cep buscar_cep = new Buscar_Cep();
 
             txCidade.setText(endereco.getLocality());
             txEstado.setText(endereco.getAdminArea());
             txRua.setText(endereco.getThoroughfare());
             txtBairro.setText(endereco.getSubLocality());
+            txEstado.setText(buscar_cep.getUF(endereco.getPostalCode()));
 
 
         } catch (IOException e) {
@@ -383,19 +384,25 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
     public void salvar_ocorrencia(View v) throws IOException {
 
-        tipo_crime =  "Assalto";
-        UF = "SP";
+        tipo_crime =  spinner.getSelectedItem().toString();
+        UF = txEstado.getText().toString();
         convDataOcorrencia = txData_Ocorrencia.getText().toString();
         convDescricao = txDescricao.getText().toString();
         convEndereco = txRua.getText().toString();
         convCidade = txCidade.getText().toString();
         convBairro = txtBairro.getText().toString();
 
+        BtnAnonimo = (RadioButton) findViewById(R.id.rdBtnAnonimo);
+
+        if(BtnAnonimo.isChecked()){
+            Anonimo = "true";
+        }
+
         String BuscaId = "IDocorrencia teste";
         String ID = processasocket.cadastrar1_no_server(BuscaId);
 
         String retorno = processasocket.cadastrar_Ocorrencia(ID, CPFCliente,tipo_crime,convDataOcorrencia,UF, convDescricao,
-                convEndereco,convCidade,convBairro);
+                convEndereco,convCidade,convBairro, Anonimo);
 
         if (retorno.equals("erro")) {
             Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
@@ -404,13 +411,26 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
                 Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
 
                 setContentView(R.layout.activity_cliente);
-                this.startActivity(new Intent(this, Cliente.class));
+                Intent cliente = new Intent(this, Cliente.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", Nome);
+                bundle.putString("cpf" , CPFCliente);
+                bundle.putString("bairro" , Bairro);
+
+                cliente.putExtras(bundle);
+                this.startActivity(cliente);
             } else {
                 txRua.setError("Erro Retorno do Server False");
                 txRua.setFocusable(true);
                 txRua.requestFocus();
             }
         }
+    }
+
+    @Override
+    public void OnDataPass(String nome) {
+
     }
 }
 

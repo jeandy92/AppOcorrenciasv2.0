@@ -34,7 +34,7 @@ import appocorrencias.com.appocorrencias.R;
 public class Adm extends AppCompatActivity {
     private Button btnConexao,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
-    static String NomeCli, CPF;
+    static String NomeCli, CPF, Bairro;
     private TextView txtTesteAdm;
 
 
@@ -48,6 +48,7 @@ public class Adm extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         NomeCli = bundle.getString("nome");
         CPF = bundle.getString("cpf");
+        Bairro = bundle.getString("bairro");
 
         btnConexao  = (Button) findViewById(R.id.teste);
         txvRetornoSocket = (TextView) findViewById(R.id.txvRetornoSocket);
@@ -74,7 +75,10 @@ public class Adm extends AppCompatActivity {
         Intent cadastrarOcorrencia = new Intent(this, Cadastrar_Ocorrencia.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString("cpf", CPF);
+        bundle.putString("nome", NomeCli);
+        bundle.putString("cpf" , CPF);
+        bundle.putString("bairro" , Bairro);
+
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
 

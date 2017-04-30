@@ -63,6 +63,30 @@ public class MainActivity extends AppCompatActivity {
         String cpf = sp1.getString("login", "");
         String senha = sp1.getString("senha", "");
 
+        //Quando usuário clicar nos campos de login e senha ele apaga os dados default para o preenchimento
+        //  txtUsuario.setOnClickListener(new View.OnClickListener() {
+
+        //  @Override
+        //    public void onClick(View v) {
+        //       txtUsuario.setText("");
+        //    }
+
+
+        // });
+        // txtSenha.setOnClickListener(new View.OnClickListener() {
+
+        //  @Override
+        //  public void onClick(View v) {
+        //     txtSenha.setText("");
+        //   }
+
+
+        //});
+
+        //Insere a mascara no cpf
+        // MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", txtUsuario);
+        // txtUsuario.addTextChangedListener(maskCPF);
+
         //Quando a atividade inicial for ativada ele veirifica se existe preferences salva e a compara com a ja armazenada no erlang
         //Caso encontre chama a tela do cliente
         if (cpf.equals("adm") && senha.equals("senha")) {
@@ -80,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
 
     }
 
@@ -105,30 +130,6 @@ public class MainActivity extends AppCompatActivity {
         salvarlogin = (CheckBox) findViewById(R.id.ckSalvarLogin);
         btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
 
-        //Quando usuário clicar nos campos de login e senha ele apaga os dados default para o preenchimento
-        txtUsuario.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                txtUsuario.setText("");
-            }
-
-
-        });
-        txtSenha.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                txtSenha.setText("");
-            }
-
-
-        });
-
-        //Insere a mascara no cpf
-        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", txtUsuario);
-        txtUsuario.addTextChangedListener(maskCPF);
-
         //Retira a mascara do CPF para que possamos trabalhar se os '.'
         convCpf = txtUsuario.getText().toString().replaceAll("[^0123456789]", "");
 
@@ -139,20 +140,9 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Script", "Sem conversao:" + txtUsuario.getText().toString());
         Log.i("Script", senha);
 
+
         //Verifica se o usuario esta com o cpf e senha cadastrados.
         if (txtUsuario.getText().toString().equals("adm") && senha.equals("senha")) {
-
-            Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
-            setContentView(R.layout.activity_adm);
-
-            Intent adm = new Intent(this, Adm.class);
-
-            Bundle bundle = new Bundle();
-            bundle.putString("nome", "Elenaldo Ferreira");
-            bundle.putString("cpf", "39728970811");
-
-            adm.putExtras(bundle);
-            this.startActivity(adm);
 
             //Verifica se o salvar login foi marcado
 
@@ -169,6 +159,19 @@ public class MainActivity extends AppCompatActivity {
                 //faz o commit das preferencias
                 editor.commit();
             }
+
+            Toast.makeText(getApplicationContext(), "Perfil de ADM", Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_adm);
+
+            Intent adm = new Intent(this, Adm.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", "Elenaldo Ferreira");
+            bundle.putString("cpf", "39728970811");
+            bundle.putString("bairro", "Jd Vel");
+
+            adm.putExtras(bundle);
+            this.startActivity(adm);
 
         }
 
