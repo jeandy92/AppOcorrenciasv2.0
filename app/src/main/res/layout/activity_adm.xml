@@ -20,8 +20,8 @@
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/teste"
-        android:onClick="valida_conexao"
+        android:id="@+id/btn_validar_conexao"
+        android:onClick="ev_valida_conexao"
         android:textColor="@color/primary_text"
         android:background="@drawable/botoes_arrendondados"
 
@@ -34,7 +34,7 @@
         android:layout_margin="10dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnCadastrarOcorrencias"
-        android:onClick="cadastrar_ocorrencia"
+        android:onClick="ev_cadastrar_ocorrencia"
         android:textColor="@color/primary_text"
         android:background="@drawable/botoes_arrendondados"/>
     <!--Verificar Ocorrências-->
@@ -52,10 +52,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:id="@+id/button4"
+        android:id="@+id/btn_cadastrar_usuario"
         android:textColor="@color/primary_text"
         android:background="@drawable/botoes_arrendondados"
-        android:onClick="cadastrar_usuario"/>
+        android:onClick="ev_cadastrar_usuario"/>
     <!--Gerar Relatório-->
     <Button
         android:text="Gerar Relatório"

@@ -1,14 +1,14 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
+import android.app.NotificationManager;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,22 +16,11 @@ import java.net.Socket;
 
 import appocorrencias.com.appocorrencias.R;
 
-//Cadastrar usuario
 
-  //      Enviar dados separados por /
-//Nome Completo (Nome jeanderson ALmeida);
-//Login (ID);(id jean)
-  //      Erlang devolve Ok
-
-    //    PEGAR O RETORNO DO SERVIDOR ERLANG ERRADO E VOLTA PARA O INICIA
-   //     PEGAR O RETORNO EM CASO POSITIVO E MOSTRAR AO USUARIO
-//SENHA
-//E-mail
-//Telefone
-  //      Endereco
 
 
 public class Adm extends AppCompatActivity {
+
     private Button btnConexao,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
     static String NomeCli, CPF, Bairro;
@@ -50,25 +39,42 @@ public class Adm extends AppCompatActivity {
         CPF = bundle.getString("cpf");
         Bairro = bundle.getString("bairro");
 
-        btnConexao  = (Button) findViewById(R.id.teste);
+        btnConexao  = (Button) findViewById(R.id.btn_validar_conexao);
         txvRetornoSocket = (TextView) findViewById(R.id.txvRetornoSocket);
         btnCadastrarOcorrencias =  (Button) findViewById(R.id.btnCadastrarOcorrencias);
 
         txtTesteAdm = (TextView) findViewById(R.id.txtTesteAdm);
         txtTesteAdm.setText("Bem Vindo Adm " + NomeCli + " CPF: " + CPF);
     }
-    public void valida_conexao(View view) {
+    public void ev_valida_conexao(View view) {
 
         setContentView(R.layout.activity_cliente_socket);
         this.startActivity(new Intent(this,Cliente_Socket.class));
     }
 
-    public void cadastrar_usuario(View view) {
+    public void ev_cadastrar_usuario(View view) {
+        CriaNotificaçoes();
+
+
         setContentView(R.layout.activity_cadastrar_usuario);
         this.startActivity(new Intent(this,Cadastrar_Usuario.class));
     }
+    protected void CriaNotificaçoes() {
 
-    public void cadastrar_ocorrencia(View v){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.fab_plus_icon)
+                .setContentTitle("Um novo crime foi registrado próximo ao lugar onde mora")
+                .setContentText("Um novo crime registrado");
+
+        NotificationManager notificationmenager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
+        int mld = 1;
+        notificationmenager.notify(mld,builder.build());
+    }
+
+
+
+
+    public void ev_cadastrar_ocorrencia(View v){
 
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
@@ -112,8 +118,8 @@ public class Adm extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.activity_main);
-        this.startActivity(new Intent(this,MainActivity.class));
+        setContentView(R.layout.activity_login);
+        this.startActivity(new Intent(this,Login.class));
 
     }
 }

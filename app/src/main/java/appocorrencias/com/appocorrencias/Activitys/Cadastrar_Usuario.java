@@ -139,8 +139,8 @@ public class Cadastrar_Usuario extends AppCompatActivity {
                             if (retorno.equals("true")) {
                                 Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
 
-                                setContentView(R.layout.activity_main);
-                                this.startActivity(new Intent(this, MainActivity.class));
+                                setContentView(R.layout.activity_login);
+                                this.startActivity(new Intent(this, Login.class));
                             } else {
                                 CPF.setError("CPF Já Cadastrado");
                                 CPF.setFocusable(true);
@@ -212,8 +212,8 @@ public class Cadastrar_Usuario extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.activity_main);
-        this.startActivity(new Intent(this,MainActivity.class));
+        setContentView(R.layout.activity_login);
+        this.startActivity(new Intent(this,Login.class));
     }
 }
 

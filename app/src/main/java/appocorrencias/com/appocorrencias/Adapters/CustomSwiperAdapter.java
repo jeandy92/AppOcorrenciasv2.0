@@ -1,4 +1,4 @@
-package appocorrencias.com.appocorrencias.ClassesSA;
+package appocorrencias.com.appocorrencias.Adapters;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;

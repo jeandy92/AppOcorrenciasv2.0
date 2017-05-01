@@ -17,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -30,13 +29,11 @@ import java.util.List;
 
 import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
-import appocorrencias.com.appocorrencias.Fragments.Fragment_Ocorrencias_Registradas;
-import appocorrencias.com.appocorrencias.Fragments.Fragment_Perfil;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
 
-public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener, Fragment_Perfil.OnDataPass {
+public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener {
 
     private static final int REQUEST_PERMISSIONS_CODE = 128;
 
@@ -48,7 +45,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private static final int IMAGEM_CAPTURADA = 1;
 
 
-    private String convDataOcorrencia,convDescricao,convEndereco,convCidade,convBairro , tipo_crime, UF, Anonimo = "false";;
+    private String convDataOcorrencia,convDescricao,convEndereco,convCidade,convBairro , tipo_crime, UF;;
     private EditText txRua,txCidade,txEstado,txDescricao,txData_Ocorrencia,txtBairro, txReferencia;
     private RadioButton BtnAnonimo;
 
@@ -65,6 +62,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     static String  Nome, CPFCliente, Bairro;
 
     public static ProcessaSocket processasocket  = new ProcessaSocket();
+    private String Anonimo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +91,15 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         //AdapterSpinner adaptero = new AdapterSpinner(this,list);
         //listadecrimes.setAdapter(adaptero);
 
+        txDescricao.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                txDescricao.setText("");
+            }
+
+
+        });
 
         // Inserindo Mascaras.
         MaskEditTextChangedListener maskData = new MaskEditTextChangedListener("##/##/####", txData_Ocorrencia);
@@ -377,8 +384,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.fragment_ocorrencias_registradas);
-        this.startActivity(new Intent(this,Fragment_Ocorrencias_Registradas.class));
+        this.startActivity(new Intent(this,Cliente.class));
     }
 
 
@@ -428,10 +434,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         }
     }
 
-    @Override
-    public void OnDataPass(String nome) {
 
-    }
 }
 
 

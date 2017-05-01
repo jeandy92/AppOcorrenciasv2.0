@@ -45,7 +45,7 @@ public class AdapterParaOcorrencias extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = act.getLayoutInflater().inflate(R.layout.activity_lista_ocorrencias,parent,false);
+        View view = act.getLayoutInflater().inflate(R.layout.activity_modelo_lista_ocorrencias,parent,false);
         OcorrenciasRegistradas ocorrenciasRegistradas = ocorrenciasregistradas.get(position);
 
         //pegando as referências das Views

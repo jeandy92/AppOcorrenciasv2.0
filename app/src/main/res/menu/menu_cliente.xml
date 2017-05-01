@@ -17,6 +17,7 @@
         android:id="@+id/item_logout"
         android:orderInCategory="200"
         android:title="Logout"
+
         app:showAsAction="never" />
 
 

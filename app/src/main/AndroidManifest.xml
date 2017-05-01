@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:label">
         <activity
-            android:name=".Activitys.MainActivity"
+            android:name=".Activitys.Login"
             android:label="MainActivity"
             android:noHistory="true">
             <intent-filter>
@@ -41,7 +41,8 @@
         <activity android:name=".Activitys.Cliente_Socket" />
         <activity android:name=".Activitys.Cadastrar_Usuario" />
         <activity android:name=".Activitys.Cadastrar_Ocorrencia" />
-        <activity android:name=".ListView.Item_Ocorrencia_Registradas"></activity>
+        <activity android:name=".ListView.Item_Ocorrencia_Registradas" />
+        <activity android:name=".Activitys.Listar_Ocorrencias"></activity>
     </application>
 
 </manifest>

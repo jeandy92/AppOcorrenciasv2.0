@@ -1,35 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_cliente"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="appocorrencias.com.appocorrencias.Activitys.Cliente">
 
-<include android:id="@+id/toolbar"
-    layout="@layout/toolbar"
-    ></include>
 
-    <appocorrencias.com.appocorrencias.ClassesSA.SlidingTabLayout
+    <include android:id="@+id/toolbar"
+     layout="@layout/toolbar"/>
+
+
+
+
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="249dp"
+            android:layout_x="-2dp"
+            android:layout_y="341dp">
+
+        </ListView>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="102dp"
+        android:layout_height="117dp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="60dp"
+        android:layout_x="130dp"
+        android:layout_y="138dp"
+        android:bottomLeftRadius="50dp"
+        android:bottomRightRadius="50dp"
+        android:padding="4dp"
+        android:src="@drawable/assalto"
+        android:topLeftRadius="50dp"
+
+        android:topRightRadius="100dp" />
+
+    <TextView
+        android:id="@+id/tvNomeCompleto"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/stl_tabs"
-        android:background="@color/colorPrimary"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="260dp"
+        android:layout_x="116dp"
+        android:layout_y="116dp"
+        android:text="Jeanderson Almeida"
+        android:textColor="#00BFA5" />
+
+    <TextView
+        android:id="@+id/tvBemVindo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="260dp"
+        android:layout_x="145dp"
+        android:layout_y="89dp"
+        android:text="BEM VINDO"
+        android:textColor="#00BFA5" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="46dp"
+        android:layout_height="47dp"
+        android:layout_x="117dp"
+        android:layout_y="258dp"
+        android:theme="@style/botaopadrao"
+        android:clickable="true"
+        android:src="@drawable/ic_search"
+
+        app:fabSize="mini" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnCadastrarOcorrencias"
+        android:layout_width="52dp"
+        android:layout_height="47dp"
+        android:layout_x="210dp"
+        android:layout_y="260dp"
+        android:theme="@style/botaopadrao"
+        android:clickable="true"
+        android:onClick="evCadastrarOcorrencia"
+        android:src="@drawable/ic_note_add"
+        android:text="Cadastrar Ocorrência"
+        app:fabSize="mini" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnOcorrenciasRegistradasPorUsuario"
+        android:layout_width="53dp"
+        android:onClick="evOcorrenciasInformadas"
+        android:layout_height="48dp"
+        android:layout_x="28dp"
+        android:layout_y="255dp"
+        android:clickable="true"
+        android:theme="@style/botaopadrao"
+        app:fabSize="mini"
         />
 
 
-        <android.support.v4.view.ViewPager
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
-            android:id="@+id/vp_pagina"
-            android:layout_weight="1"/>
+</AbsoluteLayout>
 
-
-
-
-
-
-</LinearLayout>
