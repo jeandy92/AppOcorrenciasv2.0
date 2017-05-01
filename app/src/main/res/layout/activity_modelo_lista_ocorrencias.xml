@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     style="@style/ocorrenciasregistradas">
 
+    <ImageView
+        android:id="@+id/imagem_ocorrencia"
+        android:layout_width="80dp"
+        android:layout_height="match_parent" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -26,8 +31,4 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imagem_ocorrencia"
-        android:layout_width="80dp"
-        android:layout_height="match_parent" />
 </LinearLayout>

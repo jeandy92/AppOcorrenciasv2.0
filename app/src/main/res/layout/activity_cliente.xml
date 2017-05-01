@@ -89,7 +89,6 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnOcorrenciasRegistradasPorUsuario"
         android:layout_width="53dp"
-        android:onClick="evOcorrenciasInformadas"
         android:layout_height="48dp"
         android:layout_x="28dp"
         android:layout_y="255dp"
@@ -97,7 +96,7 @@
         android:theme="@style/botaopadrao"
         app:fabSize="mini"
         />
-
+    <!--android:onClick="evOcorrenciasInformadas"-->
 
 </AbsoluteLayout>
 

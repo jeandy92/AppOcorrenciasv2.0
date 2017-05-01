@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import appocorrencias.com.appocorrencias.ListView.OcorrenciasRegistradas;
+import appocorrencias.com.appocorrencias.ListView.Lista_Ocorrencias_Registradas;
 import appocorrencias.com.appocorrencias.R;
 
 /**
@@ -18,10 +18,10 @@ import appocorrencias.com.appocorrencias.R;
 
 public class AdapterParaOcorrencias extends BaseAdapter {
 
-    private final ArrayList<OcorrenciasRegistradas> ocorrenciasregistradas;
+    private final ArrayList<Lista_Ocorrencias_Registradas> ocorrenciasregistradas;
     private final Activity act;
 
-    public AdapterParaOcorrencias(ArrayList<OcorrenciasRegistradas> ocorrenciasregistradas,Activity act){
+    public AdapterParaOcorrencias(Activity act,ArrayList<Lista_Ocorrencias_Registradas> ocorrenciasregistradas){
         this.ocorrenciasregistradas = ocorrenciasregistradas;
         this.act =act;
 
@@ -46,7 +46,7 @@ public class AdapterParaOcorrencias extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = act.getLayoutInflater().inflate(R.layout.activity_modelo_lista_ocorrencias,parent,false);
-        OcorrenciasRegistradas ocorrenciasRegistradas = ocorrenciasregistradas.get(position);
+        Lista_Ocorrencias_Registradas listaOcorrenciasRegistradas = ocorrenciasregistradas.get(position);
 
         //pegando as referências das Views
         TextView nome = (TextView) view.findViewById(R.id.id_ocorrencia);
@@ -56,12 +56,12 @@ public class AdapterParaOcorrencias extends BaseAdapter {
 
 
 
-        nome.setText(String.valueOf(ocorrenciasRegistradas.getId_ocorrencias()));
-        descricao.setText(ocorrenciasRegistradas.getDescricao());
+        nome.setText(String.valueOf(listaOcorrenciasRegistradas.getId_ocorrencias()));
+        descricao.setText(listaOcorrenciasRegistradas.getDescricao());
 
-        if (ocorrenciasRegistradas.getTipocrime().equals("ASSALTO")) {
+        if (listaOcorrenciasRegistradas.getTipocrime().equals("ASSALTO")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        } else if (ocorrenciasRegistradas.getTipocrime().equals("ROUBO")) {
+        } else if (listaOcorrenciasRegistradas.getTipocrime().equals("ROUBO")) {
             imagem.setImageResource(R.drawable.ic_roubo1);
         }
 

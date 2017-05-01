@@ -105,6 +105,7 @@ public class Login extends AppCompatActivity {
 
 
 
+
     }
 
 
@@ -135,6 +136,23 @@ public class Login extends AppCompatActivity {
         //ARMAZENANDO LOG DOS DADOS FORNECIDOS PELO USUÁRIO
         Log.i("evEntrar", CPF);
         Log.i("evEntrar", SENHA);
+
+        if(salvarlogin.isChecked()){
+
+            Log.i("isCheck", CPF);
+            Log.i("isCheck", SENHA);
+
+            //Aramazena os dados na shared preferences em modo privato, impossibilitando que outra atividade altere esta preference.
+            SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+
+
+            //Colocando os dados no shared prefence
+            editor.putString("login", CPF);
+            editor.putString("senha", SENHA);
+
+        }
+
 
         if (txtUsuario.getText().toString() != null && txtSenha.getText().toString() != null) {
 

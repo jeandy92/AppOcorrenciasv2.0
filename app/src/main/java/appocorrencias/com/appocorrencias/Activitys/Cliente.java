@@ -15,17 +15,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import appocorrencias.com.appocorrencias.ClassesSA.SlidingTabLayout;
 import appocorrencias.com.appocorrencias.R;
 
 public class Cliente extends AppCompatActivity  {
 
     private Toolbar mToolbar;
     private Toolbar mToolbarBottom;
-    private SlidingTabLayout slidingTabLayout;
-    private ViewPager viewPager;
+     private ViewPager viewPager;
     private ImageButton cadastrarocorrencia;
     private Toolbar toolbar;
     private FloatingActionButton msOcorrenciasRegistradas;
@@ -38,6 +35,15 @@ public class Cliente extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
         msOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
+
+
+        msOcorrenciasRegistradas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                evOcorrenciasInformadas(v);
+
+            }
+        });
 
 
         toolbar  = (Toolbar) findViewById(R.id.toolbar);
@@ -103,10 +109,10 @@ public class Cliente extends AppCompatActivity  {
     }
 
     public void evOcorrenciasInformadas (View view){
-        setContentView(R.layout.activity_listar_ocorrencias);
 
-        Intent ocorrenciasinformadas = new Intent(this, Listar_Ocorrencias.class);
-        this.startActivity(ocorrenciasinformadas);
+        setContentView(R.layout.activity_listar_ocorrencias);
+        this.startActivity(new Intent(this,Listar_Ocorrencias.class));
+
 
     }
 
