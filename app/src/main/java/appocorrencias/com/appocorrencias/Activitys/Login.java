@@ -98,9 +98,11 @@ public class Login extends AppCompatActivity {
         SENHA = sp1.getString("senha", "");
 
         //Cria um log, para confirmar as informações.
-        Log.i("onCreate", "Sem conversao:" +CPF);
+        Log.i("onCreate", CPF);
         Log.i("onCreate", SENHA);
 
+        txtUsuario.setText(CPF);
+        txtSenha.setText(SENHA);
 
 
 
@@ -150,6 +152,8 @@ public class Login extends AppCompatActivity {
             //Colocando os dados no shared prefence
             editor.putString("login", CPF);
             editor.putString("senha", SENHA);
+
+            editor.commit();
 
         }
 

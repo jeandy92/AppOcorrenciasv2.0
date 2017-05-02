@@ -384,7 +384,11 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        this.startActivity(new Intent(this,Cliente.class));
+
+        setContentView(R.layout.activity_cliente);
+        Intent intent = new Intent(this,Cliente.class);
+        startActivity(intent);
+
     }
 
 

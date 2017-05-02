@@ -39,30 +39,20 @@ public class Listar_Ocorrencias extends AppCompatActivity {
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
+                if (position >= 0){
 
-                        Intent i = new Intent(view.getContext(), Item_Ocorrencia_Registradas.class);
-                        String idocorrencia = ((TextView) view.findViewById(R.id.id_ocorrencia)).getText().toString();
-                        String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
+                    Intent i = new Intent(view.getContext(), Item_Ocorrencia_Registradas.class);
+                    String idocorrencia = ((TextView) view.findViewById(R.id.id_ocorrencia)).getText().toString();
+                    String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
 
 
-                        i.putExtra("id_ocorrencia", idocorrencia);
-                        i.putExtra("desc_ocorrencia", descocorrencia);
+                    i.putExtra("id_ocorrencia", idocorrencia);
+                    i.putExtra("desc_ocorrencia", descocorrencia);
 
-                        startActivity(i);
+                    startActivity(i);
 
-                        Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        Toast.makeText(view.getContext(), " case 2 Exibir Sobre", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
 
-                        break;
-                    case 2:
-                        Toast.makeText(view.getContext(), " case 3Exibir Sobre", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 3:
-                        break;
                 }
             }
         });
@@ -79,4 +69,6 @@ public class Listar_Ocorrencias extends AppCompatActivity {
         setContentView(R.layout.activity_cliente);
         this.startActivity(new Intent(this,Cliente.class));
     }
+
+
 }

@@ -384,7 +384,71 @@ Prisma, Preto, Placa DSA 6522, estavam em dois, numa moto YBR cor Vermelha, um d
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnSalvaOcorrencia" />
+
+
+
+            <com.getbase.floatingactionbutton.FloatingActionsMenu
+                android:id="@+id/multiple_actions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_x="300dp"
+                android:layout_y="391dp"
+                app:menu_labels_showAnimation="@anim/fab_roll_from_down"
+                android:src="@drawable/ic_anexar"
+                app:fab_addButtonColorNormal="@color/padrao"
+                app:fab_addButtonColorPressed="#84ede8"
+                app:fab_addButtonPlusIconColor="@color/cor_fundo"
+                app:fab_labelStyle="@style/menu_labels_style"
+
+
+                tools:layout_editor_absoluteY="300dp"
+                tools:layout_editor_absoluteX="181dp">
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_colorNormal="@color/cor_fundo"
+                    app:fab_colorPressed="#ffffff"
+                    app:fab_icon="@drawable/ic_camera"
+                    app:fab_size="mini"
+                    app:fab_title="Câmera"
+                    android:onClick="tirarFoto"/>
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/galeria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="entrar_galeria"
+                    app:fab_colorNormal="@color/cor_fundo"
+                    app:fab_colorPressed="#ffffff"
+                    app:fab_icon="@drawable/ic_galeria"
+                    app:fab_size="mini"
+                    app:fab_title="Galeria" />
+
+            </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="160dp"
+                android:layout_height="250dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="190dp"
+                android:layout_marginStart="7dp"
+                android:layout_toEndOf="@+id/edtBairro"
+                android:layout_x="196dp"
+                android:layout_y="391dp">
+
+
+            </FrameLayout>
+
+
         </android.support.constraint.ConstraintLayout>
+
+
+
+
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

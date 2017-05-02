@@ -65,16 +65,16 @@ public class Lista_Ocorrencias_Registradas {
 
     public static ArrayList<Lista_Ocorrencias_Registradas> criarocorrencias (){
 
-        ArrayList<Lista_Ocorrencias_Registradas> cursosList = new ArrayList();
+        ArrayList<Lista_Ocorrencias_Registradas> List = new ArrayList();
 
-        cursosList.add(0,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ROUBO","431313868"));
-        cursosList.add(1,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
-        cursosList.add(2,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
-        cursosList.add(3,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ROUBO","431313868"));
-        cursosList.add(4,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
+        List.add(0,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ROUBO","431313868"));
+        List.add(1,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
+        List.add(2,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
+        List.add(3,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ROUBO","431313868"));
+        List.add(4,new Lista_Ocorrencias_Registradas(random.nextInt(1000),"Jaqueta amarela, calça preta, boné verde","ASSALTO","431313868"));
 
 
-        return cursosList;
+        return List;
 
     }
  public String toString(){

@@ -45,7 +45,7 @@ public class AdapterParaOcorrencias extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = act.getLayoutInflater().inflate(R.layout.activity_modelo_lista_ocorrencias,parent,false);
+        View view = act.getLayoutInflater().inflate(R.layout.activity_item_ocorrencias_registradas,parent,false);
         Lista_Ocorrencias_Registradas listaOcorrenciasRegistradas = ocorrenciasregistradas.get(position);
 
         //pegando as referências das Views
@@ -62,7 +62,7 @@ public class AdapterParaOcorrencias extends BaseAdapter {
         if (listaOcorrenciasRegistradas.getTipocrime().equals("ASSALTO")) {
             imagem.setImageResource(R.drawable.ic_assalto);
         } else if (listaOcorrenciasRegistradas.getTipocrime().equals("ROUBO")) {
-            imagem.setImageResource(R.drawable.ic_roubo1);
+            imagem.setImageResource(R.drawable.ic_furto);
         }
 
 //        imagem.setImageResource(R.drawable.ic_assalto);
