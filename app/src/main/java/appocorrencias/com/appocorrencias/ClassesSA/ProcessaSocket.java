@@ -17,6 +17,7 @@ public class ProcessaSocket {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
+    private static  String  ip_conexao = "192.168.0.15";
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -43,7 +44,7 @@ public class ProcessaSocket {
     //Metodo que envia as informações para o Servidor (Socket)
     public static void cadastrar_no_server(String dados) {
         try {
-            cliente = new Socket("192.168.0.204", 2222);
+            cliente = new Socket(ip_conexao, 2222);
             canalSaida = cliente.getOutputStream();
             canalEntrada = cliente.getInputStream();
             canalSaida.write(dados.getBytes());
@@ -62,7 +63,7 @@ public class ProcessaSocket {
         Socket cliente2 =  new Socket();
 
         int millisecondsTimeOut = 3000;
-        InetSocketAddress adress = new InetSocketAddress("192.168.0.204", 2222);
+        InetSocketAddress adress = new InetSocketAddress(ip_conexao, 2222);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);

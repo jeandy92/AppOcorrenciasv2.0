@@ -13,24 +13,37 @@
      layout="@layout/toolbar"/>
 
 
+    <TextView
+        android:id="@+id/tvBemVindo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="260dp"
+        android:layout_x="145dp"
+        android:layout_y="65dp"
+        android:text="BEM VINDO"
+     />
 
-
-    <ListView
-            android:layout_width="match_parent"
-            android:layout_height="249dp"
-            android:layout_x="-2dp"
-            android:layout_y="341dp">
-
-        </ListView>
+    <TextView
+        android:id="@+id/tvNomeCompleto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="260dp"
+        android:layout_x="119dp"
+        android:layout_y="90dp"
+        android:text="Jeanderson Almeida"
+       />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="102dp"
+
         android:layout_height="117dp"
         android:layout_marginLeft="75dp"
         android:layout_marginTop="60dp"
-        android:layout_x="130dp"
-        android:layout_y="138dp"
+        android:layout_x="136dp"
+        android:layout_y="109dp"
         android:bottomLeftRadius="50dp"
         android:bottomRightRadius="50dp"
         android:padding="4dp"
@@ -39,63 +52,91 @@
 
         android:topRightRadius="100dp" />
 
-    <TextView
-        android:id="@+id/tvNomeCompleto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="260dp"
-        android:layout_x="116dp"
-        android:layout_y="116dp"
-        android:text="Jeanderson Almeida"
-        android:textColor="#00BFA5" />
-
-    <TextView
-        android:id="@+id/tvBemVindo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="260dp"
-        android:layout_x="145dp"
-        android:layout_y="89dp"
-        android:text="BEM VINDO"
-        android:textColor="#00BFA5" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnCadastrarOcorrencias"
+        android:layout_width="46dp"
+        android:layout_height="47dp"
+        android:layout_x="278dp"
+        android:layout_y="234dp"
+        android:clickable="true"
+        android:onClick="evCadastrarOcorrencia"
+        android:src="@drawable/ic_note_add"
+        android:text="Cadastrar Ocorrência"
+        android:theme="@style/botaopadrao"
+        app:fabSize="mini" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="46dp"
         android:layout_height="47dp"
-        android:layout_x="117dp"
-        android:layout_y="258dp"
-        android:theme="@style/botaopadrao"
+        android:layout_x="166dp"
+        android:layout_y="235dp"
         android:clickable="true"
         android:src="@drawable/ic_search"
-
-        app:fabSize="mini" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnCadastrarOcorrencias"
-        android:layout_width="52dp"
-        android:layout_height="47dp"
-        android:layout_x="210dp"
-        android:layout_y="260dp"
         android:theme="@style/botaopadrao"
-        android:clickable="true"
-        android:onClick="evCadastrarOcorrencia"
-        android:src="@drawable/ic_note_add"
-        android:text="Cadastrar Ocorrência"
+
         app:fabSize="mini" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnOcorrenciasRegistradasPorUsuario"
-        android:layout_width="53dp"
-        android:layout_height="48dp"
-        android:layout_x="28dp"
-        android:layout_y="255dp"
+        android:layout_width="46dp"
+        android:layout_height="47dp"
+        android:layout_x="50dp"
+        android:layout_y="235dp"
         android:clickable="true"
+        android:src="@drawable/ic_action_document"
+        android:stateListAnimator="@anim/fab_jump_from_down"
         android:theme="@style/botaopadrao"
         app:fabSize="mini"
-        />
+        app:fab_title="Minhas Ocorrencias">
+
+    </android.support.design.widget.FloatingActionButton>
+
+    <TextView
+        android:id="@+id/legendaminhasocorrencias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="22dp"
+        android:layout_y="285dp"
+        android:text="Minhas Ocorrências"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"></TextView>
+
+    <TextView
+        android:id="@+id/legendabuscarocorrencias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="140dp"
+        android:layout_y="285dp"
+        android:text="Buscar Ocorrências"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"></TextView>
+
+    <TextView
+        android:id="@+id/legendacadastrarocorrencias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="261dp"
+        android:layout_y="285dp"
+        android:text="Nova Ocorrêncîa"
+        android:textColor="@android:color/white"
+        android:textSize="12dp"></TextView>
+
+    <ScrollView
+        android:layout_width="339dp"
+        android:layout_height="233dp"
+        android:layout_x="13dp"
+        android:layout_y="326dp">
+
+        <ListView
+            android:id="@+id/lv_feed_de_ocorrencias"
+            android:layout_width="match_parent"
+            android:layout_height="551dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+    </ScrollView>
+
     <!--android:onClick="evOcorrenciasInformadas"-->
 
 </AbsoluteLayout>
