@@ -17,7 +17,7 @@ public class ProcessaSocket {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
-    private static  String  ip_conexao = "192.168.0.15";
+    private static  String  ip_conexao = "172.20.10.3";
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -92,7 +92,7 @@ public class ProcessaSocket {
 
     public static String cadastrar_Ocorrencia(String ID, String CPFCliente, String tipo_crime, String convDataOcorrencia,
                                               String UF, String convDescricao, String convEndereco, String convCidade,
-                                              String convBairro, String Anonimo ) throws IOException {
+                                              String convBairro, String Anonimo) throws IOException {
         //Envio de dados
         String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF + " " + convDataOcorrencia +
                 " " + Anonimo;
@@ -109,29 +109,59 @@ public class ProcessaSocket {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                cadastrar_no_server(OcorrenciaRua);
-                cadastrar_no_server(OcorrenciaBairro);
-                cadastrar_no_server(OcorrenciaCidade);
-                cadastrar_no_server(OcorrenciaDescricao);
-                cadastrar_no_server(OcorrenciaTipo);
-                return "true";
-            } else {
-                return "false";
+                retorno = cadastrar1_no_server(OcorrenciaRua);
+                if (retorno.equals("erro")) {
+                    return "erro";
+                } else {
+                    if (retorno.equals("true")) {
+                        retorno = cadastrar1_no_server(OcorrenciaBairro);
+                        if (retorno.equals("erro")) {
+                            return "erro";
+                        } else {
+                            if (retorno.equals("true")) {
+                                retorno = cadastrar1_no_server(OcorrenciaCidade);
+                                if (retorno.equals("erro")) {
+                                    return "erro";
+                                } else {
+                                    if (retorno.equals("true")) {
+                                        retorno = cadastrar1_no_server(OcorrenciaDescricao);
+                                        if (retorno.equals("erro")) {
+                                            return "erro";
+                                        } else {
+                                            if (retorno.equals("true")) {
+                                                retorno = cadastrar1_no_server(OcorrenciaTipo);
+                                                if (retorno.equals("erro")) {
+                                                    return "erro";
+                                                } else {
+                                                    return "true";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            return "false";
+
         }
+
     }
 
-    public static  String cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
-                                           String convCep,EditText UF,String numero, String rua, String bairro,
-                                           String nome, String cidade) throws IOException {
+    public static String cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
+                                          String convCep, String uf, String numero, String rua, String bairro,
+                                          String nome, String cidade, String dataNasc, String complemento) throws IOException {
 
         String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha +
                 " " + email + " " + convTelefone + " " + convCep +
-                " " + UF.getText().toString() + " " + numero;
+                " " + uf + " " + numero + " " + dataNasc;
         String cadastroNome = "CadastrarNome" + " " + convCpf + " " + nome;
         String cadastroRua = "CadastrarRua" + " " + convCpf + " " + rua;
         String cadastroBairro = "CadastrarBairro" + " " + convCpf + " " + bairro;
         String cadastroCidade = "CadastrarCidade" + " " + convCpf + " " + cidade;
+        String cadastroComplemento = "CadastrarComplemento" + " " + convCpf + " " + complemento;
 
         String retorno = cadastrar1_no_server(cadastro1);
 
@@ -139,18 +169,47 @@ public class ProcessaSocket {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                cadastrar_no_server(cadastroNome);
-                cadastrar_no_server(cadastroRua);
-                cadastrar_no_server(cadastroBairro);
-                cadastrar_no_server(cadastroCidade);
-
-                return "true";
-            } else {
-                return "false";
+                retorno = cadastrar1_no_server(cadastroNome);
+                if (retorno.equals("erro")) {
+                    return "erro";
+                } else {
+                    if (retorno.equals("true")) {
+                        retorno = cadastrar1_no_server(cadastroRua);
+                        if (retorno.equals("erro")) {
+                            return "erro";
+                        } else {
+                            if (retorno.equals("true")) {
+                                retorno = cadastrar1_no_server(cadastroBairro);
+                                if (retorno.equals("erro")) {
+                                    return "erro";
+                                } else {
+                                    if (retorno.equals("true")) {
+                                        retorno = cadastrar1_no_server(cadastroCidade);
+                                        if (retorno.equals("erro")) {
+                                            return "erro";
+                                        } else {
+                                            if (retorno.equals("true")) {
+                                                retorno = cadastrar1_no_server(cadastroComplemento);
+                                                if (retorno.equals("erro")) {
+                                                    return "erro";
+                                                } else {
+                                                    return "true";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
+
         }
+        return "false";
     }
 }
+
 
 
 

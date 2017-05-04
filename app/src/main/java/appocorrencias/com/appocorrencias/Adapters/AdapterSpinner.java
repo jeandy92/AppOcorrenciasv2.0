@@ -63,7 +63,7 @@ public class AdapterSpinner extends BaseAdapter {
         if (tiposdecrime.getImagem().equals("Roubo")) {
             imagem.setImageResource(R.drawable.ic_assalto);
         } else if (tiposdecrime.getImagem().equals("Furto")) {
-            imagem.setImageResource(R.drawable.ic_furto);
+            imagem.setImageResource(R.drawable.ic_assalto);
         }
 
 //        imagem.setImageResource(R.drawable.ic_assalto);

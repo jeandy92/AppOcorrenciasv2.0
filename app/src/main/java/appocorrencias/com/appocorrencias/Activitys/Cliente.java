@@ -21,9 +21,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.FeedAdapter;
+import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
@@ -44,6 +46,7 @@ public class Cliente extends AppCompatActivity  {
     static String Nome, CPF, Bairro;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    ProcessaSocket processa = new ProcessaSocket();
 
 
 
@@ -98,7 +101,11 @@ public class Cliente extends AppCompatActivity  {
         btnOcorrenciasRegistradas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                evOcorrenciasInformadas(v);
+                try {
+                    evOcorrenciasInformadas(v);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -181,10 +188,25 @@ public class Cliente extends AppCompatActivity  {
 
     }
 
-    public void evOcorrenciasInformadas (View view){
+    public void evOcorrenciasInformadas (View view) throws IOException {
+
+        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
+        Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
+        String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
+
+
+
 
         setContentView(R.layout.activity_listar_ocorrencias);
-        this.startActivity(new Intent(this,Listar_Ocorrencias.class));
+        Intent cliente = new Intent(this, Cliente.class);
+
+
+
+        Bundle bundle = new Bundle();
+        bundle.putString("cpf", CPF);
+
+        cliente.putExtras(bundle);
+        this.startActivity(cliente);
 
 
     }

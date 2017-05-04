@@ -25,17 +25,17 @@ public class Cadastrar_Usuario extends AppCompatActivity {
     //Variaveis globais
     private Button btnCadastarUsuario;
     private Button btnBuscar;
-    private EditText Nome,CPF,Telefone,Email,Senha,Rua, Bairro, Cidade, Numero, CEP, UF;
+    private EditText Nome, CPF, Telefone, Email, Senha, Rua, Bairro, Cidade, Numero, CEP, UF, DataNasc, ConfirmarSenha, Complemento;
 
     //Variaveis para conversão e  referencia nula
-    private String  convCpf,convTelefone,convCep,email,senha,numero,rua,bairro,cidade,uf,nome;
+    private String convCpf, convTelefone, convCep, email, senha, numero, rua, bairro, cidade, uf, nome, dataNasc, confirmarSenha, complemento;
 
     //Váriaveis para serem utilizadas  no envio do cadastro
-    protected String cadastro1,cadastroNome,cadastroRua,cadastroBairro,cadastroCidade;
+    protected String cadastro1, cadastroNome, cadastroRua, cadastroBairro, cadastroCidade;
 
 
     //Dados para o envio do socket.
-    ProcessaSocket processa =  new ProcessaSocket();
+    ProcessaSocket processa = new ProcessaSocket();
     boolean retorno;
 
     @Override
@@ -45,27 +45,31 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
 
         //Button cadastrar
-        btnCadastarUsuario = (Button) findViewById(R.id.CadastrarUsuário);
-        btnBuscar = (Button) findViewById(R.id.btnBuscar);
+        btnCadastarUsuario = (Button) findViewById(R.id.CadastrarUsuario);
 
         //Váriaveis para o cadastro
-        Nome     = (EditText) findViewById(R.id.edtNome);
-        CPF      = (EditText) findViewById(R.id.edtCPF);
-        Senha    = (EditText) findViewById(R.id.edtSenha);
-        Email    = (EditText) findViewById(R.id.edtEmail);
-        Rua      = (EditText) findViewById(R.id.edtRua);
+        Nome = (EditText) findViewById(R.id.edtNome);
+        CPF = (EditText) findViewById(R.id.edtCPF);
+        Senha = (EditText) findViewById(R.id.edtSenha);
+        DataNasc = (EditText) findViewById(R.id.edtDataNasc);
+        Rua = (EditText) findViewById(R.id.edtRua);
         Telefone = (EditText) findViewById(R.id.edtTelefone);
-        CEP      = (EditText) findViewById(R.id.edtCep);
-        Bairro   = (EditText) findViewById(R.id.edtBairro);
-        Cidade   = (EditText) findViewById(R.id.edtCidade);
-        UF       = (EditText) findViewById(R.id.edtUF);
-        Numero   = (EditText) findViewById(R.id.edtNumero);
+        CEP = (EditText) findViewById(R.id.edtCep);
+        Bairro = (EditText) findViewById(R.id.edtBairro);
+        Cidade = (EditText) findViewById(R.id.edtCidade);
+        UF = (EditText) findViewById(R.id.edtUF);
+        Numero = (EditText) findViewById(R.id.edtNumero);
+        Email = (EditText) findViewById(R.id.edtEmail);
+        ConfirmarSenha = (EditText) findViewById(R.id.edtConfirmarSenha);
+        Complemento = (EditText) findViewById(R.id.edtComplemento);
 
         // Inserindo Mascaras.
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", CPF);
         MaskEditTextChangedListener maskTelefone = new MaskEditTextChangedListener("(##)#####-####", Telefone);
         MaskEditTextChangedListener maskCEP = new MaskEditTextChangedListener("#####-###", CEP);
+        MaskEditTextChangedListener maskData = new MaskEditTextChangedListener("##/##/####", DataNasc);
 
+        DataNasc.addTextChangedListener(maskData);
         CPF.addTextChangedListener(maskCPF);
         Telefone.addTextChangedListener(maskTelefone);
         CEP.addTextChangedListener(maskCEP);
@@ -79,11 +83,10 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
         Buscar_Cep busca = new Buscar_Cep();
 
-        String Status  = busca.getEndereco(convCep);
-        if(Status.equals("erro")){
+        String Status = busca.getEndereco(convCep);
+        if (Status.equals("erro")) {
             Toast.makeText(this, "Erro na Conexão", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             Rua.setText(busca.getEndereco(convCep));
             Bairro.setText(busca.getBairro(convCep));
             Cidade.setText(busca.getCidade(convCep));
@@ -100,17 +103,20 @@ public class Cadastrar_Usuario extends AppCompatActivity {
     public void evCadastrarUsuario(View v) throws IOException {
 
         //Tirando a mascara dos campos
-         convCpf = CPF.getText().toString().replaceAll("[^0123456789]", "");
-         convTelefone = Telefone.getText().toString().replaceAll("[^0123456789]", "");
-         convCep = CEP.getText().toString().replaceAll("[^0123456789]", "");
+        convCpf = CPF.getText().toString().replaceAll("[^0123456789]", "");
+        convTelefone = Telefone.getText().toString().replaceAll("[^0123456789]", "");
+        convCep = CEP.getText().toString().replaceAll("[^0123456789]", "");
 
         //Retirando referencia null
         email = Email.getText().toString();
         senha = Senha.getText().toString();
         numero = Numero.getText().toString();
-        nome =  Nome.getText().toString();
+        nome = Nome.getText().toString();
+        confirmarSenha = ConfirmarSenha.getText().toString();
+        dataNasc = DataNasc.getText().toString();
+        complemento = Complemento.getText().toString();
 
-        Log.i(TAG,  "Cadastrar...."+convCpf);
+        Log.i(TAG, "Cadastrar...." + convCpf);
 
         if (convCpf.isEmpty()) {
             CPF.setError("Faltou preencher CPF ");
@@ -132,21 +138,32 @@ public class Cadastrar_Usuario extends AppCompatActivity {
                         CEP.setFocusable(true);
                         CEP.requestFocus();
                     } else {
-                        String retorno = processa.cadastrarUsuario(convCpf, senha, email, convTelefone, convCep, UF, numero, rua, bairro, cidade, nome);
-                        if (retorno.equals("erro")) {
-                            Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                        if (senha.isEmpty()) {
+                            Senha.setError("Faltou preencher a Senha ");
+                            Senha.setFocusable(true);
+                            Senha.requestFocus();
                         } else {
-                            if (retorno.equals("true")) {
-                                Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
-
-                                setContentView(R.layout.activity_login);
-                                this.startActivity(new Intent(this, Login.class));
+                            if (senha.equals(confirmarSenha) == false) {
+                                ConfirmarSenha.setError("A senha digitada nao corresponde");
+                                ConfirmarSenha.setFocusable(true);
+                                ConfirmarSenha.requestFocus();
                             } else {
-                                CPF.setError("CPF Já Cadastrado");
-                                CPF.setFocusable(true);
-                                CPF.requestFocus();
-                            }
+                                String retorno = processa.cadastrarUsuario(convCpf, senha, email, convTelefone, convCep, uf, numero, rua, bairro, cidade, nome, dataNasc, complemento);
+                                if (retorno.equals("erro")) {
+                                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (retorno.equals("true")) {
+                                        Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
 
+                                        setContentView(R.layout.activity_login);
+                                        this.startActivity(new Intent(this, Login.class));
+                                    } else {
+                                        CPF.setError("CPF Já Cadastrado");
+                                        CPF.setFocusable(true);
+                                        CPF.requestFocus();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -155,6 +172,7 @@ public class Cadastrar_Usuario extends AppCompatActivity {
     }
 
     //Método para Validar CPF
+
     public static boolean validarCPF(String CPF) {
         if (CPF.equals("00000000000") || CPF.equals("11111111111")
                 || CPF.equals("22222222222") || CPF.equals("33333333333")
@@ -163,7 +181,7 @@ public class Cadastrar_Usuario extends AppCompatActivity {
                 || CPF.equals("88888888888") || CPF.equals("99999999999")) {
             return true;
         }
-        Log.i(TAG,  "Validando...."+CPF);
+        Log.i(TAG, "Validando...." + CPF);
         char dig10, dig11;
         int sm, i, r, num, peso;
         try {
@@ -213,7 +231,7 @@ public class Cadastrar_Usuario extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         setContentView(R.layout.activity_login);
-        this.startActivity(new Intent(this,Login.class));
+        this.startActivity(new Intent(this, Login.class));
     }
 }
 

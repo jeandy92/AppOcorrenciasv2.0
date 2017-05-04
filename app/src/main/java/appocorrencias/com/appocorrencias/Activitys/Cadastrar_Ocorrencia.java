@@ -404,6 +404,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
         BtnAnonimo = (RadioButton) findViewById(R.id.rdBtnAnonimo);
 
+        Anonimo = "false";
+
         if(BtnAnonimo.isChecked()){
             Anonimo = "true";
         }

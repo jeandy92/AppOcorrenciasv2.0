@@ -64,13 +64,13 @@ public class FeedAdapter extends BaseAdapter {
         if (lista_feed_ocorrencias.getTipo_crime().equals("Roubo")) {
             imagem.setImageResource(R.drawable.ic_assalto);
         } else if (lista_feed_ocorrencias.getTipo_crime().equals("Furto")) {
-            imagem.setImageResource(R.drawable.ic_furto);
+            imagem.setImageResource(R.drawable.ic_assalto);
         }else if (lista_feed_ocorrencias.getTipo_crime().equals("Homicídio")) {
-            imagem.setImageResource(R.drawable.ic_homicidio);
+            imagem.setImageResource(R.drawable.ic_assalto);
         }else if (lista_feed_ocorrencias.getTipo_crime().equals("Latrocínio")) {
-            imagem.setImageResource(R.drawable.ic_furto);
+            imagem.setImageResource(R.drawable.ic_assalto);
         }else if (lista_feed_ocorrencias.getTipo_crime().equals("Abuso Sexual")) {
-            imagem.setImageResource(R.drawable.ic_abuso);
+            imagem.setImageResource(R.drawable.ic_assalto);
         }
 
  /*<item>Tráfico de drogas</item>

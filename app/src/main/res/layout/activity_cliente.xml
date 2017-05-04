@@ -47,7 +47,7 @@
         android:bottomLeftRadius="50dp"
         android:bottomRightRadius="50dp"
         android:padding="4dp"
-        android:src="@drawable/ic_app"
+        android:src="@drawable/ocorrenciaimagemlogin"
         android:topLeftRadius="50dp"
 
         android:topRightRadius="100dp" />
