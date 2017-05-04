@@ -1,5 +1,6 @@
 <application>
   <component name="IntentionManagerSettings">
     <ignoreAction name="Android/Insert App Indexing API Code" />
+    <ignoreAction name="Java/Numbers/Convert to Binary" />
   </component>
 </application>
