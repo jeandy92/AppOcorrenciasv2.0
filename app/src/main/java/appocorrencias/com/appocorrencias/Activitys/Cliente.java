@@ -38,6 +38,7 @@ public class Cliente extends AppCompatActivity  {
     private ImageButton cadastrarocorrencia;
     private Toolbar toolbar;
     private ListView lvFeedOcorrencias;
+    private TextView tvnomecompleto;
     private RecyclerView rvfeedocorrencias;
     private FloatingActionButton btnOcorrenciasRegistradas,btnCadastrarOcorrencias,btnBuscarOcorrencias;
     static String Nome, CPF, Bairro;
@@ -56,6 +57,7 @@ public class Cliente extends AppCompatActivity  {
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
         btnBuscarOcorrencias   = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
         lvFeedOcorrencias =  (ListView) findViewById(R.id.lv_feed_de_ocorrencias);
+        tvnomecompleto =  (TextView) findViewById(R.id.tv_nome_completo);
 
         ArrayList<Feed_Ocorrencias> listafeedocorrencias = criarfeedocorrencias();
 
@@ -86,7 +88,13 @@ public class Cliente extends AppCompatActivity  {
             }
         });
 
+        btnBuscarOcorrencias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                evBuscarOcorrencias(v);
 
+            }
+        });
         btnOcorrenciasRegistradas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +125,9 @@ public class Cliente extends AppCompatActivity  {
             CPF = bundle.getString("cpf");
             Bairro = bundle.getString("bairro");
         }
+        ///Setta o nome no BEM VINDO
+        tvnomecompleto.setText(Nome);
+
 
 
 
@@ -148,6 +159,12 @@ public class Cliente extends AppCompatActivity  {
         this.startActivity(new Intent(this, Cadastrar_Usuario.class));
     }
 
+
+    public void evBuscarOcorrencias(View v){
+
+
+
+}
 
     // OBS FUNCAO ESTAVA FORA DO CODIGGO JEAN VERIFICAR
     public void evCadastrarOcorrencia(View view) {

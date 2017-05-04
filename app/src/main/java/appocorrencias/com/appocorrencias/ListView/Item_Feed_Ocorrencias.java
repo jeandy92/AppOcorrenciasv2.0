@@ -14,23 +14,27 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_item_feed_ocorrencias);
 
-        TextView Edt_Id_Ocorrencia  =  (TextView) findViewById(R.id.edt_id_ocorrencia);
-        TextView Edt_Desc_Ocorrencia  =  (TextView) findViewById(R.id.edt_desc_ocorrencia);
-        TextView Edt_Tipo_Crime  =  (TextView) findViewById(R.id.edt_tipo_crime);
+        TextView Tv_Id_Ocorrencia    =  (TextView) findViewById(R.id.tv_id_ocorrencia);
+        TextView Tv_Tipo_Crime       =  (TextView) findViewById(R.id.tv_tipo_crime);
+        TextView Tv_Data_Ocorrencia  =  (TextView) findViewById(R.id.tv_data_ocorrencia);
+        TextView Tv_Desc_Ocorrencia =  (TextView) findViewById(R.id.tv_desc_ocorrencia);
+        TextView Tv_Endereco  =  (TextView) findViewById(R.id.tv_endereco);
+        TextView Tv_Bairro  =  (TextView) findViewById(R.id.tv_bairro);
 
         Intent intent = getIntent();
 
         Bundle dados = intent.getExtras();
 
-        String id     = dados.getString("id_ocorrencia").toString();
-        String descricao         = dados.getString("desc_ocorrencia").toString();
-        String tipocrime         = dados.getString("tipocrime").toString();
+        String id = dados.getString("id_ocorrencia").toString();
+        String tipocrime = dados.getString("tipocrime").toString();
+        String descocorrencia = dados.getString("desc_ocorrencia").toString();
 
 
 
-        Edt_Id_Ocorrencia.setText(id);
-        Edt_Desc_Ocorrencia.setText(descricao);
-        Edt_Tipo_Crime.setText(tipocrime);
+
+        Tv_Id_Ocorrencia.setText(id);
+        Tv_Desc_Ocorrencia.setText(descocorrencia);
+        Tv_Tipo_Crime.setText(tipocrime);
 
 
 

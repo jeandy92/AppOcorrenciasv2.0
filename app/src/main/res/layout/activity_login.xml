@@ -25,9 +25,10 @@
         android:id="@+id/entrar"
         android:background="@drawable/botoes_arrendondados"
         android:textColor="@color/primary_text"
-        android:layout_alignParentBottom="true"
         android:theme="@style/botaopadrao"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_marginBottom="39dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -81,9 +82,10 @@
         android:onClick="evCadastrarSe"
         android:background="@drawable/botoes_arrendondados"
         android:textColor="@color/primary_text"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/imageView2"
-        android:theme="@style/botaopadrao"/>
+        android:theme="@style/botaopadrao"
+        android:layout_alignBaseline="@+id/entrar"
+        android:layout_alignBottom="@+id/entrar"
+        android:layout_alignEnd="@+id/imageView2" />
 
     <CheckBox
         android:layout_width="wrap_content"

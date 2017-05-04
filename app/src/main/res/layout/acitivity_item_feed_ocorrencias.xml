@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingLeft="16dp"
+    style="@style/ocorrenciasregistradas">
+
+    <ImageView
+        android:id="@+id/imagem_ocorrencia"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        />
+
+    <TextView
+        android:id="@+id/txt_tipo_crime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo crime"
+        android:textSize="25dp"
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imagem_ocorrencia"
+        android:layout_marginStart="7dp" />
+
+    <TextView
+        android:id="@+id/txt_desc_ocorrencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="descriçao"
+        android:textSize="17dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/imagem_ocorrencia"
+        android:layout_below="@+id/txt_tipo_crime" />
+    <TextView
+        android:id="@+id/txt_id_ocorrencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="numeroocorrencia"
+        android:textSize="17dp"
+        android:visibility="invisible"
+        android:layout_below="@+id/txt_tipo_crime"
+        android:layout_toEndOf="@+id/txt_tipo_crime" />
+    <View
+        android:id="@+id/vw_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@+id/txt_tipo_crime"
+        android:layout_below="@+id/txt_desc_ocorrencia"/>
+
+
+</RelativeLayout>
+
+
