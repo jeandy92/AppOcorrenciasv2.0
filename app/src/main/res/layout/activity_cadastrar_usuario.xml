@@ -113,7 +113,7 @@
                 android:layout_below="@+id/edtSenha"
                 android:layout_marginTop="4dp"
                 android:ems="10"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 app:layout_constraintTop_toBottomOf="@+id/txtTelefone"
                 android:layout_marginLeft="0dp"
                 app:layout_constraintLeft_toLeftOf="@+id/txtTelefone"

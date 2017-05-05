@@ -230,7 +230,7 @@ public class Cadastrar_Usuario extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setContentView(R.layout.activity_login);
+
         this.startActivity(new Intent(this, Login.class));
     }
 }

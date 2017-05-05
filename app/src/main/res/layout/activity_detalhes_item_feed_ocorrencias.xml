@@ -2,6 +2,7 @@
 
     <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1">
@@ -13,9 +14,10 @@
         android:layout_x="266dp"
         android:layout_y="462dp"
         android:clickable="true"
+            android:src="@drawable/ic_question_answer"
         android:theme="@style/botaopadrao"
-        app:fabSize="mini"
-        android:src="@drawable/ic_question_answer" />
+            app:fabSize="mini"
+            app:fab_title="Adicionar Ocorrência" />
 
     <TextView
         android:id="@+id/legenda_comentarios"
@@ -31,7 +33,7 @@
         android:id="@+id/tl_endereco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="22dp"
+        android:layout_x="30dp"
         android:layout_y="347dp"
         android:text="Endereço:"
         android:textColor="@color/colorPrimary" />
@@ -40,62 +42,45 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="20dp"
+        android:layout_x="30dp"
         android:layout_y="485dp"
         app:srcCompat="@drawable/ic_assalto" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="21dp"
-        android:layout_y="457dp"
-        android:text="IMAGENS DA OCORRENCIA"
-        android:textColor="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tl_bairro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="22dp"
+        android:layout_x="30dp"
         android:layout_y="382dp"
         android:text="Bairro:"
         android:textColor="@color/colorPrimary" />
 
     <TextView
-        android:id="@+id/tv_endereco"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_x="99dp"
-        android:layout_y="348dp"
-        android:text="null"
-        android:textColor="@color/colorPrimary" />
-
-        <TextView
         android:id="@+id/tv_desc_ocorrencia"
-        android:layout_width="308dp"
+        android:layout_width="299dp"
         android:layout_height="141dp"
         android:layout_weight="0.23"
-        android:layout_x="21dp"
+        android:layout_x="30dp"
         android:layout_y="175dp"
         android:ems="10"
         android:inputType="textMultiLine"
         android:textSize="15dp" />
 
-        <TextView
+    <TextView
         android:id="@+id/tl_desc_ocorrencia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="24dp"
+        android:layout_x="30dp"
         android:layout_y="143dp"
         android:text="DESCRIÇÃO DA OCORRÊNCIA"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tl_tipo_crime"
         android:layout_width="94dp"
         android:layout_height="wrap_content"
-        android:layout_x="29dp"
+        android:layout_x="30dp"
         android:layout_y="68dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -115,21 +100,10 @@
         android:id="@+id/tl_numero_ocorrencia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="27dp"
+        android:layout_x="30dp"
         android:layout_y="20dp"
         android:text="Numero Ocorrência"
         android:textColor="@color/colorPrimary" />
-
-    <TextView
-        android:id="@+id/tv_id_ocorrencia"
-        android:layout_width="95dp"
-        android:layout_height="wrap_content"
-        android:layout_x="196dp"
-        android:layout_y="20dp"
-        android:editable="true"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/tl_data_ocorrencia"
@@ -145,7 +119,7 @@
         android:layout_width="116dp"
         android:layout_height="26dp"
         android:layout_x="196dp"
-        android:layout_y="97dp"
+        android:layout_y="95dp"
         android:editable="true"
         android:textSize="15dp" />
 
@@ -157,6 +131,38 @@
         android:layout_y="377dp"
         android:editable="true"
         android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_endereco"
+        android:layout_width="116dp"
+        android:layout_height="26dp"
+        android:layout_x="99dp"
+        android:layout_y="345dp"
+        android:text="null"
+        android:textAlignment="center"
+
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="30dp"
+        android:layout_y="455dp"
+        android:text="IMAGENS DA OCORRENCIA" />
+
+    <TextView
+        android:id="@+id/tv_id_ocorrencia"
+        android:layout_width="116dp"
+        android:layout_height="26dp"
+        android:layout_x="180dp"
+        android:layout_y="15dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="8898"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
 
 </AbsoluteLayout>

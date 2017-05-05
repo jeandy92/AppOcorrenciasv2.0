@@ -122,19 +122,18 @@
         android:textColor="@android:color/white"
         android:textSize="12dp"></TextView>
 
-    <ScrollView
-        android:layout_width="339dp"
+
+    <ListView
+        android:id="@+id/lv_feed_de_ocorrencias"
+        android:layout_width="293dp"
         android:layout_height="233dp"
-        android:layout_x="13dp"
-        android:layout_y="326dp">
+        android:layout_x="36dp"
+        android:layout_y="326dp"
+        android:animationCache="false"
+        android:paddingLeft="4dp"
+        tools:scrollbars="horizontal" />
 
-        <ListView
-            android:id="@+id/lv_feed_de_ocorrencias"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             />
 
-    </ScrollView>
 
     <!--android:onClick="evOcorrenciasInformadas"-->
 
