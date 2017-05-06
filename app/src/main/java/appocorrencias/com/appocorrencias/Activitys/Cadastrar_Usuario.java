@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.Normalizer;
 
 import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
@@ -92,11 +93,23 @@ public class Cadastrar_Usuario extends AppCompatActivity {
             Cidade.setText(busca.getCidade(convCep));
             UF.setText(busca.getUF(convCep));
 
-            rua = busca.getEndereco(convCep);
-            bairro = busca.getBairro(convCep);
-            cidade = busca.getCidade(convCep);
+
+
+            String rua2 = busca.getEndereco(convCep);
+            String bairro2 = busca.getBairro(convCep);
+            String cidade2 = busca.getCidade(convCep);
             uf = busca.getUF(convCep);
+
+            rua = removerAcentos(rua2);
+            bairro = removerAcentos(bairro2);
+            cidade = removerAcentos(cidade2);
+
+
         }
+    }
+
+    public static String removerAcentos(String str) {
+        return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
     //Cadastrar usuário no servidor
@@ -114,7 +127,8 @@ public class Cadastrar_Usuario extends AppCompatActivity {
         nome = Nome.getText().toString();
         confirmarSenha = ConfirmarSenha.getText().toString();
         dataNasc = DataNasc.getText().toString();
-        complemento = Complemento.getText().toString();
+        String complemento2 = Complemento.getText().toString();
+        complemento = removerAcentos(complemento2);
 
         Log.i(TAG, "Cadastrar...." + convCpf);
 

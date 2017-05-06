@@ -26,10 +26,13 @@ import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.FeedAdapter;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
+import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias.criarfeedocorrencias;
 
 public class Cliente extends AppCompatActivity  {
@@ -55,6 +58,14 @@ public class Cliente extends AppCompatActivity  {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
+
+            //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O CPF MANTEM O MESMO
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            Nome = bundle.getString("nome");
+            CPF = bundle.getString("cpf");
+            Bairro = bundle.getString("bairro");
+
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
@@ -124,14 +135,7 @@ public class Cliente extends AppCompatActivity  {
         setSupportActionBar(toolbar);
 
 
-        if (Nome == null && CPF == null && Bairro == null) {
-            //Pegando valores que vem do Login
-            Intent intent = getIntent();
-            Bundle bundle = intent.getExtras();
-            Nome = bundle.getString("nome");
-            CPF = bundle.getString("cpf");
-            Bairro = bundle.getString("bairro");
-        }
+
         ///Setta o nome no BEM VINDO
         tvnomecompleto.setText(Nome);
 
@@ -191,26 +195,72 @@ public class Cliente extends AppCompatActivity  {
     public void evOcorrenciasInformadas (View view) throws IOException {
 
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
+
+
         Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
+
         String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
 
+        if (retorno.equals("false")) {
+
+            Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
+
+            setContentView(R.layout.activity_listar_ocorrencias);
+            Intent cliente = new Intent(this, Listar_Ocorrencias.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("numerosOcorrencias", "false");
+            bundle.putString("qtdOcorrencias", "false");
+            bundle.putString("nome", Nome);
+            bundle.putString("cpf", CPF);
+            bundle.putString("bairro", Bairro);
+
+            cliente.putExtras(bundle);
+            this.startActivity(cliente);
 
 
+        } else {
+            // Pegando quantidade de Ocorrencias
 
-        setContentView(R.layout.activity_listar_ocorrencias);
-        Intent cliente = new Intent(this, Cliente.class);
+            int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
 
+            // Pegando dados e Adicioanando dados no Array
 
+            for (int i = 0; i < qtdOcorrencia; i++) {
+                String TodasOcorrencias[] = retorno.split("///");
 
-        Bundle bundle = new Bundle();
-        bundle.putString("cpf", CPF);
+                String Ocorrencia = TodasOcorrencias[i];
+                String OcorrenciaUm[] = Ocorrencia.split("//");
+                String Nr = OcorrenciaUm[1];
+                String CPFOco = OcorrenciaUm[2];
+                String Rua = OcorrenciaUm[3];
+                String Bairro = OcorrenciaUm[4];
+                String Cidade = OcorrenciaUm[5];
+                String UF = OcorrenciaUm[6];
+                String Descricao = OcorrenciaUm[7];
+                String Data = OcorrenciaUm[8];
+                String Tipo = OcorrenciaUm[9];
+                String Anonimo = OcorrenciaUm[10];
 
-        cliente.putExtras(bundle);
-        this.startActivity(cliente);
+                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo);
 
+                ArrayOcorrenciasRegistradas.adicionar(dado);
+            }
 
+            Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
+
+            setContentView(R.layout.activity_listar_ocorrencias);
+            Intent cliente = new Intent(this, Listar_Ocorrencias.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", Nome);
+            bundle.putString("cpf", CPF);
+            bundle.putString("bairro", Bairro);
+
+            cliente.putExtras(bundle);
+            this.startActivity(cliente);
+        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -237,6 +287,7 @@ public class Cliente extends AppCompatActivity  {
 
     public void deslogarusuario() {
         deletarSharedPreferences();
+        deleteAllArray();
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();

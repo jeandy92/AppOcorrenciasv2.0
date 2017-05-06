@@ -12,15 +12,21 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterParaOcorrencias;
+import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.Item_Ocorrencia_Registradas;
-import appocorrencias.com.appocorrencias.ListView.Lista_Ocorrencias_Registradas;
 import appocorrencias.com.appocorrencias.R;
 
-import static appocorrencias.com.appocorrencias.ListView.Lista_Ocorrencias_Registradas.criarocorrencias;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
+
 
 public class Listar_Ocorrencias extends AppCompatActivity {
 
     private ListView lista;
+    String NumerosOcorrencias;
+    String qtdOcorrencias;
+    int qtdOcorrencias2;
+    static String Nome, CPF, Bairro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +34,18 @@ public class Listar_Ocorrencias extends AppCompatActivity {
 
         setContentView(R.layout.activity_listar_ocorrencias);
 
+        //Pegando valores que vem do Login
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Nome = bundle.getString("nome");
+        CPF = bundle.getString("cpf");
+        Bairro = bundle.getString("bairro");
+
+        
+
         lista = (ListView) findViewById(R.id.lista_ocorrencias_do_usuario);
 
-        ArrayList<Lista_Ocorrencias_Registradas> listadeocorrencias = criarocorrencias();
+        ArrayList<DadosOcorrencias> listadeocorrencias = getListaOcorrencia();
 
         AdapterParaOcorrencias adapter = new AdapterParaOcorrencias(this, listadeocorrencias);
 
@@ -66,8 +81,20 @@ public class Listar_Ocorrencias extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+        deleteAllArray();
+
+
         setContentView(R.layout.activity_cliente);
-        this.startActivity(new Intent(this,Cliente.class));
+        Intent cliente = new Intent(this, Cliente.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("nome", Nome);
+        bundle.putString("cpf", CPF);
+        bundle.putString("bairro", Bairro);
+
+        cliente.putExtras(bundle);
+        this.startActivity(cliente);
+
     }
 
 
