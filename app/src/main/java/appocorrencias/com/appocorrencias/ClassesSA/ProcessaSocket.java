@@ -1,7 +1,5 @@
 package appocorrencias.com.appocorrencias.ClassesSA;
 
-import android.widget.EditText;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -44,7 +42,7 @@ public class ProcessaSocket {
     //Metodo que envia as informações para o Servidor (Socket)
     public static void cadastrar_no_server(String dados) {
         try {
-            cliente = new Socket(ip_conexao, 2222);
+            cliente = new Socket(ip_conexao, 63200);
             canalSaida = cliente.getOutputStream();
             canalEntrada = cliente.getInputStream();
             canalSaida.write(dados.getBytes());
@@ -63,7 +61,7 @@ public class ProcessaSocket {
         Socket cliente2 =  new Socket();
 
         int millisecondsTimeOut = 3000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, 2222);
+        InetSocketAddress adress = new InetSocketAddress(ip_conexao, 63200);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
