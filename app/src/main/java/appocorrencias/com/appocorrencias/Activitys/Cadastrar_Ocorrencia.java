@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -391,16 +392,27 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
     }
 
+    public static String removerAcentos(String str) {
+        return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+    }
+
 
     public void salvar_ocorrencia(View v) throws IOException {
 
-        tipo_crime =  spinner.getSelectedItem().toString();
+        String tipo_crime2 =  spinner.getSelectedItem().toString();
         UF = txEstado.getText().toString();
         convDataOcorrencia = txData_Ocorrencia.getText().toString();
-        convDescricao = txDescricao.getText().toString();
-        convEndereco = txRua.getText().toString();
-        convCidade = txCidade.getText().toString();
-        convBairro = txtBairro.getText().toString();
+        String convDescricao2 = txDescricao.getText().toString();
+        String convEndereco2 = txRua.getText().toString();
+        String convCidade2 = txCidade.getText().toString();
+        String convBairro2 = txtBairro.getText().toString();
+
+
+        tipo_crime =  removerAcentos(tipo_crime2);
+        convDescricao = removerAcentos(convDescricao2);
+        convEndereco = removerAcentos(convEndereco2);
+        convCidade = removerAcentos(convCidade2);
+        convBairro = removerAcentos(convBairro2);
 
         BtnAnonimo = (RadioButton) findViewById(R.id.rdBtnAnonimo);
 
