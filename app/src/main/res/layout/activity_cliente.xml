@@ -13,28 +13,6 @@
      layout="@layout/toolbar"/>
 
 
-    <TextView
-        android:id="@+id/tvBemVindo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="260dp"
-        android:layout_x="145dp"
-        android:layout_y="65dp"
-        android:text="BEM VINDO"
-     />
-
-    <TextView
-        android:id="@+id/tv_nome_completo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="260dp"
-        android:layout_x="119dp"
-        android:layout_y="90dp"
-
-       />
-
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="102dp"
@@ -66,7 +44,7 @@
         app:fabSize="mini" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/btnBuscarOcorrencias"
         android:layout_width="46dp"
         android:layout_height="47dp"
         android:layout_x="166dp"
@@ -133,6 +111,27 @@
         android:paddingLeft="4dp"
         tools:scrollbars="horizontal" />
 
+    <TextView
+        android:id="@+id/tv_nome_completo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="260dp"
+        android:layout_x="165dp"
+        android:layout_y="89dp"
+        android:text="NOME"
+
+        />
+
+    <TextView
+        android:id="@+id/tvBemVindo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="260dp"
+        android:layout_x="149dp"
+        android:layout_y="65dp"
+        android:text="BEM VINDO" />
 
 
     <!--android:onClick="evOcorrenciasInformadas"-->

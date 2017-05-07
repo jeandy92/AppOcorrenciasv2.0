@@ -1,9 +1,13 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,17 +16,23 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
 import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.Network.GCMRegistrationIntentService;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
 public class Login extends AppCompatActivity {
 
+    private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
+
     private byte[] imagem;
-    private String nome,SENHA, LoginServer, CPF, Nome;
-    private String convCpf,Status;
+    private String nome, SENHA, LoginServer, CPF, Nome;
+    private String convCpf, Status;
     private ProcessaSocket processa = new ProcessaSocket();
     private String retorno;
     private View view;
@@ -34,7 +44,11 @@ public class Login extends AppCompatActivity {
     private int count1;
     private int count2;
 
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
+
 //******Create by Jeanderson  22/04/2017*****//
+
 
     private SharedPreferences.OnSharedPreferenceChangeListener callback = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
@@ -48,11 +62,50 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //Verificando a Intent que esta sendo filtrada
+                if (intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCESS)) {
+                    //Registrado com sucesso
+                    String token = intent.getStringExtra("token");
+                    Toast.makeText(context, "GCM token: " + token, Toast.LENGTH_SHORT).show();
+
+                } else if (intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)) {
+                    //Rgistrado com erro
+                    Toast.makeText(context, "GCM REGISTRADO COM ERRO ", Toast.LENGTH_SHORT).show();
+                } else {
+                    //A definir
+                    Toast.makeText(context, "GCM não encontrado ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        //Verifica o  status do Play Services no seu aplicativo
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int resultCode = googleAPI.isGooglePlayServicesAvailable(getApplicationContext());
+        Log.i("RESULTCODE", "------------------------" + String.valueOf(resultCode));
+
+        if (ConnectionResult.SUCCESS != resultCode) {
+            if (googleAPI.isUserResolvableError(resultCode)) {
+                Toast.makeText(this, "Google Play Service is not install/enable em seu dispositivo ", Toast.LENGTH_SHORT).show();
+                googleAPI.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
+
+            } else {
+                Toast.makeText(this, "Este Celular não suporta o google play services", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            //Inicia o serviço
+            Intent intent = new Intent(this, GCMRegistrationIntentService.class);
+            startService(intent);
+        }
+
+
         //******Create by Jeanderson  22/04/2017*****//
 
         txtUsuario = (EditText) findViewById(R.id.usuario);
         txtSenha = (EditText) findViewById(R.id.password);
-        salvarlogin =(CheckBox) findViewById(R.id.ckSalvarLogin);
+        salvarlogin = (CheckBox) findViewById(R.id.ckSalvarLogin);
         btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
 
         //Quando usuário clicar nos campos de login e senha ele apaga os dados default para o preenchimento
@@ -105,13 +158,7 @@ public class Login extends AppCompatActivity {
         txtSenha.setText(SENHA);
 
 
-
-
-
     }
-
-
-
 
 
     public void evCadastrarSe(View view) {
@@ -119,27 +166,29 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_cadastrar_usuario);
         this.startActivity(new Intent(this, Cadastrar_Usuario.class));
     }
-////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     public void adm(View view) {
 
         setContentView(R.layout.activity_adm);
         this.startActivity(new Intent(this, Adm.class));
     }
-///////////////////////////////////////////////////////////////////////////////////////////
-    public void evEntrar(View view) throws IOException{
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    public void evEntrar(View view) throws IOException {
 
         SENHA = txtSenha.getText().toString();
         CPF = txtUsuario.getText().toString();
 
         //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E SENHA E TIRANDO A  MASCARA DO CAMPO CPF
-        CPF =  CPF.replaceAll("[^0-9]", "");
+        CPF = CPF.replaceAll("[^0-9]", "");
 
 
         //ARMAZENANDO LOG DOS DADOS FORNECIDOS PELO USUÁRIO
         Log.i("evEntrar", CPF);
         Log.i("evEntrar", SENHA);
 
-        if(salvarlogin.isChecked()){
+        if (salvarlogin.isChecked()) {
 
             Log.i("isCheck", CPF);
             Log.i("isCheck", SENHA);
@@ -167,46 +216,45 @@ public class Login extends AppCompatActivity {
                 txtUsuario.requestFocus();
                 Log.i("evEntrar(IF2)", CPF);
                 Log.i("evEntrar(IF2)", SENHA);
-            }
-            else {
+            } else {
 
                 LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
                 Log.i("evEntrar(ELSE)", CPF);
                 Log.i("evEntrar(ELSE)", SENHA);
                 Toast.makeText(this, "CPF DIGITADO CORRETAMENTE", Toast.LENGTH_SHORT).show();
                 retorno = processa.cadastrar1_no_server(LoginServer);
-                 String retorno2[] = retorno.split("/");
-                 Status = retorno2[0];
+                String retorno2[] = retorno.split("/");
+                Status = retorno2[0];
 
 
-            if (Status.equals("erro")) {
-                Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                if (Status.equals("erro")) {
+                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
 
-            } else {
-                if (Status.equals("false")) {
-                    txtUsuario.setError("Usuario ou senha Invalido");
-                    txtUsuario.setFocusable(true);
-                    txtUsuario.requestFocus();
                 } else {
-                    if (Status.equals("true")) {
-                        CPF = retorno2[1];
-                        Nome = retorno2[2];
+                    if (Status.equals("false")) {
+                        txtUsuario.setError("Usuario ou senha Invalido");
+                        txtUsuario.setFocusable(true);
+                        txtUsuario.requestFocus();
+                    } else {
+                        if (Status.equals("true")) {
+                            CPF = retorno2[1];
+                            Nome = retorno2[2];
 
-                        Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
-                        setContentView(R.layout.activity_cliente);
-                        Intent cliente = new Intent(this, Cliente.class);
+                            Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
+                            setContentView(R.layout.activity_cliente);
+                            Intent cliente = new Intent(this, Cliente.class);
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString("nome", Nome);
-                        bundle.putString("cpf", CPF);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("nome", Nome);
+                            bundle.putString("cpf", CPF);
 
-                        cliente.putExtras(bundle);
-                        this.startActivity(cliente);
-                       }
+                            cliente.putExtras(bundle);
+                            this.startActivity(cliente);
+                        }
                     }
                 }
             }
-        }else{
+        } else {
 
             txtUsuario.setError("Usuario ou senha em branco");
             txtUsuario.setFocusable(true);
@@ -258,10 +306,27 @@ public class Login extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.v("Cliente", "onPause");
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.v("Cliente", "onResume");
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCESS));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
 
 
-
+    }
+}
 
 

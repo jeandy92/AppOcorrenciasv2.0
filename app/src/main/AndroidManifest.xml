@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission android:name="appocorrencias.com.appocorrencias.C2D_MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="appocorrencias.com.appocorrencias.C2D_MESSAGE" />
 
     <!-- Permissões Perigosas -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,13 +19,15 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_app"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
@@ -43,7 +49,36 @@
         <activity android:name=".Activitys.Cadastrar_Ocorrencia" />
         <activity android:name=".ListView.Item_Ocorrencia_Registradas" />
         <activity android:name=".Activitys.Listar_Ocorrencias" />
-        <activity android:name=".ListView.Item_Feed_Ocorrencias"></activity>
+        <activity android:name=".ListView.Item_Feed_Ocorrencias"/>
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                 <category android:name="appocorrencias.com.appocorrencias" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="appocorrencias.com.appocorrencias.Network.GCMPushReceiverService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+
+        <service
+            android:name="appocorrencias.com.appocorrencias.Network.GCMRegistrationIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+
     </application>
+
 
 </manifest>

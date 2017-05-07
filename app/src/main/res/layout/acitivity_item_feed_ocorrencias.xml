@@ -28,7 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="descriçao"
-        android:textSize="17dp"
+        android:textSize="13dp"
+        android:maxLength="100"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@+id/imagem_ocorrencia"
         android:layout_below="@+id/txt_tipo_crime" />

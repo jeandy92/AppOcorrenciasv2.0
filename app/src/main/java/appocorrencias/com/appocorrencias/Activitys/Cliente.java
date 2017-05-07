@@ -36,6 +36,8 @@ import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistr
 import static appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias.criarfeedocorrencias;
 
 public class Cliente extends AppCompatActivity  {
+    //Cloud Menssagem Cliente(GCM)
+
 
     private Toolbar mToolbar;
     private Toolbar mToolbarBottom;
@@ -59,7 +61,11 @@ public class Cliente extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
-            //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O CPF MANTEM O MESMO
+
+
+
+
+        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O CPF MANTEM O MESMO
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
             Nome = bundle.getString("nome");
@@ -69,7 +75,7 @@ public class Cliente extends AppCompatActivity  {
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
-        btnBuscarOcorrencias   = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
+        btnBuscarOcorrencias   = (FloatingActionButton) findViewById(R.id.btnBuscarOcorrencias);
         lvFeedOcorrencias =  (ListView) findViewById(R.id.lv_feed_de_ocorrencias);
         tvnomecompleto =  (TextView) findViewById(R.id.tv_nome_completo);
 
@@ -315,27 +321,12 @@ public class Cliente extends AppCompatActivity  {
         Log.i("LOGOUT", sharedPreferences.getString("senha",""));
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-
-    }
-
     public void logout(Menu v) {
         deletarSharedPreferences();
 
 
         setContentView(R.layout.activity_login);
         this.startActivity(new Intent(this, Login.class));
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-
     }
 
     public static String getNome(){
@@ -351,6 +342,21 @@ public class Cliente extends AppCompatActivity  {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
 
+    }
+
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.v("Cliente", "onRestart");
+
+
+    }
 }
 
