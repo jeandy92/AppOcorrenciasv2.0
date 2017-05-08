@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
     private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
 
     private byte[] imagem;
-    private String nome, SENHA, LoginServer, CPF, Nome;
+    private String nome, SENHA, LoginServer, CPF, Nome, Bairro;
     private String convCpf, Status;
     private ProcessaSocket processa = new ProcessaSocket();
     private String retorno;
@@ -222,6 +222,7 @@ public class Login extends AppCompatActivity {
                 Log.i("evEntrar(ELSE)", CPF);
                 Log.i("evEntrar(ELSE)", SENHA);
                 Toast.makeText(this, "CPF DIGITADO CORRETAMENTE", Toast.LENGTH_SHORT).show();
+
                 retorno = processa.cadastrar1_no_server(LoginServer);
                 String retorno2[] = retorno.split("/");
                 Status = retorno2[0];
@@ -239,6 +240,7 @@ public class Login extends AppCompatActivity {
                         if (Status.equals("true")) {
                             CPF = retorno2[1];
                             Nome = retorno2[2];
+                            Bairro = retorno2[3];
 
                             Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
                             setContentView(R.layout.activity_cliente);
@@ -247,6 +249,7 @@ public class Login extends AppCompatActivity {
                             Bundle bundle = new Bundle();
                             bundle.putString("nome", Nome);
                             bundle.putString("cpf", CPF);
+                            bundle.putString("bairro", Bairro);
 
                             cliente.putExtras(bundle);
                             this.startActivity(cliente);

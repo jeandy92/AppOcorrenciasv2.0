@@ -210,7 +210,7 @@ public class ArrayOcorrenciasRegistradas {
         }
     }
 
-    static void remove(DadosOcorrencias d) {
+    public static void remove(DadosOcorrencias d) {
         dados.remove(d);
     }
 
@@ -224,7 +224,7 @@ public class ArrayOcorrenciasRegistradas {
     }
 
     public static void deleteAllArray() {
-            dados.clear();
+        dados.clear();
     }
 
     public static ArrayList<DadosOcorrencias> getListaOcorrencia () {

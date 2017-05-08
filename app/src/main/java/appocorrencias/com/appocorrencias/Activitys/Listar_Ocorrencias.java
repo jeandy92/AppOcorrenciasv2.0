@@ -23,9 +23,6 @@ import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistr
 public class Listar_Ocorrencias extends AppCompatActivity {
 
     private ListView lista;
-    String NumerosOcorrencias;
-    String qtdOcorrencias;
-    int qtdOcorrencias2;
     static String Nome, CPF, Bairro;
 
     @Override

@@ -15,7 +15,7 @@ public class ProcessaSocket {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
-    private static  String  ip_conexao = "52.34.140.131";
+    private static  String  ip_conexao =  "10.12.56.32";// "52.34.140.131";
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -61,7 +61,7 @@ public class ProcessaSocket {
         Socket cliente2 =  new Socket();
 
         int millisecondsTimeOut = 3000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, 63200);
+        InetSocketAddress adress = new InetSocketAddress(ip_conexao, 2222);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);

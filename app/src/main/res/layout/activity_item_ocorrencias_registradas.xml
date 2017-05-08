@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="20dp"
@@ -11,24 +12,35 @@
         android:layout_width="80dp"
         android:layout_height="80dp" />
 
-        <TextView
-            android:id="@+id/id_ocorrencia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Titulo"
-            android:textSize="30dp"
-            android:textColor="@android:color/black"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imagem_ocorrencia" />
+    <TextView
+        android:id="@+id/id_ocorrencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Titulo"
+        android:textSize="30dp"
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imagem_ocorrencia" />
 
-        <TextView
-            android:id="@+id/desc_ocorrencia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="descriçao"
-            android:textSize="20dp"
-            android:layout_below="@+id/id_ocorrencia"
-            android:layout_toEndOf="@+id/imagem_ocorrencia" />
+    <TextView
+        android:id="@+id/end_data_ocorrencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descricao"
+        android:layout_toEndOf="@+id/imagem_ocorrencia"
+        android:text="End e Data"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/descricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_ocorrencia"
+        android:layout_toEndOf="@+id/imagem_ocorrencia"
+        android:text="descriçao"
+        android:maxLength="170"
+        android:textSize="16dp" />
+
     <View
         android:id="@+id/vw_divider"
         android:layout_width="match_parent"
@@ -36,9 +48,19 @@
         android:background="@android:color/white"
         android:layout_marginTop="20dp"
         android:layout_alignLeft="@+id/id_ocorrencia"
-        android:layout_below="@+id/desc_ocorrencia"/>
+        android:layout_below="@+id/end_data_ocorrencia"/>
+
+    <ImageButton
+        android:id="@+id/btnDeletarOcorrencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/descricao"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:onClick=""
+        app:srcCompat="@android:drawable/ic_delete" />
 
 
-    </RelativeLayout>
+</RelativeLayout>
 
 
