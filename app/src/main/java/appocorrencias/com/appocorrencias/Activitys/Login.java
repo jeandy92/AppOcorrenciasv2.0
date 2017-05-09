@@ -22,6 +22,8 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
+import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.Network.GCMRegistrationIntentService;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -240,7 +242,9 @@ public class Login extends AppCompatActivity {
                         if (Status.equals("true")) {
                             CPF = retorno2[1];
                             Nome = retorno2[2];
-                            Bairro = retorno2[3];
+                            String Bairro2 = retorno2[3];
+
+                            evBuscarOcorrenciasBairro(Bairro2);
 
                             Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
                             setContentView(R.layout.activity_cliente);
@@ -249,7 +253,7 @@ public class Login extends AppCompatActivity {
                             Bundle bundle = new Bundle();
                             bundle.putString("nome", Nome);
                             bundle.putString("cpf", CPF);
-                            bundle.putString("bairro", Bairro);
+                            bundle.putString("bairro", Bairro2);
 
                             cliente.putExtras(bundle);
                             this.startActivity(cliente);
@@ -262,11 +266,45 @@ public class Login extends AppCompatActivity {
             txtUsuario.setError("Usuario ou senha em branco");
             txtUsuario.setFocusable(true);
             txtUsuario.requestFocus();
-
         }
-
-
     }
+
+    public void evBuscarOcorrenciasBairro (String Bairro2) throws IOException {
+
+        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro" +  Bairro2;
+        Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
+        String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
+
+        if (retorno.equals("false")) {
+            Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
+        } else {
+            // Pegando quantidade de Ocorrencias
+            int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
+            // Pegando dados e Adicioanando dados no Array
+            for (int i = 0; i < qtdOcorrencia; i++) {
+                String TodasOcorrencias[] = retorno.split("///");
+
+                String Ocorrencia = TodasOcorrencias[i];
+                String OcorrenciaUm[] = Ocorrencia.split("//");
+                String Nr = OcorrenciaUm[1];
+                String CPFOco = OcorrenciaUm[2];
+                String Rua = OcorrenciaUm[3];
+                String Bairro = OcorrenciaUm[4];
+                String Cidade = OcorrenciaUm[5];
+                String UF = OcorrenciaUm[6];
+                String Descricao = OcorrenciaUm[7];
+                String Data = OcorrenciaUm[8];
+                String Tipo = OcorrenciaUm[9];
+                String Anonimo = OcorrenciaUm[10];
+
+                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo);
+
+                ArrayOcorrenciasRegistradas.adicionar(dado);
+            }
+            Toast.makeText(this, "Mostrando Ocorrencias no seu Bairro ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 
     @Override

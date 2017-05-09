@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
@@ -18,10 +19,10 @@ import appocorrencias.com.appocorrencias.R;
 
 public class FeedAdapter extends BaseAdapter {
 
-    private final ArrayList<Feed_Ocorrencias> feed_ocorrencias;
+    private final ArrayList<DadosOcorrencias> feed_ocorrencias;
     private final Activity act;
 
-    public FeedAdapter(Activity act,ArrayList<Feed_Ocorrencias> feedocorrencias){
+    public FeedAdapter(Activity act,ArrayList<DadosOcorrencias> feedocorrencias){
         this.feed_ocorrencias = feedocorrencias;
         this.act =act;
 
@@ -46,7 +47,7 @@ public class FeedAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = act.getLayoutInflater().inflate(R.layout.acitivity_item_feed_ocorrencias,parent,false);
-        Feed_Ocorrencias lista_feed_ocorrencias  = feed_ocorrencias.get(position);
+        DadosOcorrencias lista_feed_ocorrencias  = feed_ocorrencias.get(position);
 
         //pegando as referências das Views
         TextView tipodecrime = (TextView) view.findViewById(R.id.txt_tipo_crime);
@@ -57,19 +58,21 @@ public class FeedAdapter extends BaseAdapter {
 
 
 
-        tipodecrime.setText(String.valueOf(lista_feed_ocorrencias.getTipo_crime()));
-        descricao.setText(lista_feed_ocorrencias.getDes_ocorrencia());
-        idocorrencia.setText(String.valueOf(lista_feed_ocorrencias.getId_ocorrencia()));
+        tipodecrime.setText(String.valueOf(lista_feed_ocorrencias.getTipo()));
+        descricao.setText(lista_feed_ocorrencias.getDescricao());
+        idocorrencia.setText(String.valueOf(lista_feed_ocorrencias.getNrOcorrencia()));
 
-        if (lista_feed_ocorrencias.getTipo_crime().equals("Roubo")) {
+        if (lista_feed_ocorrencias.getTipo().equals("Roubo")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        } else if (lista_feed_ocorrencias.getTipo_crime().equals("Furto")) {
+        } else if (lista_feed_ocorrencias.getTipo().equals("Furto")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        }else if (lista_feed_ocorrencias.getTipo_crime().equals("Homicídio")) {
+        } else if (lista_feed_ocorrencias.getTipo().equals("Trafico de drogas")) {
+            imagem.setImageResource(R.drawable.ic_trafico);
+        }else if (lista_feed_ocorrencias.getTipo().equals("Homicidio")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        }else if (lista_feed_ocorrencias.getTipo_crime().equals("Latrocínio")) {
+        }else if (lista_feed_ocorrencias.getTipo().equals("Latrocinio")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        }else if (lista_feed_ocorrencias.getTipo_crime().equals("Abuso Sexual")) {
+        }else if (lista_feed_ocorrencias.getTipo().equals("Abuso Sexual")) {
             imagem.setImageResource(R.drawable.ic_assalto);
         }
 

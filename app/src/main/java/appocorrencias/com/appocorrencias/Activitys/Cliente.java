@@ -33,6 +33,7 @@ import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
 import static appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias.criarfeedocorrencias;
 
 public class Cliente extends AppCompatActivity  {
@@ -79,7 +80,7 @@ public class Cliente extends AppCompatActivity  {
         lvFeedOcorrencias =  (ListView) findViewById(R.id.lv_feed_de_ocorrencias);
         tvnomecompleto =  (TextView) findViewById(R.id.tv_nome_completo);
 
-        ArrayList<Feed_Ocorrencias> listafeedocorrencias = criarfeedocorrencias();
+        ArrayList<DadosOcorrencias> listafeedocorrencias = getListaOcorrencia();
 
         FeedAdapter adapter = new FeedAdapter(this, listafeedocorrencias);
 
@@ -215,8 +216,6 @@ public class Cliente extends AppCompatActivity  {
             Intent cliente = new Intent(this, Listar_Ocorrencias.class);
 
             Bundle bundle = new Bundle();
-            bundle.putString("numerosOcorrencias", "false");
-            bundle.putString("qtdOcorrencias", "false");
             bundle.putString("nome", Nome);
             bundle.putString("cpf", CPF);
             bundle.putString("bairro", Bairro);
