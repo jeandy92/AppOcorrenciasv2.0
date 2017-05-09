@@ -13,11 +13,18 @@ import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterParaOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
-import appocorrencias.com.appocorrencias.ListView.Item_Ocorrencia_Registradas;
+import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getCidadeNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getDataNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getDescricaoNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getRuaNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getTipoNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getUFNr;
 
 
 public class Listar_Ocorrencias extends AppCompatActivity {
@@ -53,13 +60,12 @@ public class Listar_Ocorrencias extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position >= 0){
 
-                    Intent i = new Intent(view.getContext(), Item_Ocorrencia_Registradas.class);
-                    String idocorrencia = ((TextView) view.findViewById(R.id.id_ocorrencia)).getText().toString();
-                    String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
+                    Intent i = new Intent(view.getContext(), Item_Feed_Ocorrencias.class);
 
+                    String idocorrencia = ((TextView) view.findViewById(R.id.txIdOcorrencia)).getText().toString();
+                   // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
 
                     i.putExtra("id_ocorrencia", idocorrencia);
-                    i.putExtra("desc_ocorrencia", descocorrencia);
 
                     startActivity(i);
 

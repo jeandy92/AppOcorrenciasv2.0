@@ -7,6 +7,14 @@ import android.widget.TextView;
 
 import appocorrencias.com.appocorrencias.R;
 
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getCidadeNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getDataNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getDescricaoNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getRuaNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getTipoNr;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getUFNr;
+
 public class Item_Feed_Ocorrencias extends AppCompatActivity {
 
     @Override
@@ -26,18 +34,23 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         Bundle dados = intent.getExtras();
 
         String id = dados.getString("id_ocorrencia").toString();
-        String tipocrime = dados.getString("tipocrime").toString();
-        String descocorrencia = dados.getString("desc_ocorrencia").toString();
 
+        String descricao = getDescricaoNr(id);
+        String rua = getRuaNr(id);
+        String bairro  = getBairroNr(id);
+        String uf = getUFNr(id);
+        String cidade = getCidadeNr(id);
+        String data = getDataNr(id);
+        String tipo = getTipoNr(id);
 
 
 
         Tv_Id_Ocorrencia.setText(id);
-        Tv_Desc_Ocorrencia.setText(descocorrencia);
-        Tv_Tipo_Crime.setText(tipocrime);
-
-
-
+        Tv_Tipo_Crime.setText(tipo);
+        Tv_Data_Ocorrencia.setText(data);
+        Tv_Desc_Ocorrencia.setText(descricao);
+        Tv_Endereco.setText(rua+ "," + bairro);
+        Tv_Bairro.setText(cidade + "," +uf);
 
 
     }

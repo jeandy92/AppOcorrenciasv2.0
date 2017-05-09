@@ -52,8 +52,9 @@ public class AdapterParaOcorrencias extends BaseAdapter {
         DadosOcorrencias listaOcorrenciasRegistradas = ocorrenciasregistradas.get(position);
 
         //pegando as referências das Views
-        TextView nome = (TextView) view.findViewById(R.id.id_ocorrencia);
+        TextView tipo = (TextView) view.findViewById(R.id.txTipoOcorrencia);
         TextView descricao = (TextView)view.findViewById(R.id.desc_ocorrencia);
+        TextView Nr = (TextView) view.findViewById(R.id.txIdOcorrencia);
         TextView end_data = (TextView)view.findViewById(R.id.end_data_ocorrencia);
         ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_ocorrencia);
 
@@ -61,10 +62,11 @@ public class AdapterParaOcorrencias extends BaseAdapter {
 
 
 
-        nome.setText(listaOcorrenciasRegistradas.getTipo());
+        tipo.setText(listaOcorrenciasRegistradas.getTipo());
         descricao.setText("  "+listaOcorrenciasRegistradas.getDescricao());
         end_data.setText("Na"+ listaOcorrenciasRegistradas.getRua() + ","+listaOcorrenciasRegistradas.getBairro() + ", " + "Dia: " +
                 listaOcorrenciasRegistradas.getData());
+        Nr.setText(listaOcorrenciasRegistradas.getNrOcorrencia());
 
         if (listaOcorrenciasRegistradas.getTipo().equals(" Roubo")) {
             imagem.setImageResource(R.drawable.ic_assalto);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,132 +9,253 @@
     tools:context="appocorrencias.com.appocorrencias.Activitys.Cliente">
 
 
-    <include android:id="@+id/toolbar"
-     layout="@layout/toolbar"/>
-
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="102dp"
-
-        android:layout_height="117dp"
-        android:layout_marginLeft="75dp"
-        android:layout_marginTop="60dp"
-        android:layout_x="136dp"
-        android:layout_y="109dp"
-        android:bottomLeftRadius="50dp"
-        android:bottomRightRadius="50dp"
-        android:padding="4dp"
-        android:src="@drawable/ocorrenciaimagemlogin"
-        android:topLeftRadius="50dp"
-
-        android:topRightRadius="100dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnCadastrarOcorrencias"
-        android:layout_width="46dp"
-        android:layout_height="47dp"
-        android:layout_x="278dp"
-        android:layout_y="234dp"
-        android:clickable="true"
-        android:onClick="evCadastrarOcorrencia"
-        android:src="@drawable/ic_note_add"
-        android:text="Cadastrar Ocorrência"
-        android:theme="@style/botaopadrao"
-        app:fabSize="mini" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnBuscarOcorrencias"
-        android:layout_width="46dp"
-        android:layout_height="47dp"
-        android:layout_x="166dp"
-        android:layout_y="235dp"
-        android:clickable="true"
-        android:src="@drawable/ic_search"
-        android:theme="@style/botaopadrao"
-
-        app:fabSize="mini" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnOcorrenciasRegistradasPorUsuario"
-        android:layout_width="46dp"
-        android:layout_height="47dp"
-        android:layout_x="50dp"
-        android:layout_y="235dp"
-        android:clickable="true"
-        android:src="@drawable/ic_action_document"
-        android:stateListAnimator="@anim/fab_jump_from_down"
-        android:theme="@style/botaopadrao"
-        app:fabSize="mini"
-        app:fab_title="Minhas Ocorrencias">
-
-    </android.support.design.widget.FloatingActionButton>
-
-    <TextView
-        android:id="@+id/legendaminhasocorrencias"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="22dp"
-        android:layout_y="285dp"
-        android:text="Minhas Ocorrências"
-        android:textColor="@android:color/white"
-        android:textSize="12dp"></TextView>
-
-    <TextView
-        android:id="@+id/legendabuscarocorrencias"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="140dp"
-        android:layout_y="285dp"
-        android:text="Buscar Ocorrências"
-        android:textColor="@android:color/white"
-        android:textSize="12dp"></TextView>
-
-    <TextView
-        android:id="@+id/legendacadastrarocorrencias"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="261dp"
-        android:layout_y="285dp"
-        android:text="Nova Ocorrêncîa"
-        android:textColor="@android:color/white"
-        android:textSize="12dp"></TextView>
-
-
     <ListView
         android:id="@+id/lv_feed_de_ocorrencias"
-        android:layout_width="match_parent"
-        android:layout_height="233dp"
-        android:layout_x="36dp"
-        android:layout_y="326dp"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:animationCache="false"
         android:paddingLeft="4dp"
-        tools:scrollbars="horizontal" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:scrollbars="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="270dp" />
 
-    <TextView
-        android:id="@+id/tv_nome_completo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="260dp"
-        android:layout_x="165dp"
-        android:layout_y="89dp"
-        android:text="NOME"
+    <ScrollView
+        android:id="@+id/ScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-        />
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/activity_cliente2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context="appocorrencias.com.appocorrencias.Activitys.Cliente">
 
-    <TextView
-        android:id="@+id/tvBemVindo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="260dp"
-        android:layout_x="149dp"
-        android:layout_y="65dp"
-        android:text="BEM VINDO" />
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="9dp"
+                app:layout_constraintBottom_toTopOf="@+id/tvBemVindo"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:layout_constraintBottom_creator="1"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintTop_creator="1" />
+
+
+            <TextView
+                android:id="@+id/tvBemVindo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="50dp"
+                android:text="BEM VINDO"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintTop_creator="1" />
+
+            <TextView
+                android:id="@+id/tv_nome_completo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="NOME"
+                app:layout_constraintLeft_toLeftOf="@+id/tvBemVindo"
+                app:layout_constraintRight_toRightOf="@+id/tvBemVindo"
+                app:layout_constraintTop_toBottomOf="@+id/tvBemVindo"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintTop_creator="1" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="90dp"
+
+                android:layout_height="90dp"
+                android:layout_marginTop="7dp"
+                android:bottomLeftRadius="50dp"
+
+                android:bottomRightRadius="50dp"
+                android:padding="4dp"
+                android:src="@drawable/ocorrenciaimagemlogin"
+                android:topLeftRadius="50dp"
+                android:topRightRadius="100dp"
+                app:layout_constraintLeft_toLeftOf="@+id/tv_nome_completo"
+                app:layout_constraintRight_toRightOf="@+id/tv_nome_completo"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nome_completo"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintTop_creator="1" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnOcorrenciasRegistradasPorUsuario"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:src="@drawable/ic_action_document"
+                android:stateListAnimator="@anim/fab_jump_from_down"
+                android:theme="@style/botaopadrao"
+                app:fabSize="mini"
+                app:fab_title="Minhas Ocorrencias"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/btnBuscarOcorrencias"
+                app:layout_constraintTop_toTopOf="@+id/btnBuscarOcorrencias"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintTop_creator="1">
+
+            </android.support.design.widget.FloatingActionButton>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnBuscarOcorrencias"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+
+                android:clickable="true"
+                android:src="@drawable/ic_search"
+                android:theme="@style/botaopadrao"
+                app:fabSize="mini"
+                app:layout_constraintLeft_toLeftOf="@+id/imageView3"
+                app:layout_constraintRight_toRightOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnCadastrarOcorrencias"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:onClick="evCadastrarOcorrencia"
+                android:src="@drawable/ic_note_add"
+                android:text="Cadastrar Ocorrência"
+                android:theme="@style/botaopadrao"
+                app:fabSize="mini"
+                app:layout_constraintHorizontal_bias="0.524"
+                app:layout_constraintLeft_toRightOf="@+id/btnBuscarOcorrencias"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnBuscarOcorrencias"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1"
+                tools:layout_constraintTop_creator="1" />
+
+            <TextView
+                android:id="@+id/legendaminhasocorrencias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Minhas Ocorrências"
+                android:textColor="@android:color/white"
+                android:textSize="12dp"
+                app:layout_constraintLeft_toLeftOf="@+id/btnOcorrenciasRegistradasPorUsuario"
+                app:layout_constraintRight_toRightOf="@+id/btnOcorrenciasRegistradasPorUsuario"
+                app:layout_constraintTop_toBottomOf="@+id/btnOcorrenciasRegistradasPorUsuario"
+                tools:layout_constraintTop_creator="1"></TextView>
+
+            <TextView
+                android:id="@+id/legendabuscarocorrencias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Buscar Ocorrências"
+                android:textColor="@android:color/white"
+                android:textSize="12dp"
+                app:layout_constraintLeft_toLeftOf="@+id/btnBuscarOcorrencias"
+                app:layout_constraintRight_toRightOf="@+id/btnBuscarOcorrencias"
+                app:layout_constraintTop_toBottomOf="@+id/btnBuscarOcorrencias"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintTop_creator="1"></TextView>
+
+            <TextView
+                android:id="@+id/legendacadastrarocorrencias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Nova Ocorrêncîa"
+                android:textColor="@android:color/white"
+                android:textSize="12dp"
+                app:layout_constraintLeft_toLeftOf="@+id/btnCadastrarOcorrencias"
+                app:layout_constraintRight_toRightOf="@+id/btnCadastrarOcorrencias"
+                app:layout_constraintTop_toTopOf="@+id/legendabuscarocorrencias"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintTop_creator="1"></TextView>
+
+
+            <ScrollView
+                android:id="@+id/ScrollView2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/legendabuscarocorrencias"><![CDATA[>
+
+                ]]></ScrollView>
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
 
     <!--android:onClick="evOcorrenciasInformadas"-->
 
-</AbsoluteLayout>
+</android.support.constraint.ConstraintLayout>
 

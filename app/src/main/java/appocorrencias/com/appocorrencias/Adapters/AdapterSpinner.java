@@ -50,7 +50,7 @@ public class AdapterSpinner extends BaseAdapter {
         TiposDeCrime tiposdecrime = listadecrimes.get(position);
 
         //pegando as referências das Views
-        TextView nome = (TextView) view.findViewById(R.id.id_ocorrencia);
+        TextView nome = (TextView) view.findViewById(R.id.txTipoOcorrencia);
         EditText descricao = (EditText) view.findViewById(R.id.desc_ocorrencia);
         ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_ocorrencia);
 

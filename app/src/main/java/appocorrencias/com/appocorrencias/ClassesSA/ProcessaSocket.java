@@ -15,7 +15,7 @@ public class ProcessaSocket {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
-    private static  String  ip_conexao =  "10.12.56.32";// "52.34.140.131";
+    private static  String  ip_conexao =  "172.20.10.3";// "52.34.140.131";
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];

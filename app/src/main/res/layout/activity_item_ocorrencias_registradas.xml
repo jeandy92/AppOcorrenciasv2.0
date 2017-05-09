@@ -14,14 +14,15 @@
         android:layout_above="@+id/vw_divider" />
 
     <TextView
-        android:id="@+id/id_ocorrencia"
+        android:id="@+id/txTipoOcorrencia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Titulo"
         android:textSize="30dp"
         android:textColor="@android:color/black"
+        android:layout_marginEnd="20dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/imagem_ocorrencia" />
+        android:layout_toEndOf="@+id/txIdOcorrencia" />
 
     <TextView
         android:id="@+id/end_data_ocorrencia"
@@ -36,7 +37,7 @@
         android:id="@+id/desc_ocorrencia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/id_ocorrencia"
+        android:layout_below="@+id/txTipoOcorrencia"
         android:layout_toEndOf="@+id/imagem_ocorrencia"
         android:text="descriçao"
         android:maxLength="190"
@@ -48,7 +49,7 @@
         android:layout_height="0.8dp"
         android:background="@android:color/white"
         android:layout_marginTop="20dp"
-        android:layout_alignLeft="@+id/id_ocorrencia"
+        android:layout_alignLeft="@+id/txTipoOcorrencia"
         android:layout_below="@+id/end_data_ocorrencia"/>
 
     <ImageButton
@@ -59,7 +60,16 @@
         android:layout_alignParentEnd="true"
         app:srcCompat="@android:drawable/ic_delete" />
 
-
+    <TextView
+        android:id="@+id/txIdOcorrencia"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/desc_ocorrencia"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imagem_ocorrencia"
+        android:textSize="30dp"
+        android:textColor="@android:color/black"
+        android:text="ID" />
 
 
 </RelativeLayout>

@@ -32,7 +32,7 @@ public class ArrayOcorrenciasRegistradas {
         return n;
     }
 
-    static String getAllBairro() {
+    public static String getAllBairro() {
         StringBuilder bairro = new StringBuilder();
         for (DadosOcorrencias x : dados) {
             bairro.append(x.Bairro + "/");
@@ -40,7 +40,7 @@ public class ArrayOcorrenciasRegistradas {
         return bairro.toString();
     }
 
-    static String getAllData() {
+   public static String getAllData() {
         StringBuilder data = new StringBuilder();
         for (DadosOcorrencias x : dados) {
             data.append(x.Data + "/");
@@ -48,7 +48,7 @@ public class ArrayOcorrenciasRegistradas {
         return data.toString();
     }
 
-    static String getAllTipo() {
+    public static String getAllTipo() {
         StringBuilder tipo = new StringBuilder();
         for (DadosOcorrencias x : dados) {
             tipo.append(x.Tipo + "/");
@@ -66,7 +66,7 @@ public class ArrayOcorrenciasRegistradas {
         return Nr.toString();
     }
 
-    static String getAllDescricao() {
+    public static String getAllDescricao() {
         StringBuilder descricao = new StringBuilder();
         for (DadosOcorrencias x : dados) {
             descricao.append(x.Descricao + "/");
@@ -75,7 +75,7 @@ public class ArrayOcorrenciasRegistradas {
     }
 
     ///RETORNANDO DADOS POR NUMERO DE OCORRENCIA
-    static String getBairroNr(String Nr) {
+    public static String getBairroNr(String Nr) {
         String bairro = null;
 
         int n = dados.size();
@@ -88,7 +88,7 @@ public class ArrayOcorrenciasRegistradas {
         return bairro;
     }
 
-    static String getTipoNr(String Nr) {
+    public static String getTipoNr(String Nr) {
         String tipo = null;
 
         int n = dados.size();
@@ -101,7 +101,7 @@ public class ArrayOcorrenciasRegistradas {
         return tipo;
     }
 
-    static String getDataNr(String Nr) {
+    public static String getDataNr(String Nr) {
         String data = null;
 
         int n = dados.size();
@@ -114,7 +114,7 @@ public class ArrayOcorrenciasRegistradas {
         return data;
     }
 
-    static String getDescricaoNr(String Nr) {
+    public static String getDescricaoNr(String Nr) {
         String descricao = null;
 
         int n = dados.size();
@@ -127,7 +127,7 @@ public class ArrayOcorrenciasRegistradas {
         return descricao;
     }
 
-    static String getCPFNr(String Nr) {
+    public static String getCPFNr(String Nr) {
         String cpf = null;
 
         int n = dados.size();
@@ -140,7 +140,7 @@ public class ArrayOcorrenciasRegistradas {
         return cpf;
     }
 
-    static String getRuaNr(String Nr) {
+    public static String getRuaNr(String Nr) {
         String rua = null;
 
         int n = dados.size();
@@ -153,7 +153,7 @@ public class ArrayOcorrenciasRegistradas {
         return rua;
     }
 
-    static String getUFNr(String Nr) {
+    public static String getUFNr(String Nr) {
         String uf = null;
 
         int n = dados.size();
@@ -166,7 +166,7 @@ public class ArrayOcorrenciasRegistradas {
         return uf;
     }
 
-    static String getCidadeNr(String Nr) {
+    public static String getCidadeNr(String Nr) {
         String cidade = null;
 
         int n = dados.size();
@@ -179,7 +179,7 @@ public class ArrayOcorrenciasRegistradas {
         return cidade;
     }
 
-    static String getAnonimoNr(String Nr) {
+    public static String getAnonimoNr(String Nr) {
         String anonimo = null;
 
         int n = dados.size();

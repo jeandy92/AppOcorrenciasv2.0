@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/id_ocorrencia"
+            android:id="@+id/txTipoOcorrencia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Titulo"

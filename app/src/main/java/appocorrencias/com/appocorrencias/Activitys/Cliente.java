@@ -28,13 +28,12 @@ import appocorrencias.com.appocorrencias.Adapters.FeedAdapter;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
-import appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
-import static appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias.criarfeedocorrencias;
+
 
 public class Cliente extends AppCompatActivity  {
     //Cloud Menssagem Cliente(GCM)
@@ -186,6 +185,8 @@ public class Cliente extends AppCompatActivity  {
 
     // OBS FUNCAO ESTAVA FORA DO CODIGGO JEAN VERIFICAR
     public void evCadastrarOcorrencia(View view) {
+        deleteAllArray();
+
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
         Intent cadastrarOcorrencia = new Intent(this, Cadastrar_Ocorrencia.class);
@@ -196,10 +197,11 @@ public class Cliente extends AppCompatActivity  {
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
 
-
     }
 
     public void evOcorrenciasInformadas (View view) throws IOException {
+
+        deleteAllArray();
 
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
 
@@ -344,6 +346,7 @@ public class Cliente extends AppCompatActivity  {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        deleteAllArray();
         finish();
 
     }

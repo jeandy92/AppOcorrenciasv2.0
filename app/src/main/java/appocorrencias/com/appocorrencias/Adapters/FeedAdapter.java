@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
-import appocorrencias.com.appocorrencias.ListView.Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
 /**
@@ -62,17 +61,17 @@ public class FeedAdapter extends BaseAdapter {
         descricao.setText(lista_feed_ocorrencias.getDescricao());
         idocorrencia.setText(String.valueOf(lista_feed_ocorrencias.getNrOcorrencia()));
 
-        if (lista_feed_ocorrencias.getTipo().equals("Roubo")) {
+        if (lista_feed_ocorrencias.getTipo().equals(" Roubo")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        } else if (lista_feed_ocorrencias.getTipo().equals("Furto")) {
+        } else if (lista_feed_ocorrencias.getTipo().equals(" Furto")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        } else if (lista_feed_ocorrencias.getTipo().equals("Trafico de drogas")) {
+        } else if (lista_feed_ocorrencias.getTipo().equals(" Trafico de drogas")) {
             imagem.setImageResource(R.drawable.ic_trafico);
-        }else if (lista_feed_ocorrencias.getTipo().equals("Homicidio")) {
+        }else if (lista_feed_ocorrencias.getTipo().equals(" Homicidio")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        }else if (lista_feed_ocorrencias.getTipo().equals("Latrocinio")) {
+        }else if (lista_feed_ocorrencias.getTipo().equals(" Latrocinio")) {
             imagem.setImageResource(R.drawable.ic_assalto);
-        }else if (lista_feed_ocorrencias.getTipo().equals("Abuso Sexual")) {
+        }else if (lista_feed_ocorrencias.getTipo().equals(" Abuso Sexual")) {
             imagem.setImageResource(R.drawable.ic_assalto);
         }
 
