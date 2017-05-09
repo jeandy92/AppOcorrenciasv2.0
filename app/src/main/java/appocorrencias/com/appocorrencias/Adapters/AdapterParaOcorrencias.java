@@ -62,8 +62,8 @@ public class AdapterParaOcorrencias extends BaseAdapter {
 
 
         nome.setText(listaOcorrenciasRegistradas.getTipo());
-        //descricao.setText(listaOcorrenciasRegistradas.getDescricao());
-        end_data.setText("Na Rua"+ listaOcorrenciasRegistradas.getRua() + ","+listaOcorrenciasRegistradas.getBairro() + ", " + "Dia: " +
+        descricao.setText("  "+listaOcorrenciasRegistradas.getDescricao());
+        end_data.setText("Na"+ listaOcorrenciasRegistradas.getRua() + ","+listaOcorrenciasRegistradas.getBairro() + ", " + "Dia: " +
                 listaOcorrenciasRegistradas.getData());
 
         if (listaOcorrenciasRegistradas.getTipo().equals(" Roubo")) {

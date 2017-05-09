@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/imagem_ocorrencia"
         android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_height="80dp"
+        android:layout_above="@+id/vw_divider" />
 
     <TextView
         android:id="@+id/id_ocorrencia"
@@ -26,20 +27,20 @@
         android:id="@+id/end_data_ocorrencia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/descricao"
+        android:layout_below="@+id/desc_ocorrencia"
         android:layout_toEndOf="@+id/imagem_ocorrencia"
         android:text="End e Data"
         android:textSize="13sp" />
 
     <TextView
-        android:id="@+id/descricao"
+        android:id="@+id/desc_ocorrencia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_ocorrencia"
         android:layout_toEndOf="@+id/imagem_ocorrencia"
         android:text="descriçao"
-        android:maxLength="170"
-        android:textSize="16dp" />
+        android:maxLength="190"
+        android:textSize="17dp" />
 
     <View
         android:id="@+id/vw_divider"
@@ -53,12 +54,12 @@
     <ImageButton
         android:id="@+id/btnDeletarOcorrencia"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/descricao"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/desc_ocorrencia"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:onClick=""
         app:srcCompat="@android:drawable/ic_delete" />
+
+
 
 
 </RelativeLayout>

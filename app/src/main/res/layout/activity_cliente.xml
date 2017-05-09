@@ -103,7 +103,7 @@
 
     <ListView
         android:id="@+id/lv_feed_de_ocorrencias"
-        android:layout_width="293dp"
+        android:layout_width="match_parent"
         android:layout_height="233dp"
         android:layout_x="36dp"
         android:layout_y="326dp"
