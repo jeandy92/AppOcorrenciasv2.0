@@ -1,13 +1,9 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,19 +14,20 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
-import appocorrencias.com.appocorrencias.Network.GCMRegistrationIntentService;
+import appocorrencias.com.appocorrencias.Network.FCMFirebaseInstanceIDService;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
 public class Login extends AppCompatActivity {
 
-    private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
+    private int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private byte[] imagem;
     private String nome, SENHA, LoginServer, CPF, Nome, Bairro;
@@ -45,8 +42,8 @@ public class Login extends AppCompatActivity {
     private static final String PREF_NAME = "MainActivityPreferences";
     private int count1;
     private int count2;
+    private static final String TAG = "Login";
 
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
 
 //******Create by Jeanderson  22/04/2017*****//
@@ -64,25 +61,11 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                //Verificando a Intent que esta sendo filtrada
-                if (intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCESS)) {
-                    //Registrado com sucesso
-                    String token = intent.getStringExtra("token");
-                    Toast.makeText(context, "GCM token: " + token, Toast.LENGTH_SHORT).show();
+        String token = FirebaseInstanceId.getInstance().getToken();
 
-                } else if (intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)) {
-                    //Rgistrado com erro
-                    Toast.makeText(context, "GCM REGISTRADO COM ERRO ", Toast.LENGTH_SHORT).show();
-                } else {
-                    //A definir
-                    Toast.makeText(context, "GCM não encontrado ", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
 
+        Log.d(TAG, token);
+        Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
         //Verifica o  status do Play Services no seu aplicativo
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int resultCode = googleAPI.isGooglePlayServicesAvailable(getApplicationContext());
@@ -98,7 +81,7 @@ public class Login extends AppCompatActivity {
             }
         } else {
             //Inicia o serviço
-            Intent intent = new Intent(this, GCMRegistrationIntentService.class);
+            Intent intent = new Intent(this, FCMFirebaseInstanceIDService.class);
             startService(intent);
         }
 
@@ -352,19 +335,12 @@ public class Login extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        Log.v("Cliente", "onPause");
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.v("Cliente", "onResume");
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCESS));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
 
 
     }

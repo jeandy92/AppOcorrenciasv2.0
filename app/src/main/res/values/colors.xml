@@ -15,4 +15,5 @@
         <color name="fundo_botao">#FFFFFF</color>
         <color name="texto_botao">#212121</color>
     <color name="cor_icone">#FFFFFF</color>
+    <color name="cast_expanded_controller_background_color">#FFFFFF</color>
 </resources>
