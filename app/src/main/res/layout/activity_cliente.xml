@@ -9,27 +9,6 @@
     tools:context="appocorrencias.com.appocorrencias.Activitys.Cliente">
 
 
-    <ListView
-        android:id="@+id/lv_feed_de_ocorrencias"
-        android:layout_width="0dp"
-        android:layout_height="240dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:animationCache="false"
-        android:paddingLeft="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:scrollbars="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="270dp" />
-
     <ScrollView
         android:id="@+id/ScrollView"
         android:layout_width="0dp"
@@ -41,7 +20,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,6 +35,20 @@
             android:orientation="vertical"
             tools:context="appocorrencias.com.appocorrencias.Activitys.Cliente">
 
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="591dp" />
 
             <include
                 android:id="@+id/toolbar"
@@ -234,22 +227,24 @@
                 tools:layout_constraintTop_creator="1"></TextView>
 
 
-            <ScrollView
-                android:id="@+id/ScrollView2"
+            <ListView
+                android:id="@+id/lv_feed_de_ocorrencias"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="279dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:animationCache="false"
+                android:paddingLeft="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/legendabuscarocorrencias"><![CDATA[>
-
-                ]]></ScrollView>
+                app:layout_constraintTop_toBottomOf="@+id/legendabuscarocorrencias"
+                app:layout_constraintVertical_bias="0.063"
+                tools:layout_constraintLeft_creator="1"
+                tools:scrollbars="horizontal"
+                app:layout_constraintHorizontal_bias="0.0" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
