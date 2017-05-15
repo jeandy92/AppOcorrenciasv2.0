@@ -14,7 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 
@@ -25,9 +26,11 @@ import appocorrencias.com.appocorrencias.Network.FCMFirebaseInstanceIDService;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
+import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
+
 public class Login extends AppCompatActivity {
 
-    private int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
 
     private byte[] imagem;
     private String nome, SENHA, LoginServer, CPF, Nome, Bairro;
@@ -44,7 +47,7 @@ public class Login extends AppCompatActivity {
     private int count2;
     private static final String TAG = "Login";
 
-
+    private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
 
 //******Create by Jeanderson  22/04/2017*****//
 
@@ -61,11 +64,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String token = FirebaseInstanceId.getInstance().getToken();
+       firebasereferencia.child("pontos").setValue("100");
 
-
-        Log.d(TAG, token);
-        Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
         //Verifica o  status do Play Services no seu aplicativo
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int resultCode = googleAPI.isGooglePlayServicesAvailable(getApplicationContext());
@@ -161,6 +161,13 @@ public class Login extends AppCompatActivity {
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     public void evEntrar(View view) throws IOException {
+
+        String token = getInstance().getToken();
+
+
+        Log.d(TAG, token);
+
+        Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
 
         SENHA = txtSenha.getText().toString();
         CPF = txtUsuario.getText().toString();
