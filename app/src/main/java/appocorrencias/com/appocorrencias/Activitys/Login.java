@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 
@@ -47,7 +45,7 @@ public class Login extends AppCompatActivity {
     private int count2;
     private static final String TAG = "Login";
 
-    private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
+    //private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
 
 //******Create by Jeanderson  22/04/2017*****//
 
@@ -64,7 +62,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-       firebasereferencia.child("pontos").setValue("100");
+
 
         //Verifica o  status do Play Services no seu aplicativo
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
