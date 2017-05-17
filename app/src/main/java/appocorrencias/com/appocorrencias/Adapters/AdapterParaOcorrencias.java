@@ -52,21 +52,17 @@ public class AdapterParaOcorrencias extends BaseAdapter {
         DadosOcorrencias listaOcorrenciasRegistradas = ocorrenciasregistradas.get(position);
 
         //pegando as referências das Views
-        TextView tipo = (TextView) view.findViewById(R.id.txTipoOcorrencia);
-        TextView descricao = (TextView)view.findViewById(R.id.desc_ocorrencia);
-        TextView Nr = (TextView) view.findViewById(R.id.txIdOcorrencia);
-        TextView end_data = (TextView)view.findViewById(R.id.end_data_ocorrencia);
+        TextView tipodecrime = (TextView) view.findViewById(R.id.txt_tipo_crime);
+        TextView descricao = (TextView)view.findViewById(R.id.txt_desc_ocorrencia);
+        TextView endereco = (TextView)view.findViewById(R.id.txEndereco);
         ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_ocorrencia);
+        TextView idocorrencia = (TextView)  view.findViewById(R.id.txt_id_ocorrencia);
 
 
-
-
-
-        tipo.setText(listaOcorrenciasRegistradas.getTipo());
-        descricao.setText("  "+listaOcorrenciasRegistradas.getDescricao());
-        end_data.setText("Na"+ listaOcorrenciasRegistradas.getRua() + ","+listaOcorrenciasRegistradas.getBairro() + ", " + "Dia: " +
-                listaOcorrenciasRegistradas.getData());
-        Nr.setText(listaOcorrenciasRegistradas.getNrOcorrencia());
+        tipodecrime.setText(String.valueOf(listaOcorrenciasRegistradas.getTipo()));
+        descricao.setText(listaOcorrenciasRegistradas.getDescricao());
+        endereco.setText("Ocorreu na"+ listaOcorrenciasRegistradas.getRua() + " no dia " + listaOcorrenciasRegistradas.getData());
+        idocorrencia.setText(String.valueOf(listaOcorrenciasRegistradas.getNrOcorrencia()));
 
         if (listaOcorrenciasRegistradas.getTipo().equals(" Roubo")) {
             imagem.setImageResource(R.drawable.ic_assalto);

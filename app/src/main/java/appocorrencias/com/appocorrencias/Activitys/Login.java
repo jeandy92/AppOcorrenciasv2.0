@@ -268,6 +268,8 @@ public class Login extends AppCompatActivity {
         } else {
             // Pegando quantidade de Ocorrencias
             int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
+
+
             // Pegando dados e Adicioanando dados no Array
             for (int i = 0; i < qtdOcorrencia; i++) {
                 String TodasOcorrencias[] = retorno.split("///");

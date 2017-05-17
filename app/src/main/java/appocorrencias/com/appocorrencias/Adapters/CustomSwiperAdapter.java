@@ -16,12 +16,15 @@ import appocorrencias.com.appocorrencias.R;
  */
 
 public class CustomSwiperAdapter extends PagerAdapter {
-    private int[] image_resources = {R.drawable.roubo, R.drawable.ocorrenciaimagemlogin, R.drawable.assalto, R.drawable.ic_assalto};
+
+
+    int[] image_resources;
     private Context ctx;
     private LayoutInflater layoutInflater;
 
-    public CustomSwiperAdapter(Context ctx){
+    public CustomSwiperAdapter(Context ctx, int[] image_resources){
         this.ctx = ctx ;
+        this.image_resources = image_resources;
     }
 
 
@@ -34,7 +37,6 @@ public class CustomSwiperAdapter extends PagerAdapter {
     public boolean isViewFromObject(View view, Object object) {
         return (view == (ConstraintLayout) object);
     }
-
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -42,9 +44,8 @@ public class CustomSwiperAdapter extends PagerAdapter {
         ImageView imageView =  (ImageView) item_view.findViewById(R.id.image_view);
         TextView textView = (TextView) item_view.findViewById(R.id.image_count);
         imageView.setImageResource(image_resources[position]);
-        textView.setText("imagem : " + position);
+        textView.setText("");
         container.addView(item_view);
-
         return item_view;
     }
 

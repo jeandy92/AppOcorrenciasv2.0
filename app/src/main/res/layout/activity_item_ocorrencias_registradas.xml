@@ -1,77 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingLeft="16dp"
     style="@style/ocorrenciasregistradas">
 
     <ImageView
         android:id="@+id/imagem_ocorrencia"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_above="@+id/vw_divider" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_editor_absoluteY="8dp" />
 
     <TextView
-        android:id="@+id/txTipoOcorrencia"
+        android:id="@+id/txt_tipo_crime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tipo"
+        android:textColor="@color/wallet_dim_foreground_holo_dark"
+        android:textSize="18dp"
+        tools:layout_editor_absoluteY="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/imagem_ocorrencia"
+        android:layout_marginLeft="8dp" />
+
+    <TextView
+        android:id="@+id/txt_desc_ocorrencia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Titulo"
-        android:textSize="30dp"
-        android:textColor="@android:color/black"
-        android:layout_marginEnd="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/txIdOcorrencia" />
-
-    <TextView
-        android:id="@+id/end_data_ocorrencia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/desc_ocorrencia"
-        android:layout_toEndOf="@+id/imagem_ocorrencia"
-        android:text="End e Data"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/desc_ocorrencia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txTipoOcorrencia"
-        android:layout_toEndOf="@+id/imagem_ocorrencia"
         android:text="descriçao"
-        android:maxLength="190"
-        android:textSize="17dp" />
-
-    <View
-        android:id="@+id/vw_divider"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:background="@android:color/white"
-        android:layout_marginTop="20dp"
-        android:layout_alignLeft="@+id/txTipoOcorrencia"
-        android:layout_below="@+id/end_data_ocorrencia"/>
-
-    <ImageButton
-        android:id="@+id/btnDeletarOcorrencia"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/desc_ocorrencia"
-        android:layout_alignParentEnd="true"
-        app:srcCompat="@android:drawable/ic_delete" />
+        android:textSize="16dp"
+        android:maxLength="100"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/imagem_ocorrencia"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/txt_tipo_crime" />
 
     <TextView
-        android:id="@+id/txIdOcorrencia"
-        android:layout_width="40dp"
+        android:id="@+id/txEndereco"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/desc_ocorrencia"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/imagem_ocorrencia"
-        android:textSize="30dp"
-        android:textColor="@android:color/black"
-        android:text="ID" />
+        android:maxLength="100"
+        android:text="endereco"
+        android:textSize="13dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/imagem_ocorrencia"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/txt_desc_ocorrencia"
+        android:layout_marginStart="8dp" />
+
+    <TextView
+        android:id="@+id/txt_id_ocorrencia"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="numeroocorrencia"
+        android:textSize="17dp"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imagem_ocorrencia"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
 
-</RelativeLayout>
-
-
+</android.support.constraint.ConstraintLayout>

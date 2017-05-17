@@ -1,35 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingLeft="16dp"
 
     tools:context="appocorrencias.com.appocorrencias.Activitys.Listar_Ocorrencias">
 
-
-        <ListView
-            android:id="@+id/lista_ocorrencias_do_usuario"
-            android:layout_width="match_parent"
-            android:layout_height="512dp"
-            android:layout_x="9dp"
-            android:layout_y="85dp"
-            android:animationCache="false"
-            android:paddingLeft="4dp"
-            tools:scrollbars="horizontal" />
 
         <TextView
             android:id="@+id/txTituloOcorrencias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.02"
-            android:layout_x="82dp"
-            android:layout_y="22dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="38dp"
+            android:layout_marginTop="8dp"
             android:text="Minhas Ocorrencias"
-            android:textSize="26dp" />
+            android:textSize="26dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintTop_creator="1"
+            android:layout_marginStart="32dp" />
+
+        <ListView
+            android:id="@+id/lista_ocorrencias_do_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="23dp"
+            android:animationCache="false"
+            android:paddingLeft="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            tools:scrollbars="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/txTituloOcorrencias"
+            android:layout_marginTop="16dp" />
 
 
-</AbsoluteLayout>
+</android.support.constraint.ConstraintLayout>

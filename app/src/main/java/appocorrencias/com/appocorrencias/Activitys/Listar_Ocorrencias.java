@@ -47,7 +47,6 @@ public class Listar_Ocorrencias extends AppCompatActivity {
         CPF = bundle.getString("cpf");
         Bairro = bundle.getString("bairro");
 
-        
 
         lista = (ListView) findViewById(R.id.lista_ocorrencias_do_usuario);
 
@@ -63,24 +62,16 @@ public class Listar_Ocorrencias extends AppCompatActivity {
                 if (position >= 0){
 
                     Intent i = new Intent(view.getContext(), Item_Feed_Ocorrencias.class);
-
-                    String idocorrencia = ((TextView) view.findViewById(R.id.txIdOcorrencia)).getText().toString();
+                    String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
                    // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
-
                     i.putExtra("id_ocorrencia", idocorrencia);
-
                     startActivity(i);
-
                     Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
 
     }
-
-
-
 
     @Override
     public void onBackPressed() {

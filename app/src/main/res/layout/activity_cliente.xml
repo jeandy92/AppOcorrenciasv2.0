@@ -48,7 +48,7 @@
                 android:visibility="invisible"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="591dp" />
+                tools:layout_editor_absoluteY="690dp" />
 
             <include
                 android:id="@+id/toolbar"
@@ -134,7 +134,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/legendabuscarocorrencias" />
+                app:layout_constraintTop_toBottomOf="@+id/legendabuscarocorrencias"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/btnOcorrenciasRegistradasPorUsuario"
@@ -244,21 +246,22 @@
             <ListView
                 android:id="@+id/lv_feed_de_ocorrencias"
                 android:layout_width="0dp"
-                android:layout_height="279dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="302dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="110dp"
                 android:animationCache="false"
                 android:paddingLeft="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/legendabuscarocorrencias"
-                app:layout_constraintVertical_bias="0.063"
                 tools:layout_constraintLeft_creator="1"
                 tools:scrollbars="horizontal"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="0dp" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
