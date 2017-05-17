@@ -34,6 +34,8 @@ import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
 
+import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
+
 public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener {
 
     private static final int REQUEST_PERMISSIONS_CODE = 128;
@@ -386,9 +388,22 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     public void onBackPressed() {
         super.onBackPressed();
 
+        try {
+            evBuscarOcorrenciasBairro(Bairro);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         setContentView(R.layout.activity_cliente);
-        Intent intent = new Intent(this,Cliente.class);
-        startActivity(intent);
+        Intent cliente = new Intent(this, Cliente.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("nome", Nome);
+        bundle.putString("cpf" , CPFCliente);
+        bundle.putString("bairro" , Bairro);
+
+        cliente.putExtras(bundle);
+        this.startActivity(cliente);
 
     }
 
@@ -407,6 +422,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         String convCidade2 = txCidade.getText().toString();
         String convBairro2 = txtBairro.getText().toString();
 
+        String ArrayNome[]  = Nome.split(" ");
+        String PriNome = ArrayNome[1];
 
         tipo_crime =  removerAcentos(tipo_crime2);
         convDescricao = removerAcentos(convDescricao2);
@@ -426,13 +443,15 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         String ID = processasocket.cadastrar1_no_server(BuscaId);
 
         String retorno = processasocket.cadastrar_Ocorrencia(ID, CPFCliente,tipo_crime,convDataOcorrencia,UF, convDescricao,
-                convEndereco,convCidade,convBairro, Anonimo);
+                convEndereco,convCidade,convBairro, Anonimo, PriNome);
 
         if (retorno.equals("erro")) {
             Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
         } else {
             if (retorno.equals("true")) {
                 Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
+
+                evBuscarOcorrenciasBairro(Bairro);
 
                 setContentView(R.layout.activity_cliente);
                 Intent cliente = new Intent(this, Cliente.class);

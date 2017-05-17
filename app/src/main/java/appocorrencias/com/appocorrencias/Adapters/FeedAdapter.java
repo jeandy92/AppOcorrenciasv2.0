@@ -50,39 +50,38 @@ public class FeedAdapter extends BaseAdapter {
 
         //pegando as referências das Views
         TextView tipodecrime = (TextView) view.findViewById(R.id.txt_tipo_crime);
+        TextView apelido = (TextView) view.findViewById(R.id.txApelido);
         TextView descricao = (TextView)view.findViewById(R.id.txt_desc_ocorrencia);
+        TextView endereco = (TextView)view.findViewById(R.id.txEndereco);
         ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_ocorrencia);
         TextView idocorrencia = (TextView)  view.findViewById(R.id.txt_id_ocorrencia);
 
 
-
-
+        String anonimo = lista_feed_ocorrencias.getAnonimo();
+        if(anonimo.equals("true")){
+            apelido.setText("Anonimo:");
+        }
+        else {
+            apelido.setText(String.valueOf(lista_feed_ocorrencias.getApelido())+":");
+        }
         tipodecrime.setText(String.valueOf(lista_feed_ocorrencias.getTipo()));
         descricao.setText(lista_feed_ocorrencias.getDescricao());
+        endereco.setText("Ocorreu na"+ lista_feed_ocorrencias.getRua() + " no dia " + lista_feed_ocorrencias.getData());
         idocorrencia.setText(String.valueOf(lista_feed_ocorrencias.getNrOcorrencia()));
 
         if (lista_feed_ocorrencias.getTipo().equals(" Roubo")) {
             imagem.setImageResource(R.drawable.ic_assalto);
         } else if (lista_feed_ocorrencias.getTipo().equals(" Furto")) {
-            imagem.setImageResource(R.drawable.ic_assalto);
+            imagem.setImageResource(R.drawable.ic_furto);
         } else if (lista_feed_ocorrencias.getTipo().equals(" Trafico de drogas")) {
             imagem.setImageResource(R.drawable.ic_trafico);
         }else if (lista_feed_ocorrencias.getTipo().equals(" Homicidio")) {
-            imagem.setImageResource(R.drawable.ic_assalto);
+            imagem.setImageResource(R.drawable.ic_homicidio);
         }else if (lista_feed_ocorrencias.getTipo().equals(" Latrocinio")) {
-            imagem.setImageResource(R.drawable.ic_assalto);
+            imagem.setImageResource(R.drawable.ic_latrocinio);
         }else if (lista_feed_ocorrencias.getTipo().equals(" Abuso Sexual")) {
-            imagem.setImageResource(R.drawable.ic_assalto);
+            imagem.setImageResource(R.drawable.ic_abuso);
         }
-
- /*<item>Tráfico de drogas</item>
-        <item>Roubo</item>
-        <item>Furto</item>
-        <item>Homicídio</item>
-        <item>Latrocínio</item>
-        <item>Abuso Sexual</item>*/
-
-//        imagem.setImageResource(R.drawable.ic_assalto);
 
         return view;
     }

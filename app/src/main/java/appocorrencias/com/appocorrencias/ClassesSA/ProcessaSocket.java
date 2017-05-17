@@ -15,7 +15,7 @@ public class ProcessaSocket {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
-    private static  String  ip_conexao =  "172.20.10.3";// "52.34.140.131";
+    private static  String  ip_conexao =  "192.168.1.10";// "52.34.140.131";
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -90,10 +90,10 @@ public class ProcessaSocket {
 
     public static String cadastrar_Ocorrencia(String ID, String CPFCliente, String tipo_crime, String convDataOcorrencia,
                                               String UF, String convDescricao, String convEndereco, String convCidade,
-                                              String convBairro, String Anonimo) throws IOException {
+                                              String convBairro, String Anonimo, String PriNome) throws IOException {
         //Envio de dados
         String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF + " " + convDataOcorrencia +
-                " " + Anonimo;
+                " " + Anonimo + " " + PriNome;
 
         String OcorrenciaRua = "OcorrenciaRua" + " " + ID + " " + convEndereco;
         String OcorrenciaBairro = "OcorrenciaBairro" + " " + ID + " " + convBairro;

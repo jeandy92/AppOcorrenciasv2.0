@@ -192,6 +192,19 @@ public class ArrayOcorrenciasRegistradas {
         return anonimo;
     }
 
+    public static String getApelidoNr(String Nr) {
+        String apelido = null;
+
+        int n = dados.size();
+        for (int i = 0; i < n; i++) {
+            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+
+                apelido = dados.get(i).Apelido;
+            }
+        }
+        return apelido;
+    }
+
     public static boolean BuscaExiste(String servico) {
         boolean stat = false;
         int n = dados.size();

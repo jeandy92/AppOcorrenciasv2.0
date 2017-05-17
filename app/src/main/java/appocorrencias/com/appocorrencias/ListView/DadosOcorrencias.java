@@ -14,10 +14,11 @@ public class DadosOcorrencias {
     public String Data;
     public String Tipo;
     public String Anonimo;
+    public String Apelido;
 
 
     public DadosOcorrencias(String NrOcorrencia, String CPF, String Rua, String Bairro, String Cidade,
-                            String UF, String Descricao, String Data, String Tipo, String Anonimo) {
+                            String UF, String Descricao, String Data, String Tipo, String Anonimo, String Apelido) {
 
         this.NrOcorrencia = NrOcorrencia;
         this.CPF = CPF;
@@ -29,6 +30,7 @@ public class DadosOcorrencias {
         this.Data = Data;
         this.Tipo = Tipo;
         this.Anonimo = Anonimo;
+        this.Apelido = Apelido;
     }
 
     public String getNrOcorrencia() {
@@ -53,6 +55,14 @@ public class DadosOcorrencias {
 
     public String getRua() {
         return Rua;
+    }
+
+    public String getApelido() {
+        return Apelido;
+    }
+
+    public String getAnonimo() {
+        return Anonimo;
     }
 
     @Override

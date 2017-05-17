@@ -79,7 +79,7 @@ public class AdapterParaOcorrencias extends BaseAdapter {
         }else if (listaOcorrenciasRegistradas.getTipo().equals(" Homicidio")) {
             imagem.setImageResource(R.drawable.ic_homicidio);
         }else if (listaOcorrenciasRegistradas.getTipo().equals(" Latrocinio")) {
-            imagem.setImageResource(R.drawable.ic_homicidio);
+            imagem.setImageResource(R.drawable.ic_latrocinio);
         }
 
 //        imagem.setImageResource(R.drawable.ic_assalto);

@@ -48,7 +48,7 @@ public class Cliente extends AppCompatActivity  {
     private TextView tvnomecompleto;
     private RecyclerView rvfeedocorrencias;
     private FloatingActionButton btnOcorrenciasRegistradas,btnCadastrarOcorrencias,btnBuscarOcorrencias;
-    static String Nome, CPF, Bairro;
+    public static String Nome, CPF, Bairro;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     ProcessaSocket processa = new ProcessaSocket();
@@ -179,8 +179,6 @@ public class Cliente extends AppCompatActivity  {
 
     public void evBuscarOcorrencias(View v){
 
-
-
 }
 
     // OBS FUNCAO ESTAVA FORA DO CODIGGO JEAN VERIFICAR
@@ -192,7 +190,9 @@ public class Cliente extends AppCompatActivity  {
         Intent cadastrarOcorrencia = new Intent(this, Cadastrar_Ocorrencia.class);
 
         Bundle bundle = new Bundle();
+        bundle.putString("nome", Nome);
         bundle.putString("cpf", CPF);
+        bundle.putString("bairro", Bairro);
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
@@ -248,8 +248,9 @@ public class Cliente extends AppCompatActivity  {
                 String Data = OcorrenciaUm[8];
                 String Tipo = OcorrenciaUm[9];
                 String Anonimo = OcorrenciaUm[10];
+                String Apelido = OcorrenciaUm[11];
 
-                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo);
+                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
 
                 ArrayOcorrenciasRegistradas.adicionar(dado);
             }

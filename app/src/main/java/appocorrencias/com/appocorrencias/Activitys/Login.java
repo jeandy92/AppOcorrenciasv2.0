@@ -33,7 +33,7 @@ public class Login extends AppCompatActivity {
     private byte[] imagem;
     private String nome, SENHA, LoginServer, CPF, Nome, Bairro;
     private String convCpf, Status;
-    private ProcessaSocket processa = new ProcessaSocket();
+    private static ProcessaSocket processa = new ProcessaSocket();
     private String retorno;
     private View view;
     private String nomecompleto = "Jeanderson de Almeeida Dyorgenes";
@@ -257,14 +257,14 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    public void evBuscarOcorrenciasBairro (String Bairro2) throws IOException {
+    public static void evBuscarOcorrenciasBairro (String Bairro2) throws IOException {
 
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro" +  Bairro2;
-        Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
         String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
-            Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
         } else {
             // Pegando quantidade de Ocorrencias
             int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
@@ -284,12 +284,13 @@ public class Login extends AppCompatActivity {
                 String Data = OcorrenciaUm[8];
                 String Tipo = OcorrenciaUm[9];
                 String Anonimo = OcorrenciaUm[10];
+                String Apelido = OcorrenciaUm[11];
 
-                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo);
+                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo,Apelido);
 
                 ArrayOcorrenciasRegistradas.adicionar(dado);
             }
-            Toast.makeText(this, "Mostrando Ocorrencias no seu Bairro ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Mostrando Ocorrencias no seu Bairro ", Toast.LENGTH_SHORT).show();
         }
     }
 

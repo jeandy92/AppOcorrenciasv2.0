@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterParaOcorrencias;
@@ -16,6 +17,7 @@ import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
+import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getCidadeNr;
@@ -86,14 +88,18 @@ public class Listar_Ocorrencias extends AppCompatActivity {
 
         deleteAllArray();
 
-
+        try {
+            evBuscarOcorrenciasBairro(Bairro);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_cliente);
         Intent cliente = new Intent(this, Cliente.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("nome", Nome);
-        bundle.putString("cpf", CPF);
-        bundle.putString("bairro", Bairro);
+        bundle.putString("cpf" , CPF);
+        bundle.putString("bairro" , Bairro);
 
         cliente.putExtras(bundle);
         this.startActivity(cliente);
