@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     style="@style/ocorrenciasregistradas">
     <ImageView
-        android:id="@+id/imagem_ocorrencia"
+        android:id="@+id/imagem_comentario"
         android:layout_width="100dp"
         android:layout_height="match_parent" />
 

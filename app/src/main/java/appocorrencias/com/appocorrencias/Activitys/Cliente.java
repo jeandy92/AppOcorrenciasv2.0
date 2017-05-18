@@ -31,8 +31,10 @@ import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
+import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
+import static appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias.evBuscarComentario;
 
 
 public class Cliente extends AppCompatActivity  {
@@ -92,13 +94,22 @@ public class Cliente extends AppCompatActivity  {
 
                     Intent i = new Intent(view.getContext(), Item_Feed_Ocorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
-                    String descocorrencia = ((TextView) view.findViewById(R.id.txt_desc_ocorrencia)).getText().toString();
+                    String descocorrencia = ((TextView) view.findViewById(R.id.txt_desc_comentario)).getText().toString();
                     String tipocrime = ((TextView) view.findViewById(R.id.txt_tipo_crime)).getText().toString();
 
-
+                    i.putExtra("cpf", CPF);
+                    i.putExtra("nome", Nome);
                     i.putExtra("id_ocorrencia", idocorrencia);
                     i.putExtra("desc_ocorrencia", descocorrencia);
                     i.putExtra("tipocrime", tipocrime);
+
+                    deleteAllArrayComentarios();
+
+                    try {
+                        evBuscarComentario(idocorrencia);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     startActivity(i);
 
@@ -141,11 +152,8 @@ public class Cliente extends AppCompatActivity  {
         setSupportActionBar(toolbar);
 
 
-
         ///Setta o nome no BEM VINDO
         tvnomecompleto.setText(Nome);
-
-
 
 
     }

@@ -51,9 +51,9 @@ public class FeedAdapter extends BaseAdapter {
         //pegando as referências das Views
         TextView tipodecrime = (TextView) view.findViewById(R.id.txt_tipo_crime);
         TextView apelido = (TextView) view.findViewById(R.id.txApelido);
-        TextView descricao = (TextView)view.findViewById(R.id.txt_desc_ocorrencia);
+        TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);
         TextView endereco = (TextView)view.findViewById(R.id.txEndereco);
-        ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_ocorrencia);
+        ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_comentario);
         TextView idocorrencia = (TextView)  view.findViewById(R.id.txt_id_ocorrencia);
 
 

@@ -11,11 +11,11 @@ import java.net.Socket;
  */
 
 public class ProcessaSocket {
-    static Socket cliente =  new Socket();
+    static Socket cliente = new Socket();
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
-    private static  String  ip_conexao =  "172.20.10.3";// "52.34.140.131";
+    private static String ip_conexao = "172.20.10.3";// "52.34.140.131";
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -58,7 +58,7 @@ public class ProcessaSocket {
 
     public static String cadastrar1_no_server(String dados) throws IOException {
         String str = null;
-        Socket cliente2 =  new Socket();
+        Socket cliente2 = new Socket();
 
         int millisecondsTimeOut = 3000;
         InetSocketAddress adress = new InetSocketAddress(ip_conexao, 2222);
@@ -66,24 +66,24 @@ public class ProcessaSocket {
         try {
             cliente2.connect(adress, millisecondsTimeOut);
         } catch (Exception e) {
-            str= "erro";
+            str = "erro";
             return str;
         }
-          try {
-              canalSaida = cliente2.getOutputStream();
-              canalEntrada = cliente2.getInputStream();
-              canalSaida.write(dados.getBytes());
-              str = recebe_dados(canalEntrada);
+        try {
+            canalSaida = cliente2.getOutputStream();
+            canalEntrada = cliente2.getInputStream();
+            canalSaida.write(dados.getBytes());
+            str = recebe_dados(canalEntrada);
 
-              canalSaida.flush();
-              canalSaida.close();
-              canalEntrada.close();
-              cliente2.close();
+            canalSaida.flush();
+            canalSaida.close();
+            canalEntrada.close();
+            cliente2.close();
 
-           } catch (Exception e) {
-               //FIXME Tratar a Exception.
-                e.printStackTrace();
-             }
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
         return str;
     }
 
@@ -203,6 +203,31 @@ public class ProcessaSocket {
                 }
             }
 
+        }
+        return "false";
+    }
+
+    public static String cadastrar_Comentario(String IDComentario, String IDOcorrencia, String CPFCliente, String Data, String Hora,
+                                              String Apelido, String convDescricao) throws IOException {
+        //Envio de dados
+        String CadastrarComentario = "CadastrarComentario" + " " + IDComentario + " " + IDOcorrencia + " " + CPFCliente + " " + Data +
+                " " + Hora + " " + Apelido;
+
+        String ComentarioDescricao = "ComentarioDescricao" + " " + IDComentario + " " + convDescricao;
+
+        String retorno = cadastrar1_no_server(CadastrarComentario);
+
+        if (retorno.equals("erro")) {
+            return "erro";
+        } else {
+            if (retorno.equals("true")) {
+                retorno = cadastrar1_no_server(ComentarioDescricao);
+                if (retorno.equals("erro")) {
+                    return "erro";
+                } else {
+                    return "true";
+                }
+            }
         }
         return "false";
     }

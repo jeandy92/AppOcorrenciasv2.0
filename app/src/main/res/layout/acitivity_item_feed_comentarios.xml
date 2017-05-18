@@ -14,18 +14,22 @@
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"
         tools:layout_editor_absoluteY="8dp" />
 
     <TextView
-        android:id="@+id/txt_tipo_crime"
-        android:layout_width="0dp"
+        android:id="@+id/txApelido"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tipo"
-        android:textColor="@color/wallet_dim_foreground_holo_dark"
-        android:textSize="18dp"
-        tools:layout_editor_absoluteY="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:text="Apelido: "
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@+id/imagem_comentario"
-        android:layout_marginLeft="8dp" />
+        app:layout_constraintTop_toTopOf="@+id/imagem_comentario"
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/txt_desc_comentario"
@@ -38,27 +42,27 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/imagem_comentario"
         android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_tipo_crime" />
-
-    <TextView
-        android:id="@+id/txEndereco"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLength="100"
-        android:text="endereco"
-        android:textSize="13dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/imagem_comentario"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_desc_comentario"
+        app:layout_constraintTop_toBottomOf="@+id/txApelido"
         android:layout_marginStart="8dp" />
 
     <TextView
-        android:id="@+id/txt_id_ocorrencia"
+        android:id="@+id/txDataHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:maxLength="100"
+        android:text="Data Hora"
+        android:textSize="13dp"
+        app:layout_constraintLeft_toRightOf="@+id/imagem_comentario"
+        app:layout_constraintTop_toBottomOf="@+id/txt_desc_comentario"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/txt_id_comentario"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="8dp"
@@ -74,3 +78,5 @@
 
 
 </android.support.constraint.ConstraintLayout>
+
+
