@@ -13,10 +13,10 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import appocorrencias.com.appocorrencias.Adapters.AdapterParaOcorrencias;
 import appocorrencias.com.appocorrencias.Adapters.ComentariosAdapter;
 import appocorrencias.com.appocorrencias.Adapters.CustomSwiperAdapter;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
@@ -100,14 +100,16 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
 
         listaComentarios = (ListView) findViewById(R.id.list_comentarios);
         ArrayList<DadosComentarios> listadecomentarios = getListaComentarios();
+
+        Collections.sort(listadecomentarios);
+
         ComentariosAdapter adapter = new ComentariosAdapter(this, listadecomentarios);
         listaComentarios.setAdapter(adapter);
     }
 
     public void evEnviarComentario(View view) throws IOException {
 
-        if (txtComentario.getText().toString() != null) {
-
+        if (txtComentario != null) {
             String BuscaId = "IDcomentario teste";
             String IDComentario = processa.cadastrar1_no_server(BuscaId);
 
@@ -125,7 +127,10 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
             SimpleDateFormat hora2 = new SimpleDateFormat("HH:mm:h");
             String Hora = hora2.format(hora.getTime());
 
-            String retorno = processa.cadastrar_Comentario(idOcorrencia, IDComentario, CPF, Data, Hora, Apelido, convComentario);
+            String retorno = processa.cadastrar_Comentario(IDComentario, idOcorrencia, CPF, Data, Hora, Apelido, convComentario);
+
+
+            txtComentario.setText(null);
 
             if (retorno.equals("erro")) {
                 Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
@@ -138,6 +143,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
 
                     listaComentarios = (ListView) findViewById(R.id.list_comentarios);
                     ArrayList<DadosComentarios> listadecomentarios = getListaComentarios();
+                    Collections.sort(listadecomentarios);
                     ComentariosAdapter adapter = new ComentariosAdapter(this, listadecomentarios);
                     listaComentarios.setAdapter(adapter);
 
@@ -146,6 +152,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
                 }
             }
         }
+
     }
 
 

@@ -1,9 +1,11 @@
 package appocorrencias.com.appocorrencias.ListView;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by PamelaNycoly on 06/05/2017.
  */
-public class DadosComentarios {
+public class DadosComentarios implements Comparable<DadosComentarios> {
     public String NrComentario;
     public String NrOcorrencia;
     public String CPF;
@@ -55,4 +57,18 @@ public class DadosComentarios {
     public boolean equals(DadosComentarios m) {
         return this.NrOcorrencia == null ? m.NrOcorrencia == null : this.NrOcorrencia.equals(m.NrOcorrencia);
     }
+
+    @Override
+    public int compareTo(@NonNull DadosComentarios dados) {
+        int NrAtual = Integer.parseInt(this.NrComentario);
+        int Nrdado = Integer.parseInt(dados.NrComentario);
+        if(NrAtual > Nrdado){
+            return -1;
+        }
+        else if(NrAtual < Nrdado){
+            return 1;
+        }
+        return this.getNrComentario().compareToIgnoreCase(dados.getNrComentario());
+    }
+
 }

@@ -18,7 +18,7 @@ import appocorrencias.com.appocorrencias.R;
 
 public class ComentariosAdapter extends BaseAdapter {
 
-    private ArrayList<DadosComentarios> feed_comentarios = null;
+    private ArrayList<DadosComentarios> feed_comentarios;
     private final Activity act;
 
     public ComentariosAdapter(Activity act, ArrayList<DadosComentarios> feedocomentarios){

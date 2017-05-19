@@ -18,6 +18,7 @@ import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
+import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getCidadeNr;
@@ -27,6 +28,7 @@ import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistr
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getRuaNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getTipoNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getUFNr;
+import static appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias.evBuscarComentario;
 
 
 public class Listar_Ocorrencias extends AppCompatActivity {
@@ -64,7 +66,18 @@ public class Listar_Ocorrencias extends AppCompatActivity {
                     Intent i = new Intent(view.getContext(), Item_Feed_Ocorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
                    // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
+                    i.putExtra("cpf", CPF);
+                    i.putExtra("nome", Nome);
                     i.putExtra("id_ocorrencia", idocorrencia);
+
+                    deleteAllArrayComentarios();
+
+                    try {
+                        evBuscarComentario(idocorrencia);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     startActivity(i);
                     Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
                 }

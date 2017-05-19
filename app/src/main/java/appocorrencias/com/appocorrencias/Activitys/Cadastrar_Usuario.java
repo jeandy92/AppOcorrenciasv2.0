@@ -34,7 +34,6 @@ public class Cadastrar_Usuario extends AppCompatActivity {
     //Váriaveis para serem utilizadas  no envio do cadastro
     protected String cadastro1, cadastroNome, cadastroRua, cadastroBairro, cadastroCidade;
 
-
     //Dados para o envio do socket.
     ProcessaSocket processa = new ProcessaSocket();
     boolean retorno;
@@ -95,10 +94,10 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
 
 
-            String rua2 = busca.getEndereco(convCep);
-            String bairro2 = busca.getBairro(convCep);
-            String cidade2 = busca.getCidade(convCep);
-            uf = busca.getUF(convCep);
+            String rua2 = Rua.getText().toString();
+            String bairro2 = Bairro.getText().toString();
+            String cidade2 = Cidade.getText().toString();
+            uf = UF.getText().toString();
 
             rua = removerAcentos(rua2);
             bairro = removerAcentos(bairro2);
