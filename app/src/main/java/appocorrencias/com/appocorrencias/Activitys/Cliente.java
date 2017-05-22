@@ -99,6 +99,7 @@ public class Cliente extends AppCompatActivity  {
 
                     i.putExtra("cpf", CPF);
                     i.putExtra("nome", Nome);
+                    i.putExtra("bairro", Bairro);
                     i.putExtra("id_ocorrencia", idocorrencia);
                     i.putExtra("desc_ocorrencia", descocorrencia);
                     i.putExtra("tipocrime", tipocrime);

@@ -36,7 +36,7 @@ import me.drakeet.materialdialog.MaterialDialog;
 
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
 
-public class Cadastrar_Ocorrencia extends AppCompatActivity implements  LocationListener {
+public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationListener {
 
     private static final int REQUEST_PERMISSIONS_CODE = 128;
 
@@ -48,8 +48,9 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private static final int IMAGEM_CAPTURADA = 1;
 
 
-    private String convDataOcorrencia,convDescricao,convEndereco,convCidade,convBairro , tipo_crime, UF;;
-    private EditText txRua,txCidade,txEstado,txDescricao,txData_Ocorrencia,txtBairro, txReferencia;
+    private String convDataOcorrencia, convDescricao, convEndereco, convCidade, convBairro, tipo_crime, UF;
+    ;
+    private EditText txRua, txCidade, txEstado, txDescricao, txData_Ocorrencia, txtBairro, txReferencia;
     private RadioButton BtnAnonimo;
 
     private Buscar_Cep buscauf = new Buscar_Cep();
@@ -62,9 +63,9 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     private Date data;
 
 
-    static String  Nome, CPFCliente, Bairro;
+    static String Nome, CPFCliente, Bairro;
 
-    public static ProcessaSocket processasocket  = new ProcessaSocket();
+    public static ProcessaSocket processasocket = new ProcessaSocket();
     private String Anonimo;
 
     @Override
@@ -198,7 +199,6 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
     //Localidade
 
 
-
     public void localidade_atual(View v) {
 
 
@@ -269,7 +269,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
         try {
             //endereco = buscarEndereco(latitude   ,  longitude);
-            endereco = buscarEndereco(-23.540827   ,  -46.761993);
+            endereco = buscarEndereco(-23.540827, -46.761993);
 
 
             Log.i(TAG, endereco.getLocality());
@@ -381,7 +381,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
     //Abrir Calendário
 
-    public void  evEscolher_Data(View v){
+    public void evEscolher_Data(View v) {
     }
 
     @Override
@@ -399,8 +399,8 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
         Bundle bundle = new Bundle();
         bundle.putString("nome", Nome);
-        bundle.putString("cpf" , CPFCliente);
-        bundle.putString("bairro" , Bairro);
+        bundle.putString("cpf", CPFCliente);
+        bundle.putString("bairro", Bairro);
 
         cliente.putExtras(bundle);
         this.startActivity(cliente);
@@ -414,7 +414,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
     public void salvar_ocorrencia(View v) throws IOException {
 
-        String tipo_crime2 =  spinner.getSelectedItem().toString();
+        String tipo_crime2 = spinner.getSelectedItem().toString();
         UF = txEstado.getText().toString();
         convDataOcorrencia = txData_Ocorrencia.getText().toString();
         String convDescricao2 = txDescricao.getText().toString();
@@ -422,10 +422,10 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
         String convCidade2 = txCidade.getText().toString();
         String convBairro2 = txtBairro.getText().toString();
 
-        String ArrayNome[]  = Nome.split(" ");
+        String ArrayNome[] = Nome.split(" ");
         String PriNome = ArrayNome[1];
 
-        tipo_crime =  removerAcentos(tipo_crime2);
+        tipo_crime = removerAcentos(tipo_crime2);
         convDescricao = removerAcentos(convDescricao2);
         convEndereco = removerAcentos(convEndereco2);
         convCidade = removerAcentos(convCidade2);
@@ -435,43 +435,72 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements  Location
 
         Anonimo = "false";
 
-        if(BtnAnonimo.isChecked()){
+        if (BtnAnonimo.isChecked()) {
             Anonimo = "true";
         }
 
-        String BuscaId = "IDocorrencia teste";
-        String ID = processasocket.cadastrar1_no_server(BuscaId);
-
-        String retorno = processasocket.cadastrar_Ocorrencia(ID, CPFCliente,tipo_crime,convDataOcorrencia,UF, convDescricao,
-                convEndereco,convCidade,convBairro, Anonimo, PriNome);
-
-        if (retorno.equals("erro")) {
-            Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+        if (convDescricao.isEmpty()) {
+            txDescricao.setError("Faltou preencher Descrição ");
+            txDescricao.setFocusable(true);
+            txDescricao.requestFocus();
         } else {
-            if (retorno.equals("true")) {
-                Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
-
-                evBuscarOcorrenciasBairro(Bairro);
-
-                setContentView(R.layout.activity_cliente);
-                Intent cliente = new Intent(this, Cliente.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putString("nome", Nome);
-                bundle.putString("cpf" , CPFCliente);
-                bundle.putString("bairro" , Bairro);
-
-                cliente.putExtras(bundle);
-                this.startActivity(cliente);
-            } else {
-                txRua.setError("Erro Retorno do Server False");
+            if (convEndereco.isEmpty()) {
+                txRua.setError("Faltou preencher Rua ");
                 txRua.setFocusable(true);
                 txRua.requestFocus();
+            } else {
+                if (convCidade.isEmpty()) {
+                    txCidade.setError("Faltou preencher Cidade ");
+                    txCidade.setFocusable(true);
+                    txCidade.requestFocus();
+                } else {
+                    if (convBairro.isEmpty()) {
+                        txtBairro.setError("Faltou preencher Bairro ");
+                        txtBairro.setFocusable(true);
+                        txtBairro.requestFocus();
+                    } else {
+                        if (UF.isEmpty()) {
+                            txEstado.setError("Faltou preencher UF ");
+                            txEstado.setFocusable(true);
+                            txEstado.requestFocus();
+                        } else {
+
+                            String BuscaId = "IDocorrencia teste";
+                            String ID = processasocket.cadastrar1_no_server(BuscaId);
+
+                            String retorno = processasocket.cadastrar_Ocorrencia(ID, CPFCliente, tipo_crime, convDataOcorrencia, UF, convDescricao,
+                                    convEndereco, convCidade, convBairro, Anonimo, PriNome);
+
+                            if (retorno.equals("erro")) {
+                                Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (retorno.equals("true")) {
+                                    Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
+
+                                    evBuscarOcorrenciasBairro(Bairro);
+
+                                    setContentView(R.layout.activity_cliente);
+                                    Intent cliente = new Intent(this, Cliente.class);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("nome", Nome);
+                                    bundle.putString("cpf", CPFCliente);
+                                    bundle.putString("bairro", Bairro);
+
+                                    cliente.putExtras(bundle);
+                                    this.startActivity(cliente);
+                                } else {
+                                    txRua.setError("Erro Retorno do Server False");
+                                    txRua.setFocusable(true);
+                                    txRua.requestFocus();
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-
-
 }
 
 

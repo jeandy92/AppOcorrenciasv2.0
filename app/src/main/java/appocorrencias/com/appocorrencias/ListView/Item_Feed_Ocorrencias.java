@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import appocorrencias.com.appocorrencias.Activitys.Listar_Ocorrencias;
 import appocorrencias.com.appocorrencias.Adapters.ComentariosAdapter;
 import appocorrencias.com.appocorrencias.Adapters.CustomSwiperAdapter;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
@@ -24,7 +26,9 @@ import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.Activitys.Cadastrar_Ocorrencia.removerAcentos;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
+import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getCPFNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
+import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getCidadeNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getDataNr;
@@ -38,7 +42,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
     ViewPager viewPager;
     CustomSwiperAdapter customSwiperAdapter;
     private static ProcessaSocket processa = new ProcessaSocket();
-    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, convComentario;
+    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome,BairroCli, convComentario, CPFOcorrencia;
     private ListView listaComentarios;
 
 
@@ -54,6 +58,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         TextView Tv_Desc_Ocorrencia = (TextView) findViewById(R.id.txtCampoDescricaoDaOcorrencia);
         TextView Tv_Cidade_UF = (TextView) findViewById(R.id.txtCidadeUFOcorrencia);
         TextView Tv_Rua_Bairro = (TextView) findViewById(R.id.txtRuaBairroOcorrencia);
+        Button btnExcluir = (Button) findViewById(R.id.btnExcluir);
 
         Intent intent = getIntent();
 
@@ -62,6 +67,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         idOcorrencia = dados.getString("id_ocorrencia").toString();
         CPF = dados.getString("cpf").toString();
         Nome = dados.getString("nome").toString();
+        BairroCli= dados.getString("bairro").toString();
 
         descricao = getDescricaoNr(idOcorrencia);
         rua = getRuaNr(idOcorrencia);
@@ -70,6 +76,11 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         cidade = getCidadeNr(idOcorrencia);
         data = getDataNr(idOcorrencia);
         tipo = getTipoNr(idOcorrencia);
+        CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
+
+        if(CPFOcorrencia.equals(CPF)){
+            btnExcluir.setVisibility(View.VISIBLE);
+        }
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         int[] image_resources = null;
@@ -105,6 +116,74 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
 
         ComentariosAdapter adapter = new ComentariosAdapter(this, listadecomentarios);
         listaComentarios.setAdapter(adapter);
+    }
+
+    public void evExcluirOcorrencia(View view) throws IOException {
+
+        String ExcluirOcorrencia = "ExcluirOcorrencia " + idOcorrencia;
+        String retornoExclusao = processa.cadastrar1_no_server(ExcluirOcorrencia);
+
+        if(retornoExclusao.equals("true")) {
+
+            deleteAllArray();
+
+            String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
+
+
+            Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
+
+            String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
+
+            if (retorno.equals("false")) {
+                Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.activity_listar_ocorrencias);
+                Intent cliente = new Intent(this, Listar_Ocorrencias.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", Nome);
+                bundle.putString("cpf", CPF);
+                bundle.putString("bairro", BairroCli);
+
+                cliente.putExtras(bundle);
+                this.startActivity(cliente);
+
+            } else {
+                // Pegando quantidade de Ocorrencias
+                int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
+                // Pegando dados e Adicioanando dados no Array
+                for (int i = 0; i < qtdOcorrencia; i++) {
+                    String TodasOcorrencias[] = retorno.split("///");
+
+                    String Ocorrencia = TodasOcorrencias[i];
+                    String OcorrenciaUm[] = Ocorrencia.split("//");
+                    String Nr = OcorrenciaUm[1];
+                    String CPFOco = OcorrenciaUm[2];
+                    String Rua = OcorrenciaUm[3];
+                    String Bairro = OcorrenciaUm[4];
+                    String Cidade = OcorrenciaUm[5];
+                    String UF = OcorrenciaUm[6];
+                    String Descricao = OcorrenciaUm[7];
+                    String Data = OcorrenciaUm[8];
+                    String Tipo = OcorrenciaUm[9];
+                    String Anonimo = OcorrenciaUm[10];
+                    String Apelido = OcorrenciaUm[11];
+                    DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
+                    ArrayOcorrenciasRegistradas.adicionar(dado);
+                }
+                Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
+
+                setContentView(R.layout.activity_listar_ocorrencias);
+                Intent cliente = new Intent(this, Listar_Ocorrencias.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", Nome);
+                bundle.putString("cpf", CPF);
+                bundle.putString("bairro", BairroCli);
+
+                cliente.putExtras(bundle);
+                this.startActivity(cliente);
+            }
+        }
+
     }
 
     public void evEnviarComentario(View view) throws IOException {
@@ -148,7 +227,6 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
                     listaComentarios.setAdapter(adapter);
 
                 } else {
-
                 }
             }
         }

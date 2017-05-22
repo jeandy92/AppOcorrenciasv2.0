@@ -31,7 +31,6 @@
                 android:layout_marginLeft="8dp"
                 android:onClick="evExcluirOcorrencia"
                 android:text="Excluir"
-                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/txtCampoNumeroOcorrencia"
                 app:layout_constraintLeft_toRightOf="@+id/txtCampoNumeroOcorrencia" />
 
