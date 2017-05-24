@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:id="@+id/scrollView3">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/edtFoco"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/txtInfoBusca"
+                app:layout_constraintTop_toTopOf="@+id/txtInfoBusca" />
+
+            <TextView
+                android:id="@+id/txtInfoBusca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Selecione um tipo de busca"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <ImageView
+                android:id="@+id/ivBuscaTipo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="32dp"
+                android:background="@color/fab_material_blue_500"
+                app:layout_constraintTop_toBottomOf="@+id/txtInfoBusca"
+                android:layout_marginLeft="65dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/txtBuscaTipo"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/fab_material_deep_purple_500"
+                android:text="CPF"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/rbtCPF"
+                app:layout_constraintLeft_toLeftOf="@+id/ivBuscaTipo"
+                app:layout_constraintRight_toRightOf="@+id/ivBuscaTipo"
+                app:layout_constraintTop_toTopOf="@+id/ivBuscaTipo" />
+
+            <RadioButton
+                android:id="@+id/rbtCPF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivBuscaTipo"
+                app:layout_constraintLeft_toLeftOf="@+id/ivBuscaTipo"
+                app:layout_constraintRight_toRightOf="@+id/ivBuscaTipo"
+                app:layout_constraintTop_toTopOf="@+id/ivBuscaTipo" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_CPF"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="@+id/txtInfoBusca"
+                app:layout_constraintRight_toRightOf="@+id/txtInfoBusca"
+                app:layout_constraintTop_toBottomOf="@+id/ivBuscaBairro">>
+                <EditText
+
+                    android:id="@+id/edtCPF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:ems="10"
+                    android:hint="CPF"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <ImageView
+                android:id="@+id/ivBuscaBairro"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="32dp"
+                android:background="@color/fab_material_blue_500"
+                app:layout_constraintTop_toBottomOf="@+id/txtInfoBusca"
+                android:layout_marginRight="65dp"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:id="@+id/txtBuscaBairro"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/fab_material_deep_purple_500"
+                android:text="Nome"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/rbtNome"
+                app:layout_constraintLeft_toLeftOf="@+id/ivBuscaBairro"
+                app:layout_constraintRight_toRightOf="@+id/ivBuscaBairro"
+                app:layout_constraintTop_toTopOf="@+id/ivBuscaBairro" />
+
+            <RadioButton
+                android:id="@+id/rbtNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="@+id/ivBuscaBairro"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="@+id/ivBuscaBairro"
+                app:layout_constraintBottom_toBottomOf="@+id/ivBuscaBairro"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintTop_toTopOf="@+id/ivBuscaBairro"
+                android:layout_marginTop="32dp" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_Nome"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="@+id/txtInfoBusca"
+                app:layout_constraintRight_toRightOf="@+id/txtInfoBusca"
+                app:layout_constraintTop_toBottomOf="@+id/ivBuscaBairro">>
+
+                <EditText
+                    android:id="@+id/edtNome"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nome"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnBuscar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
+
+                android:background="@drawable/botao_redondo"
+                android:backgroundTint="@color/fab_material_deep_purple_500"
+                android:text="Buscar"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintLeft_toLeftOf="@+id/txtInfoBusca"
+                app:layout_constraintRight_toRightOf="@+id/txtInfoBusca"
+                app:layout_constraintTop_toBottomOf="@+id/txtInfoBusca" />
+
+            <TextView
+                android:id="@+id/txtLimitador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="LIMITADOR"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/lv_feed_de_ocorrencias"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ListView
+                android:id="@+id/lv_feed_de_ocorrencias"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginEnd="8dp"
+
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:animationCache="false"
+                android:paddingLeft="4dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnBuscar"
+                tools:layout_constraintLeft_creator="1"
+                tools:scrollbars="horizontal" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -48,6 +48,9 @@ public class ComentariosAdapter extends BaseAdapter {
         View view = act.getLayoutInflater().inflate(R.layout.acitivity_item_feed_comentarios,parent,false);
         DadosComentarios lista_feed_comentarios  = feed_comentarios.get(position);
 
+
+
+
         //pegando as referências das Views
         TextView apelido = (TextView) view.findViewById(R.id.txApelido);
         TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);
@@ -60,7 +63,10 @@ public class ComentariosAdapter extends BaseAdapter {
         dataHora.setText("Dia "+ lista_feed_comentarios.getData() + " às " + lista_feed_comentarios.getHora());
         idocorrencia.setText(String.valueOf(lista_feed_comentarios.getNrOcorrencia()));
 
+        String CPFComentario = lista_feed_comentarios.getCPF();
+
         imagem.setImageResource(R.drawable.ic_abuso);
+
 
         return view;
     }

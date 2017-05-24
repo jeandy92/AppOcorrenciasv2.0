@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.Random;
+import java.util.TimeZone;
 
 import appocorrencias.com.appocorrencias.Activitys.Listar_Ocorrencias;
 import appocorrencias.com.appocorrencias.Adapters.ComentariosAdapter;
@@ -26,7 +31,6 @@ import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.Activitys.Cadastrar_Ocorrencia.removerAcentos;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
-import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getCPFNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
@@ -42,7 +46,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
     ViewPager viewPager;
     CustomSwiperAdapter customSwiperAdapter;
     private static ProcessaSocket processa = new ProcessaSocket();
-    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome,BairroCli, convComentario, CPFOcorrencia;
+    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia;
     private ListView listaComentarios;
 
 
@@ -59,6 +63,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         TextView Tv_Cidade_UF = (TextView) findViewById(R.id.txtCidadeUFOcorrencia);
         TextView Tv_Rua_Bairro = (TextView) findViewById(R.id.txtRuaBairroOcorrencia);
         Button btnExcluir = (Button) findViewById(R.id.btnExcluir);
+        ImageButton btnDelComent = (ImageButton) findViewById(R.id.btnDelComent);
 
         Intent intent = getIntent();
 
@@ -67,7 +72,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         idOcorrencia = dados.getString("id_ocorrencia").toString();
         CPF = dados.getString("cpf").toString();
         Nome = dados.getString("nome").toString();
-        BairroCli= dados.getString("bairro").toString();
+        BairroCli = dados.getString("bairro").toString();
 
         descricao = getDescricaoNr(idOcorrencia);
         rua = getRuaNr(idOcorrencia);
@@ -78,7 +83,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         tipo = getTipoNr(idOcorrencia);
         CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
 
-        if(CPFOcorrencia.equals(CPF)){
+        if (CPFOcorrencia.equals(CPF)) {
             btnExcluir.setVisibility(View.VISIBLE);
         }
 
@@ -116,6 +121,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
 
         ComentariosAdapter adapter = new ComentariosAdapter(this, listadecomentarios);
         listaComentarios.setAdapter(adapter);
+
     }
 
     public void evExcluirOcorrencia(View view) throws IOException {
@@ -123,7 +129,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
         String ExcluirOcorrencia = "ExcluirOcorrencia " + idOcorrencia;
         String retornoExclusao = processa.cadastrar1_no_server(ExcluirOcorrencia);
 
-        if(retornoExclusao.equals("true")) {
+        if (retornoExclusao.equals("true")) {
 
             deleteAllArray();
 
@@ -188,23 +194,38 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
 
     public void evEnviarComentario(View view) throws IOException {
 
-        if (txtComentario != null) {
+        String Comentario = txtComentario.getText().toString();
+
+        if (Comentario.isEmpty()) {
+            txtComentario.setError("Escreva um comentario ");
+            txtComentario.setFocusable(true);
+            txtComentario.requestFocus();
+        } else {
+
+            Random random = new Random();
+            int x = random.nextInt(101);
+            String NrAleatorio = Integer.toString(x);
             String BuscaId = "IDcomentario teste";
-            String IDComentario = processa.cadastrar1_no_server(BuscaId);
+            String IDserver = processa.cadastrar1_no_server(BuscaId);
+            String IDComentario = IDserver + NrAleatorio;
+
 
             String ArrayNome[] = Nome.split(" ");
             String Apelido = ArrayNome[1];
 
-            String Comentario = txtComentario.getText().toString();
             convComentario = removerAcentos(Comentario);
 
             Date data = new Date();
             SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
             String Data = formatador.format(data);
 
-            GregorianCalendar hora = new GregorianCalendar();
+            GregorianCalendar dtI = new GregorianCalendar(TimeZone.getTimeZone("GMT-3"), new Locale("pt_BR"));
+            Date data2 = dtI.getTime();
+            data2.setHours(data.getHours() - 3);
+            dtI.setTime(data2);
             SimpleDateFormat hora2 = new SimpleDateFormat("HH:mm:h");
-            String Hora = hora2.format(hora.getTime());
+            String Hora = hora2.format(dtI.getTime());
+
 
             String retorno = processa.cadastrar_Comentario(IDComentario, idOcorrencia, CPF, Data, Hora, Apelido, convComentario);
 

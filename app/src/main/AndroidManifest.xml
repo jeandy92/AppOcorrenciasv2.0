@@ -33,6 +33,7 @@
         tools:replace="android:label">
         <activity
             android:name=".Activitys.Login"
+            android:windowSoftInputMode="stateHidden"
             android:label="AppOcorrencias"
             android:noHistory="true">
             <intent-filter>
@@ -44,10 +45,21 @@
         <activity android:name=".Activitys.Adm" />
         <activity android:name=".Activitys.Cliente" />
         <activity android:name=".Activitys.Cliente_Socket" />
-        <activity android:name=".Activitys.Cadastrar_Usuario" />
-        <activity android:name=".Activitys.Cadastrar_Ocorrencia" />
+        <activity android:name=".Activitys.Cadastrar_Usuario"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activitys.Cadastrar_Ocorrencia"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activitys.Listar_Ocorrencias" />
-        <activity android:name=".ListView.Item_Feed_Ocorrencias"/>
+        <activity android:name=".ListView.Item_Feed_Ocorrencias"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".Activitys.Buscar_Ocorrencias"
+            android:windowSoftInputMode="stateHidden"
+            />
+        <activity android:name=".Activitys.Buscar_Usuarios"
+            android:windowSoftInputMode="stateHidden"
+            />
+
+
 
 
         <service

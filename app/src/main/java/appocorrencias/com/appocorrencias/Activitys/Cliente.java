@@ -63,17 +63,12 @@ public class Cliente extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
-
-
-
-
         //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O CPF MANTEM O MESMO
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
             Nome = bundle.getString("nome");
             CPF = bundle.getString("cpf");
             Bairro = bundle.getString("bairro");
-
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
@@ -113,8 +108,6 @@ public class Cliente extends AppCompatActivity  {
                     }
 
                     startActivity(i);
-
-                    Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -187,6 +180,14 @@ public class Cliente extends AppCompatActivity  {
 
 
     public void evBuscarOcorrencias(View v){
+
+        Intent cliente = new Intent(this, Buscar_Ocorrencias.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("nome", Nome);
+        bundle.putString("cpf", CPF);
+        bundle.putString("bairro", Bairro);
+        cliente.putExtras(bundle);
+        this.startActivity(cliente);
 
 }
 

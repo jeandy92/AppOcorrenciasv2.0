@@ -27,6 +27,7 @@ import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
@@ -89,6 +90,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
         txDescricao = (EditText) findViewById(R.id.edtDescricao);
         txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
+        BtnAnonimo = (RadioButton) findViewById((R.id.rdBtnAnonimo));
 
 
         //ArrayList<TiposDeCrime> list = criarcrimes();
@@ -121,9 +123,23 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
         data = new Date(System.currentTimeMillis());
         SimpleDateFormat formatarData = new SimpleDateFormat("dd-MM-yyyy");
         txData_Ocorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
+
+        BtnAnonimo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    if (BtnAnonimo.equals(true)) {
+                        BtnAnonimo.setChecked(false);
+                    } else {
+                        BtnAnonimo.setChecked(true);
+                    }
+
+            }
+        });
     }
 
-    //Abrir Camera
+
+        //Abrir Camera
+
     public void tirarFoto(View v) {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -465,8 +481,12 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
                             txEstado.requestFocus();
                         } else {
 
+                            Random random = new Random();
+                            int x = random.nextInt(101);
+                            String NrAleatorio = Integer.toString(x);
                             String BuscaId = "IDocorrencia teste";
-                            String ID = processasocket.cadastrar1_no_server(BuscaId);
+                            String IDserver = processasocket.cadastrar1_no_server(BuscaId);
+                            String ID = IDserver + NrAleatorio;
 
                             String retorno = processasocket.cadastrar_Ocorrencia(ID, CPFCliente, tipo_crime, convDataOcorrencia, UF, convDescricao,
                                     convEndereco, convCidade, convBairro, Anonimo, PriNome);
