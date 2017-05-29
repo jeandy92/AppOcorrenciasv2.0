@@ -1,5 +1,7 @@
 package appocorrencias.com.appocorrencias.ClassesSA;
 
+import android.view.View;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,7 +17,9 @@ public class ProcessaSocket {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
-    private static String ip_conexao = /*"192.168.1.12";*/ "52.34.140.131";
+    //private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
+    private static String ip_conexao = "172.20.10.3";
+    private static int  porta_conexao = 2222;
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -42,7 +46,7 @@ public class ProcessaSocket {
     //Metodo que envia as informações para o Servidor (Socket)
     public static void cadastrar_no_server(String dados) {
         try {
-            cliente = new Socket(ip_conexao, 63200);
+            cliente = new Socket(ip_conexao, porta_conexao);
             canalSaida = cliente.getOutputStream();
             canalEntrada = cliente.getInputStream();
             canalSaida.write(dados.getBytes());
@@ -57,29 +61,30 @@ public class ProcessaSocket {
     }
 
     //Metodo que envia as informações para o Servidor (Socket)
-    public static void Bytes(byte[] bites) {
+    public static String Bytes(byte[] bites) {
+        String str = null;
+
         try {
-            String str = null;
+
             Socket cliente2 = new Socket();
 
             int millisecondsTimeOut = 3000;
-            InetSocketAddress adress = new InetSocketAddress(ip_conexao, 63200);
+            InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
 
             try {
                 cliente2.connect(adress, millisecondsTimeOut);
             } catch (Exception e) {
                 str = "erro";
+                return str;
             }
 
-            // BufferedOutputStream bf = new BufferedOutputStream(cliente2.getOutputStream());
             canalSaida = cliente2.getOutputStream();
 
             canalSaida.write(bites, 0, bites.length);
             canalSaida.flush();
             canalSaida.close();
-            //bf.write(bites);
-            // bf.flush();
-            // bf.close();
+
+            str = "true";
 
             cliente2.close();
 
@@ -87,6 +92,7 @@ public class ProcessaSocket {
             //FIXME Tratar a Exception.
             e.printStackTrace();
         }
+        return str;
     }
 
     public static String cadastrar1_no_server(String dados) throws IOException {
@@ -106,7 +112,7 @@ public class ProcessaSocket {
 
 
         int millisecondsTimeOut = 3000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, 63200);
+        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
@@ -303,5 +309,37 @@ public class ProcessaSocket {
         result[3] = (byte) (i >> 24);
 
         return result;
+    }
+
+    ////////////// enviar os bytes
+    public static String envia_Img(String ID, String CPF, String nomeImg, byte [] byteImagem ) throws IOException {
+
+        String dados = "ImagemOcorrencia " + ID + " " + CPF + " " + nomeImg;
+
+        byte[] byteDados  = dados.getBytes();
+        int tamanhoDados = byteDados.length;
+
+        int tamanhoImagem = byteImagem.length;
+
+        byte[] byteTamanhoDados = toBytes(tamanhoDados);
+        byte[] byteTamanhoImagem = toBytes(tamanhoImagem);
+
+
+        byte[] TamanhoEDados = concat(byteTamanhoDados,byteDados);
+        byte[] TamanhoEImagem = concat(byteTamanhoImagem,byteImagem);
+
+        byte[] DadosImagem = concat(TamanhoEDados,TamanhoEImagem);
+
+        int tamanhoPacote = DadosImagem.length;
+        byte[] byteTamanho = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanho,DadosImagem);
+
+        String retorno = Bytes(byteFinal);
+
+        if (retorno.equals("erro")) {
+            return "erro";
+        } else {
+            return "true";
+        }
     }
 }

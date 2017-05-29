@@ -81,11 +81,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     public static ProcessaSocket processasocket = new ProcessaSocket();
     private String Anonimo;
 
-    String acao = "Imagem ";
-    int tamanhoPacote = 0;
-    byte[] byteImagem;
-    byte[] byteAcao = acao.getBytes();
-    byte [] byteFinal, byteTamanho, byteTamanhoDados, byteTamanhoImagem;
+    byte[] byteImagem = null, byteImagem2 = null, byteImagem3 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,10 +115,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         BtnAnonimo = (CheckBox) findViewById((R.id.rdBtnAnonimo));
 
 
-        //ArrayList<TiposDeCrime> list = criarcrimes();
-        //AdapterSpinner adaptero = new AdapterSpinner(this,list);
-        //listadecrimes.setAdapter(adaptero);
-
         txDescricao.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -150,37 +142,26 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         SimpleDateFormat formatarData = new SimpleDateFormat("dd-MM-yyyy");
         txData_Ocorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
 
-        BtnAnonimo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    if (BtnAnonimo.equals(true)) {
-                        BtnAnonimo.setChecked(false);
-                    } else {
-                        BtnAnonimo.setChecked(true);
-                    }
 
-            }
-        });
     }
 
 
-
     // Galeria
-    public void limparImg(View view){
+    public void limparImg(View view) {
         if (cont == 2) {
             iv1.setImageBitmap(null);
             iv1.setBackgroundResource(R.drawable.cam1);
-            cont --;
+            cont--;
 
         } else if (cont == 3) {
             iv2.setImageBitmap(null);
             iv2.setBackgroundResource(R.drawable.cam1);
-            cont --;
+            cont--;
 
         } else if (cont == 4) {
             iv3.setImageBitmap(null);
             iv3.setBackgroundResource(R.drawable.cam1);
-            cont --;
+            cont--;
 
         }
     }
@@ -204,11 +185,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     private void abrir_galeria() {
 
         Toast.makeText(getApplicationContext(), "Abrindo galeria", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent();
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Selecionar Imagem"), SELECIONA_IMAGEM);
-
+        startActivityForResult(intent, IMAGEM_INTERNA);
     }
 
     private String getPath(Uri uri) {
@@ -234,8 +213,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
-        if(requestCode == IMAGEM_INTERNA && resultCode == RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == IMAGEM_INTERNA && resultCode == RESULT_OK) {
             Uri imagemSelecionada = intent.getData();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imagemSelecionada));
@@ -248,17 +227,19 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
                     } else if (cont == 2) {
                         iv2.setImageBitmap(bitmap);
+                        toByte2(bitmap);
                         iv2.setBackground(null);
                         cont++;
 
                     } else if (cont == 3) {
                         iv3.setImageBitmap(bitmap);
+                        toByte3(bitmap);
                         iv3.setBackground(null);
                         cont++;
                     }
                 }
-            }catch (Exception err){
-                Log.d("Imag",err.getMessage());
+            } catch (Exception err) {
+                Log.d("Imag", err.getMessage());
             }
         }
     }
@@ -286,47 +267,22 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-
         byteImagem = byteArray;
-
-    }
-    ////////////// enviar os bytes
-    public void envia_Img(View v) throws IOException {
-        //String tamanho2 = String.valueOf(tamanho);
-        //byteTamanho = tamanho2.getBytes();
-
-        String dados = "ImagemOcorrencia 754";
-        byte[] byteDados  = dados.getBytes();
-        int tamanhoDados = byteDados.length;
-        int tamanhoImagem = byteImagem.length;
-        byteTamanhoDados = toBytes(tamanhoDados);
-        byteTamanhoImagem = toBytes(tamanhoImagem);
-
-
-        byte[] TamanhoEDados = concat(byteTamanhoDados,byteDados);
-        byte[] TamanhoEImagem = concat(byteTamanhoImagem,byteImagem);
-
-        byte[] DadosImagem = concat(TamanhoEDados,TamanhoEImagem);
-
-
-        tamanhoPacote = DadosImagem.length;
-        byteTamanho = toBytes(tamanhoPacote);
-        byteFinal = concat(byteTamanho,DadosImagem);
-
-        ProcessaSocket.Bytes(byteFinal);
     }
 
-    static byte[] toBytes(int i ){
-        byte[] result = new byte [4];
-
-        result[0] = (byte) (i);
-        result[1] = (byte) (i >> 8);
-        result[2] = (byte) (i >> 16);
-        result[3] = (byte) (i >> 24);
-
-        return result;
+    public void toByte2(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        byteImagem2 = byteArray;
     }
 
+    public void toByte3(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        byteImagem3 = byteArray;
+    }
 
 
     //Abrir Camera
@@ -638,6 +594,25 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                 Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (retorno.equals("true")) {
+                                    String retornoImg = null;
+
+                                    // ENVIANDO IMAGEM
+                                    if (byteImagem != null) {
+                                        retornoImg = processasocket.envia_Img(ID, CPFCliente, "Img1", byteImagem);
+                                        if (retornoImg != null && byteImagem2 != null) {
+                                            retornoImg = processasocket.envia_Img(ID, CPFCliente, "Img2", byteImagem2);
+                                            if (retornoImg != null && byteImagem3 != null) {
+                                                retornoImg = processasocket.envia_Img(ID, CPFCliente, "Img3", byteImagem3);
+                                            } else {
+                                                Toast.makeText(this, "Duas Img", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(this, "Uma Img", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(this, "Nao há imagem", Toast.LENGTH_SHORT).show();
+                                    }
+
                                     Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
 
                                     evBuscarOcorrenciasBairro(Bairro);
@@ -652,6 +627,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
                                     cliente.putExtras(bundle);
                                     this.startActivity(cliente);
+
+
                                 } else {
                                     txRua.setError("Erro Retorno do Server False");
                                     txRua.setFocusable(true);
