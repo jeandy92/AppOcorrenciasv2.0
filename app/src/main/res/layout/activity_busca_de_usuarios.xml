@@ -73,7 +73,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/fab_material_deep_purple_500"
-                android:text="CPF"
+                android:text="Cpf"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toTopOf="@+id/rbtCPF"
                 app:layout_constraintLeft_toLeftOf="@+id/ivBuscaTipo"
@@ -113,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:textSize="14sp"
                     android:ems="10"
-                    android:hint="CPF"
+                    android:hint="Cpf"
                     android:inputType="number" />
 
             </android.support.design.widget.TextInputLayout>
@@ -207,13 +207,13 @@
                 app:layout_constraintRight_toRightOf="parent"
                 tools:text="LIMITADOR"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/lv_feed_de_ocorrencias"
+                app:layout_constraintTop_toBottomOf="@+id/lv_usuarios_encontrados"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintVertical_bias="0.0" />
 
             <ListView
-                android:id="@+id/lv_feed_de_ocorrencias"
+                android:id="@+id/lv_usuarios_encontrados"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
                 android:layout_marginEnd="8dp"

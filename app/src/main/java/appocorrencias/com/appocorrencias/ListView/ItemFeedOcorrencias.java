@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,13 +22,13 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.TimeZone;
 
-import appocorrencias.com.appocorrencias.Activitys.Listar_Ocorrencias;
-import appocorrencias.com.appocorrencias.Adapters.ComentariosAdapter;
-import appocorrencias.com.appocorrencias.Adapters.CustomSwiperAdapter;
+import appocorrencias.com.appocorrencias.Activitys.ListarOcorrencias;
+import appocorrencias.com.appocorrencias.Adapters.AdapterComentarios;
+import appocorrencias.com.appocorrencias.Adapters.AdapterCustomSwiper;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 
-import static appocorrencias.com.appocorrencias.Activitys.Cadastrar_Ocorrencia.removerAcentos;
+import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.removerAcentos;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
@@ -41,10 +40,10 @@ import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistr
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getTipoNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getUFNr;
 
-public class Item_Feed_Ocorrencias extends AppCompatActivity {
+public class ItemFeedOcorrencias extends AppCompatActivity {
     private EditText txtComentario;
     ViewPager viewPager;
-    CustomSwiperAdapter customSwiperAdapter;
+    AdapterCustomSwiper adapterCustomSwiper;
     private static ProcessaSocket processa = new ProcessaSocket();
     String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia;
     private ListView listaComentarios;
@@ -103,8 +102,8 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
             image_resources = new int[]{R.drawable.ic_abuso, R.drawable.roubo};
         }
 
-        customSwiperAdapter = new CustomSwiperAdapter(this, image_resources);
-        viewPager.setAdapter(customSwiperAdapter);
+        adapterCustomSwiper = new AdapterCustomSwiper(this, image_resources);
+        viewPager.setAdapter(adapterCustomSwiper);
 
         Tv_Id_Ocorrencia.setText(idOcorrencia);
         Tv_Tipo_Crime.setText(tipo);
@@ -119,7 +118,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
 
         Collections.sort(listadecomentarios);
 
-        ComentariosAdapter adapter = new ComentariosAdapter(this, listadecomentarios);
+        AdapterComentarios adapter = new AdapterComentarios(this, listadecomentarios);
         listaComentarios.setAdapter(adapter);
 
     }
@@ -143,7 +142,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
             if (retorno.equals("false")) {
                 Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
                 setContentView(R.layout.activity_listar_ocorrencias);
-                Intent cliente = new Intent(this, Listar_Ocorrencias.class);
+                Intent cliente = new Intent(this, ListarOcorrencias.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("nome", Nome);
                 bundle.putString("cpf", CPF);
@@ -178,7 +177,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
                 Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
 
                 setContentView(R.layout.activity_listar_ocorrencias);
-                Intent cliente = new Intent(this, Listar_Ocorrencias.class);
+                Intent cliente = new Intent(this, ListarOcorrencias.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("nome", Nome);
@@ -244,7 +243,7 @@ public class Item_Feed_Ocorrencias extends AppCompatActivity {
                     listaComentarios = (ListView) findViewById(R.id.list_comentarios);
                     ArrayList<DadosComentarios> listadecomentarios = getListaComentarios();
                     Collections.sort(listadecomentarios);
-                    ComentariosAdapter adapter = new ComentariosAdapter(this, listadecomentarios);
+                    AdapterComentarios adapter = new AdapterComentarios(this, listadecomentarios);
                     listaComentarios.setAdapter(adapter);
 
                 } else {

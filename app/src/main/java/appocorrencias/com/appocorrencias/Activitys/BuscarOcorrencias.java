@@ -5,7 +5,6 @@ package appocorrencias.com.appocorrencias.Activitys;
         import android.os.Bundle;
         import android.support.design.widget.TextInputLayout;
         import android.support.v7.app.AppCompatActivity;
-        import android.util.Log;
         import android.view.View;
         import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
@@ -14,25 +13,24 @@ package appocorrencias.com.appocorrencias.Activitys;
         import android.widget.RadioButton;
         import android.widget.Spinner;
         import android.widget.TextView;
-        import android.widget.Toast;
 
 
         import java.io.IOException;
         import java.util.ArrayList;
 
-        import appocorrencias.com.appocorrencias.Adapters.FeedAdapter;
+        import appocorrencias.com.appocorrencias.Adapters.AdapterFeed;
         import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
         import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
         import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
-        import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
+        import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
         import appocorrencias.com.appocorrencias.R;
 
         import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
         import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
         import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
-        import static appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias.evBuscarComentario;
+        import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
 
-public class Buscar_Ocorrencias extends AppCompatActivity {
+public class BuscarOcorrencias extends AppCompatActivity {
 
     private RadioButton rbtTipoOcorrencia, rbtBairro;
     private Spinner  spnTipoOcorrencia;
@@ -48,7 +46,7 @@ public class Buscar_Ocorrencias extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busca_de_ocorrencias);
 
-        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O CPF MANTEM O MESMO
+        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O Cpf MANTEM O MESMO
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         Nome = bundle.getString("nome");
@@ -64,7 +62,7 @@ public class Buscar_Ocorrencias extends AppCompatActivity {
         spnTipoOcorrencia = (Spinner) findViewById(R.id.spnTipoOcorrencia);
         edtBairro = (TextInputLayout) findViewById(R.id.input_layout_Nome);
         edtBairroText = (EditText) findViewById(R.id.edtNome);
-        lvFeedOcorrencias =  (ListView) findViewById(R.id.lv_feed_de_ocorrencias);
+        lvFeedOcorrencias =  (ListView) findViewById(R.id.lv_usuarios_encontrados);
 
         spnTipoOcorrencia.setVisibility(View.INVISIBLE);
         spnTipoOcorrencia.setEnabled(false);
@@ -113,10 +111,10 @@ public class Buscar_Ocorrencias extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position >= 0){
 
-                    Intent i = new Intent(view.getContext(), Item_Feed_Ocorrencias.class);
+                    Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
                     String descocorrencia = ((TextView) view.findViewById(R.id.txt_desc_comentario)).getText().toString();
-                    String tipocrime = ((TextView) view.findViewById(R.id.txt_tipo_crime)).getText().toString();
+                    String tipocrime = ((TextView) view.findViewById(R.id.tv_bairro)).getText().toString();
 
                     i.putExtra("cpf", CPF);
                     i.putExtra("nome", Nome);
@@ -154,7 +152,7 @@ public class Buscar_Ocorrencias extends AppCompatActivity {
 
             ArrayList<DadosOcorrencias> listafeedocorrencias = getListaOcorrencia();
 
-            FeedAdapter adapter = new FeedAdapter(this, listafeedocorrencias);
+            AdapterFeed adapter = new AdapterFeed(this, listafeedocorrencias);
 
             lvFeedOcorrencias.setAdapter(adapter);
 

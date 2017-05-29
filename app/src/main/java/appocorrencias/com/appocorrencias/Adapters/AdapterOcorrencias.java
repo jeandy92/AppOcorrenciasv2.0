@@ -17,14 +17,14 @@ import appocorrencias.com.appocorrencias.R;
  * Created by Jeanderson on 22/04/2017.
  */
 
-public class AdapterParaOcorrencias extends BaseAdapter {
+public class AdapterOcorrencias extends BaseAdapter {
 
     private ArrayList<DadosOcorrencias> ocorrenciasregistradas;
     private Activity act;
 
     private ImageButton BtnDeletarOcorrencia;
 
-    public AdapterParaOcorrencias(Activity act,ArrayList<DadosOcorrencias> ocorrenciasregistradas){
+    public AdapterOcorrencias(Activity act, ArrayList<DadosOcorrencias> ocorrenciasregistradas){
         this.ocorrenciasregistradas = ocorrenciasregistradas;
         this.act =act;
 
@@ -52,7 +52,7 @@ public class AdapterParaOcorrencias extends BaseAdapter {
         DadosOcorrencias listaOcorrenciasRegistradas = ocorrenciasregistradas.get(position);
 
         //pegando as referências das Views
-        TextView tipodecrime = (TextView) view.findViewById(R.id.txt_tipo_crime);
+        TextView tipodecrime = (TextView) view.findViewById(R.id.tv_bairro);
         TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);
         TextView endereco = (TextView)view.findViewById(R.id.txEndereco);
         ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_comentario);

@@ -147,7 +147,7 @@ public class Login extends AppCompatActivity {
     public void evCadastrarSe(View view) {
 
         setContentView(R.layout.activity_cadastrar_usuario);
-        this.startActivity(new Intent(this, Cadastrar_Usuario.class));
+        this.startActivity(new Intent(this, CadastrarUsuario.class));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,7 +200,7 @@ public class Login extends AppCompatActivity {
         if (txtUsuario.getText().toString() != null && txtSenha.getText().toString() != null) {
 
 
-            if (Cadastrar_Usuario.validarCPF(CPF)) {
+            if (CadastrarUsuario.validarCPF(CPF)) {
                 txtUsuario.setError("CPF Inválido");
                 txtUsuario.setFocusable(true);
                 txtUsuario.requestFocus();

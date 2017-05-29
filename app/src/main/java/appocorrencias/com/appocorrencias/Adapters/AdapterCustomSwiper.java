@@ -15,14 +15,14 @@ import appocorrencias.com.appocorrencias.R;
  * Created by Robson on 26/04/2017.
  */
 
-public class CustomSwiperAdapter extends PagerAdapter {
+public class AdapterCustomSwiper extends PagerAdapter {
 
 
     int[] image_resources;
     private Context ctx;
     private LayoutInflater layoutInflater;
 
-    public CustomSwiperAdapter(Context ctx, int[] image_resources){
+    public AdapterCustomSwiper(Context ctx, int[] image_resources){
         this.ctx = ctx ;
         this.image_resources = image_resources;
     }

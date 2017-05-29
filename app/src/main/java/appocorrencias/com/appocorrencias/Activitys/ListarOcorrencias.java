@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,19 +12,19 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import appocorrencias.com.appocorrencias.Adapters.AdapterParaOcorrencias;
+import appocorrencias.com.appocorrencias.Adapters.AdapterOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
-import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
+import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
-import static appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias.evBuscarComentario;
+import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
 
 
-public class Listar_Ocorrencias extends AppCompatActivity {
+public class ListarOcorrencias extends AppCompatActivity {
 
     private ListView lista;
     static String Nome, CPF, Bairro;
@@ -48,7 +47,7 @@ public class Listar_Ocorrencias extends AppCompatActivity {
 
         ArrayList<DadosOcorrencias> listadeocorrencias = getListaOcorrencia();
 
-        AdapterParaOcorrencias adapter = new AdapterParaOcorrencias(this, listadeocorrencias);
+        AdapterOcorrencias adapter = new AdapterOcorrencias(this, listadeocorrencias);
 
         lista.setAdapter(adapter);
 
@@ -57,7 +56,7 @@ public class Listar_Ocorrencias extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position >= 0){
 
-                    Intent i = new Intent(view.getContext(), Item_Feed_Ocorrencias.class);
+                    Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
                    // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
                     i.putExtra("cpf", CPF);

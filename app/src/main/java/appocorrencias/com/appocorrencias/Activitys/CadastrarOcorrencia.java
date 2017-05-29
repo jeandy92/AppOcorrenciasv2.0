@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
+import appocorrencias.com.appocorrencias.ClassesSA.BuscarCep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -43,7 +43,7 @@ import me.drakeet.materialdialog.MaterialDialog;
 
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
 
-public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationListener {
+public class CadastrarOcorrencia extends AppCompatActivity implements LocationListener {
 
     private static final int REQUEST_PERMISSIONS_CODE = 128;
 
@@ -66,7 +66,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
     private EditText txRua, txCidade, txEstado, txDescricao, txData_Ocorrencia, txtBairro, txReferencia;
     private CheckBox BtnAnonimo;
 
-    private Buscar_Cep buscauf = new Buscar_Cep();
+    private BuscarCep buscauf = new BuscarCep();
 
     private Location location;
     private LocationManager locationmenager;
@@ -436,7 +436,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
             Log.i(TAG, endereco.getAddressLine(1));
             Log.i(TAG, endereco.getSubLocality());
 
-            Buscar_Cep buscar_cep = new Buscar_Cep();
+            BuscarCep buscar_cep = new BuscarCep();
 
             txCidade.setText(endereco.getLocality());
             txEstado.setText(endereco.getAdminArea());
@@ -497,7 +497,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
             @Override
             public void onClick(View v) {
 
-                ActivityCompat.requestPermissions(Cadastrar_Ocorrencia.this, permissions, REQUEST_PERMISSIONS_CODE);
+                ActivityCompat.requestPermissions(CadastrarOcorrencia.this, permissions, REQUEST_PERMISSIONS_CODE);
                 mMaterialDialog.dismiss();
             }
         });

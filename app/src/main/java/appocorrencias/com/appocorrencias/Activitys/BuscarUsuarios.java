@@ -1,27 +1,55 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.support.design.widget.TextInputLayout;
-        import android.support.v7.app.AppCompatActivity;
-        import android.view.View;
-        import android.view.inputmethod.InputMethodManager;
-        import android.widget.EditText;
-        import android.widget.RadioButton;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
 
-        import appocorrencias.com.appocorrencias.R;
+import java.util.ArrayList;
 
-public class Buscar_Usuarios extends AppCompatActivity {
+import appocorrencias.com.appocorrencias.Adapters.AdapterBuscaUsuario;
+import appocorrencias.com.appocorrencias.ListView.DadosUsuarios;
+import appocorrencias.com.appocorrencias.ListView.ItemBuscaUsuario;
+import appocorrencias.com.appocorrencias.R;
+
+public class BuscarUsuarios extends AppCompatActivity {
 
     private RadioButton rbtCPF, rbtNome;
     private TextInputLayout edtTextCPF, edtTextNome;
     private EditText edtFoco, edtCPF, edtNome;
+    private ListView lvUsuariosEncontrados;
+    private ArrayList<DadosUsuarios> listaUsuariosEncontrados;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busca_de_usuarios);
+
+        //List View para mostrar os usuários
+        lvUsuariosEncontrados = (ListView) findViewById(R.id.lv_usuarios_encontrados);
+
+        ArrayList<DadosUsuarios> listaUsuariosEncontrados = getListaUsuariosEncontrados();
+
+        AdapterBuscaUsuario adapter = new AdapterBuscaUsuario(this, listaUsuariosEncontrados);
+
+        lvUsuariosEncontrados.setAdapter(adapter);
+
+
+        lvUsuariosEncontrados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), ItemBuscaUsuario.class);
+                startActivity(intent);
+            }
+        });
 
 
         edtFoco = (EditText) findViewById(R.id.edtFoco);
@@ -59,7 +87,7 @@ public class Buscar_Usuarios extends AppCompatActivity {
             }
         });
 
-        rbtNome.setOnClickListener(new View.OnClickListener(){
+        rbtNome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 edtFoco.requestFocus();
@@ -110,6 +138,10 @@ public class Buscar_Usuarios extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         this.startActivity(new Intent(this,Login.class));
 
+    }
+
+    public ArrayList<DadosUsuarios> getListaUsuariosEncontrados() {
+        return listaUsuariosEncontrados;
     }
 }
 
