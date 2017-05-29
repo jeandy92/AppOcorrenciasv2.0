@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -17,11 +19,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
@@ -48,11 +54,17 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
     private static final int SELECIONA_IMAGEM = 1;
     private static final int IMAGEM_CAPTURADA = 1;
 
+    public static final int IMAGEM_INTERNA = 12;
+    private ImageButton imgBtnAdd;
+    private ImageButton imgBtnDel;
+    private ImageView iv1, iv2, iv3;
+    private int cont = 1;
+
 
     private String convDataOcorrencia, convDescricao, convEndereco, convCidade, convBairro, tipo_crime, UF;
     ;
     private EditText txRua, txCidade, txEstado, txDescricao, txData_Ocorrencia, txtBairro, txReferencia;
-    private RadioButton BtnAnonimo;
+    private CheckBox BtnAnonimo;
 
     private Buscar_Cep buscauf = new Buscar_Cep();
 
@@ -69,6 +81,12 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
     public static ProcessaSocket processasocket = new ProcessaSocket();
     private String Anonimo;
 
+    String acao = "Imagem ";
+    int tamanhoPacote = 0;
+    byte[] byteImagem;
+    byte[] byteAcao = acao.getBytes();
+    byte [] byteFinal, byteTamanho, byteTamanhoDados, byteTamanhoImagem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +100,14 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
         Bairro = bundle.getString("bairro");
 
 
+        imgBtnAdd = (ImageButton) findViewById(R.id.imgBtnAdd);
+        imgBtnDel = (ImageButton) findViewById(R.id.imgBtnDel);
+
+        iv1 = (ImageView) findViewById(R.id.imageView1);
+        iv2 = (ImageView) findViewById(R.id.imageView2);
+        iv3 = (ImageView) findViewById(R.id.imageView3);
+
+
         txCidade = (EditText) findViewById(R.id.edtCidade);
         txRua = (EditText) findViewById(R.id.edtRua);
         txtBairro = (EditText) findViewById(R.id.edtBairro);
@@ -90,7 +116,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
         txDescricao = (EditText) findViewById(R.id.edtDescricao);
         txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
-        BtnAnonimo = (RadioButton) findViewById((R.id.rdBtnAnonimo));
+        BtnAnonimo = (CheckBox) findViewById((R.id.rdBtnAnonimo));
 
 
         //ArrayList<TiposDeCrime> list = criarcrimes();
@@ -138,30 +164,25 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
     }
 
 
-        //Abrir Camera
 
-    public void tirarFoto(View v) {
+    // Galeria
+    public void limparImg(View view){
+        if (cont == 2) {
+            iv1.setImageBitmap(null);
+            iv1.setBackgroundResource(R.drawable.cam1);
+            cont --;
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        } else if (cont == 3) {
+            iv2.setImageBitmap(null);
+            iv2.setBackgroundResource(R.drawable.cam1);
+            cont --;
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                dialogo("É preciso a permission READ_EXTERNAL_STORAGE para acessar sua Galeria.", new String[]{Manifest.permission.CAMERA});
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSIONS_CODE);
-            }
-        } else {
-            abrirCamera();
+        } else if (cont == 4) {
+            iv3.setImageBitmap(null);
+            iv3.setBackgroundResource(R.drawable.cam1);
+            cont --;
+
         }
-
-    }
-
-    private void abrirCamera() {
-
-        Intent selecionacameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (selecionacameraIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(selecionacameraIntent, IMAGEM_CAPTURADA);
-        }
-
     }
 
     // Galeria
@@ -209,6 +230,128 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
         cursor.close();
 
         return path;
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+        if(requestCode == IMAGEM_INTERNA && resultCode == RESULT_OK){
+            Uri imagemSelecionada = intent.getData();
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imagemSelecionada));
+                if (cont > 0 && cont < 4) {
+                    if (cont == 1) {
+                        iv1.setImageBitmap(bitmap);
+                        toByte1(bitmap);
+                        iv1.setBackground(null);
+                        cont++;
+
+                    } else if (cont == 2) {
+                        iv2.setImageBitmap(bitmap);
+                        iv2.setBackground(null);
+                        cont++;
+
+                    } else if (cont == 3) {
+                        iv3.setImageBitmap(bitmap);
+                        iv3.setBackground(null);
+                        cont++;
+                    }
+                }
+            }catch (Exception err){
+                Log.d("Imag",err.getMessage());
+            }
+        }
+    }
+
+
+    //// juntando 2 bytes arrays
+    public static byte[] concat(byte[]... inputs) {
+        int i = 0;
+        for (byte[] b : inputs) {
+            i += b.length;
+        }
+        byte[] r = new byte[i];
+        i = 0;
+        for (byte[] b : inputs) {
+            System.arraycopy(b, 0, r, i, b.length);
+            i += b.length;
+        }
+        return r;
+    }
+
+
+    //// Bitmap em bytes
+
+    public void toByte1(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        byteImagem = byteArray;
+
+    }
+    ////////////// enviar os bytes
+    public void envia_Img(View v) throws IOException {
+        //String tamanho2 = String.valueOf(tamanho);
+        //byteTamanho = tamanho2.getBytes();
+
+        String dados = "ImagemOcorrencia 754";
+        byte[] byteDados  = dados.getBytes();
+        int tamanhoDados = byteDados.length;
+        int tamanhoImagem = byteImagem.length;
+        byteTamanhoDados = toBytes(tamanhoDados);
+        byteTamanhoImagem = toBytes(tamanhoImagem);
+
+
+        byte[] TamanhoEDados = concat(byteTamanhoDados,byteDados);
+        byte[] TamanhoEImagem = concat(byteTamanhoImagem,byteImagem);
+
+        byte[] DadosImagem = concat(TamanhoEDados,TamanhoEImagem);
+
+
+        tamanhoPacote = DadosImagem.length;
+        byteTamanho = toBytes(tamanhoPacote);
+        byteFinal = concat(byteTamanho,DadosImagem);
+
+        ProcessaSocket.Bytes(byteFinal);
+    }
+
+    static byte[] toBytes(int i ){
+        byte[] result = new byte [4];
+
+        result[0] = (byte) (i);
+        result[1] = (byte) (i >> 8);
+        result[2] = (byte) (i >> 16);
+        result[3] = (byte) (i >> 24);
+
+        return result;
+    }
+
+
+
+    //Abrir Camera
+
+    public void tirarFoto(View v) {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                dialogo("É preciso a permission READ_EXTERNAL_STORAGE para acessar sua Galeria.", new String[]{Manifest.permission.CAMERA});
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSIONS_CODE);
+            }
+        } else {
+            abrirCamera();
+        }
+
+    }
+
+    private void abrirCamera() {
+
+        Intent selecionacameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (selecionacameraIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(selecionacameraIntent, IMAGEM_CAPTURADA);
+        }
 
     }
 
@@ -447,7 +590,7 @@ public class Cadastrar_Ocorrencia extends AppCompatActivity implements LocationL
         convCidade = removerAcentos(convCidade2);
         convBairro = removerAcentos(convBairro2);
 
-        BtnAnonimo = (RadioButton) findViewById(R.id.rdBtnAnonimo);
+        BtnAnonimo = (CheckBox) findViewById(R.id.rdBtnAnonimo);
 
         Anonimo = "false";
 

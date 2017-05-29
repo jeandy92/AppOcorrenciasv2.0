@@ -211,7 +211,6 @@ public class Login extends AppCompatActivity {
                 LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
                 Log.i("evEntrar(ELSE)", CPF);
                 Log.i("evEntrar(ELSE)", SENHA);
-                Toast.makeText(this, "CPF DIGITADO CORRETAMENTE", Toast.LENGTH_SHORT).show();
 
                 retorno = processa.cadastrar1_no_server(LoginServer);
                 String retorno2[] = retorno.split("/");

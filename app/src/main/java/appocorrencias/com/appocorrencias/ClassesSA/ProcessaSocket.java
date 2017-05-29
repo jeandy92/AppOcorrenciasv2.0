@@ -15,7 +15,7 @@ public class ProcessaSocket {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
 
-    private static String ip_conexao = "172.20.10.3";// "52.34.140.131";
+    private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -56,9 +56,54 @@ public class ProcessaSocket {
         }
     }
 
+    //Metodo que envia as informações para o Servidor (Socket)
+    public static void Bytes(byte[] bites) {
+        try {
+            String str = null;
+            Socket cliente2 = new Socket();
+
+            int millisecondsTimeOut = 3000;
+            InetSocketAddress adress = new InetSocketAddress("192.168.1.18", 2222);
+
+            try {
+                cliente2.connect(adress, millisecondsTimeOut);
+            } catch (Exception e) {
+                str = "erro";
+            }
+
+            // BufferedOutputStream bf = new BufferedOutputStream(cliente2.getOutputStream());
+            canalSaida = cliente2.getOutputStream();
+
+            canalSaida.write(bites, 0, bites.length);
+            canalSaida.flush();
+            canalSaida.close();
+            //bf.write(bites);
+            // bf.flush();
+            // bf.close();
+
+            cliente2.close();
+
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
+    }
+
     public static String cadastrar1_no_server(String dados) throws IOException {
         String str = null;
         Socket cliente2 = new Socket();
+
+
+        byte[] byteDados  = dados.getBytes();
+        int tamanhoDados = byteDados.length;
+
+        byte[] byteTamanhoDados = toBytes(tamanhoDados);
+        byte[] TamanhoEDados = concat(byteTamanhoDados,byteDados);
+
+        int tamanhoPacote = TamanhoEDados.length;
+        byte [] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte [] byteFinal = concat(byteTamanhoPct,TamanhoEDados);
+
 
         int millisecondsTimeOut = 3000;
         InetSocketAddress adress = new InetSocketAddress(ip_conexao, 2222);
@@ -72,7 +117,7 @@ public class ProcessaSocket {
         try {
             canalSaida = cliente2.getOutputStream();
             canalEntrada = cliente2.getInputStream();
-            canalSaida.write(dados.getBytes());
+            canalSaida.write(byteFinal);
             str = recebe_dados(canalEntrada);
 
             canalSaida.flush();
@@ -231,8 +276,32 @@ public class ProcessaSocket {
         }
         return "false";
     }
+
+
+    //// juntando 2 bytes arrays
+    public static byte[] concat(byte[]... inputs) {
+        int i = 0;
+        for (byte[] b : inputs) {
+            i += b.length;
+        }
+        byte[] r = new byte[i];
+        i = 0;
+        for (byte[] b : inputs) {
+            System.arraycopy(b, 0, r, i, b.length);
+            i += b.length;
+        }
+        return r;
+    }
+
+    //// Convertento inteiro para Byte
+    static byte[] toBytes(int i) {
+        byte[] result = new byte[4];
+
+        result[0] = (byte) (i);
+        result[1] = (byte) (i >> 8);
+        result[2] = (byte) (i >> 16);
+        result[3] = (byte) (i >> 24);
+
+        return result;
+    }
 }
-
-
-
-
