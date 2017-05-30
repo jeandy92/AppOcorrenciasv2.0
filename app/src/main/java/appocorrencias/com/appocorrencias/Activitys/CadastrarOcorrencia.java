@@ -587,6 +587,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                             String IDserver = processasocket.cadastrar1_no_server(BuscaId);
                             String ID = IDserver + NrAleatorio;
 
+
+
                             String retorno = processasocket.cadastrar_Ocorrencia(ID, CPFCliente, tipo_crime, convDataOcorrencia, UF, convDescricao,
                                     convEndereco, convCidade, convBairro, Anonimo, PriNome);
 
@@ -598,11 +600,17 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
                                     // ENVIANDO IMAGEM
                                     if (byteImagem != null) {
-                                        retornoImg = processasocket.envia_Img(ID, CPFCliente, "Img1", byteImagem);
+                                        int x1 = random.nextInt(101);
+                                        String IDImg = Integer.toString(x1);
+                                        retornoImg = processasocket.envia_Img(IDImg, ID, CPFCliente, "Img1", byteImagem);
                                         if (retornoImg != null && byteImagem2 != null) {
-                                            retornoImg = processasocket.envia_Img(ID, CPFCliente, "Img2", byteImagem2);
+                                            int x2 = random.nextInt(101);
+                                            String IDImg2 = Integer.toString(x2);
+                                            retornoImg = processasocket.envia_Img(IDImg2, ID, CPFCliente, "Img2", byteImagem2);
                                             if (retornoImg != null && byteImagem3 != null) {
-                                                retornoImg = processasocket.envia_Img(ID, CPFCliente, "Img3", byteImagem3);
+                                                int x3 = random.nextInt(101);
+                                                String IDImg3 = Integer.toString(x3);
+                                                retornoImg = processasocket.envia_Img(IDImg3, ID, CPFCliente, "Img3", byteImagem3);
                                             } else {
                                                 Toast.makeText(this, "Duas Img", Toast.LENGTH_SHORT).show();
                                             }

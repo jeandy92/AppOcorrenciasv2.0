@@ -312,9 +312,9 @@ public class ProcessaSocket {
     }
 
     ////////////// enviar os bytes
-    public static String envia_Img(String ID, String CPF, String nomeImg, byte [] byteImagem ) throws IOException {
+    public static String envia_Img(String IDImg, String ID, String CPF, String nomeImg, byte [] byteImagem ) throws IOException {
 
-        String dados = "ImagemOcorrencia " + ID + " " + CPF + " " + nomeImg;
+        String dados = "ImagemOcorrencia " + IDImg+ " " + ID + " " + CPF + " " + nomeImg;
 
         byte[] byteDados  = dados.getBytes();
         int tamanhoDados = byteDados.length;
