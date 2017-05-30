@@ -16,12 +16,12 @@ import appocorrencias.com.appocorrencias.R;
  * Created by Jeanderson on 01/05/2017.
  */
 
-public class FeedAdapter extends BaseAdapter {
+public class AdapterFeed extends BaseAdapter {
 
     private final ArrayList<DadosOcorrencias> feed_ocorrencias;
     private final Activity act;
 
-    public FeedAdapter(Activity act,ArrayList<DadosOcorrencias> feedocorrencias){
+    public AdapterFeed(Activity act, ArrayList<DadosOcorrencias> feedocorrencias){
         this.feed_ocorrencias = feedocorrencias;
         this.act =act;
 
@@ -49,8 +49,8 @@ public class FeedAdapter extends BaseAdapter {
         DadosOcorrencias lista_feed_ocorrencias  = feed_ocorrencias.get(position);
 
         //pegando as referências das Views
-        TextView tipodecrime = (TextView) view.findViewById(R.id.txt_tipo_crime);
-        TextView apelido = (TextView) view.findViewById(R.id.txApelido);
+        TextView tipodecrime = (TextView) view.findViewById(R.id.tv_bairro);
+        TextView apelido = (TextView) view.findViewById(R.id.tv_nome);
         TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);
         TextView endereco = (TextView)view.findViewById(R.id.txEndereco);
         ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_comentario);

@@ -5,7 +5,7 @@ package appocorrencias.com.appocorrencias.ListView;
  */
 public class DadosOcorrencias {
     public String NrOcorrencia;
-    public String CPF;
+    public String Cpf;
     public String Rua;
     public String Bairro;
     public String Cidade;
@@ -17,11 +17,11 @@ public class DadosOcorrencias {
     public String Apelido;
 
 
-    public DadosOcorrencias(String NrOcorrencia, String CPF, String Rua, String Bairro, String Cidade,
+    public DadosOcorrencias(String NrOcorrencia, String Cpf, String Rua, String Bairro, String Cidade,
                             String UF, String Descricao, String Data, String Tipo, String Anonimo, String Apelido) {
 
         this.NrOcorrencia = NrOcorrencia;
-        this.CPF = CPF;
+        this.Cpf = Cpf;
         this.Rua = Rua;
         this.Bairro = Bairro;
         this.Cidade = Cidade;

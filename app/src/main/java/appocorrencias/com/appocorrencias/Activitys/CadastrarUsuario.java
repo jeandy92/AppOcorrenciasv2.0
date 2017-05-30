@@ -13,12 +13,12 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.text.Normalizer;
 
-import appocorrencias.com.appocorrencias.ClassesSA.Buscar_Cep;
+import appocorrencias.com.appocorrencias.ClassesSA.BuscarCep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
-public class Cadastrar_Usuario extends AppCompatActivity {
+public class CadastrarUsuario extends AppCompatActivity {
 
     //Variavel para gerar log
     private static final String TAG = "LOG";
@@ -81,7 +81,7 @@ public class Cadastrar_Usuario extends AppCompatActivity {
 
         convCep = CEP.getText().toString().replaceAll("[^0123456789]", "");
 
-        Buscar_Cep busca = new Buscar_Cep();
+        BuscarCep busca = new BuscarCep();
 
         String Status = busca.getEndereco(convCep);
         if (Status.equals("erro")) {
@@ -132,12 +132,12 @@ public class Cadastrar_Usuario extends AppCompatActivity {
         Log.i(TAG, "Cadastrar...." + convCpf);
 
         if (convCpf.isEmpty()) {
-            CPF.setError("Faltou preencher CPF ");
+            CPF.setError("Faltou preencher Cpf ");
             CPF.setFocusable(true);
             CPF.requestFocus();
         } else {
             if (validarCPF(convCpf)) {
-                CPF.setError("CPF Inválido");
+                CPF.setError("Cpf Inválido");
                 CPF.setFocusable(true);
                 CPF.requestFocus();
             } else {
@@ -171,7 +171,7 @@ public class Cadastrar_Usuario extends AppCompatActivity {
                                         setContentView(R.layout.activity_login);
                                         this.startActivity(new Intent(this, Login.class));
                                     } else {
-                                        CPF.setError("CPF Já Cadastrado");
+                                        CPF.setError("Cpf Já Cadastrado");
                                         CPF.setFocusable(true);
                                         CPF.requestFocus();
                                     }
@@ -184,7 +184,7 @@ public class Cadastrar_Usuario extends AppCompatActivity {
         }
     }
 
-    //Método para Validar CPF
+    //Método para Validar Cpf
 
     public static boolean validarCPF(String CPF) {
         if (CPF.equals("00000000000") || CPF.equals("11111111111")

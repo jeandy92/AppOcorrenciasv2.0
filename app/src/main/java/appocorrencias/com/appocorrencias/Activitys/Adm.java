@@ -44,12 +44,10 @@ public class Adm extends AppCompatActivity {
         btnCadastrarOcorrencias =  (Button) findViewById(R.id.btnCadastrarOcorrencias);
 
         txtTesteAdm = (TextView) findViewById(R.id.txtTesteAdm);
-        txtTesteAdm.setText("Bem Vindo Adm " + NomeCli + " CPF: " + CPF);
+        txtTesteAdm.setText("Bem Vindo Adm " + NomeCli + " Cpf: " + CPF);
     }
     public void ev_valida_conexao(View view) {
 
-        setContentView(R.layout.activity_cliente_socket);
-        this.startActivity(new Intent(this,Cliente_Socket.class));
     }
 
     public void ev_cadastrar_usuario(View view) {
@@ -57,7 +55,7 @@ public class Adm extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_cadastrar_usuario);
-        this.startActivity(new Intent(this,Cadastrar_Usuario.class));
+        this.startActivity(new Intent(this,CadastrarUsuario.class));
     }
     protected void CriaNotificaçoes() {
 
@@ -78,7 +76,7 @@ public class Adm extends AppCompatActivity {
 
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
-        Intent cadastrarOcorrencia = new Intent(this, Cadastrar_Ocorrencia.class);
+        Intent cadastrarOcorrencia = new Intent(this, CadastrarOcorrencia.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("nome", NomeCli);

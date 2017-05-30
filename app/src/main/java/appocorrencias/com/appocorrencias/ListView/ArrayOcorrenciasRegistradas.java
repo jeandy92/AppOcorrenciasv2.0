@@ -134,7 +134,7 @@ public class ArrayOcorrenciasRegistradas {
         for (int i = 0; i < n; i++) {
             if (Nr.equals(dados.get(i).NrOcorrencia)) {
 
-                cpf = dados.get(i).CPF;
+                cpf = dados.get(i).Cpf;
             }
         }
         return cpf;

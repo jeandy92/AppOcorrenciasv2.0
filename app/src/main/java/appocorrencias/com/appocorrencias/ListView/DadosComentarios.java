@@ -48,6 +48,10 @@ public class DadosComentarios implements Comparable<DadosComentarios> {
         return Descricao;
     }
 
+    public String getCPF() {
+        return CPF;
+    }
+
 
     public String getApelido() {
         return Apelido;

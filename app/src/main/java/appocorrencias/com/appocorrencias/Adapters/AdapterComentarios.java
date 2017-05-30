@@ -16,12 +16,12 @@ import appocorrencias.com.appocorrencias.R;
  * Created by Jeanderson on 01/05/2017.
  */
 
-public class ComentariosAdapter extends BaseAdapter {
+public class AdapterComentarios extends BaseAdapter {
 
     private ArrayList<DadosComentarios> feed_comentarios;
     private final Activity act;
 
-    public ComentariosAdapter(Activity act, ArrayList<DadosComentarios> feedocomentarios){
+    public AdapterComentarios(Activity act, ArrayList<DadosComentarios> feedocomentarios){
         this.feed_comentarios = feedocomentarios;
         this.act =act;
 
@@ -48,8 +48,11 @@ public class ComentariosAdapter extends BaseAdapter {
         View view = act.getLayoutInflater().inflate(R.layout.acitivity_item_feed_comentarios,parent,false);
         DadosComentarios lista_feed_comentarios  = feed_comentarios.get(position);
 
+
+
+
         //pegando as referências das Views
-        TextView apelido = (TextView) view.findViewById(R.id.txApelido);
+        TextView apelido = (TextView) view.findViewById(R.id.tv_nome);
         TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);
         TextView dataHora = (TextView)view.findViewById(R.id.txDataHora);
         ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_comentario);
@@ -60,7 +63,10 @@ public class ComentariosAdapter extends BaseAdapter {
         dataHora.setText("Dia "+ lista_feed_comentarios.getData() + " às " + lista_feed_comentarios.getHora());
         idocorrencia.setText(String.valueOf(lista_feed_comentarios.getNrOcorrencia()));
 
+        String CPFComentario = lista_feed_comentarios.getCPF();
+
         imagem.setImageResource(R.drawable.ic_abuso);
+
 
         return view;
     }

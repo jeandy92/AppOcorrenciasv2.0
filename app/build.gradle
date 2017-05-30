@@ -34,19 +34,22 @@ dependencies {
 
 
 
-    compile "com.google.firebase:firebase-messaging:9.0.1"
-    compile "com.google.firebase:firebase-database:9.0.1"
-    compile 'com.google.android.gms:play-services:9.0.1'
+
+
+
+
 
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'org.jsoup:jsoup:1.10.2'
+    compile 'com.google.firebase:firebase-messaging:9.0.1'
+    compile 'com.google.firebase:firebase-database:9.0.1'
+    compile 'com.google.android.gms:play-services:9.0.1'
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.getbase:floatingactionbutton:1.10.1'
-
     compile 'com.github.shell-software:fab:1.0.5'
     compile 'me.drakeet.materialdialog:library:1.2.2'
     compile 'br.com.jansenfelipe:androidmask:1.0.1'
@@ -54,9 +57,6 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
-
-
-
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'

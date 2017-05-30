@@ -24,17 +24,17 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import appocorrencias.com.appocorrencias.Adapters.FeedAdapter;
+import appocorrencias.com.appocorrencias.Adapters.AdapterFeed;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
-import appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias;
+import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
-import static appocorrencias.com.appocorrencias.ListView.Item_Feed_Ocorrencias.evBuscarComentario;
+import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
 
 
 public class Cliente extends AppCompatActivity  {
@@ -63,17 +63,12 @@ public class Cliente extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
-
-
-
-
-        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O CPF MANTEM O MESMO
+        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O Cpf MANTEM O MESMO
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
             Nome = bundle.getString("nome");
             CPF = bundle.getString("cpf");
             Bairro = bundle.getString("bairro");
-
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
@@ -83,7 +78,7 @@ public class Cliente extends AppCompatActivity  {
 
         ArrayList<DadosOcorrencias> listafeedocorrencias = getListaOcorrencia();
 
-        FeedAdapter adapter = new FeedAdapter(this, listafeedocorrencias);
+        AdapterFeed adapter = new AdapterFeed(this, listafeedocorrencias);
 
         lvFeedOcorrencias.setAdapter(adapter);
 
@@ -92,10 +87,10 @@ public class Cliente extends AppCompatActivity  {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position >= 0){
 
-                    Intent i = new Intent(view.getContext(), Item_Feed_Ocorrencias.class);
+                    Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
                     String descocorrencia = ((TextView) view.findViewById(R.id.txt_desc_comentario)).getText().toString();
-                    String tipocrime = ((TextView) view.findViewById(R.id.txt_tipo_crime)).getText().toString();
+                    String tipocrime = ((TextView) view.findViewById(R.id.tv_bairro)).getText().toString();
 
                     i.putExtra("cpf", CPF);
                     i.putExtra("nome", Nome);
@@ -113,8 +108,6 @@ public class Cliente extends AppCompatActivity  {
                     }
 
                     startActivity(i);
-
-                    Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -167,7 +160,7 @@ public class Cliente extends AppCompatActivity  {
         Bundle b = new Bundle();
         b.putString("tipocrime", "roubo");
 
-        this.startActivity(new Intent(this, Cadastrar_Ocorrencia.class));
+        this.startActivity(new Intent(this, CadastrarOcorrencia.class));
 
     }
 
@@ -182,11 +175,19 @@ public class Cliente extends AppCompatActivity  {
     public void onUpdateCliente() {
 
         setContentView(R.layout.activity_cadastrar_usuario);
-        this.startActivity(new Intent(this, Cadastrar_Usuario.class));
+        this.startActivity(new Intent(this, CadastrarUsuario.class));
     }
 
 
     public void evBuscarOcorrencias(View v){
+
+        Intent cliente = new Intent(this, BuscarOcorrencias.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("nome", Nome);
+        bundle.putString("cpf", CPF);
+        bundle.putString("bairro", Bairro);
+        cliente.putExtras(bundle);
+        this.startActivity(cliente);
 
 }
 
@@ -196,7 +197,7 @@ public class Cliente extends AppCompatActivity  {
 
         setContentView(R.layout.activity_cadastrar_ocorrencia);
 
-        Intent cadastrarOcorrencia = new Intent(this, Cadastrar_Ocorrencia.class);
+        Intent cadastrarOcorrencia = new Intent(this, CadastrarOcorrencia.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("nome", Nome);
@@ -224,7 +225,7 @@ public class Cliente extends AppCompatActivity  {
             Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
 
             setContentView(R.layout.activity_listar_ocorrencias);
-            Intent cliente = new Intent(this, Listar_Ocorrencias.class);
+            Intent cliente = new Intent(this, ListarOcorrencias.class);
 
             Bundle bundle = new Bundle();
             bundle.putString("nome", Nome);
@@ -267,7 +268,7 @@ public class Cliente extends AppCompatActivity  {
             Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
 
             setContentView(R.layout.activity_listar_ocorrencias);
-            Intent cliente = new Intent(this, Listar_Ocorrencias.class);
+            Intent cliente = new Intent(this, ListarOcorrencias.class);
 
             Bundle bundle = new Bundle();
             bundle.putString("nome", Nome);
