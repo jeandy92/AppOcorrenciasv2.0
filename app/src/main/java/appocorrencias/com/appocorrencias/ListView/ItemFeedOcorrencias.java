@@ -1,6 +1,8 @@
 package appocorrencias.com.appocorrencias.ListView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +35,10 @@ import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.removerAcentos;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.concat;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.recebe_dados;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.toBytes;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
@@ -47,6 +57,16 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     private static ProcessaSocket processa = new ProcessaSocket();
     String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia;
     private ListView listaComentarios;
+    static byte[] imagem= null;
+    static byte[] imagem2= null;
+    static byte[] imagem3=null;
+
+    Bitmap img;
+    Bitmap img2;
+    Bitmap img3;
+
+    Bitmap [] images = new Bitmap[3];
+
 
 
     @Override
@@ -82,6 +102,21 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         tipo = getTipoNr(idOcorrencia);
         CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
 
+        try {
+            evBuscarImagens(idOcorrencia);
+            img = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
+            img2 = BitmapFactory.decodeByteArray(imagem2, 0, imagem2.length);
+            img3 = BitmapFactory.decodeByteArray(imagem3, 0, imagem3.length);
+
+            images [0]= img;
+            images [1]= img2;
+            images [2]= img3;
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if (CPFOcorrencia.equals(CPF)) {
             btnExcluir.setVisibility(View.VISIBLE);
         }
@@ -102,7 +137,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             image_resources = new int[]{R.drawable.ic_abuso, R.drawable.roubo};
         }
 
-        adapterCustomSwiper = new AdapterCustomSwiper(this, image_resources);
+        adapterCustomSwiper = new AdapterCustomSwiper(this, image_resources, images);
         viewPager.setAdapter(adapterCustomSwiper);
 
         Tv_Id_Ocorrencia.setText(idOcorrencia);
@@ -284,9 +319,100 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                         HoraComentario, ApelidoComentario, DescricaoComentario);
 
                 ArrayComentariosRegistrados.adicionar(dado);
+
+
             }
         }
     }
 
+    public static void evBuscarImagens(String IDOcorrencia) throws IOException {
+
+        String BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
+
+        String ip_conexao = "172.20.10.4";
+        int porta_conexao = 2222;
+        String str = null;
+        OutputStream canalSaida = null;
+        InputStream canalEntrada = null;
+        Socket cliente2 = new Socket();
+
+        byte[] byteDados = BuscarImagensOcorrencia.getBytes();
+        int tamanhoDados = byteDados.length;
+
+        byte[] byteTamanhoDados = toBytes(tamanhoDados);
+        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
+        int tamanhoPacote = TamanhoEDados.length;
+        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
+
+        int millisecondsTimeOut = 3000;
+        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+
+        try {
+            cliente2.connect(adress, millisecondsTimeOut);
+        } catch (Exception e) {
+            str = "erro";
+        }
+        try {
+            canalSaida = cliente2.getOutputStream();
+            canalEntrada = cliente2.getInputStream();
+            canalSaida.write(byteFinal);
+            str = recebe_dados(canalEntrada);
+
+            if (str.equals("trueImagem")) {
+                imagem = receber_imagem(canalEntrada);
+
+                str = recebe_dados(canalEntrada);
+
+                if (str.equals("trueImagem")) {
+                    imagem2 = receber_imagem(canalEntrada);
+
+                    str = recebe_dados(canalEntrada);
+
+                    if (str.equals("trueImagem")) {
+                        imagem3 = receber_imagem(canalEntrada);
+                    }
+                }
+            }
+
+
+            canalSaida.flush();
+            canalSaida.close();
+            canalEntrada.close();
+            cliente2.close();
+
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void onBackPressed() {
+        super.onBackPressed();
+
+
+//        imagem= null;
+//        imagem2= null;
+//        imagem3=null;
+//
+//         img = null;
+//         img2=null;
+//         img3=null;
+//
+//        images = null;
+
+        Intent cliente = new Intent(this, ListarOcorrencias.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("nome", Nome);
+        bundle.putString("cpf" , CPF);
+        bundle.putString("bairro" , BairroCli);
+
+        cliente.putExtras(bundle);
+        this.startActivity(cliente);
+
+    }
 
 }

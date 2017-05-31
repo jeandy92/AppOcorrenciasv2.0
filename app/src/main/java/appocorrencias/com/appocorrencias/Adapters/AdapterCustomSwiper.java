@@ -1,6 +1,7 @@
 package appocorrencias.com.appocorrencias.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -21,16 +22,19 @@ public class AdapterCustomSwiper extends PagerAdapter {
     int[] image_resources;
     private Context ctx;
     private LayoutInflater layoutInflater;
+    Bitmap[] images;
 
-    public AdapterCustomSwiper(Context ctx, int[] image_resources){
+    public AdapterCustomSwiper(Context ctx, int[] image_resources, Bitmap[] images){
         this.ctx = ctx ;
         this.image_resources = image_resources;
+        this.images= images;
     }
 
 
     @Override
     public int getCount() {
-        return image_resources.length;
+        return images.length;
+        //return image_resources.length;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class AdapterCustomSwiper extends PagerAdapter {
         View item_view = layoutInflater.inflate(R.layout.swipe_layout, container, false);
         ImageView imageView =  (ImageView) item_view.findViewById(R.id.image_view);
         TextView textView = (TextView) item_view.findViewById(R.id.image_count);
-        imageView.setImageResource(image_resources[position]);
+        imageView.setImageBitmap(images[position]);
         textView.setText("");
         container.addView(item_view);
         return item_view;

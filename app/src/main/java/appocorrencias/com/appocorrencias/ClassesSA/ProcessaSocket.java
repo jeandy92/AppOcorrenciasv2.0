@@ -1,7 +1,5 @@
 package appocorrencias.com.appocorrencias.ClassesSA;
 
-import android.view.View;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,7 +16,7 @@ public class ProcessaSocket {
     static InputStream canalEntrada = null;
 
     //private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
-    private static String ip_conexao = "172.20.10.3";
+    private static String ip_conexao = "172.20.10.4";
     private static int  porta_conexao = 2222;
 
     public static String recebe_dados(InputStream in) throws IOException {
@@ -38,10 +36,33 @@ public class ProcessaSocket {
             sb.append(t);
             str = sb.toString();
         }
-        in.close();
+
+        //in.close();
         return str;
 
     }
+
+
+
+    public static byte [] receber_imagem(InputStream in) throws IOException {
+
+        byte[] resulBuff = new byte[0];
+        byte[] buff = new byte[6022386];
+        int k = 0;
+
+        k = in.read(buff, 0, buff.length);
+        byte[] tbuff = new byte[resulBuff.length + k];
+        System.arraycopy(resulBuff, 0, tbuff, 0, resulBuff.length);
+        System.arraycopy(buff, 0, tbuff, resulBuff.length, k);
+        resulBuff = tbuff;
+
+       // in.close();
+        return resulBuff;
+
+        }
+
+
+
 
     //Metodo que envia as informações para o Servidor (Socket)
     public static void cadastrar_no_server(String dados) {
@@ -94,6 +115,7 @@ public class ProcessaSocket {
         }
         return str;
     }
+
 
     public static String cadastrar1_no_server(String dados) throws IOException {
         String str = null;
@@ -300,7 +322,7 @@ public class ProcessaSocket {
     }
 
     //// Convertento inteiro para Byte
-    static byte[] toBytes(int i) {
+    public static byte[] toBytes(int i) {
         byte[] result = new byte[4];
 
         result[0] = (byte) (i);
