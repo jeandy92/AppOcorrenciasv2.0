@@ -233,8 +233,6 @@ public class Login extends AppCompatActivity {
 
                             evBuscarOcorrenciasBairro(Bairro2);
 
-                            Toast.makeText(getApplicationContext(), "Perfil Cliente", Toast.LENGTH_SHORT).show();
-                            setContentView(R.layout.activity_cliente);
                             Intent cliente = new Intent(this, Cliente.class);
 
                             Bundle bundle = new Bundle();

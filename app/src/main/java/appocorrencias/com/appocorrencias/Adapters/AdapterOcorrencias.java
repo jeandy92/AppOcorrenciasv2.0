@@ -52,7 +52,7 @@ public class AdapterOcorrencias extends BaseAdapter {
         DadosOcorrencias listaOcorrenciasRegistradas = ocorrenciasregistradas.get(position);
 
         //pegando as referências das Views
-        TextView tipodecrime = (TextView) view.findViewById(R.id.tv_bairro);
+        TextView tipodecrime = (TextView) view.findViewById(R.id.tv_tipo);
         TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);
         TextView endereco = (TextView)view.findViewById(R.id.txEndereco);
         ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_comentario);

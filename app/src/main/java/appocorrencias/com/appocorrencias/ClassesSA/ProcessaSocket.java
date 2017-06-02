@@ -16,10 +16,34 @@ public class ProcessaSocket {
     static InputStream canalEntrada = null;
 
     //private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
-    private static String ip_conexao = "172.20.10.4";
+    private static String ip_conexao = "172.20.10.3";
     private static int  porta_conexao = 2222;
 
     public static String recebe_dados(InputStream in) throws IOException {
+        byte[] resulBuff = new byte[0];
+        byte[] buff = new byte[4096];
+        int k = 0;
+        String str = null;
+        StringBuilder sb = new StringBuilder();
+
+        k = in.read(buff, 0, buff.length);
+        byte[] tbuff = new byte[resulBuff.length + k];
+        System.arraycopy(resulBuff, 0, tbuff, 0, resulBuff.length);
+        System.arraycopy(buff, 0, tbuff, resulBuff.length, k);
+        resulBuff = tbuff;
+        for (int i = 0; i < resulBuff.length; i++) {
+            char t = (char) tbuff[i];
+            sb.append(t);
+            str = sb.toString();
+        }
+
+        in.close();
+        return str;
+
+    }
+
+
+    public static String recebe_dados_img(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
         byte[] buff = new byte[4096];
         int k = 0;

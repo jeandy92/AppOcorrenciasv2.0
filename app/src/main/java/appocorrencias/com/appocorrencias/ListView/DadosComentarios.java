@@ -66,10 +66,10 @@ public class DadosComentarios implements Comparable<DadosComentarios> {
     public int compareTo(@NonNull DadosComentarios dados) {
         int NrAtual = Integer.parseInt(this.NrComentario);
         int Nrdado = Integer.parseInt(dados.NrComentario);
-        if(NrAtual > Nrdado){
+        if(NrAtual < Nrdado){
             return -1;
         }
-        else if(NrAtual < Nrdado){
+        else if(NrAtual > Nrdado){
             return 1;
         }
         return this.getNrComentario().compareToIgnoreCase(dados.getNrComentario());

@@ -1,12 +1,16 @@
 package appocorrencias.com.appocorrencias.ListView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,10 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +28,8 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.TimeZone;
 
+import appocorrencias.com.appocorrencias.Activitys.BuscarOcorrencias;
+import appocorrencias.com.appocorrencias.Activitys.Cliente;
 import appocorrencias.com.appocorrencias.Activitys.ListarOcorrencias;
 import appocorrencias.com.appocorrencias.Adapters.AdapterComentarios;
 import appocorrencias.com.appocorrencias.Adapters.AdapterCustomSwiper;
@@ -35,12 +37,10 @@ import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.removerAcentos;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.concat;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.recebe_dados;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.toBytes;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
+import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.deleteAllArrayImagens;
+import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.getListaImagens;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getCidadeNr;
@@ -55,19 +55,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     ViewPager viewPager;
     AdapterCustomSwiper adapterCustomSwiper;
     private static ProcessaSocket processa = new ProcessaSocket();
-    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia;
-    private ListView listaComentarios;
-    static byte[] imagem= null;
-    static byte[] imagem2= null;
-    static byte[] imagem3=null;
-
-    Bitmap img;
-    Bitmap img2;
-    Bitmap img3;
-
-    Bitmap [] images = new Bitmap[3];
-
-
+    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia, tela;
+    ListView listaComentarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +77,13 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
         Bundle dados = intent.getExtras();
 
+
         idOcorrencia = dados.getString("id_ocorrencia").toString();
         CPF = dados.getString("cpf").toString();
         Nome = dados.getString("nome").toString();
         BairroCli = dados.getString("bairro").toString();
+        tela = dados.getString("tela").toString();
+
 
         descricao = getDescricaoNr(idOcorrencia);
         rua = getRuaNr(idOcorrencia);
@@ -102,20 +94,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         tipo = getTipoNr(idOcorrencia);
         CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
 
-        try {
-            evBuscarImagens(idOcorrencia);
-            img = BitmapFactory.decodeByteArray(imagem, 0, imagem.length);
-            img2 = BitmapFactory.decodeByteArray(imagem2, 0, imagem2.length);
-            img3 = BitmapFactory.decodeByteArray(imagem3, 0, imagem3.length);
+        ArrayList<Bitmap> listaImagens = getListaImagens();
 
-            images [0]= img;
-            images [1]= img2;
-            images [2]= img3;
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         if (CPFOcorrencia.equals(CPF)) {
             btnExcluir.setVisibility(View.VISIBLE);
@@ -137,7 +117,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             image_resources = new int[]{R.drawable.ic_abuso, R.drawable.roubo};
         }
 
-        adapterCustomSwiper = new AdapterCustomSwiper(this, image_resources, images);
+        adapterCustomSwiper = new AdapterCustomSwiper(this, image_resources, listaImagens);
         viewPager.setAdapter(adapterCustomSwiper);
 
         Tv_Id_Ocorrencia.setText(idOcorrencia);
@@ -147,14 +127,35 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         Tv_Rua_Bairro.setText(rua + "," + bairro);
         Tv_Cidade_UF.setText(cidade + ", " + uf);
 
+        ArrayList<DadosComentarios> listadecomentarios = getListaComentarios();
+        Collections.sort(listadecomentarios);
+        AdapterComentarios adapter = new AdapterComentarios(this, listadecomentarios);
 
         listaComentarios = (ListView) findViewById(R.id.list_comentarios);
-        ArrayList<DadosComentarios> listadecomentarios = getListaComentarios();
-
-        Collections.sort(listadecomentarios);
-
-        AdapterComentarios adapter = new AdapterComentarios(this, listadecomentarios);
         listaComentarios.setAdapter(adapter);
+
+
+        listaComentarios.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
 
     }
 
@@ -241,7 +242,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             String NrAleatorio = Integer.toString(x);
             String BuscaId = "IDcomentario teste";
             String IDserver = processa.cadastrar1_no_server(BuscaId);
-            String IDComentario = IDserver + NrAleatorio;
+            //String IDComentario = IDserver + NrAleatorio;
 
 
             String ArrayNome[] = Nome.split(" ");
@@ -261,10 +262,15 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             String Hora = hora2.format(dtI.getTime());
 
 
-            String retorno = processa.cadastrar_Comentario(IDComentario, idOcorrencia, CPF, Data, Hora, Apelido, convComentario);
+            String retorno = processa.cadastrar_Comentario(IDserver, idOcorrencia, CPF, Data, Hora, Apelido, convComentario);
 
 
             txtComentario.setText(null);
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
             if (retorno.equals("erro")) {
                 Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
@@ -325,94 +331,48 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         }
     }
 
-    public static void evBuscarImagens(String IDOcorrencia) throws IOException {
-
-        String BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
-
-        String ip_conexao = "172.20.10.4";
-        int porta_conexao = 2222;
-        String str = null;
-        OutputStream canalSaida = null;
-        InputStream canalEntrada = null;
-        Socket cliente2 = new Socket();
-
-        byte[] byteDados = BuscarImagensOcorrencia.getBytes();
-        int tamanhoDados = byteDados.length;
-
-        byte[] byteTamanhoDados = toBytes(tamanhoDados);
-        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
-        int tamanhoPacote = TamanhoEDados.length;
-        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
-        byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
-
-        int millisecondsTimeOut = 3000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
-
-        try {
-            cliente2.connect(adress, millisecondsTimeOut);
-        } catch (Exception e) {
-            str = "erro";
-        }
-        try {
-            canalSaida = cliente2.getOutputStream();
-            canalEntrada = cliente2.getInputStream();
-            canalSaida.write(byteFinal);
-            str = recebe_dados(canalEntrada);
-
-            if (str.equals("trueImagem")) {
-                imagem = receber_imagem(canalEntrada);
-
-                str = recebe_dados(canalEntrada);
-
-                if (str.equals("trueImagem")) {
-                    imagem2 = receber_imagem(canalEntrada);
-
-                    str = recebe_dados(canalEntrada);
-
-                    if (str.equals("trueImagem")) {
-                        imagem3 = receber_imagem(canalEntrada);
-                    }
-                }
-            }
-
-
-            canalSaida.flush();
-            canalSaida.close();
-            canalEntrada.close();
-            cliente2.close();
-
-        } catch (Exception e) {
-            //FIXME Tratar a Exception.
-            e.printStackTrace();
-        }
-    }
-
-
 
     public void onBackPressed() {
         super.onBackPressed();
 
+        deleteAllArrayImagens();
 
-//        imagem= null;
-//        imagem2= null;
-//        imagem3=null;
-//
-//         img = null;
-//         img2=null;
-//         img3=null;
-//
-//        images = null;
+        if (tela.equals("ListarOcorrencia")) {
+            Intent cliente = new Intent(this, ListarOcorrencias.class);
 
-        Intent cliente = new Intent(this, ListarOcorrencias.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", Nome);
+            bundle.putString("cpf", CPF);
+            bundle.putString("bairro", BairroCli);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("nome", Nome);
-        bundle.putString("cpf" , CPF);
-        bundle.putString("bairro" , BairroCli);
+            cliente.putExtras(bundle);
+            this.startActivity(cliente);
 
-        cliente.putExtras(bundle);
-        this.startActivity(cliente);
+        } else {
+            if (tela.equals("Cliente")) {
 
+                Intent cliente = new Intent(this, Cliente.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", Nome);
+                bundle.putString("cpf", CPF);
+                bundle.putString("bairro", BairroCli);
+
+                cliente.putExtras(bundle);
+                this.startActivity(cliente);
+            } else {
+                Intent cliente = new Intent(this, BuscarOcorrencias.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", Nome);
+                bundle.putString("cpf", CPF);
+                bundle.putString("bairro", BairroCli);
+
+                cliente.putExtras(bundle);
+                this.startActivity(cliente);
+
+            }
+        }
     }
 
 }

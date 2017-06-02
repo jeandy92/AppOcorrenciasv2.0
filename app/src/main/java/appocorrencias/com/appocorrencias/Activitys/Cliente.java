@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -90,14 +91,16 @@ public class Cliente extends AppCompatActivity  {
                     Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
                     String descocorrencia = ((TextView) view.findViewById(R.id.txt_desc_comentario)).getText().toString();
-                    String tipocrime = ((TextView) view.findViewById(R.id.tv_bairro)).getText().toString();
+                    String tipocrime = ((TextView) view.findViewById(R.id.tv_tipo)).getText().toString();
 
+                    String tela = "Cliente";
                     i.putExtra("cpf", CPF);
                     i.putExtra("nome", Nome);
                     i.putExtra("bairro", Bairro);
                     i.putExtra("id_ocorrencia", idocorrencia);
                     i.putExtra("desc_ocorrencia", descocorrencia);
                     i.putExtra("tipocrime", tipocrime);
+                    i.putExtra("tela", tela);
 
                     deleteAllArrayComentarios();
 
@@ -149,6 +152,27 @@ public class Cliente extends AppCompatActivity  {
         ///Setta o nome no BEM VINDO
         tvnomecompleto.setText(Nome);
 
+        lvFeedOcorrencias.setOnTouchListener(new ListView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
 
     }
 
@@ -195,8 +219,6 @@ public class Cliente extends AppCompatActivity  {
     public void evCadastrarOcorrencia(View view) {
         deleteAllArray();
 
-        setContentView(R.layout.activity_cadastrar_ocorrencia);
-
         Intent cadastrarOcorrencia = new Intent(this, CadastrarOcorrencia.class);
 
         Bundle bundle = new Bundle();
@@ -224,7 +246,6 @@ public class Cliente extends AppCompatActivity  {
 
             Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
 
-            setContentView(R.layout.activity_listar_ocorrencias);
             Intent cliente = new Intent(this, ListarOcorrencias.class);
 
             Bundle bundle = new Bundle();

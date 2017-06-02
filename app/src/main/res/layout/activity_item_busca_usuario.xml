@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/tv_nome" />
 
     <TextView
-        android:id="@+id/tv_bairro"
+        android:id="@+id/tv_tipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bairro"
@@ -71,7 +71,7 @@
         app:layout_constraintLeft_toRightOf="@+id/img_imagem_usuario"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bairro"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tipo"
         android:layout_marginStart="8dp" />
 
     <TextView
