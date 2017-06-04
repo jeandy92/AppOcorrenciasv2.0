@@ -144,7 +144,7 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:clickable="true"
                 android:src="@drawable/ic_action_document"
@@ -152,14 +152,13 @@
                 android:theme="@style/botaopadrao"
                 app:fabSize="mini"
                 app:fab_title="Minhas Ocorrencias"
-                app:layout_constraintHorizontal_bias="0.51"
+                app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/btnBuscarOcorrencias"
                 app:layout_constraintTop_toTopOf="@+id/btnBuscarOcorrencias"
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1"
-                tools:layout_constraintTop_creator="1"
-                android:layout_marginTop="0dp">
+                tools:layout_constraintTop_creator="1">
 
             </android.support.design.widget.FloatingActionButton>
 
@@ -212,8 +211,7 @@
                 app:layout_constraintLeft_toLeftOf="@+id/btnOcorrenciasRegistradasPorUsuario"
                 app:layout_constraintRight_toRightOf="@+id/btnOcorrenciasRegistradasPorUsuario"
                 app:layout_constraintTop_toBottomOf="@+id/btnOcorrenciasRegistradasPorUsuario"
-                tools:layout_constraintTop_creator="1"
-                app:layout_constraintHorizontal_bias="0.661"></TextView>
+                tools:layout_constraintTop_creator="1"></TextView>
 
             <TextView
                 android:id="@+id/legendabuscarocorrencias"
@@ -235,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:text="Nova Ocorrêncîa"
+                android:text="Nova Ocorrência"
                 android:textColor="@android:color/white"
                 android:textSize="12dp"
                 app:layout_constraintLeft_toLeftOf="@+id/btnCadastrarOcorrencias"

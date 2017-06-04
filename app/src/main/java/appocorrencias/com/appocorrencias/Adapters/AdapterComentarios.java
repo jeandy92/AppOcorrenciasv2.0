@@ -49,8 +49,6 @@ public class AdapterComentarios extends BaseAdapter {
         DadosComentarios lista_feed_comentarios  = feed_comentarios.get(position);
 
 
-
-
         //pegando as referências das Views
         TextView apelido = (TextView) view.findViewById(R.id.tv_nome);
         TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);

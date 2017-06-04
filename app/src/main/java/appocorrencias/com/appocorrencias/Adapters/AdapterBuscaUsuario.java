@@ -56,7 +56,7 @@ public class AdapterBuscaUsuario extends BaseAdapter{
         ImageView imagemUsuario = (ImageView)  view.findViewById(R.id.img_imagem_usuario);
         TextView nome = (TextView) view.findViewById(R.id.tv_nome);
         TextView cidade = (TextView)view.findViewById(R.id.tv_cidade);
-        TextView bairro = (TextView)view.findViewById(R.id.tv_bairro);
+        TextView bairro = (TextView)view.findViewById(R.id.tv_tipo);
         TextView endereco = (TextView)view.findViewById(R.id.tv_endereco);
 
 
