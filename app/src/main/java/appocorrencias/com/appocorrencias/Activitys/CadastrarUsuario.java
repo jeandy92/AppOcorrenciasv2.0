@@ -29,7 +29,7 @@ public class CadastrarUsuario extends AppCompatActivity {
     private EditText Nome, CPF, Telefone, Email, Senha, Rua, Bairro, Cidade, Numero, CEP, UF, DataNasc, ConfirmarSenha, Complemento;
 
     //Variaveis para conversão e  referencia nula
-    private String convCpf, convTelefone, convCep, email, senha, numero, rua, bairro, cidade, uf, nome, dataNasc, confirmarSenha, complemento;
+    private String Tela, convCpf, convTelefone, convCep, email, senha, numero, rua, bairro, cidade, uf, nome, dataNasc, confirmarSenha, complemento;
 
     //Váriaveis para serem utilizadas  no envio do cadastro
     protected String cadastro1, cadastroNome, cadastroRua, cadastroBairro, cadastroCidade;
@@ -42,6 +42,10 @@ public class CadastrarUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Tela = bundle.getString("tela");
 
 
         //Button cadastrar
@@ -91,7 +95,6 @@ public class CadastrarUsuario extends AppCompatActivity {
             Bairro.setText(busca.getBairro(convCep));
             Cidade.setText(busca.getCidade(convCep));
             UF.setText(busca.getUF(convCep));
-
 
 
             String rua2 = Rua.getText().toString();
@@ -244,7 +247,21 @@ public class CadastrarUsuario extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        this.startActivity(new Intent(this, Login.class));
+
+        if (Tela.equals("Adm")) {
+            Intent adm = new Intent(this, Adm.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", "Administrador");
+            bundle.putString("cpf", "33333333333");
+            bundle.putString("bairro", "Adm");
+
+            adm.putExtras(bundle);
+            this.startActivity(adm);
+        } else {
+
+            this.startActivity(new Intent(this, Login.class));
+        }
     }
 }
 

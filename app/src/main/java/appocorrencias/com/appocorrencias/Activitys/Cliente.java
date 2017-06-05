@@ -91,7 +91,7 @@ public class Cliente extends AppCompatActivity  {
                     Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
                     String descocorrencia = ((TextView) view.findViewById(R.id.txt_desc_comentario)).getText().toString();
-                    String tipocrime = ((TextView) view.findViewById(R.id.tv_tipo)).getText().toString();
+                    String tipocrime = ((TextView) view.findViewById(R.id.tv_bairro)).getText().toString();
 
                     String tela = "Cliente";
                     i.putExtra("cpf", CPF);
@@ -210,6 +210,7 @@ public class Cliente extends AppCompatActivity  {
         bundle.putString("nome", Nome);
         bundle.putString("cpf", CPF);
         bundle.putString("bairro", Bairro);
+        bundle.putString("tela", "Cliente");
         cliente.putExtras(bundle);
         this.startActivity(cliente);
 
@@ -225,6 +226,7 @@ public class Cliente extends AppCompatActivity  {
         bundle.putString("nome", Nome);
         bundle.putString("cpf", CPF);
         bundle.putString("bairro", Bairro);
+        bundle.putString("tela", "Cliente");
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);

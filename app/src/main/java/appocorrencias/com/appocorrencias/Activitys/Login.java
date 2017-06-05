@@ -63,7 +63,6 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-
         //Verifica o  status do Play Services no seu aplicativo
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int resultCode = googleAPI.isGooglePlayServicesAvailable(getApplicationContext());
@@ -146,8 +145,13 @@ public class Login extends AppCompatActivity {
 
     public void evCadastrarSe(View view) {
 
-        setContentView(R.layout.activity_cadastrar_usuario);
-        this.startActivity(new Intent(this, CadastrarUsuario.class));
+        Intent cadastrar = new Intent(this, CadastrarUsuario.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("tela" , "Cliente");
+
+        cadastrar.putExtras(bundle);
+        this.startActivity(cadastrar);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,49 +203,64 @@ public class Login extends AppCompatActivity {
 
         if (txtUsuario.getText().toString() != null && txtSenha.getText().toString() != null) {
 
+            if (CPF.equals("33333333333") && SENHA.equals("1234")) {
 
-            if (CadastrarUsuario.validarCPF(CPF)) {
-                txtUsuario.setError("CPF Inválido");
-                txtUsuario.setFocusable(true);
-                txtUsuario.requestFocus();
-                Log.i("evEntrar(IF2)", CPF);
-                Log.i("evEntrar(IF2)", SENHA);
+                Intent adm = new Intent(this, Adm.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", "Administrador");
+                bundle.putString("cpf", "33333333333");
+                bundle.putString("bairro", "Adm");
+
+                adm.putExtras(bundle);
+                this.startActivity(adm);
+
             } else {
 
-                LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
-                Log.i("evEntrar(ELSE)", CPF);
-                Log.i("evEntrar(ELSE)", SENHA);
 
-                retorno = processa.cadastrar1_no_server(LoginServer);
-                String retorno2[] = retorno.split("/");
-                Status = retorno2[0];
-
-
-                if (Status.equals("erro")) {
-                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
-
+                if (CadastrarUsuario.validarCPF(CPF)) {
+                    txtUsuario.setError("CPF Inválido");
+                    txtUsuario.setFocusable(true);
+                    txtUsuario.requestFocus();
+                    Log.i("evEntrar(IF2)", CPF);
+                    Log.i("evEntrar(IF2)", SENHA);
                 } else {
-                    if (Status.equals("false")) {
-                        txtUsuario.setError("Usuario ou senha Invalido");
-                        txtUsuario.setFocusable(true);
-                        txtUsuario.requestFocus();
+
+                    LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
+                    Log.i("evEntrar(ELSE)", CPF);
+                    Log.i("evEntrar(ELSE)", SENHA);
+
+                    retorno = processa.cadastrar1_no_server(LoginServer);
+                    String retorno2[] = retorno.split("/");
+                    Status = retorno2[0];
+
+
+                    if (Status.equals("erro")) {
+                        Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+
                     } else {
-                        if (Status.equals("true")) {
-                            CPF = retorno2[1];
-                            Nome = retorno2[2];
-                            String Bairro2 = retorno2[3];
+                        if (Status.equals("false")) {
+                            txtUsuario.setError("Usuario ou senha Invalido");
+                            txtUsuario.setFocusable(true);
+                            txtUsuario.requestFocus();
+                        } else {
+                            if (Status.equals("true")) {
+                                CPF = retorno2[1];
+                                Nome = retorno2[2];
+                                String Bairro2 = retorno2[3];
 
-                            evBuscarOcorrenciasBairro(Bairro2);
+                                evBuscarOcorrenciasBairro(Bairro2);
 
-                            Intent cliente = new Intent(this, Cliente.class);
+                                Intent cliente = new Intent(this, Cliente.class);
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString("nome", Nome);
-                            bundle.putString("cpf", CPF);
-                            bundle.putString("bairro", Bairro2);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("nome", Nome);
+                                bundle.putString("cpf", CPF);
+                                bundle.putString("bairro", Bairro2);
 
-                            cliente.putExtras(bundle);
-                            this.startActivity(cliente);
+                                cliente.putExtras(bundle);
+                                this.startActivity(cliente);
+                            }
                         }
                     }
                 }
@@ -254,14 +273,14 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    public static void evBuscarOcorrenciasBairro (String Bairro2) throws IOException {
+    public static void evBuscarOcorrenciasBairro(String Bairro2) throws IOException {
 
-        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro" +  Bairro2;
+        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro" + Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
         String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
-           // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
         } else {
             // Pegando quantidade de Ocorrencias
             int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
@@ -285,14 +304,13 @@ public class Login extends AppCompatActivity {
                 String Anonimo = OcorrenciaUm[10];
                 String Apelido = OcorrenciaUm[11];
 
-                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo,Apelido);
+                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
 
                 ArrayOcorrenciasRegistradas.adicionar(dado);
             }
             //Toast.makeText(this, "Mostrando Ocorrencias no seu Bairro ", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 
     @Override

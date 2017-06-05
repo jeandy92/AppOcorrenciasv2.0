@@ -367,6 +367,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 bundle.putString("nome", Nome);
                 bundle.putString("cpf", CPF);
                 bundle.putString("bairro", BairroCli);
+                bundle.putString("tela", tela);
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);

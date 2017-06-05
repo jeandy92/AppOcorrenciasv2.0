@@ -21,9 +21,9 @@ import appocorrencias.com.appocorrencias.R;
 
 public class Adm extends AppCompatActivity {
 
-    private Button btnConexao,btnCadastrarOcorrencias;
+    private Button btnSair,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
-    static String NomeCli, CPF, Bairro;
+    static String NomeAdm, CPF, Bairro;
     private TextView txtTesteAdm;
 
 
@@ -35,16 +35,16 @@ public class Adm extends AppCompatActivity {
         //Pegando valores que vem do Login
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        NomeCli = bundle.getString("nome");
+        NomeAdm = bundle.getString("nome");
         CPF = bundle.getString("cpf");
         Bairro = bundle.getString("bairro");
 
-        btnConexao  = (Button) findViewById(R.id.btn_validar_conexao);
+        btnSair  = (Button) findViewById(R.id.btnSair);
         txvRetornoSocket = (TextView) findViewById(R.id.txvRetornoSocket);
         btnCadastrarOcorrencias =  (Button) findViewById(R.id.btnCadastrarOcorrencias);
 
         txtTesteAdm = (TextView) findViewById(R.id.txtTesteAdm);
-        txtTesteAdm.setText("Bem Vindo Adm " + NomeCli + " Cpf: " + CPF);
+        txtTesteAdm.setText(NomeAdm);
     }
     public void ev_valida_conexao(View view) {
 
@@ -53,10 +53,17 @@ public class Adm extends AppCompatActivity {
     public void ev_cadastrar_usuario(View view) {
         CriaNotificaçoes();
 
+        Intent cadastrar = new Intent(this, CadastrarUsuario.class);
 
-        setContentView(R.layout.activity_cadastrar_usuario);
-        this.startActivity(new Intent(this,CadastrarUsuario.class));
+        Bundle bundle = new Bundle();
+        bundle.putString("tela" , "Adm");
+
+        cadastrar.putExtras(bundle);
+        this.startActivity(cadastrar);
+
     }
+
+
     protected void CriaNotificaçoes() {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -74,20 +81,48 @@ public class Adm extends AppCompatActivity {
 
     public void ev_cadastrar_ocorrencia(View v){
 
-        setContentView(R.layout.activity_cadastrar_ocorrencia);
-
         Intent cadastrarOcorrencia = new Intent(this, CadastrarOcorrencia.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString("nome", NomeCli);
+        bundle.putString("nome", NomeAdm);
         bundle.putString("cpf" , CPF);
         bundle.putString("bairro" , Bairro);
+        bundle.putString("tela" , "Adm");
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
 
         this.finish();
     }
+
+
+    public void ev_buscar_ocorrencia(View v){
+
+        Intent buscarOcorrencia = new Intent(this, BuscarOcorrencias.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("nome", NomeAdm);
+        bundle.putString("cpf" , CPF);
+        bundle.putString("bairro" , Bairro);
+        bundle.putString("tela" , "Adm");
+
+        buscarOcorrencia.putExtras(bundle);
+        this.startActivity(buscarOcorrencia);
+
+        this.finish();
+    }
+
+    public void ev_buscar_usuario(View v){
+        this.startActivity(new Intent(this,BuscarUsuarios.class));
+        this.finish();
+    }
+
+
+    public void ev_sair(View v){
+        this.startActivity(new Intent(this,Login.class));
+        this.finish();
+    }
+
 
    private void conectarSocket()  {
         try{

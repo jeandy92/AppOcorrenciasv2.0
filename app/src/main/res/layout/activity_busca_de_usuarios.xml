@@ -56,11 +56,10 @@
                 android:id="@+id/ivBuscaTipo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="32dp"
-                android:background="@color/fab_material_blue_500"
-                app:layout_constraintTop_toBottomOf="@+id/txtInfoBusca"
                 android:layout_marginLeft="65dp"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:layout_marginTop="32dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtInfoBusca" />
 
             <TextView
                 android:id="@+id/txtBuscaTipo"
@@ -119,16 +118,14 @@
             </android.support.design.widget.TextInputLayout>
 
 
-
             <ImageView
                 android:id="@+id/ivBuscaBairro"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="32dp"
-                android:background="@color/fab_material_blue_500"
-                app:layout_constraintTop_toBottomOf="@+id/txtInfoBusca"
                 android:layout_marginRight="65dp"
-                app:layout_constraintRight_toRightOf="parent" />
+                android:layout_marginTop="32dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtInfoBusca" />
 
             <TextView
                 android:id="@+id/txtBuscaBairro"
