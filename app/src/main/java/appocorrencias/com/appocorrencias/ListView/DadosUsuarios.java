@@ -6,138 +6,140 @@ package appocorrencias.com.appocorrencias.ListView;
 
 public class DadosUsuarios {
 
-    String nome;
-    String cpf;
-    String senha;
-    String dataNascimento;
-    String rua;
-    String telefone;
-    String cep;
-    String bairro;
-    String cidade;
-    String uf;
-    String numeroCasa;
-    String email;
-    String complemento;
+    String CPFUsu;
+    String Senha;
+    String Nome;
+    String Telefone;
+    String Email;
+    String RuaUsu;
+    String Numero;
+    String BairroUsu;
+    String CidadeUsu;
+    String Cep;
+    String UFUsu;
+    String Complemento;
+    String Nascimento;
 
-    public DadosUsuarios(String nome, String cpf, String senha, String dataNascimento, String rua, String telefone,
-                         String cep, String bairro, String cidade, String uf, String numeroCasa, String email, String complemento) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.senha = senha;
-        this.dataNascimento = dataNascimento;
-        this.rua = rua;
-        this.telefone = telefone;
-        this.cep = cep;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.uf = uf;
-        this.numeroCasa = numeroCasa;
-        this.email = email;
-        this.complemento = complemento;
+
+
+    public DadosUsuarios(String CPFUsu, String Senha, String Nome, String Telefone, String Email, String RuaUsu, String Numero,
+                         String BairroUsu, String CidadeUsu, String Cep, String UFUsu, String Complemento, String Nascimento) {
+        this.CPFUsu = CPFUsu;
+        this.Senha = Senha;
+        this.Nome = Nome;
+        this.Telefone = Telefone;
+        this.Email = Email;
+        this.RuaUsu = RuaUsu;
+        this.Numero = Numero;
+        this.BairroUsu = BairroUsu;
+        this.CidadeUsu = CidadeUsu;
+        this.Cep = Cep;
+        this.UFUsu = UFUsu;
+        this.Complemento = Complemento;
+        this.Nascimento = Nascimento;
     }
 
     public String getNome() {
-        return nome;
+        return Nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.Nome = nome;
     }
 
     public String getCpf() {
-        return cpf;
+        return CPFUsu;
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        this.CPFUsu = cpf;
     }
 
     public String getSenha() {
-        return senha;
+        return Senha;
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        this.Senha = senha;
     }
 
     public String getDataNascimento() {
-        return dataNascimento;
+        return Nascimento;
     }
 
     public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
+        this.Nascimento = dataNascimento;
     }
 
     public String getRua() {
-        return rua;
+        return RuaUsu;
     }
 
     public void setRua(String rua) {
-        this.rua = rua;
+        this.RuaUsu = rua;
     }
 
     public String getTelefone() {
-        return telefone;
+        return Telefone;
     }
 
     public void setTelefone(String telefone) {
-        this.telefone = telefone;
+        this.Telefone = telefone;
     }
 
     public String getCep() {
-        return cep;
+        return Cep;
     }
 
     public void setCep(String cep) {
-        this.cep = cep;
+        this.Cep = cep;
     }
 
     public String getBairro() {
-        return bairro;
+        return BairroUsu;
     }
 
     public void setBairro(String bairro) {
-        this.bairro = bairro;
+        this.BairroUsu = bairro;
     }
 
     public String getCidade() {
-        return cidade;
+        return CidadeUsu;
     }
 
     public void setCidade(String cidade) {
-        this.cidade = cidade;
+        this.CidadeUsu = cidade;
     }
 
     public String getUf() {
-        return uf;
+        return UFUsu;
     }
 
     public void setUf(String uf) {
-        this.uf = uf;
+        this.UFUsu = uf;
     }
 
     public String getNumeroCasa() {
-        return numeroCasa;
+        return Numero;
     }
 
     public void setNumeroCasa(String numeroCasa) {
-        this.numeroCasa = numeroCasa;
+        this.Numero = numeroCasa;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.Email = email;
     }
 
     public String getComplemento() {
-        return complemento;
+        return Complemento;
     }
 
     public void setComplemento(String complemento) {
-        this.complemento = complemento;
+        this.Complemento = complemento;
     }
 }

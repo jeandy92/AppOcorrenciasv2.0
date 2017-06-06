@@ -49,7 +49,7 @@ public class AdapterFeed extends BaseAdapter {
         DadosOcorrencias lista_feed_ocorrencias  = feed_ocorrencias.get(position);
 
         //pegando as referências das Views
-        TextView tipodecrime = (TextView) view.findViewById(R.id.tv_tipo);
+        TextView tipodecrime = (TextView) view.findViewById(R.id.tv_bairro);
         TextView apelido = (TextView) view.findViewById(R.id.tv_nome);
         TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);
         TextView endereco = (TextView)view.findViewById(R.id.txEndereco);

@@ -32,7 +32,7 @@
         tools:layout_constraintTop_creator="1" />
 
     <TextView
-        android:id="@+id/tv_tipo"
+        android:id="@+id/tv_bairro"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"

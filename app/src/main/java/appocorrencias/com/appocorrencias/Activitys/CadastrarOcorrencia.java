@@ -76,7 +76,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     private Date data;
 
 
-    static String Nome, CPFCliente, Bairro;
+    static String Nome, CPFCliente, Bairro, Tela;
 
     public static ProcessaSocket processasocket = new ProcessaSocket();
     private String Anonimo;
@@ -94,6 +94,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         Nome = bundle.getString("nome");
         CPFCliente = bundle.getString("cpf");
         Bairro = bundle.getString("bairro");
+        Tela = bundle.getString("tela");
 
 
         imgBtnAdd = (ImageButton) findViewById(R.id.imgBtnAdd);
@@ -499,28 +500,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     public void evEscolher_Data(View v) {
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
 
-        try {
-            evBuscarOcorrenciasBairro(Bairro);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        setContentView(R.layout.activity_cliente);
-        Intent cliente = new Intent(this, Cliente.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("nome", Nome);
-        bundle.putString("cpf", CPFCliente);
-        bundle.putString("bairro", Bairro);
-
-        cliente.putExtras(bundle);
-        this.startActivity(cliente);
-
-    }
 
     public static String removerAcentos(String str) {
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
@@ -647,6 +627,43 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (Tela.equals("Adm")) {
+            Intent adm = new Intent(this, Adm.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", Nome);
+            bundle.putString("cpf", CPFCliente);
+            bundle.putString("bairro", Bairro);
+
+            adm.putExtras(bundle);
+            this.startActivity(adm);
+
+        } else {
+
+            try {
+                evBuscarOcorrenciasBairro(Bairro);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            setContentView(R.layout.activity_cliente);
+            Intent cliente = new Intent(this, Cliente.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", Nome);
+            bundle.putString("cpf", CPFCliente);
+            bundle.putString("bairro", Bairro);
+
+            cliente.putExtras(bundle);
+            this.startActivity(cliente);
+
         }
     }
 }

@@ -37,11 +37,11 @@ import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evB
 public class BuscarOcorrencias extends AppCompatActivity {
 
     private RadioButton rbtTipoOcorrencia, rbtBairro;
-    private Spinner  spnTipoOcorrencia;
+    private Spinner spnTipoOcorrencia;
     private TextInputLayout edtBairro;
     private EditText edtFoco, edtBairroText;
     private ListView lvFeedOcorrencias;
-    public static String Nome, CPF, Bairro;
+    public static String Nome, CPF, Bairro, Tela;
     public static ProcessaSocket processa = new ProcessaSocket();
 
 
@@ -56,6 +56,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         Nome = bundle.getString("nome");
         CPF = bundle.getString("cpf");
         Bairro = bundle.getString("bairro");
+        Tela = bundle.getString("tela");
 
 
         edtFoco = (EditText) findViewById(R.id.edtFoco);
@@ -66,7 +67,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         spnTipoOcorrencia = (Spinner) findViewById(R.id.spnTipoOcorrencia);
         edtBairro = (TextInputLayout) findViewById(R.id.input_layout_Nome);
         edtBairroText = (EditText) findViewById(R.id.edtNome);
-        lvFeedOcorrencias =  (ListView) findViewById(R.id.lv_usuarios_encontrados);
+        lvFeedOcorrencias = (ListView) findViewById(R.id.lv_usuarios_encontrados);
 
         spnTipoOcorrencia.setVisibility(View.INVISIBLE);
         spnTipoOcorrencia.setEnabled(false);
@@ -87,7 +88,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
                 edtBairro.setEnabled(false);
             }
         });
-        rbtBairro.setOnClickListener(new View.OnClickListener(){
+        rbtBairro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 rbtTipoOcorrencia.setChecked(false);
@@ -109,16 +110,15 @@ public class BuscarOcorrencias extends AppCompatActivity {
         spnTipoOcorrencia.setAdapter(adapter);
 
 
-
         lvFeedOcorrencias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position >= 0){
+                if (position >= 0) {
 
                     Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
                     String descocorrencia = ((TextView) view.findViewById(R.id.txt_desc_comentario)).getText().toString();
-                    String tipocrime = ((TextView) view.findViewById(R.id.tv_tipo)).getText().toString();
+                    String tipocrime = ((TextView) view.findViewById(R.id.tv_bairro)).getText().toString();
 
                     String tela = "Busca";
                     i.putExtra("cpf", CPF);
@@ -146,9 +146,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
     }
 
 
-
-
-    public void evBuscarOcorrencias (View view) throws IOException {
+    public void evBuscarOcorrencias(View view) throws IOException {
 
         deleteAllArray();
 
@@ -186,17 +184,16 @@ public class BuscarOcorrencias extends AppCompatActivity {
         edtFoco.requestFocus();
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
 
 
+    public void evBuscarOcorrenciasBairro(String Bairro2) throws IOException {
 
-    public void evBuscarOcorrenciasBairro (String Bairro2) throws IOException {
-
-        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " +  Bairro2;
+        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " + Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
         String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
 
@@ -225,7 +222,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
                 String Anonimo = OcorrenciaUm[10];
                 String Apelido = OcorrenciaUm[11];
 
-                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo,Apelido);
+                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
 
                 ArrayOcorrenciasRegistradas.adicionar(dado);
             }
@@ -234,9 +231,9 @@ public class BuscarOcorrencias extends AppCompatActivity {
     }
 
 
-    public void evBuscarOcorrenciasTipo (String tipo) throws IOException {
+    public void evBuscarOcorrenciasTipo(String tipo) throws IOException {
 
-        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasTipo " +  tipo;
+        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasTipo " + tipo;
         //Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
         String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
 
@@ -265,7 +262,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
                 String Anonimo = OcorrenciaUm[10];
                 String Apelido = OcorrenciaUm[11];
 
-                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo,Apelido);
+                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
 
                 ArrayOcorrenciasRegistradas.adicionar(dado);
             }
@@ -274,28 +271,43 @@ public class BuscarOcorrencias extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
-        deleteAllArray();
 
-        try {
-            Login.evBuscarOcorrenciasBairro(Bairro);
+        if (Tela.equals("Adm")) {
+            Intent adm = new Intent(this, Adm.class);
 
-            Intent cliente = new Intent(this, Cliente.class);
             Bundle bundle = new Bundle();
             bundle.putString("nome", Nome);
             bundle.putString("cpf", CPF);
             bundle.putString("bairro", Bairro);
 
-            cliente.putExtras(bundle);
-            this.startActivity(cliente);
+            adm.putExtras(bundle);
+            this.startActivity(adm);
+
+        } else {
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            deleteAllArray();
+
+            try {
+                Login.evBuscarOcorrenciasBairro(Bairro);
+
+                Intent cliente = new Intent(this, Cliente.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("nome", Nome);
+                bundle.putString("cpf", CPF);
+                bundle.putString("bairro", Bairro);
+
+                cliente.putExtras(bundle);
+                this.startActivity(cliente);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

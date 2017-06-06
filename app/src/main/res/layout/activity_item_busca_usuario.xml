@@ -35,17 +35,16 @@
         android:id="@+id/tv_cidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="0dp"
         android:text="Cidade"
         android:textColor="@color/wallet_dim_foreground_holo_dark"
         android:textSize="18dp"
-        app:layout_constraintLeft_toRightOf="@+id/tv_nome"
-        app:layout_constraintTop_toTopOf="@+id/tv_nome" />
+        app:layout_constraintTop_toTopOf="@+id/tv_bairro"
+        android:layout_marginTop="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/tv_bairro"
+        android:layout_marginLeft="16dp" />
 
     <TextView
-        android:id="@+id/tv_tipo"
+        android:id="@+id/tv_bairro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bairro"
@@ -55,27 +54,25 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/img_imagem_usuario"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nome"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_rua" />
 
     <TextView
-        android:id="@+id/tv_endereco"
+        android:id="@+id/tv_rua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLength="100"
         android:text="endereco"
         android:textSize="13dp"
-        tools:layout_constraintTop_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/img_imagem_usuario"
-        android:layout_marginLeft="8dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_editor_absoluteX="96dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tipo"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_nome" />
 
     <TextView
-        android:id="@+id/txt_id_ocorrencia"
+        android:id="@+id/txt_CPF"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="8dp"
