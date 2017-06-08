@@ -24,6 +24,7 @@ import appocorrencias.com.appocorrencias.Network.FCMFirebaseInstanceIDService;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
+import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
 import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
 
 public class Login extends AppCompatActivity {
@@ -250,6 +251,7 @@ public class Login extends AppCompatActivity {
                                 String Bairro2 = retorno2[3];
 
                                 evBuscarOcorrenciasBairro(Bairro2);
+                                evBuscarImagens(CPF,"cpf");
 
                                 Intent cliente = new Intent(this, Cliente.class);
 
@@ -311,6 +313,8 @@ public class Login extends AppCompatActivity {
             //Toast.makeText(this, "Mostrando Ocorrencias no seu Bairro ", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 
     @Override

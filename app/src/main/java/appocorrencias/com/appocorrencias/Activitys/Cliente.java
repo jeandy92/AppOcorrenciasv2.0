@@ -1,11 +1,18 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -18,44 +25,54 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterFeed;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ListView.ArrayImagens;
+import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfil;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
 import appocorrencias.com.appocorrencias.R;
+import me.drakeet.materialdialog.MaterialDialog;
 
+import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.processasocket;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
+import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.getImagens;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
 import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
+import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
 
 
-public class Cliente extends AppCompatActivity  {
+public class Cliente extends AppCompatActivity {
     //Cloud Menssagem Cliente(GCM)
 
-
-    private Toolbar mToolbar;
-    private Toolbar mToolbarBottom;
-    private ViewPager viewPager;
-    private ImageButton cadastrarocorrencia;
     private Toolbar toolbar;
     private ListView lvFeedOcorrencias;
     private TextView tvnomecompleto;
-    private RecyclerView rvfeedocorrencias;
-    private FloatingActionButton btnOcorrenciasRegistradas,btnCadastrarOcorrencias,btnBuscarOcorrencias;
+    private FloatingActionButton btnOcorrenciasRegistradas, btnCadastrarOcorrencias, btnBuscarOcorrencias;
     public static String Nome, CPF, Bairro;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+
     ProcessaSocket processa = new ProcessaSocket();
 
+    private static final int REQUEST_PERMISSIONS_CODE = 128;
+
+    private static final String TAG = "LOG";
+    //Váriaveis para realizar o controle do ResultActivity
+    public static final int IMAGEM_INTERNA = 12;
+    private ImageView ivCliente;
+
+    byte[] byteImagem = null;
 
 
     @Override
@@ -65,20 +82,29 @@ public class Cliente extends AppCompatActivity  {
         setContentView(R.layout.activity_cliente);
 
         //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O Cpf MANTEM O MESMO
-            Intent intent = getIntent();
-            Bundle bundle = intent.getExtras();
-            Nome = bundle.getString("nome");
-            CPF = bundle.getString("cpf");
-            Bairro = bundle.getString("bairro");
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Nome = bundle.getString("nome");
+        CPF = bundle.getString("cpf");
+        Bairro = bundle.getString("bairro");
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
-        btnBuscarOcorrencias   = (FloatingActionButton) findViewById(R.id.btnBuscarOcorrencias);
-        lvFeedOcorrencias =  (ListView) findViewById(R.id.lv_feed_de_ocorrencias);
-        tvnomecompleto =  (TextView) findViewById(R.id.tv_nome_completo);
+        btnBuscarOcorrencias = (FloatingActionButton) findViewById(R.id.btnBuscarOcorrencias);
+        lvFeedOcorrencias = (ListView) findViewById(R.id.lv_feed_de_ocorrencias);
+        tvnomecompleto = (TextView) findViewById(R.id.tv_nome_completo);
+        ivCliente = (ImageView) findViewById(R.id.ivCliente);
+
+        ArrayList<Bitmap> listaImagens = ArrayImagensPerfil.getImagens();
+        Bitmap[] images = new Bitmap[listaImagens.size()];
+
+        if(listaImagens.size() > 0){
+            images[0] = listaImagens.get(0);
+            ivCliente.setImageBitmap(images[0]);
+        }
+
 
         ArrayList<DadosOcorrencias> listafeedocorrencias = getListaOcorrencia();
-
         AdapterFeed adapter = new AdapterFeed(this, listafeedocorrencias);
 
         lvFeedOcorrencias.setAdapter(adapter);
@@ -86,7 +112,7 @@ public class Cliente extends AppCompatActivity  {
         lvFeedOcorrencias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position >= 0){
+                if (position >= 0) {
 
                     Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
@@ -105,6 +131,7 @@ public class Cliente extends AppCompatActivity  {
                     deleteAllArrayComentarios();
 
                     try {
+                        evBuscarImagens(idocorrencia,"ocorrencia");
                         evBuscarComentario(idocorrencia);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -143,7 +170,7 @@ public class Cliente extends AppCompatActivity  {
         });
 
 
-        toolbar  = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(0);
         toolbar.setTitle("AppOcorrencias");
         setSupportActionBar(toolbar);
@@ -203,7 +230,7 @@ public class Cliente extends AppCompatActivity  {
     }
 
 
-    public void evBuscarOcorrencias(View v){
+    public void evBuscarOcorrencias(View v) {
 
         Intent cliente = new Intent(this, BuscarOcorrencias.class);
         Bundle bundle = new Bundle();
@@ -214,7 +241,7 @@ public class Cliente extends AppCompatActivity  {
         cliente.putExtras(bundle);
         this.startActivity(cliente);
 
-}
+    }
 
     // OBS FUNCAO ESTAVA FORA DO CODIGGO JEAN VERIFICAR
     public void evCadastrarOcorrencia(View view) {
@@ -233,7 +260,7 @@ public class Cliente extends AppCompatActivity  {
 
     }
 
-    public void evOcorrenciasInformadas (View view) throws IOException {
+    public void evOcorrenciasInformadas(View view) throws IOException {
 
         deleteAllArray();
 
@@ -346,45 +373,161 @@ public class Cliente extends AppCompatActivity  {
         editor.putString("login", "");
 
 
-        Log.i("LOGOUT", sharedPreferences.getString("login",""));
-        Log.i("LOGOUT", sharedPreferences.getString("senha",""));
+        Log.i("LOGOUT", sharedPreferences.getString("login", ""));
+        Log.i("LOGOUT", sharedPreferences.getString("senha", ""));
 
         editor.clear();
         editor.commit();
 
-        Log.i("LOGOUT", sharedPreferences.getString("login",""));
-        Log.i("LOGOUT", sharedPreferences.getString("senha",""));
+        Log.i("LOGOUT", sharedPreferences.getString("login", ""));
+        Log.i("LOGOUT", sharedPreferences.getString("senha", ""));
     }
 
     public void logout(Menu v) {
         deletarSharedPreferences();
 
-
-        setContentView(R.layout.activity_login);
         this.startActivity(new Intent(this, Login.class));
     }
 
-    public static String getNome(){
+    public static String getNome() {
         return Nome;
     }
 
-    public static String getCPF(){
+    public static String getCPF() {
         return CPF;
     }
 
-    public static String getBairro(){
+    public static String getBairro() {
         return Bairro;
     }
 
 
+    // FOTO DO PERFIL/////////
+
+    private void dialogo(String message, final String[] permissions) {
+
+        final MaterialDialog mMaterialDialog = new MaterialDialog(this);
+        mMaterialDialog.setTitle("Permission");
+        mMaterialDialog.setMessage(message);
+        mMaterialDialog.setPositiveButton("Ok", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ActivityCompat.requestPermissions(Cliente.this, permissions, REQUEST_PERMISSIONS_CODE);
+                mMaterialDialog.dismiss();
+            }
+        });
+        mMaterialDialog.setNegativeButton("Cancel", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMaterialDialog.dismiss();
+            }
+        });
+        mMaterialDialog.show();
+    }
+
+
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.i(TAG, "Permissão");
+        switch (requestCode) {
+            case REQUEST_PERMISSIONS_CODE:
+                for (int i = 0; i < permissions.length; i++) {
+
+                    if (permissions[i].equalsIgnoreCase(Manifest.permission.ACCESS_FINE_LOCATION)
+                            && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+
+                    } else if (permissions[i].equalsIgnoreCase(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+
+                    } else if (permissions[i].equalsIgnoreCase(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+
+                    } else if (permissions[i].equalsIgnoreCase(Manifest.permission.CAMERA)
+                            && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+
+                    }
+                }
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+
+    public void entrar_galeria(View v) {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                dialogo("É preciso a permission READ_EXTERNAL_STORAGE para acessar sua Galeria.", new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS_CODE);
+            }
+        } else {
+            abrir_galeria();
+        }
+
+    }
+
+    private void abrir_galeria() {
+
+        Toast.makeText(getApplicationContext(), "Abrindo galeria", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGEM_INTERNA);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == IMAGEM_INTERNA && resultCode == RESULT_OK) {
+            Uri imagemSelecionada = intent.getData();
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imagemSelecionada));
+                ivCliente.setImageBitmap(bitmap);
+                ivCliente.setBackground(null);
+                toByte1(bitmap);
+            } catch (Exception err) {
+                Log.d("Imag", err.getMessage());
+            }
+        }
+    }
+
+
+    //// Bitmap em bytes
+
+    public void toByte1(Bitmap bitmap) throws IOException {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        byteImagem = byteArray;
+        String retorno = enviarImgPerfil();
+        if(retorno.equals("erro")){
+            Toast.makeText(getApplicationContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Imagem do Perfil Atualizada", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public String enviarImgPerfil() throws IOException {
+
+        String retornoImg = processasocket.envia_Img_Perfil(CPF, "Img1", byteImagem);
+
+        if (retornoImg.equals("erro")){
+            return "erro";
+        }
+        return "true";
+    }
+
+
+
+        @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ArrayImagens.deleteBitmap();
         deleteAllArray();
         finish();
 
     }
-
 
 
     @Override

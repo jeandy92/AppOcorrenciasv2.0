@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import appocorrencias.com.appocorrencias.ListView.ArrayImagens;
 import appocorrencias.com.appocorrencias.R;
 
 /**
@@ -25,9 +24,9 @@ public class AdapterCustomSwiper extends PagerAdapter {
     int[] image_resources;
     private Context ctx;
     private LayoutInflater layoutInflater;
-    ArrayList<Bitmap> images;
+    Bitmap [] images;
 
-    public AdapterCustomSwiper(Context ctx, int[] image_resources, ArrayList<Bitmap> images){
+    public AdapterCustomSwiper(Context ctx, Bitmap [] images){
         this.ctx = ctx ;
         this.image_resources = image_resources;
         this.images= images;
@@ -36,8 +35,9 @@ public class AdapterCustomSwiper extends PagerAdapter {
 
     @Override
     public int getCount() {
-        //return images.length;
-        return image_resources.length;
+        return images.length;
+        //return image_resources.length;
+        //return 3;
     }
 
     @Override
@@ -50,16 +50,10 @@ public class AdapterCustomSwiper extends PagerAdapter {
         View item_view = layoutInflater.inflate(R.layout.swipe_layout, container, false);
         ImageView imageView =  (ImageView) item_view.findViewById(R.id.image_view);
         TextView textView = (TextView) item_view.findViewById(R.id.image_count);
-        //for (Bitmap b: images) {
-            //imageView.setImageBitmap(b);
-            //imageView.setImageResource(image_resources[getItemPosition(position)]);
-            imageView.setImageResource(image_resources[position]);
-            textView.setText("");
-            container.addView(item_view);
-
-       // }
+        imageView.setImageBitmap(images[position]);
+        textView.setText("");
+        container.addView(item_view);
         return item_view;
-
     }
 
     public void destroyItem(ViewGroup container, int position, Object object){

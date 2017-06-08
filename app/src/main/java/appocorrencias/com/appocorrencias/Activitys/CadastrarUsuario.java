@@ -91,7 +91,7 @@ public class CadastrarUsuario extends AppCompatActivity {
         if (Status.equals("erro")) {
             Toast.makeText(this, "Erro na Conexão", Toast.LENGTH_SHORT).show();
         } else {
-            Rua.setText(busca.getEndereco(convCep));
+            Rua.setText(Status);
             Bairro.setText(busca.getBairro(convCep));
             Cidade.setText(busca.getCidade(convCep));
             UF.setText(busca.getUF(convCep));

@@ -3,7 +3,6 @@ package appocorrencias.com.appocorrencias.Activitys;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Geocoder;
@@ -23,7 +22,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -102,7 +100,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
         iv1 = (ImageView) findViewById(R.id.imageView1);
         iv2 = (ImageView) findViewById(R.id.imageView2);
-        iv3 = (ImageView) findViewById(R.id.imageView3);
+        iv3 = (ImageView) findViewById(R.id.ivCliente);
 
 
         txCidade = (EditText) findViewById(R.id.edtCidade);
@@ -191,27 +189,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         startActivityForResult(intent, IMAGEM_INTERNA);
     }
 
-    private String getPath(Uri uri) {
-
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
-
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null
-        );
-
-
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        cursor.close();
-
-        return path;
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -245,21 +222,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         }
     }
 
-
-    //// juntando 2 bytes arrays
-    public static byte[] concat(byte[]... inputs) {
-        int i = 0;
-        for (byte[] b : inputs) {
-            i += b.length;
-        }
-        byte[] r = new byte[i];
-        i = 0;
-        for (byte[] b : inputs) {
-            System.arraycopy(b, 0, r, i, b.length);
-            i += b.length;
-        }
-        return r;
-    }
 
 
     //// Bitmap em bytes
@@ -605,7 +567,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
                                     evBuscarOcorrenciasBairro(Bairro);
 
-                                    setContentView(R.layout.activity_cliente);
                                     Intent cliente = new Intent(this, Cliente.class);
 
                                     Bundle bundle = new Bundle();
@@ -653,7 +614,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                 e.printStackTrace();
             }
 
-            setContentView(R.layout.activity_cliente);
             Intent cliente = new Intent(this, Cliente.class);
 
             Bundle bundle = new Bundle();

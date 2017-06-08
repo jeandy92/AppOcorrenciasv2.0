@@ -19,6 +19,14 @@ public class BuscarCep {
         try {
             doc = Jsoup
                     .connect("http://www.qualocep.com/busca-cep/" + CEP).timeout(3000).get();
+        }catch (SocketTimeoutException e ){
+            status = "erro";
+            return status;
+
+        }catch (HttpStatusException w ){
+            status = "erro";
+            return status;
+
         }catch (Exception e){
             status = "erro";
             return status;

@@ -9,18 +9,18 @@ import android.graphics.Bitmap;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ArrayImagens {
+public class ArrayImagensPerfil {
 
     static ArrayList<Bitmap> imagens = new ArrayList();
 
-    public ArrayImagens() {
+    public ArrayImagensPerfil() {
     }
 
-    static ArrayImagens Instance = null;
+    static ArrayImagensPerfil Instance = null;
 
-    static ArrayImagens getInstance() {
+    static ArrayImagensPerfil getInstance() {
         if (Instance == null) {
-            Instance = new ArrayImagens();
+            Instance = new ArrayImagensPerfil();
         }
         return Instance;
     }
@@ -34,7 +34,7 @@ public class ArrayImagens {
     }
 
     public static void setImagens(ArrayList<Bitmap> imagens) {
-        ArrayImagens.imagens = imagens;
+        ArrayImagensPerfil.imagens = imagens;
     }
 
     public static void removerImg(Bitmap d) {

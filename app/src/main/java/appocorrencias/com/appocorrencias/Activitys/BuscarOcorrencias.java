@@ -33,6 +33,7 @@ import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistr
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
 import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
+import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
 
 public class BuscarOcorrencias extends AppCompatActivity {
 
@@ -132,6 +133,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
                     deleteAllArrayComentarios();
 
                     try {
+                        evBuscarImagens(idocorrencia,"ocorrencia");
                         evBuscarComentario(idocorrencia);
                     } catch (IOException e) {
                         e.printStackTrace();
