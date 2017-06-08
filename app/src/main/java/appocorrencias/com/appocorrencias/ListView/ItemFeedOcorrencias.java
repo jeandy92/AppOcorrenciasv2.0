@@ -3,7 +3,6 @@ package appocorrencias.com.appocorrencias.ListView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,10 +40,13 @@ import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.removerAcentos;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.concat;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem_perfil;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.toBytes;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
-import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.deleteAllArrayImagens;
-import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.getListaImagens;
+import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.getImagens;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getCidadeNr;
@@ -62,6 +68,18 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_item_feed_ocorrencias);
+
+        ArrayList<Bitmap> listaImagens = getImagens();
+        Bitmap[] images = new Bitmap[listaImagens.size()];
+
+        if (listaImagens.size() > 0) {
+
+            for (int i = 0; i < listaImagens.size(); i++) {
+                images[i] = listaImagens.get(i);
+            }
+
+        }
+
 
         txtComentario = (EditText) findViewById(R.id.edtComentario);
         TextView Tv_Id_Ocorrencia = (TextView) findViewById(R.id.txtCampoNumeroOcorrencia);
@@ -94,31 +112,16 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         tipo = getTipoNr(idOcorrencia);
         CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
 
-        ArrayList<Bitmap> listaImagens = getListaImagens();
 
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+
+        adapterCustomSwiper = new AdapterCustomSwiper(this, images);
+        viewPager.setAdapter(adapterCustomSwiper);
 
         if (CPFOcorrencia.equals(CPF)) {
             btnExcluir.setVisibility(View.VISIBLE);
         }
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        int[] image_resources = null;
-        if (tipo.equals(" Roubo")) {
-            image_resources = new int[]{R.drawable.ic_assalto, R.drawable.roubo};
-        } else if (tipo.equals(" Furto")) {
-            image_resources = new int[]{R.drawable.ic_furto, R.drawable.roubo};
-        } else if (tipo.equals(" Trafico de drogas")) {
-            image_resources = new int[]{R.drawable.ic_trafico, R.drawable.roubo};
-        } else if (tipo.equals(" Homicidio")) {
-            image_resources = new int[]{R.drawable.ic_homicidio, R.drawable.roubo};
-        } else if (tipo.equals(" Latrocinio")) {
-            image_resources = new int[]{R.drawable.ic_latrocinio, R.drawable.roubo};
-        } else if (tipo.equals(" Abuso Sexual")) {
-            image_resources = new int[]{R.drawable.ic_abuso, R.drawable.roubo};
-        }
-
-        adapterCustomSwiper = new AdapterCustomSwiper(this, image_resources, listaImagens);
-        viewPager.setAdapter(adapterCustomSwiper);
 
         Tv_Id_Ocorrencia.setText(idOcorrencia);
         Tv_Tipo_Crime.setText(tipo);
@@ -156,6 +159,66 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 return true;
             }
         });
+
+    }
+
+    public static void evBuscarImagens(String IDOcorrencia, String tipo) throws IOException {
+
+        String BuscarImagensOcorrencia;
+
+        if (tipo.equals("cpf")) {
+            BuscarImagensOcorrencia = "BuscarImagemPerfil " + IDOcorrencia;
+        } else {
+            BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
+        }
+
+        String ip_conexao = /*"192.168.0.108";//*/"192.168.43.98";
+        int porta_conexao = 2222;
+
+
+        String str = null;
+        OutputStream canalSaida = null;
+        InputStream canalEntrada = null;
+        Socket cliente2 = new Socket();
+
+        byte[] byteDados = BuscarImagensOcorrencia.getBytes();
+        int tamanhoDados = byteDados.length;
+
+        byte[] byteTamanhoDados = toBytes(tamanhoDados);
+        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
+        int tamanhoPacote = TamanhoEDados.length;
+        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
+
+        int millisecondsTimeOut = 3000;
+        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+
+        try {
+            cliente2.connect(adress, millisecondsTimeOut);
+        } catch (Exception e) {
+            str = "erro";
+        }
+        try {
+            canalSaida = cliente2.getOutputStream();
+            canalEntrada = cliente2.getInputStream();
+            canalSaida.write(byteFinal);
+
+
+            if(tipo.equals("cpf")){
+                receber_imagem_perfil(canalEntrada);
+            }else {
+                receber_imagem(canalEntrada);
+            }
+
+            canalSaida.flush();
+            canalSaida.close();
+            canalEntrada.close();
+            cliente2.close();
+
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
 
     }
 
@@ -335,7 +398,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        deleteAllArrayImagens();
+        ArrayImagens.deleteBitmap();
 
         if (tela.equals("ListarOcorrencia")) {
             Intent cliente = new Intent(this, ListarOcorrencias.class);
@@ -367,6 +430,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 bundle.putString("nome", Nome);
                 bundle.putString("cpf", CPF);
                 bundle.putString("bairro", BairroCli);
+                bundle.putString("tela", tela);
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);

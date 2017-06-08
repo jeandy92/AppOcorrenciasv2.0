@@ -51,13 +51,13 @@ public class AdapterBuscaUsuario extends BaseAdapter{
 
 
 
-
         //pegando as referências das Views
         ImageView imagemUsuario = (ImageView)  view.findViewById(R.id.img_imagem_usuario);
         TextView nome = (TextView) view.findViewById(R.id.tv_nome);
         TextView cidade = (TextView)view.findViewById(R.id.tv_cidade);
-        TextView bairro = (TextView)view.findViewById(R.id.tv_tipo);
-        TextView endereco = (TextView)view.findViewById(R.id.tv_endereco);
+        TextView bairro = (TextView)view.findViewById(R.id.tv_bairro);
+        TextView endereco = (TextView)view.findViewById(R.id.tv_rua);
+        TextView cpf = (TextView)view.findViewById(R.id.txtCPF);
 
 
 
@@ -66,6 +66,7 @@ public class AdapterBuscaUsuario extends BaseAdapter{
         bairro.setText(usuariosEcontrados.getBairro());
         endereco.setText(String.valueOf( usuariosEcontrados.getRua()+ " N° "+usuariosEcontrados.getNumeroCasa() ) );
         imagemUsuario.setImageResource(R.drawable.ic_app);
+        cpf.setText(usuariosEcontrados.getCpf());
 
     return  view;
 
