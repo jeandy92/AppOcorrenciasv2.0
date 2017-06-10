@@ -35,7 +35,7 @@
                 app:layout_constraintLeft_toRightOf="@+id/txtCampoNumeroOcorrencia" />
 
             <TextView
-                android:id="@+id/txtNumeroOcorrencia"
+                android:id="@+id/tvNome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
@@ -64,7 +64,7 @@
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@+id/txtNumeroOcorrencia"
+                app:layout_constraintLeft_toRightOf="@+id/tvNome"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ViewFlipper
@@ -103,7 +103,7 @@
             </ViewFlipper>
 
             <TextView
-                android:id="@+id/txtInformacoesDaOcorrencia"
+                android:id="@+id/txtInformacoesDoUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -118,7 +118,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/viewFlipper4" />
 
             <TextView
-                android:id="@+id/txtDataOcorrencia"
+                android:id="@+id/txtDataNascimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
@@ -130,10 +130,10 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtInformacoesDaOcorrencia" />
+                app:layout_constraintTop_toBottomOf="@+id/txtInformacoesDoUsuario" />
 
             <TextView
-                android:id="@+id/txtCampoDataOcorrencia"
+                android:id="@+id/txtCampoNascimento"
                 android:layout_width="116dp"
                 android:layout_height="26dp"
                 android:layout_marginLeft="50dp"
@@ -143,12 +143,12 @@
                 android:editable="true"
                 android:text="10/05/2016"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toRightOf="@+id/txtDataOcorrencia"
-                app:layout_constraintTop_toTopOf="@+id/txtDataOcorrencia"
+                app:layout_constraintLeft_toRightOf="@+id/txtDataNascimento"
+                app:layout_constraintTop_toTopOf="@+id/txtDataNascimento"
                 tools:text="10/05/2016" />
 
             <TextView
-                android:id="@+id/txtTipoOcorrencia"
+                android:id="@+id/txtCPF"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
@@ -164,11 +164,11 @@
                 android:visibility="visible"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="@+id/txtDataOcorrencia"
-                app:layout_constraintTop_toBottomOf="@+id/txtDataOcorrencia" />
+                app:layout_constraintRight_toRightOf="@+id/txtDataNascimento"
+                app:layout_constraintTop_toBottomOf="@+id/txtDataNascimento" />
 
             <TextView
-                android:id="@+id/txtCampoTipoOcorrencia"
+                android:id="@+id/txtCampoCPF"
                 android:layout_width="116dp"
                 android:layout_height="26dp"
                 android:layout_x="196dp"
@@ -176,12 +176,12 @@
                 android:editable="true"
                 android:text="Tipo do Crime"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@+id/txtCampoDataOcorrencia"
-                app:layout_constraintTop_toTopOf="@+id/txtTipoOcorrencia"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCampoNascimento"
+                app:layout_constraintTop_toTopOf="@+id/txtCPF"
                 tools:text="Tipo do Crime" />
 
             <TextView
-                android:id="@+id/txtLocalOcorrencia"
+                android:id="@+id/txtEndereco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
@@ -193,10 +193,10 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtTipoOcorrencia" />
+                app:layout_constraintTop_toBottomOf="@+id/txtCPF" />
 
             <TextView
-                android:id="@+id/txtRuaBairroOcorrencia"
+                android:id="@+id/txtRuaBairroUsuario"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
@@ -206,13 +206,13 @@
                 android:editable="true"
                 android:text="Av dos Autonomistas, Vila Yara"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@+id/txtCampoTipoOcorrencia"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCampoCPF"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtLocalOcorrencia"
+                app:layout_constraintTop_toTopOf="@+id/txtEndereco"
                 tools:text="Av dos Autonomistas, Vila Yara" />
 
             <TextView
-                android:id="@+id/txtCidadeUFOcorrencia"
+                android:id="@+id/txtCidadeUFUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
@@ -221,8 +221,8 @@
                 android:editable="true"
                 android:text="Osasco - SP"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@+id/txtRuaBairroOcorrencia"
-                app:layout_constraintTop_toBottomOf="@+id/txtRuaBairroOcorrencia"
+                app:layout_constraintLeft_toLeftOf="@+id/txtRuaBairroUsuario"
+                app:layout_constraintTop_toBottomOf="@+id/txtRuaBairroUsuario"
                 tools:text="Osasco - SP" />
 
             <TextView
@@ -238,7 +238,7 @@
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtCidadeUFOcorrencia" />
+                app:layout_constraintTop_toBottomOf="@+id/txtCidadeUFUsuario" />
 
             <TextView
                 android:id="@+id/txtCampoDescricaoDaOcorrencia"

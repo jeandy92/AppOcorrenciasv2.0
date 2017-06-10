@@ -223,7 +223,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     }
 
 
-
     //// Bitmap em bytes
 
     public void toByte1(Bitmap bitmap) {
@@ -463,7 +462,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     }
 
 
-
     public static String removerAcentos(String str) {
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
@@ -530,7 +528,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                             //String ID = IDserver + NrAleatorio;
 
 
-
                             String retorno = processasocket.cadastrar_Ocorrencia(IDserver, CPFCliente, tipo_crime, convDataOcorrencia, UF, convDescricao,
                                     convEndereco, convCidade, convBairro, Anonimo, PriNome);
 
@@ -545,11 +542,11 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                         int x1 = random.nextInt(101);
                                         String IDImg = Integer.toString(x1);
                                         retornoImg = processasocket.envia_Img(IDImg, IDserver, CPFCliente, "Img1", byteImagem);
-                                        if (retornoImg != null && byteImagem2 != null) {
+                                        if (retornoImg.equals("true") && byteImagem2 != null) {
                                             int x2 = random.nextInt(101);
                                             String IDImg2 = Integer.toString(x2);
                                             retornoImg = processasocket.envia_Img(IDImg2, IDserver, CPFCliente, "Img2", byteImagem2);
-                                            if (retornoImg != null && byteImagem3 != null) {
+                                            if (retornoImg.equals("true") && byteImagem3 != null) {
                                                 int x3 = random.nextInt(101);
                                                 String IDImg3 = Integer.toString(x3);
                                                 retornoImg = processasocket.envia_Img(IDImg3, IDserver, CPFCliente, "Img3", byteImagem3);
@@ -565,18 +562,23 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
                                     Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
 
-                                    evBuscarOcorrenciasBairro(Bairro);
+                                    String retornoBairro = evBuscarOcorrenciasBairro(Bairro);
 
-                                    Intent cliente = new Intent(this, Cliente.class);
+                                    if (retornoBairro.equals("erro")) {
+                                        Toast.makeText(this, "Erro na Conexão Com o Servidor", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
+                                            Intent cliente = new Intent(this, Cliente.class);
 
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("nome", Nome);
-                                    bundle.putString("cpf", CPFCliente);
-                                    bundle.putString("bairro", Bairro);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("nome", Nome);
+                                            bundle.putString("cpf", CPFCliente);
+                                            bundle.putString("bairro", Bairro);
 
-                                    cliente.putExtras(bundle);
-                                    this.startActivity(cliente);
-
+                                            cliente.putExtras(bundle);
+                                            this.startActivity(cliente);
+                                        }
+                                    }
 
                                 } else {
                                     txRua.setError("Erro Retorno do Server False");

@@ -13,9 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +22,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,7 +30,6 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterFeed;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
@@ -47,7 +43,6 @@ import me.drakeet.materialdialog.MaterialDialog;
 
 import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.processasocket;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
-import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.getImagens;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
 import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
@@ -130,14 +125,24 @@ public class Cliente extends AppCompatActivity {
 
                     deleteAllArrayComentarios();
 
+                    String retornoImagem = null;
                     try {
-                        evBuscarImagens(idocorrencia,"ocorrencia");
-                        evBuscarComentario(idocorrencia);
+                        retornoImagem = evBuscarImagens(idocorrencia,"ocorrencia");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    if(retornoImagem.equals("true") || retornoImagem.equals("false") ){
+                        String retornoComent = null;
+                        try {
+                            retornoComent = evBuscarComentario(idocorrencia);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if(retornoComent.equals("true") || retornoComent.equals("false") ){
+                                startActivity(i);
+                            }
+                        }
 
-                    startActivity(i);
 
                 }
             }
@@ -356,6 +361,7 @@ public class Cliente extends AppCompatActivity {
     public void deslogarusuario() {
         deletarSharedPreferences();
         deleteAllArray();
+        ArrayImagensPerfil.deleteBitmap();
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();
@@ -505,6 +511,8 @@ public class Cliente extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(getApplicationContext(), "Imagem do Perfil Atualizada", Toast.LENGTH_SHORT).show();
+            ArrayImagensPerfil.deleteBitmap();
+            ArrayImagensPerfil.adicionarImg(bitmap);
         }
     }
 

@@ -97,14 +97,7 @@ public class CadastrarUsuario extends AppCompatActivity {
             UF.setText(busca.getUF(convCep));
 
 
-            String rua2 = Rua.getText().toString();
-            String bairro2 = Bairro.getText().toString();
-            String cidade2 = Cidade.getText().toString();
-            uf = UF.getText().toString();
 
-            rua = removerAcentos(rua2);
-            bairro = removerAcentos(bairro2);
-            cidade = removerAcentos(cidade2);
 
 
         }
@@ -116,6 +109,15 @@ public class CadastrarUsuario extends AppCompatActivity {
 
     //Cadastrar usuário no servidor
     public void evCadastrarUsuario(View v) throws IOException {
+
+        String rua2 = Rua.getText().toString();
+        String bairro2 = Bairro.getText().toString();
+        String cidade2 = Cidade.getText().toString();
+        uf = UF.getText().toString();
+
+        rua = removerAcentos(rua2);
+        bairro = removerAcentos(bairro2);
+        cidade = removerAcentos(cidade2);
 
         //Tirando a mascara dos campos
         convCpf = CPF.getText().toString().replaceAll("[^0123456789]", "");

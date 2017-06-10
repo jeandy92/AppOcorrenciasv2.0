@@ -69,25 +69,14 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_item_feed_ocorrencias);
 
-        ArrayList<Bitmap> listaImagens = getImagens();
-        Bitmap[] images = new Bitmap[listaImagens.size()];
-
-        if (listaImagens.size() > 0) {
-
-            for (int i = 0; i < listaImagens.size(); i++) {
-                images[i] = listaImagens.get(i);
-            }
-
-        }
-
 
         txtComentario = (EditText) findViewById(R.id.edtComentario);
         TextView Tv_Id_Ocorrencia = (TextView) findViewById(R.id.txtCampoNumeroOcorrencia);
-        TextView Tv_Tipo_Crime = (TextView) findViewById(R.id.txtCampoTipoOcorrencia);
-        TextView Tv_Data_Ocorrencia = (TextView) findViewById(R.id.txtCampoDataOcorrencia);
+        TextView Tv_Tipo_Crime = (TextView) findViewById(R.id.txtCampoCPF);
+        TextView Tv_Data_Ocorrencia = (TextView) findViewById(R.id.txtCampoNascimento);
         TextView Tv_Desc_Ocorrencia = (TextView) findViewById(R.id.txtCampoDescricaoDaOcorrencia);
-        TextView Tv_Cidade_UF = (TextView) findViewById(R.id.txtCidadeUFOcorrencia);
-        TextView Tv_Rua_Bairro = (TextView) findViewById(R.id.txtRuaBairroOcorrencia);
+        TextView Tv_Cidade_UF = (TextView) findViewById(R.id.txtCidadeUFUsuario);
+        TextView Tv_Rua_Bairro = (TextView) findViewById(R.id.txtRuaBairroUsuario);
         Button btnExcluir = (Button) findViewById(R.id.btnExcluir);
         ImageButton btnDelComent = (ImageButton) findViewById(R.id.btnDelComent);
 
@@ -112,6 +101,16 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         tipo = getTipoNr(idOcorrencia);
         CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
 
+        ArrayList<Bitmap> listaImagens = getImagens();
+        Bitmap[] images = new Bitmap[listaImagens.size()];
+
+        if (listaImagens.size() > 0) {
+
+            for (int i = 0; i < listaImagens.size(); i++) {
+                images[i] = listaImagens.get(i);
+            }
+
+        }
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -162,7 +161,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
     }
 
-    public static void evBuscarImagens(String IDOcorrencia, String tipo) throws IOException {
+    public static String evBuscarImagens(String IDOcorrencia, String tipo) throws IOException {
 
         String BuscarImagensOcorrencia;
 
@@ -172,7 +171,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
         }
 
-        String ip_conexao = /*"192.168.0.108";//*/"192.168.43.98";
+        String ip_conexao = /*"192.168.0.108";//*/"192.168.1.18";
         int porta_conexao = 2222;
 
 
@@ -190,23 +189,23 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         byte[] byteTamanhoPct = toBytes(tamanhoPacote);
         byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
 
-        int millisecondsTimeOut = 3000;
+        int millisecondsTimeOut = 5000;
         InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
         } catch (Exception e) {
             str = "erro";
+            return str;
         }
         try {
             canalSaida = cliente2.getOutputStream();
             canalEntrada = cliente2.getInputStream();
             canalSaida.write(byteFinal);
 
-
-            if(tipo.equals("cpf")){
+            if (tipo.equals("cpf")) {
                 receber_imagem_perfil(canalEntrada);
-            }else {
+            } else {
                 receber_imagem(canalEntrada);
             }
 
@@ -215,10 +214,15 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             canalEntrada.close();
             cliente2.close();
 
+            str = "true";
+
+            return str;
+
         } catch (Exception e) {
             //FIXME Tratar a Exception.
             e.printStackTrace();
         }
+        return "true";
 
     }
 
@@ -358,40 +362,46 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     }
 
 
-    public static void evBuscarComentario(String IDOcorrencia) throws IOException {
+    public static String evBuscarComentario(String IDOcorrencia) throws IOException {
 
         String BuscarComentariosRegistrados = "BuscarComentariosRegistrados " + IDOcorrencia;
 
         String retorno = processa.cadastrar1_no_server(BuscarComentariosRegistrados);
 
-        if (retorno.equals("false")) {
-
+        if (retorno.equals("erro")) {
+            return "erro";
         } else {
-            // Pegando quantidade de Ocorrencias
-            int qtdComentario = ArrayComentariosRegistrados.getQuantidadeComentario(retorno);
+            if (retorno.equals("false")) {
+                return "false";
 
-            // Pegando dados e Adicioanando dados no Array
-            for (int i = 0; i < qtdComentario; i++) {
-                String TodosComentarios[] = retorno.split("///");
+            } else {
+                // Pegando quantidade de Ocorrencias
+                int qtdComentario = ArrayComentariosRegistrados.getQuantidadeComentario(retorno);
 
-                String Comentario = TodosComentarios[i];
-                String ComentarioUm[] = Comentario.split("//");
-                String IdComentario = ComentarioUm[1];
-                String IdOcorrencia = ComentarioUm[2];
-                String CPFComentario = ComentarioUm[3];
-                String DataComentario = ComentarioUm[4];
-                String HoraComentario = ComentarioUm[5];
-                String ApelidoComentario = ComentarioUm[6];
-                String DescricaoComentario = ComentarioUm[7];
+                // Pegando dados e Adicioanando dados no Array
+                for (int i = 0; i < qtdComentario; i++) {
+                    String TodosComentarios[] = retorno.split("///");
 
-                DadosComentarios dado = new DadosComentarios(IdComentario, IdOcorrencia, CPFComentario, DataComentario,
-                        HoraComentario, ApelidoComentario, DescricaoComentario);
+                    String Comentario = TodosComentarios[i];
+                    String ComentarioUm[] = Comentario.split("//");
+                    String IdComentario = ComentarioUm[1];
+                    String IdOcorrencia = ComentarioUm[2];
+                    String CPFComentario = ComentarioUm[3];
+                    String DataComentario = ComentarioUm[4];
+                    String HoraComentario = ComentarioUm[5];
+                    String ApelidoComentario = ComentarioUm[6];
+                    String DescricaoComentario = ComentarioUm[7];
 
-                ArrayComentariosRegistrados.adicionar(dado);
+                    DadosComentarios dado = new DadosComentarios(IdComentario, IdOcorrencia, CPFComentario, DataComentario,
+                            HoraComentario, ApelidoComentario, DescricaoComentario);
+
+                    ArrayComentariosRegistrados.adicionar(dado);
 
 
+                }
             }
         }
+        return "true";
     }
 
 

@@ -184,8 +184,8 @@
                 android:id="@+id/btnBuscar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
-
+                android:layout_marginTop="198dp"
+                android:onClick="evBuscarUsuario"
                 android:background="@drawable/botao_redondo"
                 android:backgroundTint="@color/fab_material_deep_purple_500"
                 android:text="Buscar"
