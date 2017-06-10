@@ -23,7 +23,7 @@ public class ProcessaSocket {
     static InputStream canalEntrada = null;
 
     //private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
-    private static String ip_conexao = "192.168.43.98";
+    private static String ip_conexao = "192.168.1.18";
     private static int  porta_conexao = 2222;
 
     public static String recebe_dados(InputStream in) throws IOException {
@@ -151,7 +151,7 @@ public class ProcessaSocket {
 
         // ler
         byte[] buff = new byte[4];
-        int k = 0;
+        int k = 0,lidos = 0, lidos_total = 0;
 
         // le tamanho total
         in.read(buff, 0, 4);
@@ -159,7 +159,14 @@ public class ProcessaSocket {
         Log.i("Tamanho total recebido", "------------------------" + String.valueOf(ttotal));
         // le o resto do pacote
         byte[] pacote = new byte[ttotal];
-        in.read(pacote, 0, ttotal);
+        byte[] tmp = new byte[ttotal];
+        //lidos = in.read(pacote, 0, ttotal);
+        while (lidos_total < ttotal) {
+            lidos = in.read(tmp, 0, ttotal - lidos_total);
+            System.arraycopy(tmp, 0, pacote, lidos_total, lidos);
+            lidos_total += lidos;
+        }
+
         Bitmap imagem_convertida = null;
 
         // obtem qtd de imagens
@@ -198,7 +205,7 @@ public class ProcessaSocket {
 
             Socket cliente2 = new Socket();
 
-            int millisecondsTimeOut = 3000;
+            int millisecondsTimeOut = 5000;
             InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
 
             try {
@@ -242,7 +249,7 @@ public class ProcessaSocket {
         byte [] byteFinal = concat(byteTamanhoPct,TamanhoEDados);
 
 
-        int millisecondsTimeOut = 3000;
+        int millisecondsTimeOut = 5000;
         InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
 
         try {
@@ -332,7 +339,7 @@ public class ProcessaSocket {
 
     public static String cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
                                           String convCep, String uf, String numero, String rua, String bairro,
-                                          String nome, String cidade, String dataNasc, String complemento) throws IOException {
+                                          String cidade, String nome, String dataNasc, String complemento) throws IOException {
 
         String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha +
                 " " + email + " " + convTelefone + " " + convCep +

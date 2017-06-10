@@ -57,16 +57,16 @@ public class AdapterBuscaUsuario extends BaseAdapter{
         TextView cidade = (TextView)view.findViewById(R.id.tv_cidade);
         TextView bairro = (TextView)view.findViewById(R.id.tv_bairro);
         TextView endereco = (TextView)view.findViewById(R.id.tv_rua);
-        TextView cpf = (TextView)view.findViewById(R.id.txtCPF);
+        TextView cpf = (TextView)view.findViewById(R.id.txt_CPF);
 
 
-
+        cpf.setText(usuariosEcontrados.getCpf());
         nome.setText(usuariosEcontrados.getNome());
         cidade.setText(usuariosEcontrados.getCidade());
         bairro.setText(usuariosEcontrados.getBairro());
         endereco.setText(String.valueOf( usuariosEcontrados.getRua()+ " N° "+usuariosEcontrados.getNumeroCasa() ) );
         imagemUsuario.setImageResource(R.drawable.ic_app);
-        cpf.setText(usuariosEcontrados.getCpf());
+
 
     return  view;
 

@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtDataOcorrencia"
+                android:id="@+id/txtDataNascimento"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
@@ -63,12 +63,12 @@
                 android:hint=""
                 android:inputType="date"
                 app:layout_constraintHorizontal_bias="0.666"
-                app:layout_constraintLeft_toLeftOf="@+id/txtDataOcorrencia"
-                app:layout_constraintRight_toRightOf="@+id/txtDataOcorrencia"
-                app:layout_constraintTop_toBottomOf="@+id/txtDataOcorrencia" />
+                app:layout_constraintLeft_toLeftOf="@+id/txtDataNascimento"
+                app:layout_constraintRight_toRightOf="@+id/txtDataNascimento"
+                app:layout_constraintTop_toBottomOf="@+id/txtDataNascimento" />
 
             <TextView
-                android:id="@+id/txtTipoOcorrencia"
+                android:id="@+id/txtCPF"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
@@ -87,9 +87,9 @@
                 android:layout_marginTop="0dp"
                 android:hint="Tipo de Ocorrência"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="@+id/txtTipoOcorrencia"
-                app:layout_constraintRight_toRightOf="@+id/txtTipoOcorrencia"
-                app:layout_constraintTop_toBottomOf="@+id/txtTipoOcorrencia" />
+                app:layout_constraintLeft_toLeftOf="@+id/txtCPF"
+                app:layout_constraintRight_toRightOf="@+id/txtCPF"
+                app:layout_constraintTop_toBottomOf="@+id/txtCPF" />
 
             <TextView
                 android:id="@+id/txtInfoDescricao"

@@ -72,36 +72,48 @@ public class ListarOcorrencias extends AppCompatActivity {
 
                     deleteAllArrayComentarios();
 
+                    String retornoComent = null;
                     try {
-                        evBuscarComentario(idocorrencia);
-                        evBuscarImagens(idocorrencia,"ocorrencia");
-
-                        //evBuscarImagens(idocorrencia);
-
+                        retornoComent = evBuscarComentario(idocorrencia);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    if (retornoComent.equals("erro")) {
+                        Toast.makeText(view.getContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (retornoComent.equals("true") || retornoComent.equals("false")) {
+                            String retornoImg = null;
+                            try {
+                                retornoImg = evBuscarImagens(idocorrencia, "ocorrencia");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (retornoImg.equals("erro")) {
+                                Toast.makeText(view.getContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (retornoImg.equals("true") || retornoImg.equals("false")) {
+
+                                    // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
+                                    String tela = "ListarOcorrencia";
+
+                                    i.putExtra("cpf", CPF);
+                                    i.putExtra("nome", Nome);
+                                    i.putExtra("bairro", Bairro);
+                                    i.putExtra("id_ocorrencia", idocorrencia);
+                                    i.putExtra("tela", tela);
 
 
-                    // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
-                    String tela = "ListarOcorrencia";
-
-                    i.putExtra("cpf", CPF);
-                    i.putExtra("nome", Nome);
-                    i.putExtra("bairro", Bairro);
-                    i.putExtra("id_ocorrencia", idocorrencia);
-                    i.putExtra("tela", tela);
-
-
-                    startActivity(i);
-                    Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
+                                    startActivity(i);
+                                    Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
                 }
-
             }
         });
-
     }
-
 
 
     @Override
