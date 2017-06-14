@@ -1,6 +1,7 @@
 package appocorrencias.com.appocorrencias.Adapters;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,8 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.DadosComentarios;
+import appocorrencias.com.appocorrencias.ListView.DadosImagensComentarios;
 import appocorrencias.com.appocorrencias.R;
+
+import static appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios.getImagens;
 
 /**
  * Created by Jeanderson on 01/05/2017.
@@ -62,9 +67,9 @@ public class AdapterComentarios extends BaseAdapter {
         idocorrencia.setText(String.valueOf(lista_feed_comentarios.getNrOcorrencia()));
 
         String CPFComentario = lista_feed_comentarios.getCPF();
+        Bitmap ImgPerfil = ArrayImagensPerfilComentarios.GetImgPerfil(CPFComentario);
 
-        imagem.setImageResource(R.drawable.ic_abuso);
-
+        imagem.setImageBitmap(ImgPerfil);
 
         return view;
     }

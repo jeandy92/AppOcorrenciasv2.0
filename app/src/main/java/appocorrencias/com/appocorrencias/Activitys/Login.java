@@ -18,6 +18,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.Network.FCMFirebaseInstanceIDService;
@@ -288,7 +289,8 @@ public class Login extends AppCompatActivity {
 
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro" + Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
-        String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
+        ArrayImagensPerfilComentarios.deleteBitmap();
+        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
             // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();

@@ -12,6 +12,8 @@ import java.net.Socket;
 
 import appocorrencias.com.appocorrencias.ListView.ArrayImagens;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfil;
+import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
+import appocorrencias.com.appocorrencias.ListView.DadosImagensComentarios;
 
 /**
  * Created by Jeanderson on 12/04/2017.
@@ -23,8 +25,8 @@ public class ProcessaSocket {
     static InputStream canalEntrada = null;
 
     //private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
-    private static String ip_conexao = "192.168.1.18";
-    private static int  porta_conexao = 2222;
+    private static String ip_conexao = "172.20.10.3";
+    private static int porta_conexao = 2222;
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -43,10 +45,7 @@ public class ProcessaSocket {
             sb.append(t);
             str = sb.toString();
         }
-
-        in.close();
         return str;
-
     }
 
 
@@ -68,27 +67,24 @@ public class ProcessaSocket {
             str = sb.toString();
         }
 
-        //in.close();
         return str;
 
     }
 
 
-
-    public static int valor_to_int(byte[] valor){
-        return valor[3] <<24 |
+    public static int valor_to_int(byte[] valor) {
+        return valor[3] << 24 |
                 (valor[2] & 0xFF) << 16 |
                 (valor[1] & 0xFF) << 8 |
                 (valor[0] & 0xFF);
     }
 
 
-
     public static void receber_imagem(InputStream in) throws IOException {
 
         // ler
         byte[] buff = new byte[4];
-        int k = 0,lidos = 0, lidos_total = 0;
+        int k = 0, lidos = 0, lidos_total = 0;
 
         // le tamanho total
         in.read(buff, 0, 4);
@@ -100,8 +96,14 @@ public class ProcessaSocket {
         //lidos = in.read(pacote, 0, ttotal);
         while (lidos_total < ttotal) {
             lidos = in.read(tmp, 0, ttotal - lidos_total);
-            System.arraycopy(tmp, 0, pacote, lidos_total, lidos);
-            lidos_total += lidos;
+            Log.i("Lidos", "------------------------" + String.valueOf(lidos));
+            if (lidos > 0) {
+                System.arraycopy(tmp, 0, pacote, lidos_total, lidos);
+                lidos_total += lidos;
+            } else {
+
+                break;
+            }
         }
 
         Bitmap imagem_convertida = null;
@@ -141,17 +143,18 @@ public class ProcessaSocket {
             deslocamento += imagens[i].length;//valor_to_int(buff);
 
             Log.i("DESLOCAMENTO Processa", "------------------------" + String.valueOf(deslocamento));
+
+
         }
+
     }
-
-
 
 
     public static void receber_imagem_perfil(InputStream in) throws IOException {
 
         // ler
         byte[] buff = new byte[4];
-        int k = 0,lidos = 0, lidos_total = 0;
+        int k = 0, lidos = 0, lidos_total = 0;
 
         // le tamanho total
         in.read(buff, 0, 4);
@@ -163,8 +166,13 @@ public class ProcessaSocket {
         //lidos = in.read(pacote, 0, ttotal);
         while (lidos_total < ttotal) {
             lidos = in.read(tmp, 0, ttotal - lidos_total);
-            System.arraycopy(tmp, 0, pacote, lidos_total, lidos);
-            lidos_total += lidos;
+            if (lidos > 0) {
+                System.arraycopy(tmp, 0, pacote, lidos_total, lidos);
+                lidos_total += lidos;
+            } else {
+
+                break;
+            }
         }
 
         Bitmap imagem_convertida = null;
@@ -193,9 +201,128 @@ public class ProcessaSocket {
 
             deslocamento += imagens[i].length;//valor_to_int(buff);
 
+
         }
+
     }
 
+
+    public static String receber_imagem_perfil_comentarios(InputStream in) throws IOException {
+
+        // ler
+        byte[] buff = new byte[4];
+        int k = 0, lidos = 0, lidos_total = 0;
+
+        // le tamanho total
+        /*in.read(buff, 0, 4);
+        int ttotal2 = valor_to_int(buff);
+        Log.i("Teste de Total", "------------------------" + String.valueOf(ttotal2));
+        byte[] pacote3 = new byte[ttotal2];
+        byte[][] teste2 = new byte[1][];
+
+        System.arraycopy(pacote3, 0, buff, 0, 4);
+        teste2[0] = new byte[valor_to_int(buff)];
+
+        System.arraycopy(pacote3, 4, teste2[0], 0, valor_to_int(buff));
+        Log.i("Teste de Total222", "------------------------" + String.valueOf(valor_to_int(buff)));
+        String testeFalse = new String(teste2[0], "UTF-8");
+        Log.i("Teste de False", "------------------------" + testeFalse); */
+
+
+        byte[] resulBuff = new byte[0];
+        //byte[] buff2 = new byte[4];
+        int k2 = 0;
+        String str2 = null;
+        StringBuilder sb = new StringBuilder();
+
+        k2 = in.read(buff, 0, buff.length);
+        byte[] tbuff = new byte[resulBuff.length + k2];
+        System.arraycopy(resulBuff, 0, tbuff, 0, resulBuff.length);
+        System.arraycopy(buff, 0, tbuff, resulBuff.length, k2);
+        resulBuff = tbuff;
+        for (int i = 0; i < resulBuff.length; i++) {
+            char t = (char) tbuff[i];
+            sb.append(t);
+            str2 = sb.toString();
+        }
+
+        Log.i("Teste de False2", "------------------------" + str2);
+
+        if (str2.equals("fals")) {
+            return "false";
+        } else {
+
+            int ttotal = valor_to_int(buff);
+
+            Log.i("Tamanho total recebido", "------------------------" + String.valueOf(ttotal));
+            // le o resto do pacote
+            byte[] pacote2 = new byte[ttotal];
+            byte[] tmp2 = new byte[ttotal];
+            //lidos = in.read(pacote, 0, ttotal);
+            while (lidos_total < ttotal) {
+                lidos = in.read(tmp2, 0, ttotal - lidos_total);
+                if (lidos > 0) {
+                    System.arraycopy(tmp2, 0, pacote2, lidos_total, lidos);
+                    lidos_total += lidos;
+                } else {
+
+                    break;
+                }
+            }
+
+            Bitmap imagem_convertida = null;
+
+            // obtem qtd de imagens
+            int qtd_imagens = valor_to_int(pacote2);
+            byte[][] imagens = new byte[qtd_imagens][];
+            byte[][] cpf = new byte[qtd_imagens][];
+
+            Log.i("IMAGENS Processa", "------------------------" + String.valueOf(qtd_imagens));
+
+            int deslocamento = 4; //ignora 4 primeiros bytes da qtd de imagens
+
+            for (int i = 0; i < qtd_imagens; i++) {
+                // copia tamanho do CPF
+                System.arraycopy(pacote2, deslocamento, buff, 0, 4);
+                deslocamento += 4;
+
+                // copia cpf
+                cpf[i] = new byte[valor_to_int(buff)];
+                System.arraycopy(pacote2, deslocamento, cpf[i], 0, valor_to_int(buff));
+
+                String cpfDecode2 = new String(cpf[i], "UTF-8");
+
+                Log.i("Valor CPF Processa", "------------------------" + cpfDecode2);
+
+                deslocamento += cpf[i].length;//valor_to_int(buff);
+
+                // copia tamanho da imagem
+                System.arraycopy(pacote2, deslocamento, buff, 0, 4);
+                deslocamento += 4;
+
+                // copia imagem
+                imagens[i] = new byte[valor_to_int(buff)];
+                System.arraycopy(pacote2, deslocamento, imagens[i], 0, valor_to_int(buff));
+
+                imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, valor_to_int(buff));
+
+                String cpfDecode = new String(cpf[i], "UTF-8");
+
+                Log.i("Valor CPF Processa", "------------------------" + cpfDecode);
+
+                DadosImagensComentarios dados = new DadosImagensComentarios(cpfDecode, imagem_convertida);
+
+                ArrayImagensPerfilComentarios.adicionarImg(dados);
+
+                // desloca imagem e o seu tamanho (4 bytes)
+
+                deslocamento += imagens[i].length;//valor_to_int(buff);
+
+            }
+        }
+        return "true";
+
+    }
 
     //Metodo que envia as informações para o Servidor (Socket)
     public static String Bytes(byte[] bites) {
@@ -238,15 +365,15 @@ public class ProcessaSocket {
         Socket cliente2 = new Socket();
 
 
-        byte[] byteDados  = dados.getBytes();
+        byte[] byteDados = dados.getBytes();
         int tamanhoDados = byteDados.length;
 
         byte[] byteTamanhoDados = toBytes(tamanhoDados);
-        byte[] TamanhoEDados = concat(byteTamanhoDados,byteDados);
+        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
 
         int tamanhoPacote = TamanhoEDados.length;
-        byte [] byteTamanhoPct = toBytes(tamanhoPacote);
-        byte [] byteFinal = concat(byteTamanhoPct,TamanhoEDados);
+        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
 
 
         int millisecondsTimeOut = 5000;
@@ -263,6 +390,57 @@ public class ProcessaSocket {
             canalEntrada = cliente2.getInputStream();
             canalSaida.write(byteFinal);
             str = recebe_dados(canalEntrada);
+
+            canalSaida.flush();
+            canalSaida.close();
+            canalEntrada.close();
+            cliente2.close();
+
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+
+    public static String buscar_dados_imagens_server(String dados) throws IOException {
+        String str = null;
+        Socket cliente2 = new Socket();
+
+
+        byte[] byteDados = dados.getBytes();
+        int tamanhoDados = byteDados.length;
+
+        byte[] byteTamanhoDados = toBytes(tamanhoDados);
+        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
+
+        int tamanhoPacote = TamanhoEDados.length;
+        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
+
+
+        int millisecondsTimeOut = 5000;
+        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+
+        try {
+            cliente2.connect(adress, millisecondsTimeOut);
+        } catch (Exception e) {
+            str = "erro";
+            return str;
+        }
+        try {
+            canalSaida = cliente2.getOutputStream();
+            canalEntrada = cliente2.getInputStream();
+            canalSaida.write(byteFinal);
+
+            str = receber_imagem_perfil_comentarios(canalEntrada);
+
+            if (str.equals("false")) {
+                return "false";
+            } else {
+                str = recebe_dados(canalEntrada);
+            }
 
             canalSaida.flush();
             canalSaida.close();
@@ -450,11 +628,11 @@ public class ProcessaSocket {
     }
 
     ////////////// enviar os bytes
-    public static String envia_Img(String IDImg, String ID, String CPF, String nomeImg, byte [] byteImagem ) throws IOException {
+    public static String envia_Img(String IDImg, String ID, String CPF, String nomeImg, byte[] byteImagem) throws IOException {
 
-        String dados = "ImagemOcorrencia " + IDImg+ " " + ID + " " + CPF + " " + nomeImg;
+        String dados = "ImagemOcorrencia " + IDImg + " " + ID + " " + CPF + " " + nomeImg;
 
-        byte[] byteDados  = dados.getBytes();
+        byte[] byteDados = dados.getBytes();
         int tamanhoDados = byteDados.length;
 
         int tamanhoImagem = byteImagem.length;
@@ -463,14 +641,14 @@ public class ProcessaSocket {
         byte[] byteTamanhoImagem = toBytes(tamanhoImagem);
 
 
-        byte[] TamanhoEDados = concat(byteTamanhoDados,byteDados);
-        byte[] TamanhoEImagem = concat(byteTamanhoImagem,byteImagem);
+        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
+        byte[] TamanhoEImagem = concat(byteTamanhoImagem, byteImagem);
 
-        byte[] DadosImagem = concat(TamanhoEDados,TamanhoEImagem);
+        byte[] DadosImagem = concat(TamanhoEDados, TamanhoEImagem);
 
         int tamanhoPacote = DadosImagem.length;
         byte[] byteTamanho = toBytes(tamanhoPacote);
-        byte[] byteFinal = concat(byteTamanho,DadosImagem);
+        byte[] byteFinal = concat(byteTamanho, DadosImagem);
 
         String retorno = Bytes(byteFinal);
 
@@ -482,11 +660,11 @@ public class ProcessaSocket {
     }
 
 
-    public static String envia_Img_Perfil(String CPF, String nomeImg, byte [] byteImagem ) throws IOException {
+    public static String envia_Img_Perfil(String CPF, String nomeImg, byte[] byteImagem) throws IOException {
 
         String dados = "ImagemPerfil " + CPF + " " + nomeImg;
 
-        byte[] byteDados  = dados.getBytes();
+        byte[] byteDados = dados.getBytes();
         int tamanhoDados = byteDados.length;
 
         int tamanhoImagem = byteImagem.length;
@@ -495,14 +673,14 @@ public class ProcessaSocket {
         byte[] byteTamanhoImagem = toBytes(tamanhoImagem);
 
 
-        byte[] TamanhoEDados = concat(byteTamanhoDados,byteDados);
-        byte[] TamanhoEImagem = concat(byteTamanhoImagem,byteImagem);
+        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
+        byte[] TamanhoEImagem = concat(byteTamanhoImagem, byteImagem);
 
-        byte[] DadosImagem = concat(TamanhoEDados,TamanhoEImagem);
+        byte[] DadosImagem = concat(TamanhoEDados, TamanhoEImagem);
 
         int tamanhoPacote = DadosImagem.length;
         byte[] byteTamanho = toBytes(tamanhoPacote);
-        byte[] byteFinal = concat(byteTamanho,DadosImagem);
+        byte[] byteFinal = concat(byteTamanho, DadosImagem);
 
         String retorno = Bytes(byteFinal);
 

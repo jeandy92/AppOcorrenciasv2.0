@@ -101,26 +101,9 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         tipo = getTipoNr(idOcorrencia);
         CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
 
-        ArrayList<Bitmap> listaImagens = getImagens();
-        Bitmap[] images = new Bitmap[listaImagens.size()];
-
-        if (listaImagens.size() > 0) {
-
-            for (int i = 0; i < listaImagens.size(); i++) {
-                images[i] = listaImagens.get(i);
-            }
-
-        }
-
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-
-        adapterCustomSwiper = new AdapterCustomSwiper(this, images);
-        viewPager.setAdapter(adapterCustomSwiper);
-
         if (CPFOcorrencia.equals(CPF)) {
             btnExcluir.setVisibility(View.VISIBLE);
         }
-
 
         Tv_Id_Ocorrencia.setText(idOcorrencia);
         Tv_Tipo_Crime.setText(tipo);
@@ -159,6 +142,18 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             }
         });
 
+        ArrayList<Bitmap> listaImagens = getImagens();
+        Bitmap[] images = new Bitmap[listaImagens.size()];
+
+        if (listaImagens.size() > 0) {
+
+            for (int i = 0; i < listaImagens.size(); i++) {
+                images[i] = listaImagens.get(i);
+            }
+        }
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        adapterCustomSwiper = new AdapterCustomSwiper(this, images);
+        viewPager.setAdapter(adapterCustomSwiper);
     }
 
     public static String evBuscarImagens(String IDOcorrencia, String tipo) throws IOException {
@@ -171,7 +166,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
         }
 
-        String ip_conexao = /*"192.168.0.108";//*/"192.168.1.18";
+        String ip_conexao = /*"192.168.0.108";//*/"172.20.10.3";
         int porta_conexao = 2222;
 
 
@@ -237,10 +232,10 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
             String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
 
-
             Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
-            String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
+            ArrayImagensPerfilComentarios.deleteBitmap();
+            String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
 
             if (retorno.equals("false")) {
                 Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
@@ -366,7 +361,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
         String BuscarComentariosRegistrados = "BuscarComentariosRegistrados " + IDOcorrencia;
 
-        String retorno = processa.cadastrar1_no_server(BuscarComentariosRegistrados);
+        ArrayImagensPerfilComentarios.deleteBitmap();
+        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarComentariosRegistrados);
 
         if (retorno.equals("erro")) {
             return "erro";
@@ -420,6 +416,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
+            this.finish();
 
         } else {
             if (tela.equals("Cliente")) {
@@ -433,6 +430,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);
+                this.finish();
+
             } else {
                 Intent cliente = new Intent(this, BuscarOcorrencias.class);
 
@@ -444,6 +443,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);
+                this.finish();
+
 
             }
         }

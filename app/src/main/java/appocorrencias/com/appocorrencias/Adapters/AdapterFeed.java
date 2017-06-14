@@ -1,6 +1,7 @@
 package appocorrencias.com.appocorrencias.Adapters;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.R;
 
@@ -69,19 +71,33 @@ public class AdapterFeed extends BaseAdapter {
         endereco.setText("Ocorreu na"+ lista_feed_ocorrencias.getRua() + " no dia " + lista_feed_ocorrencias.getData());
         idocorrencia.setText(String.valueOf(lista_feed_ocorrencias.getNrOcorrencia()));
 
-        if (lista_feed_ocorrencias.getTipo().equals(" Roubo")) {
-            imagem.setImageResource(R.drawable.ic_assalto);
-        } else if (lista_feed_ocorrencias.getTipo().equals(" Furto")) {
-            imagem.setImageResource(R.drawable.ic_furto);
-        } else if (lista_feed_ocorrencias.getTipo().equals(" Trafico de drogas")) {
-            imagem.setImageResource(R.drawable.ic_trafico);
-        }else if (lista_feed_ocorrencias.getTipo().equals(" Homicidio")) {
-            imagem.setImageResource(R.drawable.ic_homicidio);
-        }else if (lista_feed_ocorrencias.getTipo().equals(" Latrocinio")) {
-            imagem.setImageResource(R.drawable.ic_latrocinio);
-        }else if (lista_feed_ocorrencias.getTipo().equals(" Abuso Sexual")) {
-            imagem.setImageResource(R.drawable.ic_abuso);
+        String CPF = lista_feed_ocorrencias.getCPF();
+
+       // if (lista_feed_ocorrencias.getTipo().equals(" Roubo")) {
+        //  imagem.setImageResource(R.drawable.ic_assalto);
+        // } else if (lista_feed_ocorrencias.getTipo().equals(" Furto")) {
+        //     imagem.setImageResource(R.drawable.ic_furto);
+        // } else if (lista_feed_ocorrencias.getTipo().equals(" Trafico de drogas")) {
+        //      imagem.setImageResource(R.drawable.ic_trafico);
+        //  }else if (lista_feed_ocorrencias.getTipo().equals(" Homicidio")) {
+        //     imagem.setImageResource(R.drawable.ic_homicidio);
+        // }else if (lista_feed_ocorrencias.getTipo().equals(" Latrocinio")) {
+        //   imagem.setImageResource(R.drawable.ic_latrocinio);
+        // }else if (lista_feed_ocorrencias.getTipo().equals(" Abuso Sexual")) {
+        //      imagem.setImageResource(R.drawable.ic_abuso);
+        // }
+        if(anonimo.equals("true")){
+            imagem.setImageResource(R.drawable.ic_anonimo);
         }
+        else {
+            Bitmap img = ArrayImagensPerfilComentarios.GetImgPerfil(CPF);
+            if(img != null) {
+                imagem.setImageBitmap(img);
+            }else{
+                imagem.setImageResource(R.drawable.ic_app);
+            }
+        }
+
 
         return view;
     }
