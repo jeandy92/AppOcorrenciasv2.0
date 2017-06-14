@@ -32,18 +32,6 @@ public class ItemBuscaUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_item_busca_usuario);
 
-        ArrayList<Bitmap> listaImagemPerfil = getImagens();
-        Bitmap[] images = new Bitmap[listaImagemPerfil.size()];
-
-        if (listaImagemPerfil.size() > 0) {
-
-            for (int i = 0; i < listaImagemPerfil.size(); i++) {
-                images[i] = listaImagemPerfil.get(i);
-            }
-
-        }
-
-
         TextView Tv_Nome = (TextView) findViewById(R.id.txtCampoNome);
         TextView Tv_Nascimento = (TextView) findViewById(R.id.txtCampoNascimento);
         TextView Tv_CPF = (TextView) findViewById(R.id.txtCampoCPF);
@@ -72,6 +60,8 @@ public class ItemBuscaUsuario extends AppCompatActivity {
         nome = ArrayUsuariosEncontrados.getNomeCPF(cpfUsuario);
         telefone = ArrayUsuariosEncontrados.getTelefoneCPF(cpfUsuario);
 
+        Bitmap[] images = new Bitmap[1];
+        images[0]  = ArrayImagensPerfilComentarios.GetImgPerfil(cpfUsuario);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 

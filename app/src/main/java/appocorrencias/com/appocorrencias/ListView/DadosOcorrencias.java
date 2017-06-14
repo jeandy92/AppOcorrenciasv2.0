@@ -65,6 +65,10 @@ public class DadosOcorrencias {
         return Anonimo;
     }
 
+    public String getCPF() {
+        return Cpf;
+    }
+
     @Override
     public String toString() {
         return "\nNumero: " + NrOcorrencia + "\nBairro: " + Bairro + "\nData: " + Data;

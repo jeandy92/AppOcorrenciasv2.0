@@ -70,44 +70,35 @@ public class ListarOcorrencias extends AppCompatActivity {
                     Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
 
+
+                    // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
+                    String tela = "ListarOcorrencia";
+
+                    i.putExtra("cpf", CPF);
+                    i.putExtra("nome", Nome);
+                    i.putExtra("bairro", Bairro);
+                    i.putExtra("id_ocorrencia", idocorrencia);
+                    i.putExtra("tela", tela);
+
+
                     deleteAllArrayComentarios();
 
-                    String retornoComent = null;
+                    String retornoImagem = null;
                     try {
-                        retornoComent = evBuscarComentario(idocorrencia);
+                        retornoImagem = evBuscarImagens(idocorrencia, "ocorrencia");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if (retornoComent.equals("erro")) {
-                        Toast.makeText(view.getContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
-                    } else {
+                    if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
+                        String retornoComent = null;
+                        try {
+                            retornoComent = evBuscarComentario(idocorrencia);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         if (retornoComent.equals("true") || retornoComent.equals("false")) {
-                            String retornoImg = null;
-                            try {
-                                retornoImg = evBuscarImagens(idocorrencia, "ocorrencia");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            if (retornoImg.equals("erro")) {
-                                Toast.makeText(view.getContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
-                            } else {
-                                if (retornoImg.equals("true") || retornoImg.equals("false")) {
-
-                                    // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
-                                    String tela = "ListarOcorrencia";
-
-                                    i.putExtra("cpf", CPF);
-                                    i.putExtra("nome", Nome);
-                                    i.putExtra("bairro", Bairro);
-                                    i.putExtra("id_ocorrencia", idocorrencia);
-                                    i.putExtra("tela", tela);
-
-
-                                    startActivity(i);
-                                    Toast.makeText(view.getContext(), " case 1 Exibir Sobre", Toast.LENGTH_SHORT).show();
-                                }
-                            }
+                            startActivity(i);
                         }
                     }
                 }

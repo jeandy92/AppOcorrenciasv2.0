@@ -1,6 +1,7 @@
 package appocorrencias.com.appocorrencias.Adapters;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.DadosUsuarios;
 import appocorrencias.com.appocorrencias.R;
 
@@ -65,7 +67,16 @@ public class AdapterBuscaUsuario extends BaseAdapter{
         cidade.setText(usuariosEcontrados.getCidade());
         bairro.setText(usuariosEcontrados.getBairro());
         endereco.setText(String.valueOf( usuariosEcontrados.getRua()+ " N° "+usuariosEcontrados.getNumeroCasa() ) );
-        imagemUsuario.setImageResource(R.drawable.ic_app);
+        //imagemUsuario.setImageResource(R.drawable.ic_app);
+
+        String CPF = usuariosEcontrados.getCpf();
+
+        Bitmap img = ArrayImagensPerfilComentarios.GetImgPerfil(CPF);
+        if(img != null) {
+            imagemUsuario.setImageBitmap(img);
+        }else{
+            imagemUsuario.setImageResource(R.drawable.ic_app);
+        }
 
 
     return  view;

@@ -93,7 +93,7 @@ public class Cliente extends AppCompatActivity {
         ArrayList<Bitmap> listaImagens = ArrayImagensPerfil.getImagens();
         Bitmap[] images = new Bitmap[listaImagens.size()];
 
-        if(listaImagens.size() > 0){
+        if (listaImagens.size() > 0) {
             images[0] = listaImagens.get(0);
             ivCliente.setImageBitmap(images[0]);
         }
@@ -127,23 +127,22 @@ public class Cliente extends AppCompatActivity {
 
                     String retornoImagem = null;
                     try {
-                        retornoImagem = evBuscarImagens(idocorrencia,"ocorrencia");
+                        retornoImagem = evBuscarImagens(idocorrencia, "ocorrencia");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if(retornoImagem.equals("true") || retornoImagem.equals("false") ){
+                    if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
                         String retornoComent = null;
                         try {
                             retornoComent = evBuscarComentario(idocorrencia);
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if(retornoComent.equals("true") || retornoComent.equals("false") ){
-                                startActivity(i);
-                            }
+                        if (retornoComent.equals("true") || retornoComent.equals("false")) {
+                            startActivity(i);
                         }
-
-
+                    }
                 }
             }
         });
@@ -274,7 +273,7 @@ public class Cliente extends AppCompatActivity {
 
         Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
-        String retorno = processa.cadastrar1_no_server(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
 
@@ -289,7 +288,6 @@ public class Cliente extends AppCompatActivity {
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
-
 
         } else {
             // Pegando quantidade de Ocorrencias
@@ -507,9 +505,9 @@ public class Cliente extends AppCompatActivity {
         byte[] byteArray = stream.toByteArray();
         byteImagem = byteArray;
         String retorno = enviarImgPerfil();
-        if(retorno.equals("erro")){
+        if (retorno.equals("erro")) {
             Toast.makeText(getApplicationContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), "Imagem do Perfil Atualizada", Toast.LENGTH_SHORT).show();
             ArrayImagensPerfil.deleteBitmap();
             ArrayImagensPerfil.adicionarImg(bitmap);
@@ -520,15 +518,14 @@ public class Cliente extends AppCompatActivity {
 
         String retornoImg = processasocket.envia_Img_Perfil(CPF, "Img1", byteImagem);
 
-        if (retornoImg.equals("erro")){
+        if (retornoImg.equals("erro")) {
             return "erro";
         }
         return "true";
     }
 
 
-
-        @Override
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         ArrayImagens.deleteBitmap();

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterBuscaUsuario;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.ArrayUsuariosEncontrados;
 import appocorrencias.com.appocorrencias.ListView.DadosUsuarios;
 import appocorrencias.com.appocorrencias.ListView.ItemBuscaUsuario;
@@ -200,7 +201,8 @@ public class BuscarUsuarios extends AppCompatActivity {
 
         String BuscaUsuarioCPF = "BuscarUsuariosCPF " + CPF;
         //Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
-        String retorno = processa.cadastrar1_no_server(BuscaUsuarioCPF);
+        ArrayImagensPerfilComentarios.deleteBitmap();
+        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscaUsuarioCPF);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há usuarios cadastrados com esse CPF", Toast.LENGTH_SHORT).show();
@@ -242,7 +244,8 @@ public class BuscarUsuarios extends AppCompatActivity {
 
         String BuscarUsuarioNome = "BuscarUsuariosNome " + Nome;
         //Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
-        String retorno = processa.cadastrar1_no_server(BuscarUsuarioNome);
+        ArrayImagensPerfilComentarios.deleteBitmap();
+        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarUsuarioNome);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há usuarios cadastrados com esse Nome", Toast.LENGTH_SHORT).show();
@@ -277,10 +280,12 @@ public class BuscarUsuarios extends AppCompatActivity {
                             CidadeUsu, Cep, UFUsu, Complemento, Nascimento);
 
                     ArrayUsuariosEncontrados.adicionar(dado);
+
                 }
                 //Toast.makeText(this, "Mostrando Ocorrencias no seu Bairro ", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
 
