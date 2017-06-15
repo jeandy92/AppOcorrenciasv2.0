@@ -129,7 +129,7 @@
                 android:layout_marginBottom="0dp"
                 android:layout_marginRight="0dp"
                 android:background="@drawable/pencil"
-                android:onClick="entrar_galeria"
+                android:onClick="entrarGaleria"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/ivCliente"
                 app:layout_constraintRight_toRightOf="@+id/ivCliente" />

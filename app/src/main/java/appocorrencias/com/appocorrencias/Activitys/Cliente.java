@@ -42,7 +42,7 @@ import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
 import appocorrencias.com.appocorrencias.R;
 import me.drakeet.materialdialog.MaterialDialog;
 
-import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.processasocket;
+import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.processaSocket;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
@@ -459,7 +459,7 @@ public class Cliente extends AppCompatActivity {
     }
 
 
-    public void entrar_galeria(View v) {
+    public void entrarGaleria(View v) {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -518,7 +518,7 @@ public class Cliente extends AppCompatActivity {
 
     public String enviarImgPerfil() throws IOException {
 
-        String retornoImg = processasocket.envia_Img_Perfil(CPF, "Img1", byteImagem);
+        String retornoImg = processaSocket.envia_Img_Perfil(CPF, "Img1", byteImagem);
 
         if (retornoImg.equals("erro")) {
             return "erro";

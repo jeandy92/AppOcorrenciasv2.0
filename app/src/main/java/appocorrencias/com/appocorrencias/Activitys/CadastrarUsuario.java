@@ -29,14 +29,16 @@ public class CadastrarUsuario extends AppCompatActivity {
     private EditText Nome, CPF, Telefone, Email, Senha, Rua, Bairro, Cidade, Numero, CEP, UF, DataNasc, ConfirmarSenha, Complemento;
 
     //Variaveis para conversão e  referencia nula
-    private String Tela, convCpf, convTelefone, convCep, email, senha, numero, rua, bairro, cidade, uf, nome, dataNasc, confirmarSenha, complemento;
+    private String convCpf, convTelefone, convCep, email, senha, numero, rua, bairro, cidade, uf, nome, dataNasc, confirmarSenha, complemento;
 
     //Váriaveis para serem utilizadas  no envio do cadastro
     protected String cadastro1, cadastroNome, cadastroRua, cadastroBairro, cadastroCidade;
 
+
     //Dados para o envio do socket.
     ProcessaSocket processa = new ProcessaSocket();
     boolean retorno;
+    private String Tela;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

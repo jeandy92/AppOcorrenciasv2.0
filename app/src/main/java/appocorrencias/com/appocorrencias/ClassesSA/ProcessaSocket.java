@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,10 +25,12 @@ public class ProcessaSocket {
     static Socket cliente = new Socket();
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
+    static Socket socket;
 
-    private static String ip_conexao = /*"192.168.1.12";//*/ "52.34.140.131";
-    //private static String ip_conexao = "172.20.10.3";
-    private static int porta_conexao = 63200;//2222;
+
+    //private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
+    private static String ip_conexao = "52.34.140.131";
+    private static int  porta_conexao = 63200;
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -282,7 +286,7 @@ public class ProcessaSocket {
             int deslocamento = 4; //ignora 4 primeiros bytes da qtd de imagens
 
             for (int i = 0; i < qtd_imagens; i++) {
-                // copia tamanho do CPF
+                // copia tamanho do cpfBuscarOcorrencia
                 System.arraycopy(pacote2, deslocamento, buff, 0, 4);
                 deslocamento += 4;
 
@@ -292,7 +296,7 @@ public class ProcessaSocket {
 
                 String cpfDecode2 = new String(cpf[i], "UTF-8");
 
-                Log.i("Valor CPF Processa", "------------------------" + cpfDecode2);
+                Log.i("Valor cpfBuscarOcorrencia Processa", "------------------------" + cpfDecode2);
 
                 deslocamento += cpf[i].length;//valor_to_int(buff);
 
@@ -308,7 +312,7 @@ public class ProcessaSocket {
 
                 String cpfDecode = new String(cpf[i], "UTF-8");
 
-                Log.i("Valor CPF Processa", "------------------------" + cpfDecode);
+                Log.i("Valor cpfBuscarOcorrencia Processa", "------------------------" + cpfDecode);
 
                 DadosImagensComentarios dados = new DadosImagensComentarios(cpfDecode, imagem_convertida);
 
@@ -453,6 +457,132 @@ public class ProcessaSocket {
         }
         return str;
     }
+
+    //Mé
+    public static void adicionandoUsuarioNotificacao(String token_usuario , String bairro_usu) {
+
+        try {
+
+                socket = new Socket(ip_conexao, 63300);
+
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+
+                out.writeUTF("ADICIONAR_AO_GRUPO");
+
+                if (in.readBoolean()) {
+
+                    //out.writeUTF("eH27cLSAdao:APA91bFd74mH1n8mSOKoolLpYlb2m8-DFLu3GTNY4hMi3ZEOdnDiSgy1cmPg0n5uyx1O2J5nezpBGCci8kFpf0vmpUAQDr93H4bZTZwoFrGwaSoMwhqf8ElvzJHoHpa97hsJ1ZsN1tzb");
+                    //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
+
+                    System.out.println(token_usuario);
+                    out.writeUTF(token_usuario);
+
+                    System.out.println(bairro_usu.trim());
+                    out.writeUTF(bairro_usu);
+                    //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
+
+
+                    Boolean resultado_servidor = in.readBoolean();
+
+                    if (resultado_servidor) {
+
+                        System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO "+bairro_usu);
+
+                    } else {
+                        System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO "+bairro_usu);
+                    }
+
+                }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+
+    public static void criandoGrupoNotificacao (String token_usuario, String nomeGrupoNotificacao, String bairroUsuario){
+
+        try {
+
+            socket = new Socket(ip_conexao, 63300);
+
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+
+
+            out.writeUTF("CRIAR_GRUPO_NOTIFICACAO");
+
+            if (in.readBoolean()) {
+
+                out.writeUTF( token_usuario );
+                out.writeUTF( nomeGrupoNotificacao );
+                out.writeUTF( bairroUsuario);
+
+
+                Boolean resultado_servidor = in.readBoolean();
+
+
+                if (resultado_servidor) {
+
+                    System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO" + bairroUsuario);
+
+                } else {
+                    System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO" + bairroUsuario);
+                }
+
+            }
+
+        } catch (IOException e) {
+        System.out.println("Erro ao se conectar com o servidor \n");
+        System.out.println(e.getMessage());
+
+         }
+    }
+
+    public static void enviandoNotificacaoGrupo (String tokenUsuario, String bairroUsu){
+        try {
+
+            socket = new Socket("52.34.140.131", 63300);
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+
+            out.writeUTF("ENVIAR_NOTIFICACAO");
+
+            if (in.readBoolean()) {
+
+                out.writeUTF(tokenUsuario);
+                out.writeUTF("Novo Crime Registrado");
+                out.writeUTF("Assalto");
+                out.writeUTF(bairroUsu);
+
+
+                Boolean resultado_servidor = in.readBoolean();
+
+                if (resultado_servidor) {
+
+                    System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO  JARDIM SILVEIRA");
+
+                } else {
+                    System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO  JARDIM SILVEIRA");
+                }
+
+            } else {
+
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erro ao se conectar com o servidor \n");
+            System.out.println(e.getMessage());
+
+        }
+
+    }
+
+
 
 
     public static String cadastrar_Ocorrencia(String ID, String CPFCliente, String tipo_crime, String convDataOcorrencia,

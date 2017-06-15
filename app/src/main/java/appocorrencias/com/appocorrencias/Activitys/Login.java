@@ -166,11 +166,14 @@ public class Login extends AppCompatActivity {
         Log.d(TAG, token);
 
         //Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
+        ProcessaSocket.enviandoNotificacaoGrupo(token,"Jardim lok");
+
+
 
         SENHA = txtSenha.getText().toString();
         CPF = txtUsuario.getText().toString();
 
-        //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E SENHA E TIRANDO A  MASCARA DO CAMPO CPF
+        //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E SENHA E TIRANDO A  MASCARA DO CAMPO cpfAdm
         CPF = CPF.replaceAll("[^0-9]", "");
 
 
@@ -215,7 +218,7 @@ public class Login extends AppCompatActivity {
             } else {
 
                 if (CadastrarUsuario.validarCPF(CPF)) {
-                    txtUsuario.setError("CPF Inválido");
+                    txtUsuario.setError("cpfAdm Inválido");
                     txtUsuario.setFocusable(true);
                     txtUsuario.requestFocus();
                     Log.i("evEntrar(IF2)", CPF);
@@ -284,7 +287,7 @@ public class Login extends AppCompatActivity {
     public static String evBuscarOcorrenciasBairro(String Bairro2) throws IOException {
 
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro" + Bairro2;
-        //Toast.makeText(this, "Ocorrencias Registradas no meu Bairro ", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
         String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
 
@@ -321,7 +324,7 @@ public class Login extends AppCompatActivity {
 
                     ArrayOcorrenciasRegistradas.adicionar(dado);
                 }
-                //Toast.makeText(this, "Mostrando Ocorrencias no seu Bairro ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
             }
         }
         return "true";
