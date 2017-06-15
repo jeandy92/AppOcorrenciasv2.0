@@ -35,6 +35,7 @@ import appocorrencias.com.appocorrencias.Adapters.AdapterFeed;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagens;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfil;
+import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
@@ -216,7 +217,7 @@ public class Cliente extends AppCompatActivity {
         b.putString("tipocrime", "roubo");
 
         this.startActivity(new Intent(this, CadastrarOcorrencia.class));
-
+        this.finish();
     }
 
 
@@ -244,7 +245,7 @@ public class Cliente extends AppCompatActivity {
         bundle.putString("tela", "Cliente");
         cliente.putExtras(bundle);
         this.startActivity(cliente);
-
+        this.finish();
     }
 
     // OBS FUNCAO ESTAVA FORA DO CODIGGO JEAN VERIFICAR
@@ -261,7 +262,7 @@ public class Cliente extends AppCompatActivity {
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
-
+        this.finish();
     }
 
     public void evOcorrenciasInformadas(View view) throws IOException {
@@ -273,6 +274,7 @@ public class Cliente extends AppCompatActivity {
 
         Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
+        ArrayImagensPerfilComentarios.deleteBitmap();
         String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
@@ -288,7 +290,7 @@ public class Cliente extends AppCompatActivity {
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
-
+            this.finish();
         } else {
             // Pegando quantidade de Ocorrencias
 

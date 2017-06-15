@@ -128,7 +128,7 @@ public class ListarOcorrencias extends AppCompatActivity {
 
         cliente.putExtras(bundle);
         this.startActivity(cliente);
-
+        this.finish();
     }
 
 

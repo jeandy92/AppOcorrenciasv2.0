@@ -291,7 +291,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
 
             adm.putExtras(bundle);
             this.startActivity(adm);
-
+            this.finish();
         } else {
 
 
@@ -308,7 +308,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);
-
+                this.finish();
 
             } catch (IOException e) {
                 e.printStackTrace();

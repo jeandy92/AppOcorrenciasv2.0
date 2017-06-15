@@ -40,6 +40,7 @@ import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 
 import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.removerAcentos;
+import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
 import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.concat;
 import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem;
 import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem_perfil;
@@ -166,8 +167,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
         }
 
-        String ip_conexao = /*"192.168.0.108";//*/"172.20.10.3";
-        int porta_conexao = 2222;
+        String ip_conexao = /*"192.168.0.108";//*/ "52.34.140.131"; //"172.20.10.3";
+        int porta_conexao = 63200;//2222;
 
 
         String str = null;
@@ -401,6 +402,54 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     }
 
 
+    public void evOcorrenciasInformadasItem(String CPF) throws IOException {
+
+        deleteAllArray();
+
+        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
+
+        ArrayImagensPerfilComentarios.deleteBitmap();
+        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+
+        if (retorno.equals("false")) {
+
+            Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
+
+        } else {
+            // Pegando quantidade de Ocorrencias
+
+            int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
+
+            // Pegando dados e Adicioanando dados no Array
+
+            for (int i = 0; i < qtdOcorrencia; i++) {
+                String TodasOcorrencias[] = retorno.split("///");
+
+                String Ocorrencia = TodasOcorrencias[i];
+                String OcorrenciaUm[] = Ocorrencia.split("//");
+                String Nr = OcorrenciaUm[1];
+                String CPFOco = OcorrenciaUm[2];
+                String Rua = OcorrenciaUm[3];
+                String Bairro = OcorrenciaUm[4];
+                String Cidade = OcorrenciaUm[5];
+                String UF = OcorrenciaUm[6];
+                String Descricao = OcorrenciaUm[7];
+                String Data = OcorrenciaUm[8];
+                String Tipo = OcorrenciaUm[9];
+                String Anonimo = OcorrenciaUm[10];
+                String Apelido = OcorrenciaUm[11];
+
+                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
+
+                ArrayOcorrenciasRegistradas.adicionar(dado);
+            }
+
+            Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
     public void onBackPressed() {
         super.onBackPressed();
 
@@ -408,6 +457,13 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
         if (tela.equals("ListarOcorrencia")) {
             Intent cliente = new Intent(this, ListarOcorrencias.class);
+
+            deleteAllArray();
+            try {
+                evOcorrenciasInformadasItem(CPF);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             Bundle bundle = new Bundle();
             bundle.putString("nome", Nome);
@@ -420,6 +476,14 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
         } else {
             if (tela.equals("Cliente")) {
+
+                deleteAllArray();
+
+                try {
+                    evBuscarOcorrenciasBairro(BairroCli);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 Intent cliente = new Intent(this, Cliente.class);
 

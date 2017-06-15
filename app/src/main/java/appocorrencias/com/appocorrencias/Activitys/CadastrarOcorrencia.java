@@ -577,6 +577,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
                                             cliente.putExtras(bundle);
                                             this.startActivity(cliente);
+                                            this.finish();
                                         }
                                     }
 
@@ -607,7 +608,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
             adm.putExtras(bundle);
             this.startActivity(adm);
-
+            this.finish();
         } else {
 
             try {
@@ -625,7 +626,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
-
+            this.finish();
         }
     }
 }

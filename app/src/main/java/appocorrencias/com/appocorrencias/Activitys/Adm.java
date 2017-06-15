@@ -60,6 +60,7 @@ public class Adm extends AppCompatActivity {
 
         cadastrar.putExtras(bundle);
         this.startActivity(cadastrar);
+        this.finish();
 
     }
 
@@ -153,6 +154,6 @@ public class Adm extends AppCompatActivity {
         super.onBackPressed();
         setContentView(R.layout.activity_login);
         this.startActivity(new Intent(this,Login.class));
-
+        this.finish();
     }
 }

@@ -302,7 +302,7 @@ public class BuscarUsuarios extends AppCompatActivity {
 
         adm.putExtras(bundle);
         this.startActivity(adm);
-
+        this.finish();
     }
 
 }

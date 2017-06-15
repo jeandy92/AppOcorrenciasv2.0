@@ -95,11 +95,6 @@ public class CadastrarUsuario extends AppCompatActivity {
             Bairro.setText(busca.getBairro(convCep));
             Cidade.setText(busca.getCidade(convCep));
             UF.setText(busca.getUF(convCep));
-
-
-
-
-
         }
     }
 
@@ -175,6 +170,7 @@ public class CadastrarUsuario extends AppCompatActivity {
 
                                         setContentView(R.layout.activity_login);
                                         this.startActivity(new Intent(this, Login.class));
+                                        this.finish();
                                     } else {
                                         CPF.setError("Cpf Já Cadastrado");
                                         CPF.setFocusable(true);
@@ -260,9 +256,11 @@ public class CadastrarUsuario extends AppCompatActivity {
 
             adm.putExtras(bundle);
             this.startActivity(adm);
+            this.finish();
         } else {
 
             this.startActivity(new Intent(this, Login.class));
+            this.finish();
         }
     }
 }

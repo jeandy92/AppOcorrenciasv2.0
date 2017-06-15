@@ -156,12 +156,6 @@ public class Login extends AppCompatActivity {
         this.startActivity(cadastrar);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    public void adm(View view) {
-
-        setContentView(R.layout.activity_adm);
-        this.startActivity(new Intent(this, Adm.class));
-    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     public void evEntrar(View view) throws IOException {
@@ -171,7 +165,7 @@ public class Login extends AppCompatActivity {
 
         Log.d(TAG, token);
 
-        Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
 
         SENHA = txtSenha.getText().toString();
         CPF = txtUsuario.getText().toString();
@@ -216,6 +210,7 @@ public class Login extends AppCompatActivity {
 
                 adm.putExtras(bundle);
                 this.startActivity(adm);
+                this.finish();
 
             } else {
 
@@ -267,6 +262,7 @@ public class Login extends AppCompatActivity {
 
                                                 cliente.putExtras(bundle);
                                                 this.startActivity(cliente);
+                                                this.finish();
                                             }
                                         }
                                     }
