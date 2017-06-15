@@ -6,29 +6,30 @@ package appocorrencias.com.appocorrencias.ClassesSA;
 
 public class Usuario {
 
-    private String cpf_usuario;
+
 
     public Usuario(){}
-
-    String senha_usuario;
-    String nome_usuario;
-    String bairro;
-    String token;
+    
+    private String cpfUsuario;
+    private String senhaUsuario;
+    private String nomeUsuario;
+    private String bairro;
+    private String token;
 
 
 
 
 //SETS
-    public void setCpf_usuario(String cpf_usuario) {
-        this.cpf_usuario = cpf_usuario;
+    public void setCpfUsuario(String cpfUsuario) {
+        this.cpfUsuario = cpfUsuario;
     }
 
-    public void setSenha_usuario(String senha_usuario) {
-        this.senha_usuario = senha_usuario;
+    public void setSenhaUsuario(String senhaUsuario) {
+        this.senhaUsuario = senhaUsuario;
     }
 
-    public void setNome_usuario(String nome_usuario) {
-        this.nome_usuario = nome_usuario;
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
     }
 
     public void setBairro(String bairro) {
@@ -42,20 +43,20 @@ public class Usuario {
 
 
 //GETS
-    public String getSenha_usuario() {
-        return senha_usuario;
+    public String getSenhaUsuario() {
+        return senhaUsuario;
     }
 
-    public String getNome_usuario() {
-        return nome_usuario;
+    public String getNomeUsuario() {
+        return nomeUsuario;
     }
 
     public String getBairro() {
         return bairro;
     }
 
-    public String getCpf_usuario() {
-        return cpf_usuario;
+    public String getCpfUsuario() {
+        return cpfUsuario;
     }
 
     public String getToken() {

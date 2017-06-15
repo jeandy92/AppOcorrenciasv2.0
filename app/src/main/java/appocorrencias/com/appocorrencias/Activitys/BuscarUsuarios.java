@@ -200,7 +200,7 @@ public class BuscarUsuarios extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(buscaUsuarioCPF);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(buscaUsuarioCPF);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há usuarios cadastrados com esse cpfAdm", Toast.LENGTH_SHORT).show();
@@ -243,7 +243,7 @@ public class BuscarUsuarios extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
 
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarUsuarioNome);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarUsuarioNome);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há usuarios cadastrados com esse nomeBuscarOcorrencia", Toast.LENGTH_SHORT).show();

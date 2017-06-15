@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import appocorrencias.com.appocorrencias.R;
 
 /**
@@ -21,14 +19,14 @@ import appocorrencias.com.appocorrencias.R;
 public class AdapterCustomSwiper extends PagerAdapter {
 
 
-    int[] image_resources;
+    int[] imageResources;
     private Context ctx;
     private LayoutInflater layoutInflater;
     Bitmap [] images;
 
     public AdapterCustomSwiper(Context ctx, Bitmap [] images){
         this.ctx = ctx ;
-        this.image_resources = image_resources;
+        this.imageResources = imageResources;
         this.images= images;
     }
 
@@ -36,7 +34,7 @@ public class AdapterCustomSwiper extends PagerAdapter {
     @Override
     public int getCount() {
         return images.length;
-        //return image_resources.length;
+        //return imageResources.length;
         //return 3;
     }
 
@@ -46,14 +44,19 @@ public class AdapterCustomSwiper extends PagerAdapter {
     }
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View item_view = layoutInflater.inflate(R.layout.swipe_layout, container, false);
-        ImageView imageView =  (ImageView) item_view.findViewById(R.id.image_view);
-        TextView textView = (TextView) item_view.findViewById(R.id.image_count);
+
+        layoutInflater       =  (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View      itemView   =  layoutInflater.inflate(R.layout.swipe_layout, container, false);
+        ImageView imageView  =  (ImageView) itemView.findViewById(R.id.image_view);
+        TextView  textView   =  (TextView) itemView.findViewById(R.id.image_count);
+
         imageView.setImageBitmap(images[position]);
+
         textView.setText("");
-        container.addView(item_view);
-        return item_view;
+
+        container.addView(itemView);
+
+        return itemView;
     }
 
     public void destroyItem(ViewGroup container, int position, Object object){

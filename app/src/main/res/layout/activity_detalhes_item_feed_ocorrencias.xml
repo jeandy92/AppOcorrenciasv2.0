@@ -45,7 +45,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_x="30dp"
                 android:layout_y="20dp"
-                android:text="Numero Ocorrência"
+                android:text="usuNumero Ocorrência"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"

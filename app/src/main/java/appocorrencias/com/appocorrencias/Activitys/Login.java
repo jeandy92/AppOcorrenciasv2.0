@@ -28,36 +28,28 @@ import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
 import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
 
-public class Login extends AppCompatActivity {
-
-    private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
-
-    private byte[] imagem;
-    private String nome, SENHA, LoginServer, CPF, Nome, Bairro;
-    private String convCpf, Status;
-    private static ProcessaSocket processa = new ProcessaSocket();
-    private String retorno;
-    private View view;
-    private String nomecompleto = "Jeanderson de Almeeida Dyorgenes";
-    private EditText txtUsuario, txtSenha;
-    private CheckBox salvarlogin;
-    private Button btnCadastrarCli;
-    private static final String PREF_NAME = "MainActivityPreferences";
-    private int count1;
-    private int count2;
-    private static final String TAG = "Login";
-
-    //private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
-
 //******Create by Jeanderson  22/04/2017*****//
 
+public class Login extends AppCompatActivity {
 
-    private SharedPreferences.OnSharedPreferenceChangeListener callback = new SharedPreferences.OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            Log.i("Script", key + "update");
-        }
-    };
+    //Variaveis para Request
+    private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
+    private static final String PREF_NAME = "MainActivityPreferences";
+    private static final String TAG = "Login";
+
+    //Váriaveis para usar no Edit Text
+    private EditText edtUsuario, edtSenha;
+    private CheckBox cbxSalvarlogin;
+    private Button btnCadastrarCli;
+    private View view;
+
+    //Objetos para usar no processa socket
+    private static ProcessaSocket processa = new ProcessaSocket();
+
+    //Váriaveis Locais
+    private String nome, senha, loginServer, cpf, vNome;
+    private String convCpf, Status;
+    private String retorno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,34 +79,34 @@ public class Login extends AppCompatActivity {
 
         //******Create by Jeanderson  22/04/2017*****//
 
-        txtUsuario = (EditText) findViewById(R.id.usuario);
-        txtSenha = (EditText) findViewById(R.id.password);
-        salvarlogin = (CheckBox) findViewById(R.id.ckSalvarLogin);
+        edtUsuario = (EditText) findViewById(R.id.usuario);
+        edtSenha = (EditText) findViewById(R.id.password);
+        cbxSalvarlogin = (CheckBox) findViewById(R.id.ckSalvarLogin);
         btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
 
         //Quando usuário clicar nos campos de login e senha ele apaga os dados default para o preenchimento
-        txtUsuario.setOnClickListener(new View.OnClickListener() {
+        edtUsuario.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                txtUsuario.setText("");
+                edtUsuario.setText("");
             }
 
 
         });
-        txtSenha.setOnClickListener(new View.OnClickListener() {
+        edtSenha.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                txtSenha.setText("");
+                edtSenha.setText("");
             }
 
 
         });
 
         //Insere a mascara no cpf
-        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", txtUsuario);
-        txtUsuario.addTextChangedListener(maskCPF);
+        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", edtUsuario);
+        edtUsuario.addTextChangedListener(maskCPF);
 
 
         //Thread para que o aplicativo possa se conectar com o servidor na rede
@@ -126,20 +118,20 @@ public class Login extends AppCompatActivity {
 
 
         //Retirando a referencia  nulla
-        SENHA = txtSenha.getText().toString();
-        CPF = txtUsuario.getText().toString();
+        senha = edtSenha.getText().toString();
+        cpf = edtUsuario.getText().toString();
 
 
         //Recupera as string armazenadas no shared Preference
-        CPF = sp1.getString("login", "");
-        SENHA = sp1.getString("senha", "");
+        cpf = sp1.getString("login", "");
+        senha = sp1.getString("senha", "");
 
         //Cria um log, para confirmar as informações.
-        Log.i("onCreate", CPF);
-        Log.i("onCreate", SENHA);
+        Log.i("onCreate", cpf);
+        Log.i("onCreate", senha);
 
-        txtUsuario.setText(CPF);
-        txtSenha.setText(SENHA);
+        edtUsuario.setText(cpf);
+        edtSenha.setText(senha);
 
 
     }
@@ -170,21 +162,21 @@ public class Login extends AppCompatActivity {
 
 
 
-        SENHA = txtSenha.getText().toString();
-        CPF = txtUsuario.getText().toString();
+        senha = edtSenha.getText().toString();
+        cpf = edtUsuario.getText().toString();
 
-        //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E SENHA E TIRANDO A  MASCARA DO CAMPO cpfAdm
-        CPF = CPF.replaceAll("[^0-9]", "");
+        //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E senha E TIRANDO A  MASCARA DO CAMPO cpfAdm
+        cpf = cpf.replaceAll("[^0-9]", "");
 
 
         //ARMAZENANDO LOG DOS DADOS FORNECIDOS PELO USUÁRIO
-        Log.i("evEntrar", CPF);
-        Log.i("evEntrar", SENHA);
+        Log.i("evEntrar", cpf);
+        Log.i("evEntrar", senha);
 
-        if (salvarlogin.isChecked()) {
+        if (cbxSalvarlogin.isChecked()) {
 
-            Log.i("isCheck", CPF);
-            Log.i("isCheck", SENHA);
+            Log.i("isCheck", cpf);
+            Log.i("isCheck", senha);
 
             //Aramazena os dados na shared preferences em modo privato, impossibilitando que outra atividade altere esta preference.
             SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
@@ -192,17 +184,17 @@ public class Login extends AppCompatActivity {
 
 
             //Colocando os dados no shared prefence
-            editor.putString("login", CPF);
-            editor.putString("senha", SENHA);
+            editor.putString("login", cpf);
+            editor.putString("senha", senha);
 
             editor.commit();
 
         }
 
 
-        if (txtUsuario.getText().toString() != null && txtSenha.getText().toString() != null) {
+        if (edtUsuario.getText().toString() != null && edtSenha.getText().toString() != null) {
 
-            if (CPF.equals("33333333333") && SENHA.equals("1234")) {
+            if (cpf.equals("33333333333") && senha.equals("1234")) {
 
                 Intent adm = new Intent(this, Adm.class);
 
@@ -217,19 +209,19 @@ public class Login extends AppCompatActivity {
 
             } else {
 
-                if (CadastrarUsuario.validarCPF(CPF)) {
-                    txtUsuario.setError("cpfAdm Inválido");
-                    txtUsuario.setFocusable(true);
-                    txtUsuario.requestFocus();
-                    Log.i("evEntrar(IF2)", CPF);
-                    Log.i("evEntrar(IF2)", SENHA);
+                if (CadastrarUsuario.validarCPF(cpf)) {
+                    edtUsuario.setError("cpfAdm Inválido");
+                    edtUsuario.setFocusable(true);
+                    edtUsuario.requestFocus();
+                    Log.i("evEntrar(IF2)", cpf);
+                    Log.i("evEntrar(IF2)", senha);
                 } else {
 
-                    LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
-                    Log.i("evEntrar(ELSE)", CPF);
-                    Log.i("evEntrar(ELSE)", SENHA);
+                    loginServer = "loginServer" + " " + cpf + " " + senha;
+                    Log.i("evEntrar(ELSE)", cpf);
+                    Log.i("evEntrar(ELSE)", senha);
 
-                    retorno = processa.cadastrar1_no_server(LoginServer);
+                    retorno = processa.primeiroCadastroNoServidor(loginServer);
                     String retorno2[] = retorno.split("/");
                     Status = retorno2[0];
 
@@ -238,13 +230,13 @@ public class Login extends AppCompatActivity {
 
                     } else {
                         if (Status.equals("false")) {
-                            txtUsuario.setError("Usuario ou senha Invalido");
-                            txtUsuario.setFocusable(true);
-                            txtUsuario.requestFocus();
+                            edtUsuario.setError("Usuario ou senha Invalido");
+                            edtUsuario.setFocusable(true);
+                            edtUsuario.requestFocus();
                         } else {
                             if (Status.equals("true")) {
-                                CPF = retorno2[1];
-                                Nome = retorno2[2];
+                                cpf = retorno2[1];
+                                vNome = retorno2[2];
                                 String Bairro2 = retorno2[3];
 
                                 String retornoBairro = evBuscarOcorrenciasBairro(Bairro2);
@@ -252,15 +244,15 @@ public class Login extends AppCompatActivity {
                                     Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                 } else {
                                     if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
-                                        String retornoImagem = evBuscarImagens(CPF, "cpf");
+                                        String retornoImagem = evBuscarImagens(cpf, "cpf");
                                         if (retornoImagem.equals("erro")) {
                                             Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                         } else {
                                             if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
                                                 Intent cliente = new Intent(this, Cliente.class);
                                                 Bundle bundle = new Bundle();
-                                                bundle.putString("nome", Nome);
-                                                bundle.putString("cpf", CPF);
+                                                bundle.putString("nome", vNome);
+                                                bundle.putString("cpf", cpf);
                                                 bundle.putString("bairro", Bairro2);
 
                                                 cliente.putExtras(bundle);
@@ -277,9 +269,9 @@ public class Login extends AppCompatActivity {
             }
         } else {
 
-            txtUsuario.setError("Usuario ou senha em branco");
-            txtUsuario.setFocusable(true);
-            txtUsuario.requestFocus();
+            edtUsuario.setError("Usuario ou senha em branco");
+            edtUsuario.setFocusable(true);
+            edtUsuario.requestFocus();
         }
     }
 
@@ -289,7 +281,7 @@ public class Login extends AppCompatActivity {
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro" + Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
             // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
@@ -304,27 +296,27 @@ public class Login extends AppCompatActivity {
 
                 // Pegando dados e Adicioanando dados no Array
                 for (int i = 0; i < qtdOcorrencia; i++) {
-                    String TodasOcorrencias[] = retorno.split("///");
+                    String todasOcorrencias[] = retorno.split("///");
 
-                    String Ocorrencia = TodasOcorrencias[i];
-                    String OcorrenciaUm[] = Ocorrencia.split("//");
-                    String Nr = OcorrenciaUm[1];
-                    String CPFOco = OcorrenciaUm[2];
-                    String Rua = OcorrenciaUm[3];
-                    String Bairro = OcorrenciaUm[4];
-                    String Cidade = OcorrenciaUm[5];
-                    String UF = OcorrenciaUm[6];
-                    String Descricao = OcorrenciaUm[7];
-                    String Data = OcorrenciaUm[8];
-                    String Tipo = OcorrenciaUm[9];
-                    String Anonimo = OcorrenciaUm[10];
-                    String Apelido = OcorrenciaUm[11];
+                    String ocorrencia           = todasOcorrencias[i];
+                    String primeiraOcorrencia[] = ocorrencia.split("//");
+                    String numeroOcorrencia     = primeiraOcorrencia[1];
+                    String focoCpf              = primeiraOcorrencia[2];
+                    String ruaOcorrencia        = primeiraOcorrencia[3];
+                    String bairroOcorrencia     = primeiraOcorrencia[4];
+                    String cidadeOcorrencia     = primeiraOcorrencia[5];
+                    String ufOcorrencia         = primeiraOcorrencia[6];
+                    String descricaoOcorrencia  = primeiraOcorrencia[7];
+                    String dataOcorrencia       = primeiraOcorrencia[8];
+                    String tipoOcorrencia       = primeiraOcorrencia[9];
+                    String anonimoOcorrencia    = primeiraOcorrencia[10];
+                    String apelidoOcorrencia    = primeiraOcorrencia[11];
 
-                    DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
+                    DadosOcorrencias dado = new DadosOcorrencias(numeroOcorrencia, focoCpf, ruaOcorrencia, bairroOcorrencia, cidadeOcorrencia, ufOcorrencia, descricaoOcorrencia, dataOcorrencia, tipoOcorrencia, anonimoOcorrencia, apelidoOcorrencia);
 
                     ArrayOcorrenciasRegistradas.adicionar(dado);
                 }
-                //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
+
             }
         }
         return "true";
@@ -357,13 +349,15 @@ public class Login extends AppCompatActivity {
         editor.putString("login", convCpf);
         editor.commit();
 
-
-//        SharedPreferences sp2 = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
-//        count2 =sp2.getInt("count_2",0);
-//        editor =sp2.edit();
-//        editor.putInt("count_2",count2+1);
-//        editor.commit();
     }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener callback = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Log.i("Script", key + "update");
+        }
+    };
+
 
     @Override
     protected void onStop() {

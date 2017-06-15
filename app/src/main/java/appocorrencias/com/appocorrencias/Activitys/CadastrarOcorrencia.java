@@ -498,12 +498,12 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             edtDescricao.requestFocus();
         } else {
             if (convEndereco.isEmpty()) {
-                edtRua.setError("Faltou preencher Rua ");
+                edtRua.setError("Faltou preencher rua ");
                 edtRua.setFocusable(true);
                 edtRua.requestFocus();
             } else {
                 if (convCidade.isEmpty()) {
-                    edtCidade.setError("Faltou preencher Cidade ");
+                    edtCidade.setError("Faltou preencher cidade ");
                     edtCidade.setFocusable(true);
                     edtCidade.requestFocus();
                 } else {
@@ -522,11 +522,11 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                             int x = random.nextInt(101);
                             String NrAleatorio = Integer.toString(x);
                             String BuscaId = "IDocorrencia teste";
-                            String IDserver = processaSocket.cadastrar1_no_server(BuscaId);
+                            String IDserver = processaSocket.primeiroCadastroNoServidor(BuscaId);
                             //String ID = IDserver + NrAleatorio;
 
 
-                            String retorno = processaSocket.cadastrar_Ocorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
+                            String retorno = processaSocket.cadastrarOcorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
                                     convEndereco, convCidade, convBairro, Anonimo, PriNome);
 
                             if (retorno.equals("erro")) {
@@ -539,15 +539,15 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                     if (byteImagem != null) {
                                         int x1 = random.nextInt(101);
                                         String IDImg = Integer.toString(x1);
-                                        retornoImg = processaSocket.envia_Img(IDImg, IDserver, cpfCliente, "Img1", byteImagem);
+                                        retornoImg = processaSocket.enviaImg(IDImg, IDserver, cpfCliente, "Img1", byteImagem);
                                         if (retornoImg.equals("true") && byteImagem2 != null) {
                                             int x2 = random.nextInt(101);
                                             String IDImg2 = Integer.toString(x2);
-                                            retornoImg = processaSocket.envia_Img(IDImg2, IDserver, cpfCliente, "Img2", byteImagem2);
+                                            retornoImg = processaSocket.enviaImg(IDImg2, IDserver, cpfCliente, "Img2", byteImagem2);
                                             if (retornoImg.equals("true") && byteImagem3 != null) {
                                                 int x3 = random.nextInt(101);
                                                 String IDImg3 = Integer.toString(x3);
-                                                retornoImg = processaSocket.envia_Img(IDImg3, IDserver, cpfCliente, "Img3", byteImagem3);
+                                                retornoImg = processaSocket.enviaImg(IDImg3, IDserver, cpfCliente, "Img3", byteImagem3);
                                             } else {
                                                 Toast.makeText(this, "Duas Img", Toast.LENGTH_SHORT).show();
                                             }
@@ -555,7 +555,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                             Toast.makeText(this, "Uma Img", Toast.LENGTH_SHORT).show();
                                         }
                                     } else {
-                                        Toast.makeText(this, "Nao há imagem", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(this, "Nao há primeiraImagem", Toast.LENGTH_SHORT).show();
                                     }
 
                                     Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();

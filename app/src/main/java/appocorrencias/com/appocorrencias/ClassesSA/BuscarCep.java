@@ -13,7 +13,7 @@ import java.text.ParseException;
 
 public class BuscarCep {
 
-    public String getEndereco(String CEP) throws IOException{
+    public String getEndereco(String pCep) throws IOException{
         String status = null;
         Document doc;
 
@@ -23,7 +23,7 @@ public class BuscarCep {
 
         try {
             doc = Jsoup
-                    .connect("http://www.qualocep.com/busca-cep/" + CEP).timeout(3000).get();
+                    .connect("http://www.qualocep.com/busca-cep/" + pCep).timeout(3000).get();
         }catch (SocketTimeoutException e ){
             status = "erro";
             return status;
@@ -40,15 +40,15 @@ public class BuscarCep {
                 for(Element urlEndereco : urlPesquisa) {
                     return urlEndereco.text();
             }
-        return CEP;
+        return pCep;
     }
 
-    public String getBairro(String CEP) throws IOException{
+    public String getBairro(String pCep) throws IOException{
 
         try{
 
             Document doc = Jsoup
-                    .connect("http://www.qualocep.com/busca-cep/"+CEP).timeout(120000).get();
+                    .connect("http://www.qualocep.com/busca-cep/"+pCep).timeout(120000).get();
 
             Elements urlPesquisa = doc.select("td:gt(1)");
             for(Element urlBairro : urlPesquisa){
@@ -61,16 +61,16 @@ public class BuscarCep {
         }catch (HttpStatusException w ){
 
         }
-        return CEP;
+        return pCep;
     }
 
 
-    public String getCidade(String CEP) throws IOException{
+    public String getCidade(String pCep) throws IOException{
 
         try{
 
             Document doc = Jsoup
-                    .connect("http://www.qualocep.com/busca-cep/"+CEP).timeout(120000).get();
+                    .connect("http://www.qualocep.com/busca-cep/"+pCep).timeout(120000).get();
 
             Elements urlPesquisa = doc.select("span[itemprop=addressLocality]");
             for(Element urlCidade : urlPesquisa){
@@ -83,16 +83,16 @@ public class BuscarCep {
         }catch (HttpStatusException w ){
 
         }
-        return CEP;
+        return pCep;
     }
 
 
-    public String getUF(String CEP) throws IOException{
+    public String getUF(String pCep) throws IOException{
 
         try{
 
             Document doc = Jsoup
-                    .connect("http://www.qualocep.com/busca-cep/"+CEP).timeout(120000).get();
+                    .connect("http://www.qualocep.com/busca-cep/"+pCep).timeout(120000).get();
 
             Elements urlPesquisa = doc.select("span[itemprop=addressRegion]");
             for(Element urlUF : urlPesquisa){
@@ -105,19 +105,17 @@ public class BuscarCep {
         }catch (HttpStatusException w ){
 
         }
-        return CEP;
+        return pCep;
     }
 
-
-
-    public String getLatLong(String CEP) throws IOException, ParseException{
+    public String getLatLong(String pCep) throws IOException, ParseException{
 
         try{
 
-            if(CEP.contains("-")) {
+            if(pCep.contains("-")) {
                 Document doc = Jsoup
                         .connect("http://maps.googleapis.com/maps/api/geocode/xml?address="
-                                + CEP + "&language=pt-BR&sensor=true").timeout(120000).get();
+                                + pCep + "&language=pt-BR&sensor=true").timeout(120000).get();
 
                 Elements lat = doc.select("geometry").select("location").select("lat");
                 Elements lng = doc.select("geometry").select("location").select("lng");
@@ -128,12 +126,12 @@ public class BuscarCep {
                 }
 
             }else{
-                StringBuilder cepHif = new StringBuilder(CEP);
-                cepHif.insert(CEP.length() -3, '-');
+                StringBuilder cepHif = new StringBuilder(pCep);
+                cepHif.insert(pCep.length() -3, '-');
 
                 Document doc = Jsoup
                         .connect("http://maps.googleapis.com/maps/api/geocode/xml?address="
-                                + CEP + "&language=pt-BR&sensor=true").timeout(120000).get();
+                                + pCep + "&language=pt-BR&sensor=true").timeout(120000).get();
 
                 Elements lat = doc.select("geometry").select("location").select("lat");
                 Elements lng = doc.select("geometry").select("location").select("lng");
@@ -150,6 +148,6 @@ public class BuscarCep {
         }catch (HttpStatusException w ){
 
         }
-        return CEP;
+        return pCep;
     }
 }

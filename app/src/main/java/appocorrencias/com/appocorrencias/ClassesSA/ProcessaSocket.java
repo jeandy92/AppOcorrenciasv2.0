@@ -22,17 +22,18 @@ import appocorrencias.com.appocorrencias.ListView.DadosImagensComentarios;
  */
 
 public class ProcessaSocket {
+   
     static Socket cliente = new Socket();
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
     static Socket socket;
 
 
-    //private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
-    private static String ip_conexao = "52.34.140.131";
-    private static int  porta_conexao = 63200;
+    //private static String IP_CONEXAO = "192.168.1.12";// "52.34.140.131";
+    private static String IP_CONEXAO = "52.34.140.131";
+    private static int PORTA_CONEXAO = 63200;
 
-    public static String recebe_dados(InputStream in) throws IOException {
+    public static String recebeDados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
         byte[] buff = new byte[4096];
         int k = 0;
@@ -53,7 +54,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String recebe_dados_img(InputStream in) throws IOException {
+    public static String recebeDadosImg(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
         byte[] buff = new byte[4096];
         int k = 0;
@@ -76,7 +77,7 @@ public class ProcessaSocket {
     }
 
 
-    public static int valor_to_int(byte[] valor) {
+    public static int calculaValorToInt(byte[] valor) {
         return valor[3] << 24 |
                 (valor[2] & 0xFF) << 16 |
                 (valor[1] & 0xFF) << 8 |
@@ -84,7 +85,7 @@ public class ProcessaSocket {
     }
 
 
-    public static void receber_imagem(InputStream in) throws IOException {
+    public static void receberImagem(InputStream in) throws IOException {
 
         // ler
         byte[] buff = new byte[4];
@@ -92,7 +93,7 @@ public class ProcessaSocket {
 
         // le tamanho total
         in.read(buff, 0, 4);
-        int ttotal = valor_to_int(buff);
+        int ttotal = calculaValorToInt(buff);
         Log.i("Tamanho total recebido", "------------------------" + String.valueOf(ttotal));
         // le o resto do pacote
         byte[] pacote = new byte[ttotal];
@@ -113,10 +114,10 @@ public class ProcessaSocket {
         Bitmap imagem_convertida = null;
 
         // obtem qtd de imagens
-        int qtd_imagens = valor_to_int(pacote);
+        int qtd_imagens = calculaValorToInt(pacote);
         byte[][] imagens = new byte[qtd_imagens][];
 
-        Log.i("Bytes lidos", "------------------------" + String.valueOf(lidos));
+        Log.i("bytes lidos", "------------------------" + String.valueOf(lidos));
         Log.i("IMAGENS Processa", "------------------------" + String.valueOf(qtd_imagens));
 
 
@@ -132,19 +133,19 @@ public class ProcessaSocket {
             deslocamento += 4;
 
             Log.i("bUFF Processa FOR", "------------------------" + String.valueOf(buff.length));
-            Log.i("bUFF2 Processa FOR", "------------------------" + String.valueOf(valor_to_int(buff)));
+            Log.i("bUFF2 Processa FOR", "------------------------" + String.valueOf(calculaValorToInt(buff)));
             // copia imagem
-            imagens[i] = new byte[valor_to_int(buff)];
+            imagens[i] = new byte[calculaValorToInt(buff)];
             Log.i("IMAGEMTA Processa FOR", "------------------------" + String.valueOf(imagens[i].length));
             Log.i("DESLOCAMENTO 1 Processa", "------------------------" + String.valueOf(deslocamento));
-            System.arraycopy(pacote, deslocamento, imagens[i], 0, valor_to_int(buff));
+            System.arraycopy(pacote, deslocamento, imagens[i], 0, calculaValorToInt(buff));
 
-            imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, valor_to_int(buff));
+            imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, calculaValorToInt(buff));
             ArrayImagens.adicionarImg(imagem_convertida);
 
             // desloca imagem e o seu tamanho (4 bytes)
 
-            deslocamento += imagens[i].length;//valor_to_int(buff);
+            deslocamento += imagens[i].length;//calculaValorToInt(buff);
 
             Log.i("DESLOCAMENTO Processa", "------------------------" + String.valueOf(deslocamento));
 
@@ -154,7 +155,7 @@ public class ProcessaSocket {
     }
 
 
-    public static void receber_imagem_perfil(InputStream in) throws IOException {
+    public static void receberImagemPerfil(InputStream in) throws IOException {
 
         // ler
         byte[] buff = new byte[4];
@@ -162,7 +163,7 @@ public class ProcessaSocket {
 
         // le tamanho total
         in.read(buff, 0, 4);
-        int ttotal = valor_to_int(buff);
+        int ttotal = calculaValorToInt(buff);
         Log.i("Tamanho total recebido", "------------------------" + String.valueOf(ttotal));
         // le o resto do pacote
         byte[] pacote = new byte[ttotal];
@@ -182,7 +183,7 @@ public class ProcessaSocket {
         Bitmap imagem_convertida = null;
 
         // obtem qtd de imagens
-        int qtd_imagens = valor_to_int(pacote);
+        int qtd_imagens = calculaValorToInt(pacote);
         byte[][] imagens = new byte[qtd_imagens][];
 
         Log.i("IMAGENS Processa", "------------------------" + String.valueOf(qtd_imagens));
@@ -195,15 +196,15 @@ public class ProcessaSocket {
             deslocamento += 4;
 
             // copia imagem
-            imagens[i] = new byte[valor_to_int(buff)];
-            System.arraycopy(pacote, deslocamento, imagens[i], 0, valor_to_int(buff));
+            imagens[i] = new byte[calculaValorToInt(buff)];
+            System.arraycopy(pacote, deslocamento, imagens[i], 0, calculaValorToInt(buff));
 
-            imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, valor_to_int(buff));
+            imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, calculaValorToInt(buff));
             ArrayImagensPerfil.adicionarImg(imagem_convertida);
 
             // desloca imagem e o seu tamanho (4 bytes)
 
-            deslocamento += imagens[i].length;//valor_to_int(buff);
+            deslocamento += imagens[i].length;//calculaValorToInt(buff);
 
 
         }
@@ -211,7 +212,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String receber_imagem_perfil_comentarios(InputStream in) throws IOException {
+    public static String receberImagemPerfilComentarios(InputStream in) throws IOException {
 
         // ler
         byte[] buff = new byte[4];
@@ -219,16 +220,16 @@ public class ProcessaSocket {
 
         // le tamanho total
         /*in.read(buff, 0, 4);
-        int ttotal2 = valor_to_int(buff);
+        int ttotal2 = calculaValorToInt(buff);
         Log.i("Teste de Total", "------------------------" + String.valueOf(ttotal2));
         byte[] pacote3 = new byte[ttotal2];
         byte[][] teste2 = new byte[1][];
 
         System.arraycopy(pacote3, 0, buff, 0, 4);
-        teste2[0] = new byte[valor_to_int(buff)];
+        teste2[0] = new byte[calculaValorToInt(buff)];
 
-        System.arraycopy(pacote3, 4, teste2[0], 0, valor_to_int(buff));
-        Log.i("Teste de Total222", "------------------------" + String.valueOf(valor_to_int(buff)));
+        System.arraycopy(pacote3, 4, teste2[0], 0, calculaValorToInt(buff));
+        Log.i("Teste de Total222", "------------------------" + String.valueOf(calculaValorToInt(buff)));
         String testeFalse = new String(teste2[0], "UTF-8");
         Log.i("Teste de False", "------------------------" + testeFalse); */
 
@@ -256,7 +257,7 @@ public class ProcessaSocket {
             return "false";
         } else {
 
-            int ttotal = valor_to_int(buff);
+            int ttotal = calculaValorToInt(buff);
 
             Log.i("Tamanho total recebido", "------------------------" + String.valueOf(ttotal));
             // le o resto do pacote
@@ -277,7 +278,7 @@ public class ProcessaSocket {
             Bitmap imagem_convertida = null;
 
             // obtem qtd de imagens
-            int qtd_imagens = valor_to_int(pacote2);
+            int qtd_imagens = calculaValorToInt(pacote2);
             byte[][] imagens = new byte[qtd_imagens][];
             byte[][] cpf = new byte[qtd_imagens][];
 
@@ -291,28 +292,28 @@ public class ProcessaSocket {
                 deslocamento += 4;
 
                 // copia cpf
-                cpf[i] = new byte[valor_to_int(buff)];
-                System.arraycopy(pacote2, deslocamento, cpf[i], 0, valor_to_int(buff));
+                cpf[i] = new byte[calculaValorToInt(buff)];
+                System.arraycopy(pacote2, deslocamento, cpf[i], 0, calculaValorToInt(buff));
 
                 String cpfDecode2 = new String(cpf[i], "UTF-8");
 
-                Log.i("Valor cpfBuscarOcorrencia Processa", "------------------------" + cpfDecode2);
+                Log.i("cpfBuscarOcorrencia", "------------------------" + cpfDecode2);
 
-                deslocamento += cpf[i].length;//valor_to_int(buff);
+                deslocamento += cpf[i].length;//calculaValorToInt(buff);
 
                 // copia tamanho da imagem
                 System.arraycopy(pacote2, deslocamento, buff, 0, 4);
                 deslocamento += 4;
 
                 // copia imagem
-                imagens[i] = new byte[valor_to_int(buff)];
-                System.arraycopy(pacote2, deslocamento, imagens[i], 0, valor_to_int(buff));
+                imagens[i] = new byte[calculaValorToInt(buff)];
+                System.arraycopy(pacote2, deslocamento, imagens[i], 0, calculaValorToInt(buff));
 
-                imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, valor_to_int(buff));
+                imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, calculaValorToInt(buff));
 
                 String cpfDecode = new String(cpf[i], "UTF-8");
 
-                Log.i("Valor cpfBuscarOcorrencia Processa", "------------------------" + cpfDecode);
+                Log.i("cpfBuscarOcorrencia","---------------------" + cpfDecode);
 
                 DadosImagensComentarios dados = new DadosImagensComentarios(cpfDecode, imagem_convertida);
 
@@ -320,7 +321,7 @@ public class ProcessaSocket {
 
                 // desloca imagem e o seu tamanho (4 bytes)
 
-                deslocamento += imagens[i].length;//valor_to_int(buff);
+                deslocamento += imagens[i].length;//calculaValorToInt(buff);
 
             }
         }
@@ -329,7 +330,7 @@ public class ProcessaSocket {
     }
 
     //Metodo que envia as informações para o Servidor (Socket)
-    public static String Bytes(byte[] bites) {
+    public static String bytes(byte[] bites) {
         String str = null;
 
         try {
@@ -337,7 +338,7 @@ public class ProcessaSocket {
             Socket cliente2 = new Socket();
 
             int millisecondsTimeOut = 5000;
-            InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+            InetSocketAddress adress = new InetSocketAddress(IP_CONEXAO, PORTA_CONEXAO);
 
             try {
                 cliente2.connect(adress, millisecondsTimeOut);
@@ -364,7 +365,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String cadastrar1_no_server(String dados) throws IOException {
+    public static String primeiroCadastroNoServidor(String dados) throws IOException {
         String str = null;
         Socket cliente2 = new Socket();
 
@@ -381,7 +382,7 @@ public class ProcessaSocket {
 
 
         int millisecondsTimeOut = 5000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+        InetSocketAddress adress = new InetSocketAddress(IP_CONEXAO, PORTA_CONEXAO);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
@@ -393,7 +394,7 @@ public class ProcessaSocket {
             canalSaida = cliente2.getOutputStream();
             canalEntrada = cliente2.getInputStream();
             canalSaida.write(byteFinal);
-            str = recebe_dados(canalEntrada);
+            str = recebeDados(canalEntrada);
 
             canalSaida.flush();
             canalSaida.close();
@@ -408,7 +409,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String buscar_dados_imagens_server(String dados) throws IOException {
+    public static String buscarDadosImagensServer(String dados) throws IOException {
         String str = null;
         Socket cliente2 = new Socket();
 
@@ -425,7 +426,7 @@ public class ProcessaSocket {
 
 
         int millisecondsTimeOut = 5000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+        InetSocketAddress adress = new InetSocketAddress(IP_CONEXAO, PORTA_CONEXAO);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
@@ -438,12 +439,12 @@ public class ProcessaSocket {
             canalEntrada = cliente2.getInputStream();
             canalSaida.write(byteFinal);
 
-            str = receber_imagem_perfil_comentarios(canalEntrada);
+            str = receberImagemPerfilComentarios(canalEntrada);
 
             if (str.equals("false")) {
                 return "false";
             } else {
-                str = recebe_dados(canalEntrada);
+                str = recebeDados(canalEntrada);
             }
 
             canalSaida.flush();
@@ -459,11 +460,11 @@ public class ProcessaSocket {
     }
 
     //Mé
-    public static void adicionandoUsuarioNotificacao(String token_usuario , String bairro_usu) {
+    public static void adicionandoUsuarioNotificacao(String tokenUsuario , String bairroUsuario) {
 
         try {
 
-                socket = new Socket(ip_conexao, 63300);
+                socket = new Socket(IP_CONEXAO, 63300);
 
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -475,11 +476,11 @@ public class ProcessaSocket {
                     //out.writeUTF("eH27cLSAdao:APA91bFd74mH1n8mSOKoolLpYlb2m8-DFLu3GTNY4hMi3ZEOdnDiSgy1cmPg0n5uyx1O2J5nezpBGCci8kFpf0vmpUAQDr93H4bZTZwoFrGwaSoMwhqf8ElvzJHoHpa97hsJ1ZsN1tzb");
                     //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
 
-                    System.out.println(token_usuario);
-                    out.writeUTF(token_usuario);
+                    System.out.println(tokenUsuario);
+                    out.writeUTF(tokenUsuario);
 
-                    System.out.println(bairro_usu.trim());
-                    out.writeUTF(bairro_usu);
+                    System.out.println(bairroUsuario.trim());
+                    out.writeUTF(bairroUsuario);
                     //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
 
 
@@ -487,10 +488,10 @@ public class ProcessaSocket {
 
                     if (resultado_servidor) {
 
-                        System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO "+bairro_usu);
+                        System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO "+bairroUsuario);
 
                     } else {
-                        System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO "+bairro_usu);
+                        System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO "+bairroUsuario);
                     }
 
                 }
@@ -504,11 +505,11 @@ public class ProcessaSocket {
     }
 
 
-    public static void criandoGrupoNotificacao (String token_usuario, String nomeGrupoNotificacao, String bairroUsuario){
+    public static void criandoGrupoNotificacao (String tokenUsuario, String nomeGrupoNotificacao, String bairroUsuario){
 
         try {
 
-            socket = new Socket(ip_conexao, 63300);
+            socket = new Socket(IP_CONEXAO, 63300);
 
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -518,7 +519,7 @@ public class ProcessaSocket {
 
             if (in.readBoolean()) {
 
-                out.writeUTF( token_usuario );
+                out.writeUTF( tokenUsuario );
                 out.writeUTF( nomeGrupoNotificacao );
                 out.writeUTF( bairroUsuario);
 
@@ -583,48 +584,46 @@ public class ProcessaSocket {
     }
 
 
-
-
-    public static String cadastrar_Ocorrencia(String ID, String CPFCliente, String tipo_crime, String convDataOcorrencia,
-                                              String UF, String convDescricao, String convEndereco, String convCidade,
-                                              String convBairro, String Anonimo, String PriNome) throws IOException {
+    public static String cadastrarOcorrencia(String convIdOcorrencia, String convCpf, String convTpoCrime, String convDataOcorrencia,
+                                             String convUf, String convDescricao, String convEndereco, String convCidade,
+                                             String convBairro, String convAnonimo, String convPrimeiroNome) throws IOException {
         //Envio de dados
-        String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF + " " + convDataOcorrencia +
-                " " + Anonimo + " " + PriNome;
+        String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + convIdOcorrencia + " " + convCpf + " " + convUf + " " + convDataOcorrencia +
+                " " + convAnonimo + " " + convPrimeiroNome;
 
-        String OcorrenciaRua = "OcorrenciaRua" + " " + ID + " " + convEndereco;
-        String OcorrenciaBairro = "OcorrenciaBairro" + " " + ID + " " + convBairro;
-        String OcorrenciaCidade = "OcorrenciaCidade" + " " + ID + " " + convCidade;
-        String OcorrenciaDescricao = "OcorrenciaDescricao" + " " + ID + " " + convDescricao;
-        String OcorrenciaTipo = "OcorrenciaTipo" + " " + ID + " " + tipo_crime;
+        String OcorrenciaRua = "OcorrenciaRua" + " " + convIdOcorrencia + " " + convEndereco;
+        String OcorrenciaBairro = "OcorrenciaBairro" + " " + convIdOcorrencia + " " + convBairro;
+        String OcorrenciaCidade = "OcorrenciaCidade" + " " + convIdOcorrencia + " " + convCidade;
+        String OcorrenciaDescricao = "OcorrenciaDescricao" + " " + convIdOcorrencia + " " + convDescricao;
+        String OcorrenciaTipo = "OcorrenciaTipo" + " " + convIdOcorrencia + " " + convTpoCrime;
 
-        String retorno = cadastrar1_no_server(CadastrarOcorrencia);
+        String retorno = primeiroCadastroNoServidor(CadastrarOcorrencia);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                retorno = cadastrar1_no_server(OcorrenciaRua);
+                retorno = primeiroCadastroNoServidor(OcorrenciaRua);
                 if (retorno.equals("erro")) {
                     return "erro";
                 } else {
                     if (retorno.equals("true")) {
-                        retorno = cadastrar1_no_server(OcorrenciaBairro);
+                        retorno = primeiroCadastroNoServidor(OcorrenciaBairro);
                         if (retorno.equals("erro")) {
                             return "erro";
                         } else {
                             if (retorno.equals("true")) {
-                                retorno = cadastrar1_no_server(OcorrenciaCidade);
+                                retorno = primeiroCadastroNoServidor(OcorrenciaCidade);
                                 if (retorno.equals("erro")) {
                                     return "erro";
                                 } else {
                                     if (retorno.equals("true")) {
-                                        retorno = cadastrar1_no_server(OcorrenciaDescricao);
+                                        retorno = primeiroCadastroNoServidor(OcorrenciaDescricao);
                                         if (retorno.equals("erro")) {
                                             return "erro";
                                         } else {
                                             if (retorno.equals("true")) {
-                                                retorno = cadastrar1_no_server(OcorrenciaTipo);
+                                                retorno = primeiroCadastroNoServidor(OcorrenciaTipo);
                                                 if (retorno.equals("erro")) {
                                                     return "erro";
                                                 } else {
@@ -645,46 +644,46 @@ public class ProcessaSocket {
 
     }
 
-    public static String cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
-                                          String convCep, String uf, String numero, String rua, String bairro,
+    public static String cadastrarUsuario(String cpf, String senha, String email, String telefone,
+                                          String cep, String uf, String numero, String rua, String bairro,
                                           String cidade, String nome, String dataNasc, String complemento) throws IOException {
 
-        String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha +
-                " " + email + " " + convTelefone + " " + convCep +
+        String cadastro1 = "Cadastrar1" + " " + cpf + " " + senha +
+                " " + email + " " + telefone + " " + cep +
                 " " + uf + " " + numero + " " + dataNasc;
-        String cadastroNome = "CadastrarNome" + " " + convCpf + " " + nome;
-        String cadastroRua = "CadastrarRua" + " " + convCpf + " " + rua;
-        String cadastroBairro = "CadastrarBairro" + " " + convCpf + " " + bairro;
-        String cadastroCidade = "CadastrarCidade" + " " + convCpf + " " + cidade;
-        String cadastroComplemento = "CadastrarComplemento" + " " + convCpf + " " + complemento;
+        String cadastroNome = "CadastrarNome" + " " + cpf + " " + nome;
+        String cadastroRua = "CadastrarRua" + " " + cpf + " " + rua;
+        String cadastroBairro = "CadastrarBairro" + " " + cpf + " " + bairro;
+        String cadastroCidade = "CadastrarCidade" + " " + cpf + " " + cidade;
+        String cadastroComplemento = "CadastrarComplemento" + " " + cpf + " " + complemento;
 
-        String retorno = cadastrar1_no_server(cadastro1);
+        String retorno = primeiroCadastroNoServidor(cadastro1);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                retorno = cadastrar1_no_server(cadastroNome);
+                retorno = primeiroCadastroNoServidor(cadastroNome);
                 if (retorno.equals("erro")) {
                     return "erro";
                 } else {
                     if (retorno.equals("true")) {
-                        retorno = cadastrar1_no_server(cadastroRua);
+                        retorno = primeiroCadastroNoServidor(cadastroRua);
                         if (retorno.equals("erro")) {
                             return "erro";
                         } else {
                             if (retorno.equals("true")) {
-                                retorno = cadastrar1_no_server(cadastroBairro);
+                                retorno = primeiroCadastroNoServidor(cadastroBairro);
                                 if (retorno.equals("erro")) {
                                     return "erro";
                                 } else {
                                     if (retorno.equals("true")) {
-                                        retorno = cadastrar1_no_server(cadastroCidade);
+                                        retorno = primeiroCadastroNoServidor(cadastroCidade);
                                         if (retorno.equals("erro")) {
                                             return "erro";
                                         } else {
                                             if (retorno.equals("true")) {
-                                                retorno = cadastrar1_no_server(cadastroComplemento);
+                                                retorno = primeiroCadastroNoServidor(cadastroComplemento);
                                                 if (retorno.equals("erro")) {
                                                     return "erro";
                                                 } else {
@@ -704,21 +703,21 @@ public class ProcessaSocket {
         return "false";
     }
 
-    public static String cadastrar_Comentario(String IDComentario, String IDOcorrencia, String CPFCliente, String Data, String Hora,
-                                              String Apelido, String convDescricao) throws IOException {
+    public static String cadastrarComentario(String idComentario, String idOcoreencia, String cpf, String data, String hora,
+                                             String apelido, String descricao) throws IOException {
         //Envio de dados
-        String CadastrarComentario = "CadastrarComentario" + " " + IDComentario + " " + IDOcorrencia + " " + CPFCliente + " " + Data +
-                " " + Hora + " " + Apelido;
+        String CadastrarComentario = "CadastrarComentario" + " " + idComentario + " " + idOcoreencia + " " + cpf + " " + data +
+                " " + hora + " " + apelido;
 
-        String ComentarioDescricao = "ComentarioDescricao" + " " + IDComentario + " " + convDescricao;
+        String ComentarioDescricao = "ComentarioDescricao" + " " + idComentario + " " + descricao;
 
-        String retorno = cadastrar1_no_server(CadastrarComentario);
+        String retorno = primeiroCadastroNoServidor(CadastrarComentario);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                retorno = cadastrar1_no_server(ComentarioDescricao);
+                retorno = primeiroCadastroNoServidor(ComentarioDescricao);
                 if (retorno.equals("erro")) {
                     return "erro";
                 } else {
@@ -758,7 +757,7 @@ public class ProcessaSocket {
     }
 
     ////////////// enviar os bytes
-    public static String envia_Img(String IDImg, String ID, String CPF, String nomeImg, byte[] byteImagem) throws IOException {
+    public static String enviaImg(String IDImg, String ID, String CPF, String nomeImg, byte[] byteImagem) throws IOException {
 
         String dados = "ImagemOcorrencia " + IDImg + " " + ID + " " + CPF + " " + nomeImg;
 
@@ -780,7 +779,7 @@ public class ProcessaSocket {
         byte[] byteTamanho = toBytes(tamanhoPacote);
         byte[] byteFinal = concat(byteTamanho, DadosImagem);
 
-        String retorno = Bytes(byteFinal);
+        String retorno = bytes(byteFinal);
 
         if (retorno.equals("erro")) {
             return "erro";
@@ -790,7 +789,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String envia_Img_Perfil(String CPF, String nomeImg, byte[] byteImagem) throws IOException {
+    public static String enviaImgPerfil(String CPF, String nomeImg, byte[] byteImagem) throws IOException {
 
         String dados = "ImagemPerfil " + CPF + " " + nomeImg;
 
@@ -812,7 +811,7 @@ public class ProcessaSocket {
         byte[] byteTamanho = toBytes(tamanhoPacote);
         byte[] byteFinal = concat(byteTamanho, DadosImagem);
 
-        String retorno = Bytes(byteFinal);
+        String retorno = bytes(byteFinal);
 
         if (retorno.equals("erro")) {
             return "erro";

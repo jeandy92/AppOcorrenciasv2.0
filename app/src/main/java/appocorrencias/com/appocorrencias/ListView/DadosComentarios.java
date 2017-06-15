@@ -6,73 +6,73 @@ import android.support.annotation.NonNull;
  * Created by PamelaNycoly on 06/05/2017.
  */
 public class DadosComentarios implements Comparable<DadosComentarios> {
-    public String NrComentario;
-    public String NrOcorrencia;
-    public String CPF;
-    public String Data;
-    public String Hora;
-    public String Apelido;
-    public String Descricao;
+    public String nrComentario;
+    public String nrOcorrencia;
+    public String cpf;
+    public String data;
+    public String hora;
+    public String apelido;
+    public String descricao;
 
 
-    public DadosComentarios(String NrComentario, String NrOcorrencia, String CPF, String Data, String Hora,
-                            String Apelido, String Descricao) {
+    public DadosComentarios(String pNrComentario, String pNrOcorrencia, String pCpf, String pData, String pHora,
+                            String pApelido, String pDescricao) {
 
-        this.NrComentario = NrComentario;
-        this.NrOcorrencia = NrOcorrencia;
-        this.CPF = CPF;
-        this.Data = Data;
-        this.Hora = Hora;
-        this.Apelido = Apelido;
-        this.Descricao = Descricao;
+        this.nrComentario = pNrComentario;
+        this.nrOcorrencia = pNrOcorrencia;
+        this.cpf = pCpf;
+        this.data = pData;
+        this.hora = pHora;
+        this.apelido = pApelido;
+        this.descricao = pDescricao;
 
     }
 
     public String getNrComentario() {
-        return NrComentario;
+        return nrComentario;
     }
 
     public String getNrOcorrencia() {
-        return NrOcorrencia;
+        return nrOcorrencia;
     }
 
     public String getData() {
-        return Data;
+        return data;
     }
 
     public String getHora() {
-        return Hora;
+        return hora;
     }
 
     public String getDescricao() {
-        return Descricao;
+        return descricao;
     }
 
-    public String getCPF() {
-        return CPF;
+    public String getCpf() {
+        return cpf;
     }
 
 
     public String getApelido() {
-        return Apelido;
+        return apelido;
     }
 
 
     public boolean equals(DadosComentarios m) {
-        return this.NrOcorrencia == null ? m.NrOcorrencia == null : this.NrOcorrencia.equals(m.NrOcorrencia);
+        return this.nrOcorrencia == null ? m.nrOcorrencia == null : this.nrOcorrencia.equals(m.nrOcorrencia);
     }
 
     @Override
-    public int compareTo(@NonNull DadosComentarios dados) {
-        int NrAtual = Integer.parseInt(this.NrComentario);
-        int Nrdado = Integer.parseInt(dados.NrComentario);
+    public int compareTo(@NonNull DadosComentarios pDados) {
+        int NrAtual = Integer.parseInt(this.nrComentario);
+        int Nrdado = Integer.parseInt(pDados.nrComentario);
         if(NrAtual < Nrdado){
             return -1;
         }
         else if(NrAtual > Nrdado){
             return 1;
         }
-        return this.getNrComentario().compareToIgnoreCase(dados.getNrComentario());
+        return this.getNrComentario().compareToIgnoreCase(pDados.getNrComentario());
     }
 
 }

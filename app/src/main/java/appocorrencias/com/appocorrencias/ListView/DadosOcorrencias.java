@@ -4,77 +4,78 @@ package appocorrencias.com.appocorrencias.ListView;
  * Created by PamelaNycoly on 06/05/2017.
  */
 public class DadosOcorrencias {
-    public String NrOcorrencia;
-    public String Cpf;
-    public String Rua;
-    public String Bairro;
-    public String Cidade;
-    public String UF;
-    public String Descricao;
-    public String Data;
-    public String Tipo;
-    public String Anonimo;
-    public String Apelido;
+
+    public String nrOcorrencia;
+    public String cpf;
+    public String rua;
+    public String bairro;
+    public String cidade;
+    public String uf;
+    public String descricao;
+    public String data;
+    public String tipo;
+    public String anonimo;
+    public String apelido;
 
 
-    public DadosOcorrencias(String NrOcorrencia, String Cpf, String Rua, String Bairro, String Cidade,
-                            String UF, String Descricao, String Data, String Tipo, String Anonimo, String Apelido) {
+    public DadosOcorrencias(String pNrOcorrencia, String pCpf, String pRua, String pBairro, String pCidade,
+                            String pUf, String pDescricao, String pData, String pTipo, String pAnonimo, String pApelido) {
 
-        this.NrOcorrencia = NrOcorrencia;
-        this.Cpf = Cpf;
-        this.Rua = Rua;
-        this.Bairro = Bairro;
-        this.Cidade = Cidade;
-        this.UF = UF;
-        this.Descricao = Descricao;
-        this.Data = Data;
-        this.Tipo = Tipo;
-        this.Anonimo = Anonimo;
-        this.Apelido = Apelido;
+        this.nrOcorrencia = pNrOcorrencia;
+        this.cpf = pCpf;
+        this.rua = pRua;
+        this.bairro = pBairro;
+        this.cidade = pCidade;
+        this.uf = pUf;
+        this.descricao = pDescricao;
+        this.data = pData;
+        this.tipo = pTipo;
+        this.anonimo = pAnonimo;
+        this.apelido = pApelido;
     }
 
     public String getNrOcorrencia() {
-        return NrOcorrencia;
+        return nrOcorrencia;
     }
 
     public String getBairro() {
-        return Bairro;
+        return bairro;
     }
 
     public String getData() {
-        return Data;
+        return data;
     }
 
     public String getTipo() {
-        return Tipo;
+        return tipo;
     }
 
     public String getDescricao() {
-        return Descricao;
+        return descricao;
     }
 
     public String getRua() {
-        return Rua;
+        return rua;
     }
 
     public String getApelido() {
-        return Apelido;
+        return apelido;
     }
 
     public String getAnonimo() {
-        return Anonimo;
+        return anonimo;
     }
 
     public String getCPF() {
-        return Cpf;
+        return cpf;
     }
 
     @Override
     public String toString() {
-        return "\nNumero: " + NrOcorrencia + "\nbairroBuscarOcorrencia: " + Bairro + "\nData: " + Data;
+        return "\nusuNumero: " + nrOcorrencia + "\nbairroBuscarOcorrencia: " + bairro + "\ndata: " + data;
     }
 
     public boolean equals(DadosOcorrencias m) {
-        return this.NrOcorrencia == null ? m.NrOcorrencia == null : this.NrOcorrencia.equals(m.NrOcorrencia);
+        return this.nrOcorrencia == null ? m.nrOcorrencia == null : this.nrOcorrencia.equals(m.nrOcorrencia);
     }
 }

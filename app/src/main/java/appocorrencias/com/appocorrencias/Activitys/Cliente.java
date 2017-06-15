@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -51,24 +50,29 @@ import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evB
 
 
 public class Cliente extends AppCompatActivity {
-    //Cloud Menssagem Cliente(GCM)
 
+
+    //Variaveis para activitys
     private Toolbar toolbar;
     private ListView lvFeedOcorrencias;
-    private TextView tvnomecompleto;
+    private TextView tvNomeCompleto;
     private FloatingActionButton btnOcorrenciasRegistradas, btnCadastrarOcorrencias, btnBuscarOcorrencias;
-    public static String Nome, CPF, Bairro;
 
-    ProcessaSocket processa = new ProcessaSocket();
+    //Variaveis Locais
+    public static String clienteNome, clienteCpf, clienteBairro;
 
-    private static final int REQUEST_PERMISSIONS_CODE = 128;
+    //Obejtos instanciados na classe
+    public ProcessaSocket processa = new ProcessaSocket();
 
-    private static final String TAG = "LOG";
     //Váriaveis para realizar o controle do ResultActivity
-    public static final int IMAGEM_INTERNA = 12;
-    private ImageView ivCliente;
+     public static final int IMAGEM_INTERNA = 12;
+    private static final int REQUEST_PERMISSIONS_CODE = 128;
+    private static final String TAG = "LOG";
 
-    byte[] byteImagem = null;
+
+    //Variaveis para criar a primeiraImagem
+    private ImageView ivCliente;
+    private byte[] byteImagem = null;
 
 
     @Override
@@ -77,19 +81,19 @@ public class Cliente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
 
-        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O Cpf MANTEM O MESMO
+        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O cpf MANTEM O MESMO
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Nome = bundle.getString("nome");
-        CPF = bundle.getString("cpf");
-        Bairro = bundle.getString("bairro");
+        clienteNome = bundle.getString("nome");
+        clienteCpf = bundle.getString("cpf");
+        clienteBairro = bundle.getString("bairro");
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
-        btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
-        btnBuscarOcorrencias = (FloatingActionButton) findViewById(R.id.btnBuscarOcorrencias);
-        lvFeedOcorrencias = (ListView) findViewById(R.id.lv_feed_de_ocorrencias);
-        tvnomecompleto = (TextView) findViewById(R.id.tv_nome_completo);
-        ivCliente = (ImageView) findViewById(R.id.ivCliente);
+        btnCadastrarOcorrencias   = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
+        btnBuscarOcorrencias      = (FloatingActionButton) findViewById(R.id.btnBuscarOcorrencias);
+        lvFeedOcorrencias         = (ListView)             findViewById(R.id.lv_feed_de_ocorrencias);
+        tvNomeCompleto            = (TextView)             findViewById(R.id.tv_nome_completo);
+        ivCliente                 = (ImageView)            findViewById(R.id.ivCliente);
 
         ArrayList<Bitmap> listaImagens = ArrayImagensPerfil.getImagens();
         Bitmap[] images = new Bitmap[listaImagens.size()];
@@ -100,8 +104,8 @@ public class Cliente extends AppCompatActivity {
         }
 
 
-        ArrayList<DadosOcorrencias> listafeedocorrencias = getListaOcorrencia();
-        AdapterFeed adapter = new AdapterFeed(this, listafeedocorrencias);
+        ArrayList<DadosOcorrencias> listaFeedOcorrencias = getListaOcorrencia();
+        AdapterFeed adapter = new AdapterFeed(this, listaFeedOcorrencias);
 
         lvFeedOcorrencias.setAdapter(adapter);
 
@@ -116,9 +120,9 @@ public class Cliente extends AppCompatActivity {
                     String tipocrime = ((TextView) view.findViewById(R.id.tv_bairro)).getText().toString();
 
                     String tela = "Cliente";
-                    i.putExtra("cpf", CPF);
-                    i.putExtra("nome", Nome);
-                    i.putExtra("bairro", Bairro);
+                    i.putExtra("cpf", clienteCpf);
+                    i.putExtra("nome", clienteNome);
+                    i.putExtra("bairro", clienteBairro);
                     i.putExtra("id_ocorrencia", idocorrencia);
                     i.putExtra("desc_ocorrencia", descocorrencia);
                     i.putExtra("tipocrime", tipocrime);
@@ -182,7 +186,7 @@ public class Cliente extends AppCompatActivity {
 
 
         ///Setta o nome no BEM VINDO
-        tvnomecompleto.setText(Nome);
+        tvNomeCompleto.setText(clienteNome);
 
         lvFeedOcorrencias.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
@@ -209,39 +213,13 @@ public class Cliente extends AppCompatActivity {
     }
 
 
-    public void cadastrarroubo(View v) {
-
-
-        setContentView(R.layout.activity_cadastrar_ocorrencia);
-        Bundle b = new Bundle();
-        b.putString("tipocrime", "roubo");
-
-        this.startActivity(new Intent(this, CadastrarOcorrencia.class));
-        this.finish();
-    }
-
-
-    protected void CriaNotificaçoes() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.fab_plus_icon)
-                .setContentTitle("Um novo crime foi registrado próximo ao lugar onde mora")
-                .setContentText("Um novo crime registrado");
-    }
-
-    public void onUpdateCliente() {
-
-        setContentView(R.layout.activity_cadastrar_usuario);
-        this.startActivity(new Intent(this, CadastrarUsuario.class));
-    }
-
-
     public void evBuscarOcorrencias(View v) {
 
         Intent cliente = new Intent(this, BuscarOcorrencias.class);
         Bundle bundle = new Bundle();
-        bundle.putString("nome", Nome);
-        bundle.putString("cpf", CPF);
-        bundle.putString("bairro", Bairro);
+        bundle.putString("nome", clienteNome);
+        bundle.putString("cpf", clienteCpf);
+        bundle.putString("bairro", clienteBairro);
         bundle.putString("tela", "Cliente");
         cliente.putExtras(bundle);
         this.startActivity(cliente);
@@ -255,9 +233,9 @@ public class Cliente extends AppCompatActivity {
         Intent cadastrarOcorrencia = new Intent(this, CadastrarOcorrencia.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString("nome", Nome);
-        bundle.putString("cpf", CPF);
-        bundle.putString("bairro", Bairro);
+        bundle.putString("nome", clienteNome);
+        bundle.putString("cpf", clienteCpf);
+        bundle.putString("bairro", clienteBairro);
         bundle.putString("tela", "Cliente");
 
         cadastrarOcorrencia.putExtras(bundle);
@@ -269,13 +247,14 @@ public class Cliente extends AppCompatActivity {
 
         deleteAllArray();
 
-        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
+        String buscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + clienteCpf;
 
 
         Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+
+        String retorno = ProcessaSocket.buscarDadosImagensServer(buscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
 
@@ -284,9 +263,9 @@ public class Cliente extends AppCompatActivity {
             Intent cliente = new Intent(this, ListarOcorrencias.class);
 
             Bundle bundle = new Bundle();
-            bundle.putString("nome", Nome);
-            bundle.putString("cpf", CPF);
-            bundle.putString("bairro", Bairro);
+            bundle.putString("nome", clienteNome);
+            bundle.putString("cpf", clienteCpf);
+            bundle.putString("bairro", clienteBairro);
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
@@ -299,23 +278,23 @@ public class Cliente extends AppCompatActivity {
             // Pegando dados e Adicioanando dados no Array
 
             for (int i = 0; i < qtdOcorrencia; i++) {
-                String TodasOcorrencias[] = retorno.split("///");
 
-                String Ocorrencia = TodasOcorrencias[i];
-                String OcorrenciaUm[] = Ocorrencia.split("//");
-                String Nr = OcorrenciaUm[1];
-                String CPFOco = OcorrenciaUm[2];
-                String Rua = OcorrenciaUm[3];
-                String Bairro = OcorrenciaUm[4];
-                String Cidade = OcorrenciaUm[5];
-                String UF = OcorrenciaUm[6];
-                String Descricao = OcorrenciaUm[7];
-                String Data = OcorrenciaUm[8];
-                String Tipo = OcorrenciaUm[9];
-                String Anonimo = OcorrenciaUm[10];
-                String Apelido = OcorrenciaUm[11];
+                String todasOcorrencias[] = retorno.split("///");
+                String ocorrencia           = todasOcorrencias[i];
+                String primeiraOcorrencia[] = ocorrencia.split("//");
+                String numeroOcorrencia     = primeiraOcorrencia[1];
+                String focoCpf              = primeiraOcorrencia[2];
+                String ruaOcorrencia        = primeiraOcorrencia[3];
+                String bairroOcorrencia     = primeiraOcorrencia[4];
+                String cidadeOcorrencia     = primeiraOcorrencia[5];
+                String ufOcorrencia         = primeiraOcorrencia[6];
+                String descricaoOcorrencia  = primeiraOcorrencia[7];
+                String dataOcorrencia       = primeiraOcorrencia[8];
+                String tipoOcorrencia       = primeiraOcorrencia[9];
+                String anonimoOcorrencia    = primeiraOcorrencia[10];
+                String apelidoOcorrencia    = primeiraOcorrencia[11];
 
-                DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
+                DadosOcorrencias dado = new DadosOcorrencias(numeroOcorrencia, focoCpf, ruaOcorrencia, bairroOcorrencia, cidadeOcorrencia, ufOcorrencia, descricaoOcorrencia, dataOcorrencia, tipoOcorrencia, anonimoOcorrencia, apelidoOcorrencia);
 
                 ArrayOcorrenciasRegistradas.adicionar(dado);
             }
@@ -326,9 +305,9 @@ public class Cliente extends AppCompatActivity {
             Intent cliente = new Intent(this, ListarOcorrencias.class);
 
             Bundle bundle = new Bundle();
-            bundle.putString("nome", Nome);
-            bundle.putString("cpf", CPF);
-            bundle.putString("bairro", Bairro);
+            bundle.putString("nome", clienteNome);
+            bundle.putString("cpf", clienteCpf);
+            bundle.putString("bairro", clienteBairro);
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
@@ -395,16 +374,16 @@ public class Cliente extends AppCompatActivity {
         this.startActivity(new Intent(this, Login.class));
     }
 
-    public static String getNome() {
-        return Nome;
+    public static String getClienteNome() {
+        return clienteNome;
     }
 
-    public static String getCPF() {
-        return CPF;
+    public static String getClienteCpf() {
+        return clienteCpf;
     }
 
-    public static String getBairro() {
-        return Bairro;
+    public static String getClienteBairro() {
+        return clienteBairro;
     }
 
 
@@ -469,12 +448,12 @@ public class Cliente extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS_CODE);
             }
         } else {
-            abrir_galeria();
+            abrirGaleria();
         }
 
     }
 
-    private void abrir_galeria() {
+    private void abrirGaleria() {
 
         Toast.makeText(getApplicationContext(), "Abrindo galeria", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -510,7 +489,7 @@ public class Cliente extends AppCompatActivity {
         if (retorno.equals("erro")) {
             Toast.makeText(getApplicationContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Imagem do Perfil Atualizada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "imagem do Perfil Atualizada", Toast.LENGTH_SHORT).show();
             ArrayImagensPerfil.deleteBitmap();
             ArrayImagensPerfil.adicionarImg(bitmap);
         }
@@ -518,7 +497,7 @@ public class Cliente extends AppCompatActivity {
 
     public String enviarImgPerfil() throws IOException {
 
-        String retornoImg = processaSocket.envia_Img_Perfil(CPF, "Img1", byteImagem);
+        String retornoImg = processaSocket.enviaImgPerfil(clienteCpf, "Img1", byteImagem);
 
         if (retornoImg.equals("erro")) {
             return "erro";

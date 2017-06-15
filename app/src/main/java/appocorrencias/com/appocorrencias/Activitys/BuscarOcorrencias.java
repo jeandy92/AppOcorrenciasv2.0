@@ -52,7 +52,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busca_de_ocorrencias);
 
-        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O Cpf MANTEM O MESMO
+        //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O cpf MANTEM O MESMO
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         nomeBuscarOcorrencia = bundle.getString("nome");
@@ -200,7 +200,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         String buscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " + segundoBairro;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(buscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(buscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há ocorrências cadastradas neste bairro", Toast.LENGTH_SHORT).show();
@@ -242,7 +242,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
 
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há ocorrencias cadastradas com esse tipo", Toast.LENGTH_SHORT).show();

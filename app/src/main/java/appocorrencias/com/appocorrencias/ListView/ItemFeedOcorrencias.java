@@ -42,8 +42,8 @@ import appocorrencias.com.appocorrencias.R;
 import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.removerAcentos;
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
 import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.concat;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem_perfil;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receberImagem;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receberImagemPerfil;
 import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.toBytes;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
@@ -58,11 +58,12 @@ import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistr
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getUFNr;
 
 public class ItemFeedOcorrencias extends AppCompatActivity {
-    private EditText txtComentario;
+
+    private EditText edtComentario;
     ViewPager viewPager;
     AdapterCustomSwiper adapterCustomSwiper;
     private static ProcessaSocket processa = new ProcessaSocket();
-    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia, tela;
+    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, cpf, nome, bairroCli, convComentario, cpfOcorrencia, tela;
     ListView listaComentarios;
 
     @Override
@@ -71,13 +72,13 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         setContentView(R.layout.activity_detalhes_item_feed_ocorrencias);
 
 
-        txtComentario = (EditText) findViewById(R.id.edtComentario);
-        TextView Tv_Id_Ocorrencia = (TextView) findViewById(R.id.txtCampoNumeroOcorrencia);
-        TextView Tv_Tipo_Crime = (TextView) findViewById(R.id.txtCampoCPF);
-        TextView Tv_Data_Ocorrencia = (TextView) findViewById(R.id.txtCampoNascimento);
-        TextView Tv_Desc_Ocorrencia = (TextView) findViewById(R.id.txtCampoDescricaoDaOcorrencia);
-        TextView Tv_Cidade_UF = (TextView) findViewById(R.id.txtCidadeUFUsuario);
-        TextView Tv_Rua_Bairro = (TextView) findViewById(R.id.txtRuaBairroUsuario);
+        edtComentario = (EditText) findViewById(R.id.edtComentario);
+        TextView tvIdOcorrencia = (TextView) findViewById(R.id.txtCampoNumeroOcorrencia);
+        TextView tvTipoCrime = (TextView) findViewById(R.id.txtCampoCPF);
+        TextView tvDataOcorrencia = (TextView) findViewById(R.id.txtCampoNascimento);
+        TextView tvDescOcorrencia = (TextView) findViewById(R.id.txtCampoDescricaoDaOcorrencia);
+        TextView tvCidadeUF = (TextView) findViewById(R.id.txtCidadeUFUsuario);
+        TextView tvRuaBairro = (TextView) findViewById(R.id.txtRuaBairroUsuario);
         Button btnExcluir = (Button) findViewById(R.id.btnExcluir);
         ImageButton btnDelComent = (ImageButton) findViewById(R.id.btnDelComent);
 
@@ -86,42 +87,40 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         Bundle dados = intent.getExtras();
 
 
-        idOcorrencia = dados.getString("id_ocorrencia").toString();
-        CPF = dados.getString("cpf").toString();
-        Nome = dados.getString("nome").toString();
-        BairroCli = dados.getString("bairro").toString();
-        tela = dados.getString("tela").toString();
+        idOcorrencia   = dados.getString("id_ocorrencia").toString();
+        cpf            = dados.getString("cpf").toString();
+        nome           = dados.getString("nome").toString();
+        bairroCli      = dados.getString("bairro").toString();
+        tela           = dados.getString("tela").toString();
+        descricao     = getDescricaoNr(idOcorrencia);
+        rua           = getRuaNr(idOcorrencia);
+        bairro        = getBairroNr(idOcorrencia);
+        uf            = getUFNr(idOcorrencia);
+        cidade        = getCidadeNr(idOcorrencia);
+        data          = getDataNr(idOcorrencia);
+        tipo          = getTipoNr(idOcorrencia);
+        cpfOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
 
-
-        descricao = getDescricaoNr(idOcorrencia);
-        rua = getRuaNr(idOcorrencia);
-        bairro = getBairroNr(idOcorrencia);
-        uf = getUFNr(idOcorrencia);
-        cidade = getCidadeNr(idOcorrencia);
-        data = getDataNr(idOcorrencia);
-        tipo = getTipoNr(idOcorrencia);
-        CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
-
-        if (CPFOcorrencia.equals(CPF)) {
+        if (cpfOcorrencia.equals(cpf)) {
             btnExcluir.setVisibility(View.VISIBLE);
         }
 
-        Tv_Id_Ocorrencia.setText(idOcorrencia);
-        Tv_Tipo_Crime.setText(tipo);
-        Tv_Data_Ocorrencia.setText(data);
-        Tv_Desc_Ocorrencia.setText(descricao);
-        Tv_Rua_Bairro.setText(rua + "," + bairro);
-        Tv_Cidade_UF.setText(cidade + ", " + uf);
+        tvIdOcorrencia.setText(idOcorrencia);
+        tvTipoCrime.setText(tipo);
+        tvDataOcorrencia.setText(data);
+        tvDescOcorrencia.setText(descricao);
+        tvRuaBairro.setText(rua + "," + bairro);
+        tvCidadeUF.setText(cidade + ", " + uf);
 
-        ArrayList<DadosComentarios> listadecomentarios = getListaComentarios();
-        Collections.sort(listadecomentarios);
-        AdapterComentarios adapter = new AdapterComentarios(this, listadecomentarios);
+        ArrayList<DadosComentarios> listaComentarios = getListaComentarios();
+        Collections.sort(listaComentarios);
+        AdapterComentarios adapter = new AdapterComentarios(this, listaComentarios);
 
-        listaComentarios = (ListView) findViewById(R.id.list_comentarios);
-        listaComentarios.setAdapter(adapter);
+        this.listaComentarios = (ListView) findViewById(R.id.list_comentarios);
+        this.listaComentarios.setAdapter(adapter);
 
 
-        listaComentarios.setOnTouchListener(new ListView.OnTouchListener() {
+        this.listaComentarios.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
@@ -159,56 +158,56 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
     public static String evBuscarImagens(String IDOcorrencia, String tipo) throws IOException {
 
-        String BuscarImagensOcorrencia;
+        String buscarImagensOcorrencia;
 
         if (tipo.equals("cpf")) {
-            BuscarImagensOcorrencia = "BuscarImagemPerfil " + IDOcorrencia;
+            buscarImagensOcorrencia = "BuscarImagemPerfil " + IDOcorrencia;
         } else {
-            BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
+            buscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
         }
 
         String ip_conexao = /*"192.168.0.108";//*/ "52.34.140.131"; //"172.20.10.3";
         int porta_conexao = 63200;//2222;
 
 
-        String str = null;
-        OutputStream canalSaida = null;
-        InputStream canalEntrada = null;
-        Socket cliente2 = new Socket();
+        String          str            = null;
+        OutputStream   canalSaida      = null;
+        InputStream    canalEntrada    = null;
+        Socket         segundoCliente  = new Socket();
 
-        byte[] byteDados = BuscarImagensOcorrencia.getBytes();
+        byte[] byteDados = buscarImagensOcorrencia.getBytes();
         int tamanhoDados = byteDados.length;
 
         byte[] byteTamanhoDados = toBytes(tamanhoDados);
-        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
-        int tamanhoPacote = TamanhoEDados.length;
+        byte[] tamanhoEDados = concat(byteTamanhoDados, byteDados);
+           int tamanhoPacote = tamanhoEDados.length;
         byte[] byteTamanhoPct = toBytes(tamanhoPacote);
-        byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
+        byte[] byteFinal = concat(byteTamanhoPct, tamanhoEDados);
 
         int millisecondsTimeOut = 5000;
         InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
 
         try {
-            cliente2.connect(adress, millisecondsTimeOut);
+            segundoCliente.connect(adress, millisecondsTimeOut);
         } catch (Exception e) {
             str = "erro";
             return str;
         }
         try {
-            canalSaida = cliente2.getOutputStream();
-            canalEntrada = cliente2.getInputStream();
+            canalSaida = segundoCliente.getOutputStream();
+            canalEntrada = segundoCliente.getInputStream();
             canalSaida.write(byteFinal);
 
             if (tipo.equals("cpf")) {
-                receber_imagem_perfil(canalEntrada);
+                receberImagemPerfil(canalEntrada);
             } else {
-                receber_imagem(canalEntrada);
+                receberImagem(canalEntrada);
             }
 
             canalSaida.flush();
             canalSaida.close();
             canalEntrada.close();
-            cliente2.close();
+            segundoCliente.close();
 
             str = "true";
 
@@ -224,28 +223,28 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
     public void evExcluirOcorrencia(View view) throws IOException {
 
-        String ExcluirOcorrencia = "ExcluirOcorrencia " + idOcorrencia;
-        String retornoExclusao = processa.cadastrar1_no_server(ExcluirOcorrencia);
+        String excluirOcorrencia = "ExcluirOcorrencia " + idOcorrencia;
+        String retornoExclusao = processa.primeiroCadastroNoServidor(excluirOcorrencia);
 
         if (retornoExclusao.equals("true")) {
 
             deleteAllArray();
 
-            String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
+            String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + cpf;
 
             Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
             ArrayImagensPerfilComentarios.deleteBitmap();
-            String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+            String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
 
             if (retorno.equals("false")) {
                 Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
                 setContentView(R.layout.activity_listar_ocorrencias);
                 Intent cliente = new Intent(this, ListarOcorrencias.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("nome", Nome);
-                bundle.putString("cpf", CPF);
-                bundle.putString("bairro", BairroCli);
+                bundle.putString("nome", nome);
+                bundle.putString("cpf", cpf);
+                bundle.putString("bairro", bairroCli);
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);
@@ -255,22 +254,24 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
                 // Pegando dados e Adicioanando dados no Array
                 for (int i = 0; i < qtdOcorrencia; i++) {
-                    String TodasOcorrencias[] = retorno.split("///");
 
-                    String Ocorrencia = TodasOcorrencias[i];
-                    String OcorrenciaUm[] = Ocorrencia.split("//");
-                    String Nr = OcorrenciaUm[1];
-                    String CPFOco = OcorrenciaUm[2];
-                    String Rua = OcorrenciaUm[3];
-                    String Bairro = OcorrenciaUm[4];
-                    String Cidade = OcorrenciaUm[5];
-                    String UF = OcorrenciaUm[6];
-                    String Descricao = OcorrenciaUm[7];
-                    String Data = OcorrenciaUm[8];
-                    String Tipo = OcorrenciaUm[9];
-                    String Anonimo = OcorrenciaUm[10];
-                    String Apelido = OcorrenciaUm[11];
-                    DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
+                    String todasOcorrencias[] = retorno.split("///");
+                    String ocorrencia           = todasOcorrencias[i];
+                    String primeiraOcorrencia[] = ocorrencia.split("//");
+                    String numeroOcorrencia     = primeiraOcorrencia[1];
+                    String focoCpf              = primeiraOcorrencia[2];
+                    String ruaOcorrencia        = primeiraOcorrencia[3];
+                    String bairroOcorrencia     = primeiraOcorrencia[4];
+                    String cidadeOcorrencia     = primeiraOcorrencia[5];
+                    String ufOcorrencia         = primeiraOcorrencia[6];
+                    String descricaoOcorrencia  = primeiraOcorrencia[7];
+                    String dataOcorrencia       = primeiraOcorrencia[8];
+                    String tipoOcorrencia       = primeiraOcorrencia[9];
+                    String anonimoOcorrencia    = primeiraOcorrencia[10];
+                    String apelidoOcorrencia    = primeiraOcorrencia[11];
+
+                    DadosOcorrencias dado = new DadosOcorrencias(numeroOcorrencia, focoCpf, ruaOcorrencia, bairroOcorrencia, cidadeOcorrencia, ufOcorrencia, descricaoOcorrencia, dataOcorrencia, tipoOcorrencia, anonimoOcorrencia, apelidoOcorrencia);
+
                     ArrayOcorrenciasRegistradas.adicionar(dado);
                 }
                 Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
@@ -279,9 +280,9 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 Intent cliente = new Intent(this, ListarOcorrencias.class);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("nome", Nome);
-                bundle.putString("cpf", CPF);
-                bundle.putString("bairro", BairroCli);
+                bundle.putString("nome", nome);
+                bundle.putString("cpf", cpf);
+                bundle.putString("bairro", bairroCli);
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);
@@ -292,23 +293,23 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
     public void evEnviarComentario(View view) throws IOException {
 
-        String Comentario = txtComentario.getText().toString();
+        String Comentario = edtComentario.getText().toString();
 
         if (Comentario.isEmpty()) {
-            txtComentario.setError("Escreva um comentario ");
-            txtComentario.setFocusable(true);
-            txtComentario.requestFocus();
+            edtComentario.setError("Escreva um comentario ");
+            edtComentario.setFocusable(true);
+            edtComentario.requestFocus();
         } else {
 
             Random random = new Random();
             int x = random.nextInt(101);
             String NrAleatorio = Integer.toString(x);
             String BuscaId = "IDcomentario teste";
-            String IDserver = processa.cadastrar1_no_server(BuscaId);
+            String IDserver = processa.primeiroCadastroNoServidor(BuscaId);
             //String IDComentario = IDserver + NrAleatorio;
 
 
-            String ArrayNome[] = Nome.split(" ");
+            String ArrayNome[] = nome.split(" ");
             String Apelido = ArrayNome[1];
 
             convComentario = removerAcentos(Comentario);
@@ -325,10 +326,10 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             String Hora = hora2.format(dtI.getTime());
 
 
-            String retorno = processa.cadastrar_Comentario(IDserver, idOcorrencia, CPF, Data, Hora, Apelido, convComentario);
+            String retorno = processa.cadastrarComentario(IDserver, idOcorrencia, cpf, Data, Hora, Apelido, convComentario);
 
 
-            txtComentario.setText(null);
+            edtComentario.setText(null);
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
@@ -358,12 +359,12 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     }
 
 
-    public static String evBuscarComentario(String IDOcorrencia) throws IOException {
+    public static String evBuscarComentario(String pIdOcorrencia) throws IOException {
 
-        String BuscarComentariosRegistrados = "BuscarComentariosRegistrados " + IDOcorrencia;
+        String BuscarComentariosRegistrados = "BuscarComentariosRegistrados " + pIdOcorrencia;
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarComentariosRegistrados);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarComentariosRegistrados);
 
         if (retorno.equals("erro")) {
             return "erro";
@@ -402,14 +403,14 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     }
 
 
-    public void evOcorrenciasInformadasItem(String CPF) throws IOException {
+    public void evOcorrenciasInformadasItem(String pCpf) throws IOException {
 
         deleteAllArray();
 
-        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
+        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + pCpf;
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
 
@@ -460,15 +461,15 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
             deleteAllArray();
             try {
-                evOcorrenciasInformadasItem(CPF);
+                evOcorrenciasInformadasItem(cpf);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             Bundle bundle = new Bundle();
-            bundle.putString("nome", Nome);
-            bundle.putString("cpf", CPF);
-            bundle.putString("bairro", BairroCli);
+            bundle.putString("nome", nome);
+            bundle.putString("cpf", cpf);
+            bundle.putString("bairro", bairroCli);
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
@@ -480,7 +481,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 deleteAllArray();
 
                 try {
-                    evBuscarOcorrenciasBairro(BairroCli);
+                    evBuscarOcorrenciasBairro(bairroCli);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -488,9 +489,9 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 Intent cliente = new Intent(this, Cliente.class);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("nome", Nome);
-                bundle.putString("cpf", CPF);
-                bundle.putString("bairro", BairroCli);
+                bundle.putString("nome", nome);
+                bundle.putString("cpf", cpf);
+                bundle.putString("bairro", bairroCli);
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);
@@ -500,9 +501,9 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 Intent cliente = new Intent(this, BuscarOcorrencias.class);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("nome", Nome);
-                bundle.putString("cpf", CPF);
-                bundle.putString("bairro", BairroCli);
+                bundle.putString("nome", nome);
+                bundle.putString("cpf", cpf);
+                bundle.putString("bairro", bairroCli);
                 bundle.putString("tela", tela);
 
                 cliente.putExtras(bundle);

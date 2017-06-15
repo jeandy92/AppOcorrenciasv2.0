@@ -33,150 +33,148 @@ public class ArrayUsuariosEncontrados {
     }
 
     ///RETORNANDO DADOS POR NUMERO DE OCORRENCIA
-    public static String getNomeCPF(String CPF) {
+    public static String getNomeCPF(String pCpf) {
         String nome = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                nome = dados.get(i).Nome;
+                nome = dados.get(i).usuNome;
             }
         }
         return nome;
     }
 
-    public static String getNascimentoCPF(String CPF) {
+    public static String getNascimentoCPF(String pCpf) {
         String nascimento = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                nascimento = dados.get(i).Nascimento;
+                nascimento = dados.get(i).usuNascimento;
             }
         }
         return nascimento;
     }
 
-    public static String getRuaCPF(String CPF) {
+    public static String getRuaCPF(String pCpf) {
         String rua = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                rua = dados.get(i).RuaUsu;
+                rua = dados.get(i).usuRua;
             }
         }
         return rua;
     }
 
-    public static String getTelefoneCPF(String CPF) {
+    public static String getTelefoneCPF(String pCpf) {
         String telefone = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                telefone = dados.get(i).Telefone;
+                telefone = dados.get(i).usuTelefone;
             }
         }
         return telefone;
     }
 
-    public static String getCepCPF(String CPF) {
+    public static String getCepCPF(String pCpf) {
         String cep = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                cep = dados.get(i).Cep;
+                cep = dados.get(i).usuCep;
             }
         }
         return cep;
     }
 
-    public static String getBairroCPF(String CPF) {
+    public static String getBairroCPF(String pCpf) {
         String bairro = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                bairro = dados.get(i).BairroUsu;
+                bairro = dados.get(i).usuBairro;
             }
         }
         return bairro;
     }
 
-    public static String getUFCPF(String CPF) {
+    public static String getUFCPF(String pCpf) {
         String uf = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                uf = dados.get(i).UFUsu;
+                uf = dados.get(i).usuUf;
             }
         }
         return uf;
     }
 
-    public static String getCidadeCPF(String CPF) {
+    public static String getCidadeCPF(String pCpf) {
         String cidade = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                cidade = dados.get(i).CidadeUsu;
+                cidade = dados.get(i).usuCidade;
             }
         }
         return cidade;
     }
 
-    public static String getNrCasaCPF(String CPF) {
+    public static String getNrCasaCPF(String pCpf) {
         String casa = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                casa = dados.get(i).Numero;
+                casa = dados.get(i).usuNumero;
             }
         }
         return casa;
     }
 
-    public static String getEmailCPF(String CPF) {
+    public static String getEmailCPF(String pCpf) {
         String email = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                email = dados.get(i).Email;
+                email = dados.get(i).usuEmail;
             }
         }
         return email;
     }
 
-    public static String getComplementoCPF(String CPF) {
+    public static String getComplementoCPF(String pCpf) {
         String complemento = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(dados.get(i).CPFUsu)) {
+            if (pCpf.equals(dados.get(i).usuCpf)) {
 
-                complemento = dados.get(i).Complemento;
+                complemento = dados.get(i).usuComplemento;
             }
         }
         return complemento;
     }
-
-
 
     public static void remove(DadosOcorrencias d) {
         dados.remove(d);
