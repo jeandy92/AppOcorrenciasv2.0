@@ -71,7 +71,7 @@ public class DadosOcorrencias {
 
     @Override
     public String toString() {
-        return "\nNumero: " + NrOcorrencia + "\nBairro: " + Bairro + "\nData: " + Data;
+        return "\nNumero: " + NrOcorrencia + "\nbairroBuscarOcorrencia: " + Bairro + "\nData: " + Data;
     }
 
     public boolean equals(DadosOcorrencias m) {

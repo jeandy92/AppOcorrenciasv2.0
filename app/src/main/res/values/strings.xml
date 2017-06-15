@@ -8,16 +8,14 @@
     <string name="item_configuracoes">Confgurações</string>
 
 
-    <string name="Orientacao"> Descrever o ocorrido e citar as caracteristicas principais do suspeito</string>
 
-    <string name="Exemplo"> Ex: Roubou a bolsa na porta da faculdade  Caracteristicas do
-        sujeito:Magro, cabelo preto, calça jeans , boné vermelho, estava em uma
-        moto/carro de cor preta.
+
+    <string name="descricaoOcorrencia">
+        Descreva o fato citando as principais características do criminoso...
+        Ex: Roubaram meu carro Chevrolet, Prisma
+        Preto, Placa DSA 6522, estavam em dois, numa moto YBR cor Vermelha, um dos assaltantes estava com uma Blusa Preta,
+        tenis Branco e calça Jeans
     </string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -73,7 +73,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ListView.ItemBuscaUsuario"></activity>
+        <activity android:name=".ListView.ItemBuscaUsuario" />
+        <activity android:name=".ExampleUnitTest$Notificacoes" />
+        <activity android:name=".Notificacoes"></activity>
     </application>
 
 </manifest>

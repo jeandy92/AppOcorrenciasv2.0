@@ -48,6 +48,7 @@ public class AdapterBuscaUsuario extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View view = act.getLayoutInflater().inflate(R.layout.activity_item_busca_usuario,parent,false);
         DadosUsuarios usuariosEcontrados  = listaDeUsuarios.get(position);
 

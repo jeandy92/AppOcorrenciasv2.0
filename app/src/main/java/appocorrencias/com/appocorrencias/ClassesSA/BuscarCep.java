@@ -16,6 +16,11 @@ public class BuscarCep {
     public String getEndereco(String CEP) throws IOException{
         String status = null;
         Document doc;
+
+
+
+
+
         try {
             doc = Jsoup
                     .connect("http://www.qualocep.com/busca-cep/" + CEP).timeout(3000).get();

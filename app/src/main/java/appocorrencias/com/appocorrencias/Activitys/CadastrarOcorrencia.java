@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -43,43 +44,49 @@ import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenc
 
 public class CadastrarOcorrencia extends AppCompatActivity implements LocationListener {
 
-    private static final int REQUEST_PERMISSIONS_CODE = 128;
-
-    private static final String TAG = "LOG";
-    private static final android.util.Log LOG = null;
-
+    //CONSTANTES
     //Váriaveis para realizar o controle do ResultActivity
+    private static final int REQUEST_PERMISSIONS_CODE = 128;
     private static final int SELECIONA_IMAGEM = 1;
     private static final int IMAGEM_CAPTURADA = 1;
+    private static final String TAG = "LOG";
+    private static final int IMAGEM_INTERNA = 12;
 
-    public static final int IMAGEM_INTERNA = 12;
-    private ImageButton imgBtnAdd;
-    private ImageButton imgBtnDel;
-    private ImageView iv1, iv2, iv3;
-    private int cont = 1;
-
-
-    private String convDataOcorrencia, convDescricao, convEndereco, convCidade, convBairro, tipo_crime, UF;
-    ;
-    private EditText txRua, txCidade, txEstado, txDescricao, txData_Ocorrencia, txtBairro, txReferencia;
-    private CheckBox BtnAnonimo;
-
-    private BuscarCep buscauf = new BuscarCep();
-
+    //VARIÁVEIS UTILIZADAS EXTRAIDAS DE INTENTS
+    private static final android.util.Log LOG = null ;
     private Location location;
     private LocationManager locationmenager;
     private android.location.Address endereco;
+
+
+    //VARIAVEIS DE ACTIVITYS
+    private ImageButton imgBtnAdd,imgBtnDel;
+    private ImageView iv1, iv2, iv3;
+    private Button btnSalvarOcorrencia;
+    private EditText edtRua, edtCidade, edtEstado, edtDescricao, edtDataOcorrencia, edtBairro, edtReferencia;
+    private CheckBox btnAnonimo;
     private Spinner spinner;
 
-    private Date data;
+    //VARIAVEIS LOCAIS
+    private int cont = 1;
+    private String convDataOcorrencia, convDescricao, convEndereco, convCidade, convBairro, convTipoCrime, convUf;
+    private String convDesSalvarOcorre, convEndSalvarOcorre,convCidSalvarOcorre,convBaiSalvarOcorre,segundoTipoDeCrime;
 
 
-    static String Nome, CPFCliente, Bairro, Tela;
 
-    public static ProcessaSocket processasocket = new ProcessaSocket();
     private String Anonimo;
+    private byte[] byteImagem = null, byteImagem2 = null, byteImagem3 = null;
 
-    byte[] byteImagem = null, byteImagem2 = null, byteImagem3 = null;
+
+    //VARIAVEIS STATICAS
+    private static String nomeCliente, cpfCliente, bairroCliente, telaCliente, tokenUsuario;
+
+    //OBEJTOS STATICOS
+    public static ProcessaSocket processaSocket = new ProcessaSocket();
+
+    //OBJETOS
+    private BuscarCep buscauf = new BuscarCep();
+    private Date data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +96,11 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         //Pegando valores que vem do Login
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Nome = bundle.getString("nome");
-        CPFCliente = bundle.getString("cpf");
-        Bairro = bundle.getString("bairro");
-        Tela = bundle.getString("tela");
+        nomeCliente = bundle.getString("nome");
+        cpfCliente = bundle.getString("cpf");
+        bairroCliente = bundle.getString("bairro");
+        tokenUsuario = bundle.getString("token");
+        telaCliente = bundle.getString("telaCliente");
 
 
         imgBtnAdd = (ImageButton) findViewById(R.id.imgBtnAdd);
@@ -103,30 +111,30 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         iv3 = (ImageView) findViewById(R.id.ivCliente);
 
 
-        txCidade = (EditText) findViewById(R.id.edtCidade);
-        txRua = (EditText) findViewById(R.id.edtRua);
-        txtBairro = (EditText) findViewById(R.id.edtBairro);
-        txEstado = (EditText) findViewById(R.id.edtEstado);
-        txReferencia = (EditText) findViewById(R.id.edtReferencia);
-        txDescricao = (EditText) findViewById(R.id.edtDescricao);
-        txData_Ocorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
+        edtCidade = (EditText) findViewById(R.id.edtCidade);
+        edtRua = (EditText) findViewById(R.id.edtRua);
+        edtBairro = (EditText) findViewById(R.id.edtBairro);
+        edtEstado = (EditText) findViewById(R.id.edtEstado);
+        edtReferencia = (EditText) findViewById(R.id.edtReferencia);
+        edtDescricao = (EditText) findViewById(R.id.edtDescricao);
+        edtDataOcorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
-        BtnAnonimo = (CheckBox) findViewById((R.id.rdBtnAnonimo));
+        btnAnonimo = (CheckBox) findViewById((R.id.rdBtnAnonimo));
+        btnSalvarOcorrencia = (Button) findViewById(R.id.btnSalvaOcorrencia);
 
-
-        txDescricao.setOnClickListener(new View.OnClickListener() {
+        edtDescricao.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                txDescricao.setText("");
+                edtDescricao.setText("");
             }
 
 
         });
 
         // Inserindo Mascaras.
-        MaskEditTextChangedListener maskData = new MaskEditTextChangedListener("##/##/####", txData_Ocorrencia);
-        txData_Ocorrencia.addTextChangedListener(maskData);
+        MaskEditTextChangedListener maskData = new MaskEditTextChangedListener("##/##/####", edtDataOcorrencia);
+        edtDataOcorrencia.addTextChangedListener(maskData);
 
 
         //criando um ArrayAdapter para usar as strings do array como default
@@ -139,7 +147,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         //Colocando data defaul
         data = new Date(System.currentTimeMillis());
         SimpleDateFormat formatarData = new SimpleDateFormat("dd-MM-yyyy");
-        txData_Ocorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
+        edtDataOcorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
 
 
     }
@@ -166,7 +174,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     }
 
     // Galeria
-    public void entrar_galeria(View v) {
+    public void entrarGaleria(View v) {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -176,12 +184,12 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS_CODE);
             }
         } else {
-            abrir_galeria();
+            abrirGaleria();
         }
 
     }
 
-    private void abrir_galeria() {
+    private void abrirGaleria() {
 
         Toast.makeText(getApplicationContext(), "Abrindo galeria", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -248,7 +256,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
 
     //Abrir Camera
-
     public void tirarFoto(View v) {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -273,10 +280,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
     }
 
+
     //Localidade
-
-
-    public void localidade_atual(View v) {
+    public void localidadeAtual(View v) {
 
 
         LOG.i(TAG, "localidade_atual");
@@ -297,6 +303,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     }
 
     private void selecionandoLocalidadeAtual() {
+
         Toast.makeText(this, "Sua Localidade", Toast.LENGTH_SHORT).show();
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -345,8 +352,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
 
         try {
-            //endereco = buscarEndereco(latitude   ,  longitude);
-            endereco = buscarEndereco(-23.540827, -46.761993);
+            endereco = buscarEndereco(latitude   ,  longitude);
+            //endereco = buscarEndereco(-23.540827, -46.761993);
 
 
             Log.i(TAG, endereco.getLocality());
@@ -356,11 +363,11 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
             BuscarCep buscar_cep = new BuscarCep();
 
-            txCidade.setText(endereco.getLocality());
-            txEstado.setText(endereco.getAdminArea());
-            txRua.setText(endereco.getThoroughfare());
-            txtBairro.setText(endereco.getSubLocality());
-            txEstado.setText(buscar_cep.getUF(endereco.getPostalCode()));
+            edtCidade.setText(endereco.getLocality());
+            edtEstado.setText(endereco.getAdminArea());
+            edtRua.setText(endereco.getThoroughfare());
+            edtBairro.setText(endereco.getSubLocality());
+            edtEstado.setText(buscar_cep.getUF(endereco.getPostalCode()));
 
 
         } catch (IOException e) {
@@ -384,7 +391,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
         return address;
     }
-
 
     @Override
     public void onLocationChanged(Location location) {
@@ -455,80 +461,72 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         }
     }
 
-
-    //Abrir Calendário
-
-    public void evEscolher_Data(View v) {
-    }
-
-
     public static String removerAcentos(String str) {
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
+    public void salvarOcorrencia(View v) throws IOException {
 
-    public void salvar_ocorrencia(View v) throws IOException {
+        segundoTipoDeCrime  = spinner.getSelectedItem().toString();
+        convUf              = edtEstado.getText().toString();
+        convDataOcorrencia  = edtDataOcorrencia.getText().toString();
+        convDesSalvarOcorre = edtDescricao.getText().toString();
+        convEndSalvarOcorre = edtRua.getText().toString();
+        convCidSalvarOcorre = edtCidade.getText().toString();
+        convBaiSalvarOcorre = edtBairro.getText().toString();
 
-        String tipo_crime2 = spinner.getSelectedItem().toString();
-        UF = txEstado.getText().toString();
-        convDataOcorrencia = txData_Ocorrencia.getText().toString();
-        String convDescricao2 = txDescricao.getText().toString();
-        String convEndereco2 = txRua.getText().toString();
-        String convCidade2 = txCidade.getText().toString();
-        String convBairro2 = txtBairro.getText().toString();
-
-        String ArrayNome[] = Nome.split(" ");
+        String ArrayNome[] = nomeCliente.split(" ");
         String PriNome = ArrayNome[1];
 
-        tipo_crime = removerAcentos(tipo_crime2);
-        convDescricao = removerAcentos(convDescricao2);
-        convEndereco = removerAcentos(convEndereco2);
-        convCidade = removerAcentos(convCidade2);
-        convBairro = removerAcentos(convBairro2);
+        convTipoCrime = removerAcentos(segundoTipoDeCrime);
+        convDescricao = removerAcentos(convDesSalvarOcorre);
+        convEndereco  = removerAcentos(convEndSalvarOcorre);
+        convCidade    = removerAcentos(convCidSalvarOcorre);
+        convBairro    = removerAcentos(convBaiSalvarOcorre);
 
-        BtnAnonimo = (CheckBox) findViewById(R.id.rdBtnAnonimo);
+        btnAnonimo = (CheckBox) findViewById(R.id.rdBtnAnonimo);
 
         Anonimo = "false";
 
-        if (BtnAnonimo.isChecked()) {
+        if (btnAnonimo.isChecked()) {
             Anonimo = "true";
         }
 
         if (convDescricao.isEmpty()) {
-            txDescricao.setError("Faltou preencher Descrição ");
-            txDescricao.setFocusable(true);
-            txDescricao.requestFocus();
+            edtDescricao.setError("Faltou preencher Descrição ");
+            edtDescricao.setFocusable(true);
+            edtDescricao.requestFocus();
         } else {
             if (convEndereco.isEmpty()) {
-                txRua.setError("Faltou preencher Rua ");
-                txRua.setFocusable(true);
-                txRua.requestFocus();
+                edtRua.setError("Faltou preencher Rua ");
+                edtRua.setFocusable(true);
+                edtRua.requestFocus();
             } else {
                 if (convCidade.isEmpty()) {
-                    txCidade.setError("Faltou preencher Cidade ");
-                    txCidade.setFocusable(true);
-                    txCidade.requestFocus();
+                    edtCidade.setError("Faltou preencher Cidade ");
+                    edtCidade.setFocusable(true);
+                    edtCidade.requestFocus();
                 } else {
                     if (convBairro.isEmpty()) {
-                        txtBairro.setError("Faltou preencher Bairro ");
-                        txtBairro.setFocusable(true);
-                        txtBairro.requestFocus();
+                        edtBairro.setError("Faltou preencher bairro ");
+                        edtBairro.setFocusable(true);
+                        edtBairro.requestFocus();
                     } else {
-                        if (UF.isEmpty()) {
-                            txEstado.setError("Faltou preencher UF ");
-                            txEstado.setFocusable(true);
-                            txEstado.requestFocus();
+                        if (convUf.isEmpty()) {
+                            edtEstado.setError("Faltou preencher convUf ");
+                            edtEstado.setFocusable(true);
+                            edtEstado.requestFocus();
                         } else {
 
                             Random random = new Random();
                             int x = random.nextInt(101);
                             String NrAleatorio = Integer.toString(x);
                             String BuscaId = "IDocorrencia teste";
-                            String IDserver = processasocket.cadastrar1_no_server(BuscaId);
+                            String IDserver = processaSocket.cadastrar1_no_server(BuscaId);
                             //String ID = IDserver + NrAleatorio;
 
 
-                            String retorno = processasocket.cadastrar_Ocorrencia(IDserver, CPFCliente, tipo_crime, convDataOcorrencia, UF, convDescricao,
+                            String retorno = processaSocket.cadastrar_Ocorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
                                     convEndereco, convCidade, convBairro, Anonimo, PriNome);
 
                             if (retorno.equals("erro")) {
@@ -541,15 +539,15 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                     if (byteImagem != null) {
                                         int x1 = random.nextInt(101);
                                         String IDImg = Integer.toString(x1);
-                                        retornoImg = processasocket.envia_Img(IDImg, IDserver, CPFCliente, "Img1", byteImagem);
+                                        retornoImg = processaSocket.envia_Img(IDImg, IDserver, cpfCliente, "Img1", byteImagem);
                                         if (retornoImg.equals("true") && byteImagem2 != null) {
                                             int x2 = random.nextInt(101);
                                             String IDImg2 = Integer.toString(x2);
-                                            retornoImg = processasocket.envia_Img(IDImg2, IDserver, CPFCliente, "Img2", byteImagem2);
+                                            retornoImg = processaSocket.envia_Img(IDImg2, IDserver, cpfCliente, "Img2", byteImagem2);
                                             if (retornoImg.equals("true") && byteImagem3 != null) {
                                                 int x3 = random.nextInt(101);
                                                 String IDImg3 = Integer.toString(x3);
-                                                retornoImg = processasocket.envia_Img(IDImg3, IDserver, CPFCliente, "Img3", byteImagem3);
+                                                retornoImg = processaSocket.envia_Img(IDImg3, IDserver, cpfCliente, "Img3", byteImagem3);
                                             } else {
                                                 Toast.makeText(this, "Duas Img", Toast.LENGTH_SHORT).show();
                                             }
@@ -562,7 +560,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
                                     Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
 
-                                    String retornoBairro = evBuscarOcorrenciasBairro(Bairro);
+                                    String retornoBairro = evBuscarOcorrenciasBairro(bairroCliente);
 
                                     if (retornoBairro.equals("erro")) {
                                         Toast.makeText(this, "Erro na Conexão Com o Servidor", Toast.LENGTH_SHORT).show();
@@ -571,9 +569,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                             Intent cliente = new Intent(this, Cliente.class);
 
                                             Bundle bundle = new Bundle();
-                                            bundle.putString("nome", Nome);
-                                            bundle.putString("cpf", CPFCliente);
-                                            bundle.putString("bairro", Bairro);
+                                            bundle.putString("nome", nomeCliente);
+                                            bundle.putString("cpf", cpfCliente);
+                                            bundle.putString("bairro", bairroCliente);
 
                                             cliente.putExtras(bundle);
                                             this.startActivity(cliente);
@@ -582,9 +580,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                     }
 
                                 } else {
-                                    txRua.setError("Erro Retorno do Server False");
-                                    txRua.setFocusable(true);
-                                    txRua.requestFocus();
+                                    edtRua.setError("Erro Retorno do Server False");
+                                    edtRua.setFocusable(true);
+                                    edtRua.requestFocus();
                                 }
                             }
                         }
@@ -598,13 +596,13 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     public void onBackPressed() {
         super.onBackPressed();
 
-        if (Tela.equals("Adm")) {
+        if (telaCliente.equals("Adm")) {
             Intent adm = new Intent(this, Adm.class);
 
             Bundle bundle = new Bundle();
-            bundle.putString("nome", Nome);
-            bundle.putString("cpf", CPFCliente);
-            bundle.putString("bairro", Bairro);
+            bundle.putString("nome", nomeCliente);
+            bundle.putString("cpf", cpfCliente);
+            bundle.putString("bairro", bairroCliente);
 
             adm.putExtras(bundle);
             this.startActivity(adm);
@@ -612,7 +610,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         } else {
 
             try {
-                evBuscarOcorrenciasBairro(Bairro);
+                evBuscarOcorrenciasBairro(bairroCliente);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -620,9 +618,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             Intent cliente = new Intent(this, Cliente.class);
 
             Bundle bundle = new Bundle();
-            bundle.putString("nome", Nome);
-            bundle.putString("cpf", CPFCliente);
-            bundle.putString("bairro", Bairro);
+            bundle.putString("nome", nomeCliente);
+            bundle.putString("cpf", cpfCliente);
+            bundle.putString("bairro", bairroCliente);
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);

@@ -8,11 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 import appocorrencias.com.appocorrencias.R;
 
@@ -23,7 +18,7 @@ public class Adm extends AppCompatActivity {
 
     private Button btnSair,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
-    static String NomeAdm, CPF, Bairro;
+    private String nomeAdm, cpfAdm, bairro;
     private TextView txtTesteAdm;
 
 
@@ -35,23 +30,20 @@ public class Adm extends AppCompatActivity {
         //Pegando valores que vem do Login
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        NomeAdm = bundle.getString("nome");
-        CPF = bundle.getString("cpf");
-        Bairro = bundle.getString("bairro");
+        nomeAdm = bundle.getString("nome");
+        cpfAdm = bundle.getString("cpf");
+        bairro = bundle.getString("bairro");
 
         btnSair  = (Button) findViewById(R.id.btnSair);
         txvRetornoSocket = (TextView) findViewById(R.id.txvRetornoSocket);
         btnCadastrarOcorrencias =  (Button) findViewById(R.id.btnCadastrarOcorrencias);
 
         txtTesteAdm = (TextView) findViewById(R.id.txtTesteAdm);
-        txtTesteAdm.setText(NomeAdm);
-    }
-    public void ev_valida_conexao(View view) {
-
+        txtTesteAdm.setText(nomeAdm);
     }
 
-    public void ev_cadastrar_usuario(View view) {
-        CriaNotificaçoes();
+    public void evCadastrarUsuario(View view) {
+        evCriarNotificacao();
 
         Intent cadastrar = new Intent(this, CadastrarUsuario.class);
 
@@ -64,8 +56,7 @@ public class Adm extends AppCompatActivity {
 
     }
 
-
-    protected void CriaNotificaçoes() {
+    public void evCriarNotificacao() {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.fab_plus_icon)
@@ -77,17 +68,14 @@ public class Adm extends AppCompatActivity {
         notificationmenager.notify(mld,builder.build());
     }
 
-
-
-
-    public void ev_cadastrar_ocorrencia(View v){
+    public void evCadastrarOcorrencia(View v){
 
         Intent cadastrarOcorrencia = new Intent(this, CadastrarOcorrencia.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString("nome", NomeAdm);
-        bundle.putString("cpf" , CPF);
-        bundle.putString("bairro" , Bairro);
+        bundle.putString("nome", nomeAdm);
+        bundle.putString("cpf" , cpfAdm);
+        bundle.putString("bairro" , bairro);
         bundle.putString("tela" , "Adm");
 
         cadastrarOcorrencia.putExtras(bundle);
@@ -96,15 +84,14 @@ public class Adm extends AppCompatActivity {
         this.finish();
     }
 
-
-    public void ev_buscar_ocorrencia(View v){
+    public void evBuscarOcorrencia(View v){
 
         Intent buscarOcorrencia = new Intent(this, BuscarOcorrencias.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString("nome", NomeAdm);
-        bundle.putString("cpf" , CPF);
-        bundle.putString("bairro" , Bairro);
+        bundle.putString("nome", nomeAdm);
+        bundle.putString("cpf" , cpfAdm);
+        bundle.putString("bairro" , bairro);
         bundle.putString("tela" , "Adm");
 
         buscarOcorrencia.putExtras(bundle);
@@ -113,40 +100,14 @@ public class Adm extends AppCompatActivity {
         this.finish();
     }
 
-    public void ev_buscar_usuario(View v){
+    public void evBuscarUsuario(View v){
         this.startActivity(new Intent(this,BuscarUsuarios.class));
         this.finish();
     }
 
-
-    public void ev_sair(View v){
+    public void evSair(View v){
         this.startActivity(new Intent(this,Login.class));
         this.finish();
-    }
-
-
-   private void conectarSocket()  {
-        try{
-            Socket socket = null;
-
-            ObjectOutputStream canalSaida = null;
-            ObjectInputStream canalEntrada = null;
-            Toast.makeText(getApplicationContext(), "Tentando conexao", Toast.LENGTH_SHORT).show();
-            socket = new Socket("192.168.0.192", 5678);
-
-            canalSaida = new ObjectOutputStream(socket.getOutputStream());
-            canalSaida.writeObject("Teste");
-
-            canalEntrada = new ObjectInputStream(socket.getInputStream());
-            Object object = canalEntrada.readObject();
-            if ((object != null) && (object instanceof String)) {
-                txvRetornoSocket.setText(object.toString());
-
-            }
-        }  catch(Exception e) {
-            //FIXME Tratar a Exception.
-           e.printStackTrace();
-       }
     }
 
     @Override
