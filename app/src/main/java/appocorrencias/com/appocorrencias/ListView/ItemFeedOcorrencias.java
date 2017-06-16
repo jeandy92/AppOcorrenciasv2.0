@@ -167,7 +167,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
         }
 
-        String ip_conexao = "192.168.1.17"; /*// "52.34.140.131"; "172.20.10.3";*/
+        String ip_conexao = "172.20.10.3"; /*// "52.34.140.131"; "172.20.10.3";*/
         int porta_conexao = 2222; //63200;
 
 
@@ -225,7 +225,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     public void evExcluirOcorrencia(View view) throws IOException {
 
         String ExcluirOcorrencia = "ExcluirOcorrencia " + idOcorrencia;
-        String retornoExclusao = processa.cadastrar1_no_server(ExcluirOcorrencia);
+        String retornoExclusao = processa.primeiroCadastroNoServidor(ExcluirOcorrencia);
 
         if (retornoExclusao.equals("true")) {
 
@@ -236,7 +236,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
             ArrayImagensPerfilComentarios.deleteBitmap();
-            String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+            String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
 
             if (retorno.equals("false")) {
                 Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
@@ -304,7 +304,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             int x = random.nextInt(101);
             String NrAleatorio = Integer.toString(x);
             String BuscaId = "IDcomentario teste";
-            String IDserver = processa.cadastrar1_no_server(BuscaId);
+            String IDserver = processa.primeiroCadastroNoServidor(BuscaId);
             //String IDComentario = IDserver + NrAleatorio;
 
 
@@ -363,7 +363,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         String BuscarComentariosRegistrados = "BuscarComentariosRegistrados " + IDOcorrencia;
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarComentariosRegistrados);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarComentariosRegistrados);
 
         if (retorno.equals("erro")) {
             return "erro";
@@ -394,7 +394,6 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
                     ArrayComentariosRegistrados.adicionar(dado);
 
-
                 }
             }
         }
@@ -409,7 +408,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
 
