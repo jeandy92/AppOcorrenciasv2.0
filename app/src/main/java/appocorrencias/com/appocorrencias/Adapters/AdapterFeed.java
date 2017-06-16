@@ -20,11 +20,11 @@ import appocorrencias.com.appocorrencias.R;
 
 public class AdapterFeed extends BaseAdapter {
 
-    private final ArrayList<DadosOcorrencias> feed_ocorrencias;
+    private final ArrayList<DadosOcorrencias> feedOcorrencias;
     private final Activity act;
 
-    public AdapterFeed(Activity act, ArrayList<DadosOcorrencias> feedocorrencias){
-        this.feed_ocorrencias = feedocorrencias;
+    public AdapterFeed(Activity act, ArrayList<DadosOcorrencias> feedOcorrencias){
+        this.feedOcorrencias = feedOcorrencias;
         this.act =act;
 
     }
@@ -32,12 +32,12 @@ public class AdapterFeed extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return feed_ocorrencias.size();
+        return feedOcorrencias.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return feed_ocorrencias.get(position);
+        return feedOcorrencias.get(position);
     }
 
     @Override
@@ -48,49 +48,38 @@ public class AdapterFeed extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = act.getLayoutInflater().inflate(R.layout.acitivity_item_feed_ocorrencias,parent,false);
-        DadosOcorrencias lista_feed_ocorrencias  = feed_ocorrencias.get(position);
+        DadosOcorrencias listaFeedOcorrencias  = feedOcorrencias.get(position);
 
         //pegando as referências das Views
-        TextView tipodecrime = (TextView) view.findViewById(R.id.tv_bairro);
-        TextView apelido = (TextView) view.findViewById(R.id.tv_nome);
-        TextView descricao = (TextView)view.findViewById(R.id.txt_desc_comentario);
-        TextView endereco = (TextView)view.findViewById(R.id.txEndereco);
-        ImageView imagem = (ImageView)  view.findViewById(R.id.imagem_comentario);
+        TextView tipodecrime  = (TextView) view.findViewById(R.id.tv_bairro);
+        TextView apelido      = (TextView) view.findViewById(R.id.tv_nome);
+        TextView descricao    = (TextView)view.findViewById(R.id.txt_desc_comentario);
+        TextView endereco     = (TextView)view.findViewById(R.id.txEndereco);
+        ImageView imagem      = (ImageView)  view.findViewById(R.id.imagem_comentario);
         TextView idocorrencia = (TextView)  view.findViewById(R.id.txt_id_ocorrencia);
 
 
-        String anonimo = lista_feed_ocorrencias.getAnonimo();
+        String anonimo = listaFeedOcorrencias.getAnonimo();
         if(anonimo.equals("true")){
-            apelido.setText("Anonimo:");
+            apelido.setText("anonimo:");
         }
         else {
-            apelido.setText(String.valueOf(lista_feed_ocorrencias.getApelido())+":");
+            apelido.setText(String.valueOf(listaFeedOcorrencias.getApelido())+":");
         }
-        tipodecrime.setText(String.valueOf(lista_feed_ocorrencias.getTipo()));
-        descricao.setText(lista_feed_ocorrencias.getDescricao());
-        endereco.setText("Ocorreu na"+ lista_feed_ocorrencias.getRua() + " no dia " + lista_feed_ocorrencias.getData());
-        idocorrencia.setText(String.valueOf(lista_feed_ocorrencias.getNrOcorrencia()));
 
-        String CPF = lista_feed_ocorrencias.getCPF();
+         tipodecrime.setText(String.valueOf(listaFeedOcorrencias.getTipo()));
+           descricao.setText(listaFeedOcorrencias.getDescricao());
+            endereco.setText("Ocorreu na"+ listaFeedOcorrencias.getRua() + " no dia " + listaFeedOcorrencias.getData());
+        idocorrencia.setText(String.valueOf(listaFeedOcorrencias.getNrOcorrencia()));
 
-       // if (lista_feed_ocorrencias.getTipo().equals(" Roubo")) {
-        //  imagem.setImageResource(R.drawable.ic_assalto);
-        // } else if (lista_feed_ocorrencias.getTipo().equals(" Furto")) {
-        //     imagem.setImageResource(R.drawable.ic_furto);
-        // } else if (lista_feed_ocorrencias.getTipo().equals(" Trafico de drogas")) {
-        //      imagem.setImageResource(R.drawable.ic_trafico);
-        //  }else if (lista_feed_ocorrencias.getTipo().equals(" Homicidio")) {
-        //     imagem.setImageResource(R.drawable.ic_homicidio);
-        // }else if (lista_feed_ocorrencias.getTipo().equals(" Latrocinio")) {
-        //   imagem.setImageResource(R.drawable.ic_latrocinio);
-        // }else if (lista_feed_ocorrencias.getTipo().equals(" Abuso Sexual")) {
-        //      imagem.setImageResource(R.drawable.ic_abuso);
-        // }
+        String CPF = listaFeedOcorrencias.getCPF();
+
+
         if(anonimo.equals("true")){
             imagem.setImageResource(R.drawable.ic_anonimo);
         }
         else {
-            Bitmap img = ArrayImagensPerfilComentarios.GetImgPerfil(CPF);
+            Bitmap img = ArrayImagensPerfilComentarios.getImgPerfil(CPF);
             if(img != null) {
                 imagem.setImageBitmap(img);
             }else{

@@ -35,7 +35,7 @@ public class ArrayOcorrenciasRegistradas {
     public static String getAllBairro() {
         StringBuilder bairro = new StringBuilder();
         for (DadosOcorrencias x : dados) {
-            bairro.append(x.Bairro + "/");
+            bairro.append(x.bairro + "/");
         }
         return bairro.toString();
     }
@@ -43,7 +43,7 @@ public class ArrayOcorrenciasRegistradas {
    public static String getAllData() {
         StringBuilder data = new StringBuilder();
         for (DadosOcorrencias x : dados) {
-            data.append(x.Data + "/");
+            data.append(x.data + "/");
         }
         return data.toString();
     }
@@ -51,7 +51,7 @@ public class ArrayOcorrenciasRegistradas {
     public static String getAllTipo() {
         StringBuilder tipo = new StringBuilder();
         for (DadosOcorrencias x : dados) {
-            tipo.append(x.Tipo + "/");
+            tipo.append(x.tipo + "/");
         }
         return tipo.toString();
     }
@@ -60,7 +60,7 @@ public class ArrayOcorrenciasRegistradas {
         StringBuilder Nr = new StringBuilder();
 
         for (DadosOcorrencias x : dados) {
-            Nr.append(x.NrOcorrencia + "//");
+            Nr.append(x.nrOcorrencia + "//");
         }
         Nr.append("/-/" + dados.size());
         return Nr.toString();
@@ -69,143 +69,143 @@ public class ArrayOcorrenciasRegistradas {
     public static String getAllDescricao() {
         StringBuilder descricao = new StringBuilder();
         for (DadosOcorrencias x : dados) {
-            descricao.append(x.Descricao + "/");
+            descricao.append(x.descricao + "/");
         }
         return descricao.toString();
     }
 
     ///RETORNANDO DADOS POR NUMERO DE OCORRENCIA
-    public static String getBairroNr(String Nr) {
+    public static String getBairroNr(String pNr) {
         String bairro = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                bairro = dados.get(i).Bairro;
+                bairro = dados.get(i).bairro;
             }
         }
         return bairro;
     }
 
-    public static String getTipoNr(String Nr) {
+    public static String getTipoNr(String pNr) {
         String tipo = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                tipo = dados.get(i).Tipo;
+                tipo = dados.get(i).tipo;
             }
         }
         return tipo;
     }
 
-    public static String getDataNr(String Nr) {
+    public static String getDataNr(String pNr) {
         String data = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                data = dados.get(i).Data;
+                data = dados.get(i).data;
             }
         }
         return data;
     }
 
-    public static String getDescricaoNr(String Nr) {
+    public static String getDescricaoNr(String pNr) {
         String descricao = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                descricao = dados.get(i).Descricao;
+                descricao = dados.get(i).descricao;
             }
         }
         return descricao;
     }
 
-    public static String getCPFNr(String Nr) {
+    public static String getCPFNr(String pNr) {
         String cpf = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                cpf = dados.get(i).Cpf;
+                cpf = dados.get(i).cpf;
             }
         }
         return cpf;
     }
 
-    public static String getRuaNr(String Nr) {
+    public static String getRuaNr(String pNr) {
         String rua = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                rua = dados.get(i).Rua;
+                rua = dados.get(i).rua;
             }
         }
         return rua;
     }
 
-    public static String getUFNr(String Nr) {
+    public static String getUFNr(String pNr) {
         String uf = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                uf = dados.get(i).UF;
+                uf = dados.get(i).uf;
             }
         }
         return uf;
     }
 
-    public static String getCidadeNr(String Nr) {
+    public static String getCidadeNr(String pNr) {
         String cidade = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                cidade = dados.get(i).Cidade;
+                cidade = dados.get(i).cidade;
             }
         }
         return cidade;
     }
 
-    public static String getAnonimoNr(String Nr) {
+    public static String getAnonimoNr(String pNr) {
         String anonimo = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                anonimo = dados.get(i).Anonimo;
+                anonimo = dados.get(i).anonimo;
             }
         }
         return anonimo;
     }
 
-    public static String getApelidoNr(String Nr) {
+    public static String getApelidoNr(String pNr) {
         String apelido = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrOcorrencia)) {
+            if (pNr.equals(dados.get(i).nrOcorrencia)) {
 
-                apelido = dados.get(i).Apelido;
+                apelido = dados.get(i).apelido;
             }
         }
         return apelido;
     }
 
-    public static boolean BuscaExiste(String servico) {
+    public static boolean buscaExiste(String servico) {
         boolean stat = false;
         int n = dados.size();
         for (int i = 0; i < n; i++) {
@@ -219,7 +219,7 @@ public class ArrayOcorrenciasRegistradas {
 
     static void MostrarTipo() {
         for (DadosOcorrencias x : dados) {
-            System.out.println(x.Tipo);
+            System.out.println(x.tipo);
         }
     }
 

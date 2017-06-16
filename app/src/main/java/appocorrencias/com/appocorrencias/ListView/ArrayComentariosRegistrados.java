@@ -37,7 +37,7 @@ public class ArrayComentariosRegistrados {
         StringBuilder Nr = new StringBuilder();
 
         for (DadosComentarios x : dados) {
-            Nr.append(x.NrComentario + "//");
+            Nr.append(x.nrComentario + "//");
         }
         Nr.append("/-/" + dados.size());
         return Nr.toString();
@@ -50,9 +50,9 @@ public class ArrayComentariosRegistrados {
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrComentario)) {
+            if (Nr.equals(dados.get(i).nrComentario)) {
 
-                NrComentario = dados.get(i).NrComentario;
+                NrComentario = dados.get(i).nrComentario;
             }
         }
         return NrComentario;
@@ -63,9 +63,9 @@ public class ArrayComentariosRegistrados {
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrComentario)) {
+            if (Nr.equals(dados.get(i).nrComentario)) {
 
-                NrOcorrencia = dados.get(i).NrOcorrencia;
+                NrOcorrencia = dados.get(i).nrOcorrencia;
             }
         }
         return NrOcorrencia;
@@ -76,9 +76,9 @@ public class ArrayComentariosRegistrados {
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrComentario)) {
+            if (Nr.equals(dados.get(i).nrComentario)) {
 
-                data = dados.get(i).Data;
+                data = dados.get(i).data;
             }
         }
         return data;
@@ -89,22 +89,22 @@ public class ArrayComentariosRegistrados {
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrComentario)) {
+            if (Nr.equals(dados.get(i).nrComentario)) {
 
-                descricao = dados.get(i).Descricao;
+                descricao = dados.get(i).descricao;
             }
         }
         return descricao;
     }
 
-    public static String getCPFNr(String Nr) {
+    public static String getCpfNr(String Nr) {
         String cpf = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrComentario)) {
+            if (Nr.equals(dados.get(i).nrComentario)) {
 
-                cpf = dados.get(i).CPF;
+                cpf = dados.get(i).cpf;
             }
         }
         return cpf;
@@ -115,29 +115,28 @@ public class ArrayComentariosRegistrados {
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrComentario)) {
+            if (Nr.equals(dados.get(i).nrComentario)) {
 
-                Hora = dados.get(i).Hora;
+                Hora = dados.get(i).hora;
             }
         }
         return Hora;
     }
-
 
     public static String getApelidoNr(String Nr) {
         String apelido = null;
 
         int n = dados.size();
         for (int i = 0; i < n; i++) {
-            if (Nr.equals(dados.get(i).NrComentario)) {
+            if (Nr.equals(dados.get(i).nrComentario)) {
 
-                apelido = dados.get(i).Apelido;
+                apelido = dados.get(i).apelido;
             }
         }
         return apelido;
     }
 
-    public static boolean BuscaExiste(String servico) {
+    public static boolean buscaExiste(String servico) {
         boolean stat = false;
         int n = dados.size();
         for (int i = 0; i < n; i++) {
@@ -149,9 +148,9 @@ public class ArrayComentariosRegistrados {
         return stat;
     }
 
-    static void MostrarTipo() {
+    static void mostrarTipo() {
         for (DadosComentarios x : dados) {
-            System.out.println(x.Data);
+            System.out.println(x.data);
         }
     }
 

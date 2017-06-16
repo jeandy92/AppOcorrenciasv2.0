@@ -12,10 +12,7 @@ import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.DadosComentarios;
-import appocorrencias.com.appocorrencias.ListView.DadosImagensComentarios;
 import appocorrencias.com.appocorrencias.R;
-
-import static appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios.getImagens;
 
 /**
  * Created by Jeanderson on 01/05/2017.
@@ -23,11 +20,11 @@ import static appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComen
 
 public class AdapterComentarios extends BaseAdapter {
 
-    private ArrayList<DadosComentarios> feed_comentarios;
+    private ArrayList<DadosComentarios> feedComentarios;
     private final Activity act;
 
-    public AdapterComentarios(Activity act, ArrayList<DadosComentarios> feedocomentarios){
-        this.feed_comentarios = feedocomentarios;
+    public AdapterComentarios(Activity act, ArrayList<DadosComentarios> feedComentarios){
+        this.feedComentarios = feedComentarios;
         this.act =act;
 
     }
@@ -35,12 +32,12 @@ public class AdapterComentarios extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return feed_comentarios.size();
+        return feedComentarios.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return feed_comentarios.get(position);
+        return feedComentarios.get(position);
     }
 
     @Override
@@ -51,7 +48,7 @@ public class AdapterComentarios extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = act.getLayoutInflater().inflate(R.layout.acitivity_item_feed_comentarios,parent,false);
-        DadosComentarios lista_feed_comentarios  = feed_comentarios.get(position);
+        DadosComentarios lista_feed_comentarios  = feedComentarios.get(position);
 
 
         //pegando as referências das Views
@@ -66,10 +63,10 @@ public class AdapterComentarios extends BaseAdapter {
         dataHora.setText("Dia "+ lista_feed_comentarios.getData() + " às " + lista_feed_comentarios.getHora());
         idocorrencia.setText(String.valueOf(lista_feed_comentarios.getNrOcorrencia()));
 
-        String CPFComentario = lista_feed_comentarios.getCPF();
-        Bitmap ImgPerfil = ArrayImagensPerfilComentarios.GetImgPerfil(CPFComentario);
+        String cpfComentario = lista_feed_comentarios.getCpf();
+        Bitmap imgPerfil = ArrayImagensPerfilComentarios.getImgPerfil(cpfComentario);
 
-        imagem.setImageBitmap(ImgPerfil);
+        imagem.setImageBitmap(imgPerfil);
 
         return view;
     }

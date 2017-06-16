@@ -29,12 +29,12 @@ public class ArrayImagensPerfilComentarios {
         imagens.add(d);
     }
 
-    public static Bitmap GetImgPerfil(String CPF) {
+    public static Bitmap getImgPerfil(String pCpf) {
         Bitmap img = null;
 
         int n = imagens.size();
         for (int i = 0; i < n; i++) {
-            if (CPF.equals(imagens.get(i).CPF)) {
+            if (pCpf.equals(imagens.get(i).cpf)) {
 
                 img = imagens.get(i).img;
             }

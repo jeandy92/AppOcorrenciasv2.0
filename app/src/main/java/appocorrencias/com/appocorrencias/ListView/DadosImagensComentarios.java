@@ -1,25 +1,24 @@
 package appocorrencias.com.appocorrencias.ListView;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 
 /**
  * Created by PamelaNycoly on 06/05/2017.
  */
 public class DadosImagensComentarios {
-    public String CPF;
+    public String cpf;
     Bitmap img;
 
 
-    public DadosImagensComentarios(String CPF, Bitmap img) {
+    public DadosImagensComentarios(String pCpf, Bitmap pImg) {
 
-        this.CPF = CPF;
-        this.img = img;
+        this.cpf = pCpf;
+        this.img = pImg;
 
     }
 
-    public String getCPF() {
-        return CPF;
+    public String getCpf() {
+        return cpf;
     }
 
 

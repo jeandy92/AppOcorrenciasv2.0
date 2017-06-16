@@ -21,13 +21,13 @@ import appocorrencias.com.appocorrencias.R;
 
 public class AdapterOcorrencias extends BaseAdapter {
 
-    private ArrayList<DadosOcorrencias> ocorrenciasregistradas;
+    private ArrayList<DadosOcorrencias> ocorrenciasRegistradas;
     private Activity act;
 
     private ImageButton BtnDeletarOcorrencia;
 
     public AdapterOcorrencias(Activity act, ArrayList<DadosOcorrencias> ocorrenciasregistradas){
-        this.ocorrenciasregistradas = ocorrenciasregistradas;
+        this.ocorrenciasRegistradas = ocorrenciasregistradas;
         this.act =act;
 
     }
@@ -35,12 +35,12 @@ public class AdapterOcorrencias extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return ocorrenciasregistradas.size();
+        return ocorrenciasRegistradas.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return ocorrenciasregistradas.get(position);
+        return ocorrenciasRegistradas.get(position);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class AdapterOcorrencias extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = act.getLayoutInflater().inflate(R.layout.activity_item_ocorrencias_registradas,parent,false);
-        DadosOcorrencias listaOcorrenciasRegistradas = ocorrenciasregistradas.get(position);
+        DadosOcorrencias listaOcorrenciasRegistradas = ocorrenciasRegistradas.get(position);
 
         //pegando as referências das Views
         TextView tipodecrime = (TextView) view.findViewById(R.id.tv_bairro);
@@ -68,27 +68,13 @@ public class AdapterOcorrencias extends BaseAdapter {
 
         String CPF = listaOcorrenciasRegistradas.getCPF();
 
-        // if (lista_feed_ocorrencias.getTipo().equals(" Roubo")) {
-        //  imagem.setImageResource(R.drawable.ic_assalto);
-        // } else if (lista_feed_ocorrencias.getTipo().equals(" Furto")) {
-        //     imagem.setImageResource(R.drawable.ic_furto);
-        // } else if (lista_feed_ocorrencias.getTipo().equals(" Trafico de drogas")) {
-        //      imagem.setImageResource(R.drawable.ic_trafico);
-        //  }else if (lista_feed_ocorrencias.getTipo().equals(" Homicidio")) {
-        //     imagem.setImageResource(R.drawable.ic_homicidio);
-        // }else if (lista_feed_ocorrencias.getTipo().equals(" Latrocinio")) {
-        //   imagem.setImageResource(R.drawable.ic_latrocinio);
-        // }else if (lista_feed_ocorrencias.getTipo().equals(" Abuso Sexual")) {
-        //      imagem.setImageResource(R.drawable.ic_abuso);
-        // }
-
-            Bitmap img = ArrayImagensPerfilComentarios.GetImgPerfil(CPF);
+            Bitmap img = ArrayImagensPerfilComentarios.getImgPerfil(CPF);
             if(img != null) {
                 imagem.setImageBitmap(img);
             }else{
                 imagem.setImageResource(R.drawable.ic_app);
             }
-//        imagem.setImageResource(R.drawable.ic_assalto);
+
         return view;
     }
 

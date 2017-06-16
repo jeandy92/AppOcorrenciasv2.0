@@ -64,15 +64,15 @@ public class AdapterBuscaUsuario extends BaseAdapter{
 
 
         cpf.setText(usuariosEcontrados.getCpf());
-        nome.setText(usuariosEcontrados.getNome());
+        nome.setText(usuariosEcontrados.getUsuNome());
         cidade.setText(usuariosEcontrados.getCidade());
         bairro.setText(usuariosEcontrados.getBairro());
         endereco.setText(String.valueOf( usuariosEcontrados.getRua()+ " N° "+usuariosEcontrados.getNumeroCasa() ) );
         //imagemUsuario.setImageResource(R.drawable.ic_app);
 
-        String CPF = usuariosEcontrados.getCpf();
+        String cpfR = usuariosEcontrados.getCpf();
 
-        Bitmap img = ArrayImagensPerfilComentarios.GetImgPerfil(CPF);
+        Bitmap img = ArrayImagensPerfilComentarios.getImgPerfil(cpfR);
         if(img != null) {
             imagemUsuario.setImageBitmap(img);
         }else{

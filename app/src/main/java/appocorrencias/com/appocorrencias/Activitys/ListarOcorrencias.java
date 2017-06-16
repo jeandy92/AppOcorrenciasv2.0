@@ -28,16 +28,16 @@ import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evB
 public class ListarOcorrencias extends AppCompatActivity {
 
     private ListView lista;
-    public String Nome, CPF, Bairro;
+    public String loginNome, loginCpf, loginBairro;
 
-    static byte[] imagem;
-    static byte[] imagem2;
-    static byte[] imagem3;
+    static byte[] primeiraImagem;
+    static byte[] segundaImagem;
+    static byte[] terceiraImagem;
 
 
-    static Bitmap img;
-    static Bitmap img2;
-    static Bitmap img3;
+    static Bitmap primeiraImagemConvertida;
+    static Bitmap segundaImagemConvertida;
+    static Bitmap terceiraImagemConvertida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +48,16 @@ public class ListarOcorrencias extends AppCompatActivity {
         //Pegando valores que vem do Login
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Nome = bundle.getString("nome");
-        CPF = bundle.getString("cpf");
-        Bairro = bundle.getString("bairro");
+        loginNome     = bundle.getString("nome");
+        loginCpf      = bundle.getString("cpf");
+        loginBairro   = bundle.getString("bairro");
 
 
         lista = (ListView) findViewById(R.id.lista_ocorrencias_do_usuario);
 
-        ArrayList<DadosOcorrencias> listadeocorrencias = getListaOcorrencia();
+        ArrayList<DadosOcorrencias> listaDeOcorrencias = getListaOcorrencia();
 
-        AdapterOcorrencias adapter = new AdapterOcorrencias(this, listadeocorrencias);
+        AdapterOcorrencias adapter = new AdapterOcorrencias(this, listaDeOcorrencias);
 
         lista.setAdapter(adapter);
 
@@ -67,15 +67,13 @@ public class ListarOcorrencias extends AppCompatActivity {
                 if (position >= 0) {
 
                     Intent i = new Intent(view.getContext(), ItemFeedOcorrencias.class);
+
                     String idocorrencia = ((TextView) view.findViewById(R.id.txt_id_ocorrencia)).getText().toString();
-
-
-                    // String descocorrencia = ((TextView) view.findViewById(R.id.desc_ocorrencia)).getText().toString();
                     String tela = "ListarOcorrencia";
 
-                    i.putExtra("cpf", CPF);
-                    i.putExtra("nome", Nome);
-                    i.putExtra("bairro", Bairro);
+                    i.putExtra("cpf", loginCpf);
+                    i.putExtra("nome", loginNome);
+                    i.putExtra("bairro", loginBairro);
                     i.putExtra("id_ocorrencia", idocorrencia);
                     i.putExtra("tela", tela);
 
@@ -113,7 +111,7 @@ public class ListarOcorrencias extends AppCompatActivity {
         deleteAllArray();
 
         try {
-            evBuscarOcorrenciasBairro(Bairro);
+            evBuscarOcorrenciasBairro(loginBairro);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,9 +119,9 @@ public class ListarOcorrencias extends AppCompatActivity {
         Intent cliente = new Intent(this, Cliente.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString("nome", Nome);
-        bundle.putString("cpf", CPF);
-        bundle.putString("bairro", Bairro);
+        bundle.putString("nome", loginNome);
+        bundle.putString("cpf", loginCpf);
+        bundle.putString("bairro", loginBairro);
 
         cliente.putExtras(bundle);
         this.startActivity(cliente);

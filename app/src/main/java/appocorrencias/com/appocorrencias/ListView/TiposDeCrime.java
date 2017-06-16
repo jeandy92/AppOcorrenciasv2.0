@@ -8,40 +8,40 @@ import java.util.ArrayList;
 
 public class TiposDeCrime {
 
-    public static String Tipo_crime;
-    public static String Descricao;
-    public static String Imagem;
+    public static String tipoCrime;
+    public static String descricao;
+    public static String imagem;
 
     public static ArrayList<TiposDeCrime> listadecrimes;
-    public TiposDeCrime(String tipo_crime ,String  descricao, String imagem ) {
+    public TiposDeCrime(String tipoCrime, String  descricao, String imagem ) {
 
-        this.Tipo_crime = tipo_crime;
-        this.Descricao = descricao;
-        this.Imagem =imagem;
+        this.tipoCrime = tipoCrime;
+        this.descricao = descricao;
+        this.imagem =imagem;
     }
 
-    public static String getTipo_crime() {
-        return Tipo_crime;
+    public static String getTipoCrime() {
+        return tipoCrime;
     }
 
-    public static void setTipo_crime(String tipo_crime) {
-        Tipo_crime = tipo_crime;
+    public static void setTipoCrime(String tipoCrime) {
+        TiposDeCrime.tipoCrime = tipoCrime;
     }
 
     public static String getDescricao() {
-        return Descricao;
+        return descricao;
     }
 
     public static void setDescricao(String descricao) {
-        Descricao = descricao;
+        TiposDeCrime.descricao = descricao;
     }
 
     public static String getImagem() {
-        return Imagem;
+        return imagem;
     }
 
     public static void setImagem(String imagem) {
-        Imagem = imagem;
+        TiposDeCrime.imagem = imagem;
     }
 
     public static ArrayList<TiposDeCrime> criarcrimes(){
@@ -60,7 +60,7 @@ public class TiposDeCrime {
 
     @Override
     public String toString() {
-        return "Tipo de crime"+Tipo_crime+"\nDescricao:"+Descricao+" "+Imagem;
+        return "tipo de crime"+ tipoCrime +"\ndescricao:"+ descricao +" "+ imagem;
 
     }
 }
