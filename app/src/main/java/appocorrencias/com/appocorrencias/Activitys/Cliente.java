@@ -258,7 +258,7 @@ public class Cliente extends AppCompatActivity {
         bundle.putString("nome", Nome);
         bundle.putString("cpf", CPF);
         bundle.putString("bairro", Bairro);
-        bundle.putString("tela", "Cliente");
+        bundle.putString("telaCliente", "Cliente");
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);

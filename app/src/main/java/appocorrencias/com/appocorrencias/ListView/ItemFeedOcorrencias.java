@@ -167,8 +167,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
         }
 
-        String ip_conexao = /*"192.168.0.108";//*/ "52.34.140.131"; //"172.20.10.3";
-        int porta_conexao = 63200;//2222;
+        String ip_conexao = "192.168.1.17"; /*// "52.34.140.131"; "172.20.10.3";*/
+        int porta_conexao = 2222; //63200;
 
 
         String str = null;
@@ -309,7 +309,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
 
             String ArrayNome[] = Nome.split(" ");
-            String Apelido = ArrayNome[1];
+            String Apelido = ArrayNome[0];
 
             convComentario = removerAcentos(Comentario);
 

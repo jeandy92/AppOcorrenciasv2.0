@@ -93,24 +93,7 @@ public class Login extends AppCompatActivity {
         btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
 
         //Quando usuário clicar nos campos de login e senha ele apaga os dados default para o preenchimento
-        txtUsuario.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                txtUsuario.setText("");
-            }
-
-
-        });
-        txtSenha.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                txtSenha.setText("");
-            }
-
-
-        });
 
         //Insere a mascara no cpf
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", txtUsuario);
@@ -286,7 +269,7 @@ public class Login extends AppCompatActivity {
 
     public static String evBuscarOcorrenciasBairro(String Bairro2) throws IOException {
 
-        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro" + Bairro2;
+        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " + Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
         String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);

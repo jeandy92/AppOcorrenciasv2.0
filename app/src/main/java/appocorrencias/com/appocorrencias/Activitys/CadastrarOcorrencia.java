@@ -356,10 +356,10 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             //endereco = buscarEndereco(-23.540827, -46.761993);
 
 
-            Log.i(TAG, endereco.getLocality());
+//            Log.i(TAG, endereco.getLocality());
             //Log.i(TAG, endereco.getAdminArea());
-            Log.i(TAG, endereco.getAddressLine(1));
-            Log.i(TAG, endereco.getSubLocality());
+           // Log.i(TAG, endereco.getAddressLine(1));
+           // Log.i(TAG, endereco.getSubLocality());
 
             BuscarCep buscar_cep = new BuscarCep();
 
@@ -476,7 +476,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         convBaiSalvarOcorre = edtBairro.getText().toString();
 
         String ArrayNome[] = nomeCliente.split(" ");
-        String PriNome = ArrayNome[1];
+        String PriNome = ArrayNome[0];
 
         convTipoCrime = removerAcentos(segundoTipoDeCrime);
         convDescricao = removerAcentos(convDesSalvarOcorre);

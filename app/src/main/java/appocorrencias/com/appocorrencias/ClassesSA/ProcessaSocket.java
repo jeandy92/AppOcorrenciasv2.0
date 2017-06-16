@@ -28,9 +28,9 @@ public class ProcessaSocket {
     static Socket socket;
 
 
-    //private static String ip_conexao = "192.168.1.12";// "52.34.140.131";
-    private static String ip_conexao = "52.34.140.131";
-    private static int  porta_conexao = 63200;
+    private static String ip_conexao = "192.168.1.17";// "52.34.140.131";
+    //private static String ip_conexao = "52.34.140.131";
+    private static int porta_conexao = 2222;//63200;
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -217,21 +217,6 @@ public class ProcessaSocket {
         byte[] buff = new byte[4];
         int k = 0, lidos = 0, lidos_total = 0;
 
-        // le tamanho total
-        /*in.read(buff, 0, 4);
-        int ttotal2 = valor_to_int(buff);
-        Log.i("Teste de Total", "------------------------" + String.valueOf(ttotal2));
-        byte[] pacote3 = new byte[ttotal2];
-        byte[][] teste2 = new byte[1][];
-
-        System.arraycopy(pacote3, 0, buff, 0, 4);
-        teste2[0] = new byte[valor_to_int(buff)];
-
-        System.arraycopy(pacote3, 4, teste2[0], 0, valor_to_int(buff));
-        Log.i("Teste de Total222", "------------------------" + String.valueOf(valor_to_int(buff)));
-        String testeFalse = new String(teste2[0], "UTF-8");
-        Log.i("Teste de False", "------------------------" + testeFalse); */
-
 
         byte[] resulBuff = new byte[0];
         //byte[] buff2 = new byte[4];
@@ -296,7 +281,7 @@ public class ProcessaSocket {
 
                 String cpfDecode2 = new String(cpf[i], "UTF-8");
 
-                Log.i("Valor cpfBuscarOcorrencia Processa", "------------------------" + cpfDecode2);
+                Log.i("Valor cpfBusca Processa", "------------------------" + cpfDecode2);
 
                 deslocamento += cpf[i].length;//valor_to_int(buff);
 
@@ -312,7 +297,7 @@ public class ProcessaSocket {
 
                 String cpfDecode = new String(cpf[i], "UTF-8");
 
-                Log.i("Valor cpfBuscarOcorrencia Processa", "------------------------" + cpfDecode);
+                Log.i("Valor cpf Processa", "------------------------" + cpfDecode);
 
                 DadosImagensComentarios dados = new DadosImagensComentarios(cpfDecode, imagem_convertida);
 
@@ -459,41 +444,41 @@ public class ProcessaSocket {
     }
 
     //Mé
-    public static void adicionandoUsuarioNotificacao(String token_usuario , String bairro_usu) {
+    public static void adicionandoUsuarioNotificacao(String token_usuario, String bairro_usu) {
 
         try {
 
-                socket = new Socket(ip_conexao, 63300);
+            socket = new Socket(ip_conexao, 63300);
 
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
 
-                out.writeUTF("ADICIONAR_AO_GRUPO");
+            out.writeUTF("ADICIONAR_AO_GRUPO");
 
-                if (in.readBoolean()) {
+            if (in.readBoolean()) {
 
-                    //out.writeUTF("eH27cLSAdao:APA91bFd74mH1n8mSOKoolLpYlb2m8-DFLu3GTNY4hMi3ZEOdnDiSgy1cmPg0n5uyx1O2J5nezpBGCci8kFpf0vmpUAQDr93H4bZTZwoFrGwaSoMwhqf8ElvzJHoHpa97hsJ1ZsN1tzb");
-                    //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
+                //out.writeUTF("eH27cLSAdao:APA91bFd74mH1n8mSOKoolLpYlb2m8-DFLu3GTNY4hMi3ZEOdnDiSgy1cmPg0n5uyx1O2J5nezpBGCci8kFpf0vmpUAQDr93H4bZTZwoFrGwaSoMwhqf8ElvzJHoHpa97hsJ1ZsN1tzb");
+                //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
 
-                    System.out.println(token_usuario);
-                    out.writeUTF(token_usuario);
+                System.out.println(token_usuario);
+                out.writeUTF(token_usuario);
 
-                    System.out.println(bairro_usu.trim());
-                    out.writeUTF(bairro_usu);
-                    //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
+                System.out.println(bairro_usu.trim());
+                out.writeUTF(bairro_usu);
+                //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
 
 
-                    Boolean resultado_servidor = in.readBoolean();
+                Boolean resultado_servidor = in.readBoolean();
 
-                    if (resultado_servidor) {
+                if (resultado_servidor) {
 
-                        System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO "+bairro_usu);
+                    System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO " + bairro_usu);
 
-                    } else {
-                        System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO "+bairro_usu);
-                    }
-
+                } else {
+                    System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO " + bairro_usu);
                 }
+
+            }
 
 
         } catch (IOException e) {
@@ -504,7 +489,7 @@ public class ProcessaSocket {
     }
 
 
-    public static void criandoGrupoNotificacao (String token_usuario, String nomeGrupoNotificacao, String bairroUsuario){
+    public static void criandoGrupoNotificacao(String token_usuario, String nomeGrupoNotificacao, String bairroUsuario) {
 
         try {
 
@@ -518,9 +503,9 @@ public class ProcessaSocket {
 
             if (in.readBoolean()) {
 
-                out.writeUTF( token_usuario );
-                out.writeUTF( nomeGrupoNotificacao );
-                out.writeUTF( bairroUsuario);
+                out.writeUTF(token_usuario);
+                out.writeUTF(nomeGrupoNotificacao);
+                out.writeUTF(bairroUsuario);
 
 
                 Boolean resultado_servidor = in.readBoolean();
@@ -537,13 +522,13 @@ public class ProcessaSocket {
             }
 
         } catch (IOException e) {
-        System.out.println("Erro ao se conectar com o servidor \n");
-        System.out.println(e.getMessage());
+            System.out.println("Erro ao se conectar com o servidor \n");
+            System.out.println(e.getMessage());
 
-         }
+        }
     }
 
-    public static void enviandoNotificacaoGrupo (String tokenUsuario, String bairroUsu){
+    public static void enviandoNotificacaoGrupo(String tokenUsuario, String bairroUsu) {
         try {
 
             socket = new Socket("52.34.140.131", 63300);
@@ -583,8 +568,6 @@ public class ProcessaSocket {
     }
 
 
-
-
     public static String cadastrar_Ocorrencia(String ID, String CPFCliente, String tipo_crime, String convDataOcorrencia,
                                               String UF, String convDescricao, String convEndereco, String convCidade,
                                               String convBairro, String Anonimo, String PriNome) throws IOException {
@@ -592,116 +575,119 @@ public class ProcessaSocket {
         String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF + " " + convDataOcorrencia +
                 " " + Anonimo + " " + PriNome;
 
-        String OcorrenciaRua = "OcorrenciaRua" + " " + ID + " " + convEndereco;
-        String OcorrenciaBairro = "OcorrenciaBairro" + " " + ID + " " + convBairro;
-        String OcorrenciaCidade = "OcorrenciaCidade" + " " + ID + " " + convCidade;
-        String OcorrenciaDescricao = "OcorrenciaDescricao" + " " + ID + " " + convDescricao;
-        String OcorrenciaTipo = "OcorrenciaTipo" + " " + ID + " " + tipo_crime;
+        byte[] byteDados1 = CadastrarOcorrencia.getBytes();
 
-        String retorno = cadastrar1_no_server(CadastrarOcorrencia);
+        byte[] byteRua = convEndereco.getBytes();
+        byte[] byteBairro = convBairro.getBytes();
+        byte[] byteCidade = convCidade.getBytes();
+        byte[] byteDescricao = convDescricao.getBytes();
+        byte[] byteTipoCrime = tipo_crime.getBytes();
+
+        int tamanhoDado1, tamanhoRua, tamanhoBairro, tamanhoCidade, tamanhoDescricao, tamanhoTipoCrime;
+
+        tamanhoDado1 = byteDados1.length;
+        tamanhoRua = byteRua.length;
+        tamanhoBairro = byteBairro.length;
+        tamanhoCidade = byteCidade.length;
+        tamanhoDescricao = byteDescricao.length;
+        tamanhoTipoCrime = byteTipoCrime.length;
+
+        byte[] byteTamanhoDado1 = toBytes(tamanhoDado1);
+        byte[] byteTamanhoRua = toBytes(tamanhoRua);
+        byte[] byteTamanhoBairro = toBytes(tamanhoBairro);
+        byte[] byteTamanhoCidade = toBytes(tamanhoCidade);
+        byte[] byteTamanhoDescricao = toBytes(tamanhoDescricao);
+        byte[] byteTamanhoTipoCrime = toBytes(tamanhoTipoCrime);
+
+        byte[] TamanhoEDado1 = concat(byteTamanhoDado1, byteDados1);
+        byte[] TamanhoERua = concat(byteTamanhoRua, byteRua);
+        byte[] TamanhoEBairro = concat(byteTamanhoBairro, byteBairro);
+        byte[] TamanhoECidade = concat(byteTamanhoCidade, byteCidade);
+        byte[] TamanhoEDescricao = concat(byteTamanhoDescricao, byteDescricao);
+        byte[] TamanhoETipo = concat(byteTamanhoTipoCrime, byteTipoCrime);
+
+        byte[] Dado1ERua = concat(TamanhoEDado1, TamanhoERua);
+        byte[] BairroECidade = concat(TamanhoEBairro, TamanhoECidade);
+        byte[] DescricaoETipo = concat(TamanhoEDescricao, TamanhoETipo);
+        byte[] DadoRuaBaiCid = concat(Dado1ERua, BairroECidade);
+
+        byte[] DadoRuaBairCidDescTip = concat(DadoRuaBaiCid, DescricaoETipo);
+
+        int tamanhoPacote = DadoRuaBairCidDescTip.length;
+        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanhoPct, DadoRuaBairCidDescTip);
+
+        String retorno = Bytes(byteFinal);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                retorno = cadastrar1_no_server(OcorrenciaRua);
-                if (retorno.equals("erro")) {
-                    return "erro";
-                } else {
-                    if (retorno.equals("true")) {
-                        retorno = cadastrar1_no_server(OcorrenciaBairro);
-                        if (retorno.equals("erro")) {
-                            return "erro";
-                        } else {
-                            if (retorno.equals("true")) {
-                                retorno = cadastrar1_no_server(OcorrenciaCidade);
-                                if (retorno.equals("erro")) {
-                                    return "erro";
-                                } else {
-                                    if (retorno.equals("true")) {
-                                        retorno = cadastrar1_no_server(OcorrenciaDescricao);
-                                        if (retorno.equals("erro")) {
-                                            return "erro";
-                                        } else {
-                                            if (retorno.equals("true")) {
-                                                retorno = cadastrar1_no_server(OcorrenciaTipo);
-                                                if (retorno.equals("erro")) {
-                                                    return "erro";
-                                                } else {
-                                                    return "true";
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                return "true";
             }
             return "false";
-
         }
-
     }
 
     public static String cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
                                           String convCep, String uf, String numero, String rua, String bairro,
                                           String cidade, String nome, String dataNasc, String complemento) throws IOException {
 
-        String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha +
-                " " + email + " " + convTelefone + " " + convCep +
+        String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha + " " + email + " " + convTelefone + " " + convCep +
                 " " + uf + " " + numero + " " + dataNasc;
-        String cadastroNome = "CadastrarNome" + " " + convCpf + " " + nome;
-        String cadastroRua = "CadastrarRua" + " " + convCpf + " " + rua;
-        String cadastroBairro = "CadastrarBairro" + " " + convCpf + " " + bairro;
-        String cadastroCidade = "CadastrarCidade" + " " + convCpf + " " + cidade;
-        String cadastroComplemento = "CadastrarComplemento" + " " + convCpf + " " + complemento;
 
-        String retorno = cadastrar1_no_server(cadastro1);
+        byte[] byteDados1 = cadastro1.getBytes();
+
+        byte[] byteRua = rua.getBytes();
+        byte[] byteBairro = bairro.getBytes();
+        byte[] byteCidade = cidade.getBytes();
+        byte[] byteNome = nome.getBytes();
+        byte[] byteComplemento = complemento.getBytes();
+
+        int tamanhoDado1, tamanhoRua, tamanhoBairro, tamanhoCidade, tamanhoNome, tamanhoComplemento;
+
+        tamanhoDado1 = byteDados1.length;
+        tamanhoRua = byteRua.length;
+        tamanhoBairro = byteBairro.length;
+        tamanhoCidade = byteCidade.length;
+        tamanhoNome = byteNome.length;
+        tamanhoComplemento = byteComplemento.length;
+
+        byte[] byteTamanhoDado1 = toBytes(tamanhoDado1);
+        byte[] byteTamanhoRua = toBytes(tamanhoRua);
+        byte[] byteTamanhoBairro = toBytes(tamanhoBairro);
+        byte[] byteTamanhoCidade = toBytes(tamanhoCidade);
+        byte[] byteTamanhoNome = toBytes(tamanhoNome);
+        byte[] byteTamanhoComplemento = toBytes(tamanhoComplemento);
+
+        byte[] TamanhoEDado1 = concat(byteTamanhoDado1, byteDados1);
+        byte[] TamanhoERua = concat(byteTamanhoRua, byteRua);
+        byte[] TamanhoEBairro = concat(byteTamanhoBairro, byteBairro);
+        byte[] TamanhoECidade = concat(byteTamanhoCidade, byteCidade);
+        byte[] TamanhoENome = concat(byteTamanhoNome, byteNome);
+        byte[] TamanhoEComplemento = concat(byteTamanhoComplemento, byteComplemento);
+
+        byte[] Dado1ERua = concat(TamanhoEDado1, TamanhoERua);
+        byte[] BairroECidade = concat(TamanhoEBairro, TamanhoECidade);
+        byte[] NomeEComplemento = concat(TamanhoENome, TamanhoEComplemento);
+        byte[] DadoRuaCidBair = concat(Dado1ERua, BairroECidade);
+
+        byte[] DadoRuaBairCidNomComp = concat(DadoRuaCidBair, NomeEComplemento);
+
+        int tamanhoPacote = DadoRuaBairCidNomComp.length;
+        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanhoPct, DadoRuaBairCidNomComp);
+
+        String retorno = Bytes(byteFinal);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                retorno = cadastrar1_no_server(cadastroNome);
-                if (retorno.equals("erro")) {
-                    return "erro";
-                } else {
-                    if (retorno.equals("true")) {
-                        retorno = cadastrar1_no_server(cadastroRua);
-                        if (retorno.equals("erro")) {
-                            return "erro";
-                        } else {
-                            if (retorno.equals("true")) {
-                                retorno = cadastrar1_no_server(cadastroBairro);
-                                if (retorno.equals("erro")) {
-                                    return "erro";
-                                } else {
-                                    if (retorno.equals("true")) {
-                                        retorno = cadastrar1_no_server(cadastroCidade);
-                                        if (retorno.equals("erro")) {
-                                            return "erro";
-                                        } else {
-                                            if (retorno.equals("true")) {
-                                                retorno = cadastrar1_no_server(cadastroComplemento);
-                                                if (retorno.equals("erro")) {
-                                                    return "erro";
-                                                } else {
-                                                    return "true";
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                return "true";
             }
-
+            return "false";
         }
-        return "false";
     }
 
     public static String cadastrar_Comentario(String IDComentario, String IDOcorrencia, String CPFCliente, String Data, String Hora,
