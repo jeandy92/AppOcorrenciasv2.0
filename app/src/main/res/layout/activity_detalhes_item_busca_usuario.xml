@@ -79,7 +79,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1"
-                tools:layout_editor_absoluteY="91dp">
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="80dp">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager"
@@ -88,7 +89,6 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="0dp"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="0dp"
                     android:visibility="invisible"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -124,7 +124,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_x="196dp"
                 android:layout_y="68dp"
-                android:text="usuNascimento"
+                android:text="Nascimento"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -151,12 +151,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="27dp"
                 android:layout_x="30dp"
                 android:layout_y="68dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="cpf"
+                android:text="CPF"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 android:visibility="visible"

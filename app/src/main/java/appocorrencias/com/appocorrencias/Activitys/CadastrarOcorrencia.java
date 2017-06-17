@@ -108,7 +108,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
         iv1 = (ImageView) findViewById(R.id.imageView1);
         iv2 = (ImageView) findViewById(R.id.imageView2);
-        iv3 = (ImageView) findViewById(R.id.ivCliente);
+        iv3 = (ImageView) findViewById(R.id.imageView3);
 
 
         edtCidade = (EditText) findViewById(R.id.edtCidade);
@@ -122,15 +122,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         btnAnonimo = (CheckBox) findViewById((R.id.rdBtnAnonimo));
         btnSalvarOcorrencia = (Button) findViewById(R.id.btnSalvaOcorrencia);
 
-        edtDescricao.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                edtDescricao.setText("");
-            }
-
-
-        });
 
         // Inserindo Mascaras.
         MaskEditTextChangedListener maskData = new MaskEditTextChangedListener("##/##/####", edtDataOcorrencia);
@@ -149,9 +140,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         SimpleDateFormat formatarData = new SimpleDateFormat("dd-MM-yyyy");
         edtDataOcorrencia.setText(formatarData.format(data).replaceAll("[^0123456789]", ""));
 
-
     }
-
 
     // Galeria
     public void limparImg(View view) {
@@ -289,7 +278,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 dialogo("É preciso a permission ACCESS_FINE_LOCATION para acessar sua localização.", new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
             } else {
@@ -298,7 +286,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         } else {
             selecionandoLocalidadeAtual();
         }
-
 
     }
 
@@ -314,13 +301,28 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         double latitude = 0;
         double longitude = 0;
 
+
+        if (!isGPSEnabled) {
+            if (location == null) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, (LocationListener) this);
+                Toast.makeText(this, "Localização desligada", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "GPS Enabled");
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (location != null) {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
+            }
+        }
+
         if (!isGPSEnabled || !isNetworkEnabled) {
             Log.i(TAG, "A geolocalização não pode ser usada.");
+            Toast.makeText(this, " A geolocalização não pode ser usada localização desligada ", Toast.LENGTH_SHORT).show();
         } else {
             if (isNetworkEnabled) {
 
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 0, this);
-                Toast.makeText(this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Network");
 
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -336,40 +338,34 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                 }
             }
 
-            if (isGPSEnabled) {
-                if (location == null) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, (LocationListener) this);
-                    Toast.makeText(this, "Localização desligada", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "GPS Enabled");
-                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if (location != null) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                    }
-                }
-            }
+
         }
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
 
         try {
-            endereco = buscarEndereco(latitude   ,  longitude);
-            //endereco = buscarEndereco(-23.540827, -46.761993);
+            if(latitude!=0 || longitude!=0 ) {
+
+                endereco = buscarEndereco(latitude, longitude);
+                //endereco = buscarEndereco(-23.540827, -46.761993);
 
 
 //            Log.i(TAG, endereco.getLocality());
-            //Log.i(TAG, endereco.getAdminArea());
-           // Log.i(TAG, endereco.getAddressLine(1));
-           // Log.i(TAG, endereco.getSubLocality());
+                //Log.i(TAG, endereco.getAdminArea());
+                // Log.i(TAG, endereco.getAddressLine(1));
+                // Log.i(TAG, endereco.getSubLocality());
 
-            BuscarCep buscar_cep = new BuscarCep();
+                BuscarCep buscar_cep = new BuscarCep();
 
-            edtCidade.setText(endereco.getLocality());
-            edtEstado.setText(endereco.getAdminArea());
-            edtRua.setText(endereco.getThoroughfare());
-            edtBairro.setText(endereco.getSubLocality());
-            edtEstado.setText(buscar_cep.getUF(endereco.getPostalCode()));
+                edtCidade.setText(endereco.getLocality());
+                edtEstado.setText(endereco.getAdminArea());
+                edtRua.setText(endereco.getThoroughfare());
+                edtBairro.setText(endereco.getSubLocality());
+                edtEstado.setText(buscar_cep.getUF(endereco.getPostalCode()));
 
-
+            }
+            else{
+                Toast.makeText(this, "Ligar localização", Toast.LENGTH_SHORT).show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -498,12 +494,12 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             edtDescricao.requestFocus();
         } else {
             if (convEndereco.isEmpty()) {
-                edtRua.setError("Faltou preencher rua ");
+                edtRua.setError("Faltou preencher Rua ");
                 edtRua.setFocusable(true);
                 edtRua.requestFocus();
             } else {
                 if (convCidade.isEmpty()) {
-                    edtCidade.setError("Faltou preencher cidade ");
+                    edtCidade.setError("Faltou preencher Cidade ");
                     edtCidade.setFocusable(true);
                     edtCidade.requestFocus();
                 } else {
@@ -526,7 +522,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                             //String ID = IDserver + NrAleatorio;
 
 
-                            String retorno = processaSocket.cadastrarOcorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
+                            String retorno = processaSocket.cadastrar_Ocorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
                                     convEndereco, convCidade, convBairro, Anonimo, PriNome);
 
                             if (retorno.equals("erro")) {
@@ -539,15 +535,15 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                     if (byteImagem != null) {
                                         int x1 = random.nextInt(101);
                                         String IDImg = Integer.toString(x1);
-                                        retornoImg = processaSocket.enviaImg(IDImg, IDserver, cpfCliente, "Img1", byteImagem);
+                                        retornoImg = processaSocket.envia_Img(IDImg, IDserver, cpfCliente, "Img1", byteImagem);
                                         if (retornoImg.equals("true") && byteImagem2 != null) {
                                             int x2 = random.nextInt(101);
                                             String IDImg2 = Integer.toString(x2);
-                                            retornoImg = processaSocket.enviaImg(IDImg2, IDserver, cpfCliente, "Img2", byteImagem2);
+                                            retornoImg = processaSocket.envia_Img(IDImg2, IDserver, cpfCliente, "Img2", byteImagem2);
                                             if (retornoImg.equals("true") && byteImagem3 != null) {
                                                 int x3 = random.nextInt(101);
                                                 String IDImg3 = Integer.toString(x3);
-                                                retornoImg = processaSocket.enviaImg(IDImg3, IDserver, cpfCliente, "Img3", byteImagem3);
+                                                retornoImg = processaSocket.envia_Img(IDImg3, IDserver, cpfCliente, "Img3", byteImagem3);
                                             } else {
                                                 Toast.makeText(this, "Duas Img", Toast.LENGTH_SHORT).show();
                                             }
@@ -555,7 +551,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                             Toast.makeText(this, "Uma Img", Toast.LENGTH_SHORT).show();
                                         }
                                     } else {
-                                        Toast.makeText(this, "Nao há primeiraImagem", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(this, "Nao há imagem", Toast.LENGTH_SHORT).show();
                                     }
 
                                     Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
