@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "784063389852",
+    "firebase_url": "https://fir-appocorrencias.firebaseio.com",
+    "project_id": "firebase-appocorrencias",
+    "storage_bucket": "firebase-appocorrencias.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784063389852:android:4b82016da81b13c9",
+        "android_client_info": {
+          "package_name": "appocorrencias.com.appocorrencias"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784063389852-h6gokr6b04tsqfscspko8i06hbe3aooi.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "784063389852-kgi55qgimnhamif4hbjat7thn54hk8qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDODBYGkjvLndV5WUx0cYiKkT87TUIpSlw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

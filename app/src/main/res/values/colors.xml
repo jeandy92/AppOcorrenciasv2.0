@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <resources>
+        <color name="colorPrimary">#212121</color>
+        <color name="colorPrimaryDark">#616161</color>
+        <color name="primary_light">#ffffff</color>
+        <color name="colorAccent">#607D8B</color>
+        <color name="primary_text">#212121</color>
+        <color name="secondary_text">#757575</color>
+        <color name="icons">#FFFFFF</color>
+        <color name="divider">#BDBDBD</color>
+        <color name="padrao">#9E9E9E</color>
+        <color name="cor_fundo">#2e3131</color>
+        <color name="fundo_botao">#FFFFFF</color>
+        <color name="texto_botao">#212121</color>
+    <color name="cor_icone">#FFFFFF</color>
+    <color name="cast_expanded_controller_background_color">#FFFFFF</color>
+</resources>

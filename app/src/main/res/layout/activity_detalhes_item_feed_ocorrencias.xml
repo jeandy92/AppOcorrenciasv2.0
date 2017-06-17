@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:id="@+id/scrollView2">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/btnExcluir"
+                android:layout_width="88dp"
+                android:layout_height="48dp"
+                android:onClick="evExcluirOcorrencia"
+                android:text="Excluir"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/txtCampoNumeroOcorrencia"
+                android:layout_marginBottom="0dp"
+                android:layout_marginRight="32dp"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:id="@+id/tvNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_x="30dp"
+                android:layout_y="20dp"
+                android:text="Numero Ocorrência"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtCampoNumeroOcorrencia"
+                android:layout_width="60dp"
+                android:layout_height="27dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_x="180dp"
+                android:layout_y="15dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="8898"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/tvNome"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ViewFlipper
+                android:id="@+id/viewFlipper4"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/btnExcluir">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="0dp"
+                    android:visibility="invisible"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </android.support.v4.view.ViewPager>
+
+
+            </ViewFlipper>
+
+            <TextView
+                android:id="@+id/txtInformacoesDoUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:text="Informações da Ocorrência"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewFlipper4" />
+
+            <TextView
+                android:id="@+id/txtDataNascimento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_x="196dp"
+                android:layout_y="68dp"
+                android:text="Data:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtInformacoesDoUsuario" />
+
+            <TextView
+                android:id="@+id/txtCampoNascimento"
+                android:layout_width="116dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_x="30dp"
+                android:layout_y="95dp"
+                android:editable="true"
+                android:text="10/05/2016"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toRightOf="@+id/txtDataNascimento"
+                app:layout_constraintTop_toTopOf="@+id/txtDataNascimento"
+                tools:text="10/05/2016" />
+
+            <TextView
+                android:id="@+id/txtCPF"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_x="30dp"
+                android:layout_y="68dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Tipo:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@+id/txtDataNascimento"
+                app:layout_constraintTop_toBottomOf="@+id/txtDataNascimento" />
+
+            <TextView
+                android:id="@+id/txtCampoCPF"
+                android:layout_width="116dp"
+                android:layout_height="26dp"
+                android:layout_x="196dp"
+                android:layout_y="95dp"
+                android:editable="true"
+                android:text="Tipo do Crime"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCampoNascimento"
+                app:layout_constraintTop_toTopOf="@+id/txtCPF"
+                tools:text="Tipo do Crime" />
+
+            <TextView
+                android:id="@+id/txtEndereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_x="30dp"
+                android:layout_y="347dp"
+                android:text="Local:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCPF" />
+
+            <TextView
+                android:id="@+id/txtRuaBairroUsuario"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_x="99dp"
+                android:layout_y="377dp"
+                android:editable="true"
+                android:text="Av dos Autonomistas, Vila Yara"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCampoCPF"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtEndereco"
+                tools:text="Av dos Autonomistas, Vila Yara" />
+
+            <TextView
+                android:id="@+id/txtCidadeUFUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_x="99dp"
+                android:layout_y="377dp"
+                android:editable="true"
+                android:text="Osasco - SP"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@+id/txtRuaBairroUsuario"
+                app:layout_constraintTop_toBottomOf="@+id/txtRuaBairroUsuario"
+                tools:text="Osasco - SP" />
+
+            <TextView
+                android:id="@+id/txtDescricaoDaOcorrencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:text="Descrição da Ocorrência"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCidadeUFUsuario" />
+
+            <TextView
+                android:id="@+id/txtCampoDescricaoDaOcorrencia"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDescricaoDaOcorrencia" />
+
+            <TextView
+                android:id="@+id/txtComentarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:text="Comentários"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCampoDescricaoDaOcorrencia" />
+
+            <ListView
+                android:id="@+id/list_comentarios"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtComentarios"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/LIMITADOR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="LIMITADOR"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="50dp"
+                app:layout_constraintTop_toBottomOf="@+id/list_comentarios" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:titleTextColor="@android:color/black">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:hint="Comentário"
+                android:textColorHint="@color/fab_material_black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/imageButton">
+
+                <EditText
+                    android:id="@+id/edtComentario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@android:color/black"
+                    android:visibility="visible" />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                style="@style/botaopadrao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/arrendondados"
+                android:onClick="evEnviarComentario"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_send"
+                android:layout_marginEnd="10dp" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.Toolbar>
+</android.support.constraint.ConstraintLayout>

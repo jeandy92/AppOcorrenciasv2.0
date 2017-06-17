@@ -1,0 +1,62 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="windowNoTitle">@android:color/white</item>
+
+    </style>
+
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
+
+    </style>
+<style name="botaopadrao" parent="Theme.AppCompat.Light">
+    <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+    <item name="android:textColor">@android:color/white</item>
+
+
+</style>
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/cor_icone</item>
+        <item name="android:src">@drawable/ic_anexar</item>
+
+
+    </style>
+
+    <style name="ocorrenciasregistradas">
+
+        <item name="android:textColor">#00796B</item>
+        <item name ="android:colorAccent">#1DE9B6</item>
+
+    </style>
+
+    values/themes.xml:
+
+    <style name="Theme.MyTheme" parent="Theme.AppCompat.Light">
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated,
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- You can also set colorControlNormal, colorControlActivated
+             colorControlHighlight, and colorSwitchThumbNormal. -->
+
+    </style>
+
+</resources>

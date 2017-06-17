@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:id="@+id/scrollView2">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/btnExcluir"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:onClick="evExcluirUsuario"
+                android:text="Excluir"
+                android:visibility="visible"
+                android:layout_marginRight="16dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:id="@+id/tvNome"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_x="30dp"
+                android:layout_y="20dp"
+                android:text="Nome:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtCampoNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_x="99dp"
+                android:layout_y="377dp"
+                android:editable="true"
+                android:text="Nome"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toRightOf="@+id/tvNome"
+                app:layout_constraintTop_toTopOf="@+id/tvNome"
+                tools:text="Nome" />
+
+            <ViewFlipper
+                android:id="@+id/viewFlipper4"
+                android:layout_width="155dp"
+                android:layout_height="155dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="80dp">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="0dp"
+                    android:visibility="invisible"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </android.support.v4.view.ViewPager>
+
+
+            </ViewFlipper>
+
+            <TextView
+                android:id="@+id/txtInformacoesDoUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:text="Informações do Usuário"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewFlipper4" />
+
+            <TextView
+                android:id="@+id/txtDataNascimento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_x="196dp"
+                android:layout_y="68dp"
+                android:text="Nascimento"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtInformacoesDoUsuario" />
+
+            <TextView
+                android:id="@+id/txtCampoNascimento"
+                android:layout_width="116dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_x="30dp"
+                android:layout_y="95dp"
+                android:editable="true"
+                android:text="10/05/2016"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toRightOf="@+id/txtDataNascimento"
+                app:layout_constraintTop_toTopOf="@+id/txtDataNascimento"
+                tools:text="10/05/2016" />
+
+            <TextView
+                android:id="@+id/txtCPF"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="27dp"
+                android:layout_x="30dp"
+                android:layout_y="68dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="CPF"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@+id/txtDataNascimento"
+                app:layout_constraintTop_toBottomOf="@+id/txtDataNascimento" />
+
+            <TextView
+                android:id="@+id/txtCampoCPF"
+                android:layout_width="116dp"
+                android:layout_height="26dp"
+                android:layout_x="196dp"
+                android:layout_y="95dp"
+                android:editable="true"
+                android:text="cpf"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCampoNascimento"
+                app:layout_constraintTop_toTopOf="@+id/txtCPF"
+                tools:text="cpf" />
+
+            <TextView
+                android:id="@+id/txtCampoTelefone"
+                android:layout_width="116dp"
+                android:layout_height="26dp"
+                android:layout_x="196dp"
+                android:layout_y="95dp"
+                android:editable="true"
+                android:text="Telefone"
+                android:textSize="14sp"
+                tools:text="Telefone"
+                android:layout_marginTop="28dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCampoEmail" />
+
+            <TextView
+                android:id="@+id/txtEndereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="28dp"
+                android:layout_x="30dp"
+                android:layout_y="347dp"
+                android:text="Endereço"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCPF" />
+
+            <TextView
+                android:id="@+id/txtBairro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_x="30dp"
+                android:layout_y="347dp"
+                android:text="Bairro"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginTop="28dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEndereco"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="32dp" />
+
+            <TextView
+                android:id="@+id/txtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_x="30dp"
+                android:layout_y="347dp"
+                android:text="E-mail"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtBairro"
+                android:layout_marginStart="32dp" />
+
+            <TextView
+                android:id="@+id/txtTelefone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_x="30dp"
+                android:layout_y="347dp"
+                android:text="Telefone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginTop="28dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="32dp" />
+
+            <TextView
+                android:id="@+id/txtRuaBairroUsuario"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_x="99dp"
+                android:layout_y="377dp"
+                android:editable="true"
+                android:text="Av dos Autonomistas, Vila Yara"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCampoCPF"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtEndereco"
+                tools:text="Av dos Autonomistas, Vila Yara"
+                app:layout_constraintHorizontal_bias="1.0" />
+
+            <TextView
+                android:id="@+id/txtCampoBairro"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_x="99dp"
+                android:layout_y="377dp"
+                android:editable="true"
+                android:text="Bairro"
+                android:textSize="14sp"
+                tools:text="Bairro"
+                android:layout_marginTop="28dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtRuaBairroUsuario"
+                app:layout_constraintLeft_toLeftOf="@+id/txtRuaBairroUsuario" />
+
+            <TextView
+                android:id="@+id/txtCampoEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_x="99dp"
+                android:layout_y="377dp"
+                android:editable="true"
+                android:text="usuEmail"
+                android:textSize="14sp"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="usuEmail"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtCampoBairro"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCidadeUFUsuario" />
+
+            <TextView
+                android:id="@+id/txtCidadeUFUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_x="99dp"
+                android:layout_y="377dp"
+                android:editable="true"
+                android:text="Osasco - SP"
+                android:textSize="14sp"
+                tools:text="Osasco - SP"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtCampoBairro"
+                app:layout_constraintLeft_toLeftOf="@+id/txtCampoBairro" />
+
+            <TextView
+                android:id="@+id/LIMITADOR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:text="LIMITADOR"
+                android:visibility="invisible"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="888dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
