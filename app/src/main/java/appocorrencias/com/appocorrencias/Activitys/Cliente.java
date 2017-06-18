@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -93,6 +94,7 @@ public class Cliente extends AppCompatActivity {
         lvFeedOcorrencias = (ListView) findViewById(R.id.lv_feed_de_ocorrencias);
         tvnomecompleto = (TextView) findViewById(R.id.tv_nome_completo);
         ivCliente = (ImageView) findViewById(R.id.ivCliente);
+
 
         ArrayList<Bitmap> listaImagens = ArrayImagensPerfil.getImagens();
         Bitmap[] images = new Bitmap[listaImagens.size()];
@@ -218,7 +220,6 @@ public class Cliente extends AppCompatActivity {
     public void cadastrarroubo(View v) {
 
 
-        setContentView(R.layout.activity_cadastrar_ocorrencia);
         Bundle b = new Bundle();
         b.putString("tipocrime", "roubo");
 
@@ -236,7 +237,6 @@ public class Cliente extends AppCompatActivity {
 
     public void onUpdateCliente() {
 
-        setContentView(R.layout.activity_cadastrar_usuario);
         this.startActivity(new Intent(this, CadastrarUsuario.class));
     }
 
@@ -335,7 +335,6 @@ public class Cliente extends AppCompatActivity {
 
             Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
 
-            setContentView(R.layout.activity_listar_ocorrencias);
             Intent cliente = new Intent(this, ListarOcorrencias.class);
 
             Bundle bundle = new Bundle();
