@@ -57,7 +57,8 @@ public class Cliente extends AppCompatActivity {
     private ListView lvFeedOcorrencias;
     private TextView tvnomecompleto;
     private FloatingActionButton btnOcorrenciasRegistradas, btnCadastrarOcorrencias, btnBuscarOcorrencias;
-    public static String Nome, CPF, Bairro;
+    public static String Nome, CPF, Bairro, Ip;
+    public static int Porta;
 
     ProcessaSocket processa = new ProcessaSocket();
 
@@ -83,6 +84,8 @@ public class Cliente extends AppCompatActivity {
         Nome = bundle.getString("nome");
         CPF = bundle.getString("cpf");
         Bairro = bundle.getString("bairro");
+        Ip = bundle.getString("ip");
+        Porta = bundle.getInt("porta");
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
@@ -119,23 +122,26 @@ public class Cliente extends AppCompatActivity {
                     i.putExtra("cpf", CPF);
                     i.putExtra("nome", Nome);
                     i.putExtra("bairro", Bairro);
+                    i.putExtra("ip", Ip);
+                    i.putExtra("porta", Porta);
                     i.putExtra("id_ocorrencia", idocorrencia);
                     i.putExtra("desc_ocorrencia", descocorrencia);
                     i.putExtra("tipocrime", tipocrime);
                     i.putExtra("tela", tela);
 
+
                     deleteAllArrayComentarios();
 
                     String retornoImagem = null;
                     try {
-                        retornoImagem = evBuscarImagens(idocorrencia, "ocorrencia");
+                        retornoImagem = evBuscarImagens(idocorrencia, "ocorrencia", Ip, Porta);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
                         String retornoComent = null;
                         try {
-                            retornoComent = evBuscarComentario(idocorrencia);
+                            retornoComent = evBuscarComentario(idocorrencia, Ip, Porta);
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -243,6 +249,9 @@ public class Cliente extends AppCompatActivity {
         bundle.putString("cpf", CPF);
         bundle.putString("bairro", Bairro);
         bundle.putString("tela", "Cliente");
+        bundle.putString("ip", Ip);
+        bundle.putInt("porta", Porta);
+
         cliente.putExtras(bundle);
         this.startActivity(cliente);
         this.finish();
@@ -259,6 +268,8 @@ public class Cliente extends AppCompatActivity {
         bundle.putString("cpf", CPF);
         bundle.putString("bairro", Bairro);
         bundle.putString("tela", "Cliente");
+        bundle.putString("ip", Ip);
+        bundle.putInt("porta", Porta);
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
@@ -267,7 +278,7 @@ public class Cliente extends AppCompatActivity {
 
     public void evOcorrenciasInformadas(View view) throws IOException {
 
-        deleteAllArray();
+        ArrayOcorrenciasRegistradas.deleteAllArray();
 
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
 
@@ -275,7 +286,7 @@ public class Cliente extends AppCompatActivity {
         Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
 
         if (retorno.equals("false")) {
 
@@ -287,6 +298,8 @@ public class Cliente extends AppCompatActivity {
             bundle.putString("nome", Nome);
             bundle.putString("cpf", CPF);
             bundle.putString("bairro", Bairro);
+            bundle.putString("ip", Ip);
+            bundle.putInt("porta", Porta);
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
@@ -329,6 +342,8 @@ public class Cliente extends AppCompatActivity {
             bundle.putString("nome", Nome);
             bundle.putString("cpf", CPF);
             bundle.putString("bairro", Bairro);
+            bundle.putString("ip", Ip);
+            bundle.putInt("porta", Porta);
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
@@ -518,7 +533,7 @@ public class Cliente extends AppCompatActivity {
 
     public String enviarImgPerfil() throws IOException {
 
-        String retornoImg = processaSocket.envia_Img_Perfil(CPF, "Img1", byteImagem);
+        String retornoImg = processaSocket.envia_Img_Perfil(CPF, "Img1", byteImagem, Ip, Porta);
 
         if (retornoImg.equals("erro")) {
             return "erro";

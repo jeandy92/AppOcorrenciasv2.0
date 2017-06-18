@@ -30,7 +30,8 @@ public class CadastrarUsuario extends AppCompatActivity {
 
     //Variaveis para conversão e  referencia nula
     private String convCpf, convTelefone, convCep, convEmail, convSenha,
-            convNumero, convRua, convBairro, convCidade, convUf, convNome, convDataNasc, convConfirmarSenha, convComplemento;
+            convNumero, convRua, convBairro, convCidade, convUf, convNome, convDataNasc, convConfirmarSenha, convComplemento, Ip;
+    private int Porta;
 
     //Váriaveis para serem utilizadas  no envio do cadastro
     protected String primeiroCadastro, cadastroNome, cadastroRua, cadastroBairro, cadastroCidade;
@@ -108,6 +109,26 @@ public class CadastrarUsuario extends AppCompatActivity {
     //Cadastrar usuário no servidor
     public void evCadastrarUsuario(View v) throws IOException {
 
+        String DadosServidor = null;
+
+
+        try {
+            DadosServidor = ProcessaSocket.BuscarServidor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (DadosServidor.equals("erro")) {
+            Toast.makeText(this, "Erro na Conexão DNS", Toast.LENGTH_SHORT).show();
+        } else {
+            if (DadosServidor != null) {
+                String retorno2[] = DadosServidor.split("//");
+                Ip = retorno2[0];
+                Porta = Integer.parseInt(retorno2[1]);
+            }
+        }
+
+
         String segundaRua = edtRua.getText().toString();
         String segundoBairro = edtBairro.getText().toString();
         String segundaCidade = edtCidade.getText().toString();
@@ -164,7 +185,7 @@ public class CadastrarUsuario extends AppCompatActivity {
                                 edtConfirmarSenha.setFocusable(true);
                                 edtConfirmarSenha.requestFocus();
                             } else {
-                                String retorno = processa.cadastrarUsuario(convCpf, convSenha, convEmail, convTelefone, convCep, convUf, convNumero, convRua, convBairro, convCidade, convNome, convDataNasc, convComplemento);
+                                String retorno = processa.cadastrarUsuario(convCpf, convSenha, convEmail, convTelefone, convCep, convUf, convNumero, convRua, convBairro, convCidade, convNome, convDataNasc, convComplemento, Ip, Porta);
                                 if (retorno.equals("erro")) {
                                     Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                 } else {

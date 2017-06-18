@@ -29,7 +29,8 @@ import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evB
 public class ListarOcorrencias extends AppCompatActivity {
 
     private ListView lista;
-    public String loginNome, loginCpf, loginBairro;
+    public String loginNome, loginCpf, loginBairro, Ip;
+    public int Porta;
 
     static byte[] primeiraImagem;
     static byte[] segundaImagem;
@@ -52,6 +53,8 @@ public class ListarOcorrencias extends AppCompatActivity {
         loginNome     = bundle.getString("nome");
         loginCpf      = bundle.getString("cpf");
         loginBairro   = bundle.getString("bairro");
+        Ip = bundle.getString("ip");
+        Porta = bundle.getInt("porta");
 
 
         lista = (ListView) findViewById(R.id.lista_ocorrencias_do_usuario);
@@ -77,20 +80,22 @@ public class ListarOcorrencias extends AppCompatActivity {
                     i.putExtra("bairro", loginBairro);
                     i.putExtra("id_ocorrencia", idocorrencia);
                     i.putExtra("tela", tela);
+                    i.putExtra("ip", Ip);
+                    i.putExtra("porta", Porta);
 
 
                     deleteAllArrayComentarios();
 
                     String retornoImagem = null;
                     try {
-                        retornoImagem = evBuscarImagens(idocorrencia, "ocorrencia");
+                        retornoImagem = evBuscarImagens(idocorrencia, "ocorrencia", Ip, Porta);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
                         String retornoComent = null;
                         try {
-                            retornoComent = evBuscarComentario(idocorrencia);
+                            retornoComent = evBuscarComentario(idocorrencia, Ip, Porta);
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -136,7 +141,7 @@ public class ListarOcorrencias extends AppCompatActivity {
         deleteAllArray();
 
         try {
-            evBuscarOcorrenciasBairro(loginBairro);
+            evBuscarOcorrenciasBairro(loginBairro, Ip, Porta);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,6 +152,8 @@ public class ListarOcorrencias extends AppCompatActivity {
         bundle.putString("nome", loginNome);
         bundle.putString("cpf", loginCpf);
         bundle.putString("bairro", loginBairro);
+        bundle.putString("ip", Ip);
+        bundle.putInt("porta", Porta);
 
         cliente.putExtras(bundle);
         this.startActivity(cliente);

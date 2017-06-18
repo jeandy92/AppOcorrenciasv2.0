@@ -62,7 +62,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     ViewPager viewPager;
     AdapterCustomSwiper adapterCustomSwiper;
     private static ProcessaSocket processa = new ProcessaSocket();
-    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia, tela;
+    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia, tela, Ip;
+    int Porta;
     ListView listaComentarios;
 
     @Override
@@ -91,6 +92,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         Nome = dados.getString("nome").toString();
         BairroCli = dados.getString("bairro").toString();
         tela = dados.getString("tela").toString();
+        Ip = dados.getString("ip").toString();
+        Porta = dados.getInt("porta");
 
 
         descricao = getDescricaoNr(idOcorrencia);
@@ -157,7 +160,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         viewPager.setAdapter(adapterCustomSwiper);
     }
 
-    public static String evBuscarImagens(String IDOcorrencia, String tipo) throws IOException {
+    public static String evBuscarImagens(String IDOcorrencia, String tipo, String IpServer, int PortaServer) throws IOException {
 
         String BuscarImagensOcorrencia;
 
@@ -167,8 +170,11 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             BuscarImagensOcorrencia = "BuscarImagensOcorrencia " + IDOcorrencia;
         }
 
-        String ip_conexao =  "52.34.140.131";
-        int porta_conexao = 63200;
+        //String ip_conexao =  "52.34.140.131";
+        //int porta_conexao = 63200;
+
+        String ip_conexao = "10.12.56.32";
+        int porta_conexao = 3333;
 
 
         String str = null;
@@ -186,7 +192,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
 
         int millisecondsTimeOut = 5000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+        InetSocketAddress adress = new InetSocketAddress(IpServer, PortaServer);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
@@ -222,25 +228,24 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
     }
 
-    public void evExcluirOcorrencia(View view) throws IOException {
+    public void evExcluirOcorrencia(View view, String Ip, int Porta) throws IOException {
 
         String ExcluirOcorrencia = "ExcluirOcorrencia " + idOcorrencia;
-        String retornoExclusao = processa.primeiroCadastroNoServidor(ExcluirOcorrencia);
+        String retornoExclusao = processa.primeiroCadastroNoServidor(ExcluirOcorrencia, Ip, Porta);
 
         if (retornoExclusao.equals("true")) {
 
-            deleteAllArray();
+            ArrayOcorrenciasRegistradas.deleteAllArray();
 
             String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
 
             Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
             ArrayImagensPerfilComentarios.deleteBitmap();
-            String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
+            String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
 
             if (retorno.equals("false")) {
                 Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_listar_ocorrencias);
                 Intent cliente = new Intent(this, ListarOcorrencias.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("nome", Nome);
@@ -275,7 +280,6 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 }
                 Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
 
-                setContentView(R.layout.activity_listar_ocorrencias);
                 Intent cliente = new Intent(this, ListarOcorrencias.class);
 
                 Bundle bundle = new Bundle();
@@ -304,7 +308,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             int x = random.nextInt(101);
             String NrAleatorio = Integer.toString(x);
             String BuscaId = "IDcomentario teste";
-            String IDserver = processa.primeiroCadastroNoServidor(BuscaId);
+            String IDserver = processa.primeiroCadastroNoServidor(BuscaId, Ip, Porta);
             //String IDComentario = IDserver + NrAleatorio;
 
 
@@ -325,7 +329,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             String Hora = hora2.format(dtI.getTime());
 
 
-            String retorno = processa.cadastrar_Comentario(IDserver, idOcorrencia, CPF, Data, Hora, Apelido, convComentario);
+            String retorno = processa.cadastrar_Comentario(IDserver, idOcorrencia, CPF, Data, Hora, Apelido, convComentario, Ip, Porta);
 
 
             txtComentario.setText(null);
@@ -342,7 +346,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                     Toast.makeText(this, "Comantario Salvo com sucesso", Toast.LENGTH_SHORT).show();
 
                     deleteAllArrayComentarios();
-                    evBuscarComentario(idOcorrencia);
+                    evBuscarComentario(idOcorrencia, Ip, Porta);
 
                     listaComentarios = (ListView) findViewById(R.id.list_comentarios);
                     ArrayList<DadosComentarios> listadecomentarios = getListaComentarios();
@@ -358,12 +362,12 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     }
 
 
-    public static String evBuscarComentario(String IDOcorrencia) throws IOException {
+    public static String evBuscarComentario(String IDOcorrencia, String IpServer, int PortaServer) throws IOException {
 
         String BuscarComentariosRegistrados = "BuscarComentariosRegistrados " + IDOcorrencia;
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarComentariosRegistrados);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarComentariosRegistrados, IpServer,PortaServer );
 
         if (retorno.equals("erro")) {
             return "erro";
@@ -401,14 +405,14 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     }
 
 
-    public void evOcorrenciasInformadasItem(String CPF) throws IOException {
+    public void evOcorrenciasInformadasItem(String CPF, String Ip, int Porta) throws IOException {
 
         deleteAllArray();
 
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
 
         if (retorno.equals("false")) {
 
@@ -459,7 +463,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
             deleteAllArray();
             try {
-                evOcorrenciasInformadasItem(CPF);
+                evOcorrenciasInformadasItem(CPF, Ip, Porta);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -468,6 +472,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             bundle.putString("nome", Nome);
             bundle.putString("cpf", CPF);
             bundle.putString("bairro", BairroCli);
+            bundle.putString("ip", Ip);
+            bundle.putInt("porta", Porta);
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
@@ -479,7 +485,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 deleteAllArray();
 
                 try {
-                    evBuscarOcorrenciasBairro(BairroCli);
+                    evBuscarOcorrenciasBairro(BairroCli, Ip, Porta);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -490,6 +496,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 bundle.putString("nome", Nome);
                 bundle.putString("cpf", CPF);
                 bundle.putString("bairro", BairroCli);
+                bundle.putString("ip", Ip);
+                bundle.putInt("porta", Porta);
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);
@@ -503,6 +511,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 bundle.putString("cpf", CPF);
                 bundle.putString("bairro", BairroCli);
                 bundle.putString("tela", tela);
+                bundle.putString("ip", Ip);
+                bundle.putInt("porta", Porta);
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);

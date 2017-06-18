@@ -32,7 +32,8 @@ public class Login extends AppCompatActivity {
 
     private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
 
-    private String nome, SENHA, LoginServer, CPF, Nome, Bairro;
+    private String nome, SENHA, LoginServer, CPF, Nome, Bairro, IpServer;
+    int PortaServer;
     private String convCpf, Status;
     private static ProcessaSocket processa = new ProcessaSocket();
     private String retorno;
@@ -134,112 +135,133 @@ public class Login extends AppCompatActivity {
     ///////////////////////////////////////////////////////////////////////////////////////////
     public void evEntrar(View view) throws IOException {
 
-        String token = getInstance().getToken();
+        String DadosServidor = null;
 
-
-        Log.d(TAG, token);
-
-        //Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
-        ProcessaSocket.enviandoNotificacaoGrupo(token,"Jardim lok");
-
-
-
-        SENHA = txtSenha.getText().toString();
-        CPF = txtUsuario.getText().toString();
-
-        //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E SENHA E TIRANDO A  MASCARA DO CAMPO cpfAdm
-        CPF = CPF.replaceAll("[^0-9]", "");
-
-
-        //ARMAZENANDO LOG DOS DADOS FORNECIDOS PELO USUÁRIO
-        Log.i("evEntrar", CPF);
-        Log.i("evEntrar", SENHA);
-
-        if (salvarlogin.isChecked()) {
-
-            Log.i("isCheck", CPF);
-            Log.i("isCheck", SENHA);
-
-            //Aramazena os dados na shared preferences em modo privato, impossibilitando que outra atividade altere esta preference.
-            SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
-
-
-            //Colocando os dados no shared prefence
-            editor.putString("login", CPF);
-            editor.putString("senha", SENHA);
-
-            editor.commit();
-
+        try {
+            DadosServidor = ProcessaSocket.BuscarServidor();
+            Log.i("evEntrar(Servidor)", DadosServidor);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        if (DadosServidor.equals("erro")) {
+            Toast.makeText(this, "Erro na Conexão DNS", Toast.LENGTH_SHORT).show();
+        } else {
+            if (DadosServidor != null) {
+                String retorno2[] = DadosServidor.split("//");
+                IpServer = retorno2[0];
+                PortaServer = Integer.parseInt(retorno2[1]);
 
-        if (txtUsuario.getText().toString() != null && txtSenha.getText().toString() != null) {
 
-            if (CPF.equals("33333333333") && SENHA.equals("1234")) {
+                String token = getInstance().getToken();
 
-                Intent adm = new Intent(this, Adm.class);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("nome", "Administrador");
-                bundle.putString("cpf", "33333333333");
-                bundle.putString("bairro", "Adm");
+                Log.d(TAG, token);
 
-                adm.putExtras(bundle);
-                this.startActivity(adm);
-                this.finish();
+                //Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
+                ProcessaSocket.enviandoNotificacaoGrupo(token, "Jardim lok");
 
-            } else {
 
-                if (CadastrarUsuario.validarCPF(CPF)) {
-                    txtUsuario.setError("cpfAdm Inválido");
-                    txtUsuario.setFocusable(true);
-                    txtUsuario.requestFocus();
-                    Log.i("evEntrar(IF2)", CPF);
-                    Log.i("evEntrar(IF2)", SENHA);
-                } else {
+                SENHA = txtSenha.getText().toString();
+                CPF = txtUsuario.getText().toString();
 
-                    LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
-                    Log.i("evEntrar(ELSE)", CPF);
-                    Log.i("evEntrar(ELSE)", SENHA);
+                //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E SENHA E TIRANDO A  MASCARA DO CAMPO cpfAdm
+                CPF = CPF.replaceAll("[^0-9]", "");
 
-                    retorno = processa.primeiroCadastroNoServidor(LoginServer);
-                    String retorno2[] = retorno.split("/");
-                    Status = retorno2[0];
 
-                    if (Status.equals("erro")) {
-                        Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                //ARMAZENANDO LOG DOS DADOS FORNECIDOS PELO USUÁRIO
+                Log.i("evEntrar", CPF);
+                Log.i("evEntrar", SENHA);
+
+                if (salvarlogin.isChecked()) {
+
+                    Log.i("isCheck", CPF);
+                    Log.i("isCheck", SENHA);
+
+                    //Aramazena os dados na shared preferences em modo privato, impossibilitando que outra atividade altere esta preference.
+                    SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+
+
+                    //Colocando os dados no shared prefence
+                    editor.putString("login", CPF);
+                    editor.putString("senha", SENHA);
+
+                    editor.commit();
+
+                }
+
+
+                if (txtUsuario.getText().toString() != null && txtSenha.getText().toString() != null) {
+
+                    if (CPF.equals("33333333333") && SENHA.equals("1234")) {
+
+                        Intent adm = new Intent(this, Adm.class);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("nome", "Administrador");
+                        bundle.putString("cpf", "33333333333");
+                        bundle.putString("bairro", "Adm");
+
+                        adm.putExtras(bundle);
+                        this.startActivity(adm);
+                        this.finish();
 
                     } else {
-                        if (Status.equals("false")) {
-                            txtUsuario.setError("Usuario ou senha Invalido");
+
+                        if (CadastrarUsuario.validarCPF(CPF)) {
+                            txtUsuario.setError("CPF Inválido");
                             txtUsuario.setFocusable(true);
                             txtUsuario.requestFocus();
+                            Log.i("evEntrar(IF2)", CPF);
+                            Log.i("evEntrar(IF2)", SENHA);
                         } else {
-                            if (Status.equals("true")) {
-                                CPF = retorno2[1];
-                                Nome = retorno2[2];
-                                String Bairro2 = retorno2[3];
 
-                                String retornoBairro = evBuscarOcorrenciasBairro(Bairro2);
-                                if (retornoBairro.equals("erro")) {
-                                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                            LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
+                            Log.i("evEntrar(ELSE)", CPF);
+                            Log.i("evEntrar(ELSE)", SENHA);
+
+                            retorno = processa.primeiroCadastroNoServidor(LoginServer, IpServer, PortaServer);
+                            String retornoCadastro[] = retorno.split("/");
+                            Status = retornoCadastro[0];
+
+                            if (Status.equals("erro")) {
+                                Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                if (Status.equals("false")) {
+                                    txtUsuario.setError("Usuario ou senha Invalido");
+                                    txtUsuario.setFocusable(true);
+                                    txtUsuario.requestFocus();
                                 } else {
-                                    if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
-                                        String retornoImagem = evBuscarImagens(CPF, "cpf");
-                                        if (retornoImagem.equals("erro")) {
+                                    if (Status.equals("true")) {
+                                        CPF = retornoCadastro[1];
+                                        Nome = retornoCadastro[2];
+                                        String Bairro2 = retornoCadastro[3];
+
+                                        String retornoBairro = evBuscarOcorrenciasBairro(Bairro2, IpServer, PortaServer);
+                                        if (retornoBairro.equals("erro")) {
                                             Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
-                                                Intent cliente = new Intent(this, Cliente.class);
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString("nome", Nome);
-                                                bundle.putString("cpf", CPF);
-                                                bundle.putString("bairro", Bairro2);
+                                            if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
+                                                String retornoImagem = evBuscarImagens(CPF, "cpf", IpServer, PortaServer);
+                                                if (retornoImagem.equals("erro")) {
+                                                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
+                                                        Intent cliente = new Intent(this, Cliente.class);
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("nome", Nome);
+                                                        bundle.putString("cpf", CPF);
+                                                        bundle.putString("bairro", Bairro2);
+                                                        bundle.putString("ip", IpServer);
+                                                        bundle.putInt("porta", PortaServer);
 
-                                                cliente.putExtras(bundle);
-                                                this.startActivity(cliente);
-                                                this.finish();
+                                                        cliente.putExtras(bundle);
+                                                        this.startActivity(cliente);
+                                                        this.finish();
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -247,23 +269,24 @@ public class Login extends AppCompatActivity {
                             }
                         }
                     }
+                } else {
+
+                    txtUsuario.setError("Usuario ou senha em branco");
+                    txtUsuario.setFocusable(true);
+                    txtUsuario.requestFocus();
                 }
             }
-        } else {
-
-            txtUsuario.setError("Usuario ou senha em branco");
-            txtUsuario.setFocusable(true);
-            txtUsuario.requestFocus();
         }
+
     }
 
 
-    public static String evBuscarOcorrenciasBairro(String Bairro2) throws IOException {
+    public static String evBuscarOcorrenciasBairro(String Bairro2, String IpServer, int PortaServer) throws IOException {
 
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " + Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, IpServer, PortaServer);
 
         if (retorno.equals("false")) {
             // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();

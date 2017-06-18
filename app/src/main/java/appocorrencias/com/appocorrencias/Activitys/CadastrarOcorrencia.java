@@ -53,14 +53,14 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     private static final int IMAGEM_INTERNA = 12;
 
     //VARIÁVEIS UTILIZADAS EXTRAIDAS DE INTENTS
-    private static final android.util.Log LOG = null ;
+    private static final android.util.Log LOG = null;
     private Location location;
     private LocationManager locationmenager;
     private android.location.Address endereco;
 
 
     //VARIAVEIS DE ACTIVITYS
-    private ImageButton imgBtnAdd,imgBtnDel;
+    private ImageButton imgBtnAdd, imgBtnDel;
     private ImageView iv1, iv2, iv3;
     private Button btnSalvarOcorrencia;
     private EditText edtRua, edtCidade, edtEstado, edtDescricao, edtDataOcorrencia, edtBairro, edtReferencia;
@@ -70,11 +70,11 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     //VARIAVEIS LOCAIS
     private int cont = 1;
     private String convDataOcorrencia, convDescricao, convEndereco, convCidade, convBairro, convTipoCrime, convUf;
-    private String convDesSalvarOcorre, convEndSalvarOcorre,convCidSalvarOcorre,convBaiSalvarOcorre,segundoTipoDeCrime;
+    private String convDesSalvarOcorre, convEndSalvarOcorre, convCidSalvarOcorre, convBaiSalvarOcorre, segundoTipoDeCrime;
 
 
-
-    private String Anonimo;
+    private String Anonimo, Ip;
+    private int Porta;
     private byte[] byteImagem = null, byteImagem2 = null, byteImagem3 = null;
 
 
@@ -101,6 +101,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         bairroCliente = bundle.getString("bairro");
         tokenUsuario = bundle.getString("token");
         telaCliente = bundle.getString("telaCliente");
+        Ip = bundle.getString("ip");
+        Porta = bundle.getInt("porta");
 
 
         imgBtnAdd = (ImageButton) findViewById(R.id.imgBtnAdd);
@@ -343,7 +345,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         Log.i(TAG, "Lat: " + latitude + " | Long: " + longitude);
 
         try {
-            if(latitude!=0 || longitude!=0 ) {
+            if (latitude != 0 || longitude != 0) {
 
                 endereco = buscarEndereco(latitude, longitude);
                 //endereco = buscarEndereco(-23.540827, -46.761993);
@@ -362,8 +364,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                 edtBairro.setText(endereco.getSubLocality());
                 edtEstado.setText(buscar_cep.getUF(endereco.getPostalCode()));
 
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Ligar localização", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
@@ -463,9 +464,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
     public void salvarOcorrencia(View v) throws IOException {
 
-        segundoTipoDeCrime  = spinner.getSelectedItem().toString();
-        convUf              = edtEstado.getText().toString();
-        convDataOcorrencia  = edtDataOcorrencia.getText().toString();
+        segundoTipoDeCrime = spinner.getSelectedItem().toString();
+        convUf = edtEstado.getText().toString();
+        convDataOcorrencia = edtDataOcorrencia.getText().toString();
         convDesSalvarOcorre = edtDescricao.getText().toString();
         convEndSalvarOcorre = edtRua.getText().toString();
         convCidSalvarOcorre = edtCidade.getText().toString();
@@ -476,9 +477,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
         convTipoCrime = removerAcentos(segundoTipoDeCrime);
         convDescricao = removerAcentos(convDesSalvarOcorre);
-        convEndereco  = removerAcentos(convEndSalvarOcorre);
-        convCidade    = removerAcentos(convCidSalvarOcorre);
-        convBairro    = removerAcentos(convBaiSalvarOcorre);
+        convEndereco = removerAcentos(convEndSalvarOcorre);
+        convCidade = removerAcentos(convCidSalvarOcorre);
+        convBairro = removerAcentos(convBaiSalvarOcorre);
 
         btnAnonimo = (CheckBox) findViewById(R.id.rdBtnAnonimo);
 
@@ -514,67 +515,46 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                             edtEstado.requestFocus();
                         } else {
 
-                            Random random = new Random();
-                            int x = random.nextInt(101);
-                            String NrAleatorio = Integer.toString(x);
                             String BuscaId = "IDocorrencia teste";
-                            String IDserver = processaSocket.primeiroCadastroNoServidor(BuscaId);
-                            //String ID = IDserver + NrAleatorio;
-
+                            String IDserver = processaSocket.primeiroCadastroNoServidor(BuscaId, Ip, Porta);
 
                             String retorno = processaSocket.cadastrar_Ocorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
-                                    convEndereco, convCidade, convBairro, Anonimo, PriNome);
+                                    convEndereco, convCidade, convBairro, Anonimo, PriNome, Ip, Porta);
 
                             if (retorno.equals("erro")) {
                                 Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (retorno.equals("true")) {
-                                    String retornoImg = null;
 
-                                    // ENVIANDO IMAGEM
-                                    if (byteImagem != null) {
-                                        int x1 = random.nextInt(101);
-                                        String IDImg = Integer.toString(x1);
-                                        retornoImg = processaSocket.envia_Img(IDImg, IDserver, cpfCliente, "Img1", byteImagem);
-                                        if (retornoImg.equals("true") && byteImagem2 != null) {
-                                            int x2 = random.nextInt(101);
-                                            String IDImg2 = Integer.toString(x2);
-                                            retornoImg = processaSocket.envia_Img(IDImg2, IDserver, cpfCliente, "Img2", byteImagem2);
-                                            if (retornoImg.equals("true") && byteImagem3 != null) {
-                                                int x3 = random.nextInt(101);
-                                                String IDImg3 = Integer.toString(x3);
-                                                retornoImg = processaSocket.envia_Img(IDImg3, IDserver, cpfCliente, "Img3", byteImagem3);
+                                    String retornoImg = processaSocket.envia_Img(IDserver, cpfCliente, byteImagem, byteImagem2, byteImagem3, Ip, Porta);
+
+                                    if (retornoImg.equals("erro")) {
+                                        Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (retornoImg.equals("true")) {
+                                            Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
+
+                                            String retornoBairro = evBuscarOcorrenciasBairro(bairroCliente, Ip, Porta);
+                                            if (retornoBairro.equals("erro")) {
+                                                Toast.makeText(this, "Erro na Conexão Com o Servidor", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                Toast.makeText(this, "Duas Img", Toast.LENGTH_SHORT).show();
+                                                if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
+                                                    Intent cliente = new Intent(this, Cliente.class);
+
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("nome", nomeCliente);
+                                                    bundle.putString("cpf", cpfCliente);
+                                                    bundle.putString("bairro", bairroCliente);
+                                                    bundle.putString("ip", Ip);
+                                                    bundle.putInt("porta", Porta);
+
+                                                    cliente.putExtras(bundle);
+                                                    this.startActivity(cliente);
+                                                    this.finish();
+                                                }
                                             }
-                                        } else {
-                                            Toast.makeText(this, "Uma Img", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } else {
-                                        Toast.makeText(this, "Nao há imagem", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
-
-                                    String retornoBairro = evBuscarOcorrenciasBairro(bairroCliente);
-
-                                    if (retornoBairro.equals("erro")) {
-                                        Toast.makeText(this, "Erro na Conexão Com o Servidor", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
-                                            Intent cliente = new Intent(this, Cliente.class);
-
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("nome", nomeCliente);
-                                            bundle.putString("cpf", cpfCliente);
-                                            bundle.putString("bairro", bairroCliente);
-
-                                            cliente.putExtras(bundle);
-                                            this.startActivity(cliente);
-                                            this.finish();
                                         }
                                     }
-
                                 } else {
                                     edtRua.setError("Erro Retorno do Server False");
                                     edtRua.setFocusable(true);
@@ -588,6 +568,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         }
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -599,6 +580,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             bundle.putString("nome", nomeCliente);
             bundle.putString("cpf", cpfCliente);
             bundle.putString("bairro", bairroCliente);
+            bundle.putString("ip", Ip);
+            bundle.putInt("porta", Porta);
 
             adm.putExtras(bundle);
             this.startActivity(adm);
@@ -606,7 +589,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         } else {
 
             try {
-                evBuscarOcorrenciasBairro(bairroCliente);
+                evBuscarOcorrenciasBairro(bairroCliente, Ip, Porta);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -617,6 +600,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             bundle.putString("nome", nomeCliente);
             bundle.putString("cpf", cpfCliente);
             bundle.putString("bairro", bairroCliente);
+            bundle.putString("ip", Ip);
+            bundle.putInt("porta", Porta);
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);
