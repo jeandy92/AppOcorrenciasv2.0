@@ -28,9 +28,13 @@ public class ProcessaSocket {
     static Socket socket;
 
 
-      //private static String ip_conexao = "192.168.43.98";// "52.34.140.131";
-    private static String ip_conexao = "52.34.140.131";
-    private static int porta_conexao = 63200;
+    //private static String ip_conexao = "192.168.43.98";// "52.34.140.131";
+    //private static String ip_conexao = "52.34.140.131";
+    //private static int porta_conexao = 63200;
+
+    private static String ip_conexao = "10.12.56.32";
+    private static int porta_conexao = 3333;
+
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -125,7 +129,6 @@ public class ProcessaSocket {
         //lidos = in.read(pacote, 0, ttotal);
         while (lidos_total < ttotal) {
             lidos = in.read(tmp, 0, ttotal - lidos_total);
-            Log.i("Lidos", "------------------------" + String.valueOf(lidos));
             if (lidos > 0) {
                 System.arraycopy(tmp, 0, pacote, lidos_total, lidos);
                 lidos_total += lidos;
@@ -313,7 +316,7 @@ public class ProcessaSocket {
     }
 
     //Metodo que envia as informações para o Servidor (Socket)
-    public static String Bytes(byte[] bites) {
+    public static String Bytes(byte[] bites, String Ip, int Porta) {
         String str = null;
 
         try {
@@ -321,7 +324,7 @@ public class ProcessaSocket {
             Socket cliente2 = new Socket();
 
             int millisecondsTimeOut = 5000;
-            InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+            InetSocketAddress adress = new InetSocketAddress(Ip, Porta);
 
             try {
                 cliente2.connect(adress, millisecondsTimeOut);
@@ -348,7 +351,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String primeiroCadastroNoServidor(String dados) throws IOException {
+    public static String primeiroCadastroNoServidor(String dados, String IpServer, int PortaServer) throws IOException {
         String str = null;
         Socket cliente2 = new Socket();
 
@@ -365,7 +368,53 @@ public class ProcessaSocket {
 
 
         int millisecondsTimeOut = 5000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+        InetSocketAddress adress = new InetSocketAddress(IpServer, PortaServer);
+
+        try {
+            cliente2.connect(adress, millisecondsTimeOut);
+        } catch (Exception e) {
+            str = "erro";
+            return str;
+        }
+        try {
+            canalSaida = cliente2.getOutputStream();
+            canalEntrada = cliente2.getInputStream();
+            canalSaida.write(byteFinal);
+            str = recebe_dados(canalEntrada);
+
+            canalSaida.flush();
+            canalSaida.close();
+            canalEntrada.close();
+            cliente2.close();
+
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static String BuscarServidor() throws IOException {
+        String str = null;
+        Socket cliente2 = new Socket();
+
+        String IpDNS = "10.12.56.32";
+        int portaDNS = 4444;
+
+        String dados = "ClienteLogin teste";
+        byte[] byteDados = dados.getBytes();
+        int tamanhoDados = byteDados.length;
+
+        byte[] byteTamanhoDados = toBytes(tamanhoDados);
+        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
+
+        int tamanhoPacote = TamanhoEDados.length;
+        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
+
+
+        int millisecondsTimeOut = 3000;
+        InetSocketAddress adress = new InetSocketAddress(IpDNS, portaDNS);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
@@ -392,7 +441,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String buscarDadosImagensServer(String dados) throws IOException {
+    public static String buscarDadosImagensServer(String dados, String IpServer, int PortaServer) throws IOException {
         String str = null;
         Socket cliente2 = new Socket();
 
@@ -409,7 +458,7 @@ public class ProcessaSocket {
 
 
         int millisecondsTimeOut = 5000;
-        InetSocketAddress adress = new InetSocketAddress(ip_conexao, porta_conexao);
+        InetSocketAddress adress = new InetSocketAddress(IpServer, PortaServer);
 
         try {
             cliente2.connect(adress, millisecondsTimeOut);
@@ -573,7 +622,7 @@ public class ProcessaSocket {
 
     public static String cadastrar_Ocorrencia(String ID, String CPFCliente, String tipo_crime, String convDataOcorrencia,
                                               String UF, String convDescricao, String convEndereco, String convCidade,
-                                              String convBairro, String Anonimo, String PriNome) throws IOException {
+                                              String convBairro, String Anonimo, String PriNome, String Ip, int Porta) throws IOException {
         //Envio de dados
         String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF + " " + convDataOcorrencia +
                 " " + Anonimo + " " + PriNome;
@@ -620,7 +669,7 @@ public class ProcessaSocket {
         byte[] byteTamanhoPct = toBytes(tamanhoPacote);
         byte[] byteFinal = concat(byteTamanhoPct, DadoRuaBairCidDescTip);
 
-        String retorno = Bytes(byteFinal);
+        String retorno = Bytes(byteFinal, Ip, Porta);
 
         if (retorno.equals("erro")) {
             return "erro";
@@ -634,7 +683,7 @@ public class ProcessaSocket {
 
     public static String cadastrarUsuario(String convCpf, String senha, String email, String convTelefone,
                                           String convCep, String uf, String numero, String rua, String bairro,
-                                          String cidade, String nome, String dataNasc, String complemento) throws IOException {
+                                          String cidade, String nome, String dataNasc, String complemento, String Ip, int Porta) throws IOException {
 
         String cadastro1 = "Cadastrar1" + " " + convCpf + " " + senha + " " + email + " " + convTelefone + " " + convCep +
                 " " + uf + " " + numero + " " + dataNasc;
@@ -681,7 +730,7 @@ public class ProcessaSocket {
         byte[] byteTamanhoPct = toBytes(tamanhoPacote);
         byte[] byteFinal = concat(byteTamanhoPct, DadoRuaBairCidNomComp);
 
-        String retorno = Bytes(byteFinal);
+        String retorno = Bytes(byteFinal, Ip, Porta);
 
         if (retorno.equals("erro")) {
             return "erro";
@@ -694,20 +743,20 @@ public class ProcessaSocket {
     }
 
     public static String cadastrar_Comentario(String IDComentario, String IDOcorrencia, String CPFCliente, String Data, String Hora,
-                                              String Apelido, String convDescricao) throws IOException {
+                                              String Apelido, String convDescricao, String Ip, int Porta) throws IOException {
         //Envio de dados
         String CadastrarComentario = "CadastrarComentario" + " " + IDComentario + " " + IDOcorrencia + " " + CPFCliente + " " + Data +
                 " " + Hora + " " + Apelido;
 
         String ComentarioDescricao = "ComentarioDescricao" + " " + IDComentario + " " + convDescricao;
 
-        String retorno = primeiroCadastroNoServidor(CadastrarComentario);
+        String retorno = primeiroCadastroNoServidor(CadastrarComentario, Ip, Porta);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                retorno = primeiroCadastroNoServidor(ComentarioDescricao);
+                retorno = primeiroCadastroNoServidor(ComentarioDescricao, Ip, Porta);
                 if (retorno.equals("erro")) {
                     return "erro";
                 } else {
@@ -747,39 +796,103 @@ public class ProcessaSocket {
     }
 
     ////////////// enviar os bytes
-    public static String envia_Img(String IDImg, String ID, String CPF, String nomeImg, byte[] byteImagem) throws IOException {
-
-        String dados = "ImagemOcorrencia " + IDImg + " " + ID + " " + CPF + " " + nomeImg;
-
-        byte[] byteDados = dados.getBytes();
-        int tamanhoDados = byteDados.length;
+    public static String envia_Img(String IDOcor, String CPF, byte[] byteImagem, byte[] byteImagem2, byte[] byteImagem3, String Ip, int Porta) throws IOException {
 
         int tamanhoImagem = byteImagem.length;
-
-        byte[] byteTamanhoDados = toBytes(tamanhoDados);
         byte[] byteTamanhoImagem = toBytes(tamanhoImagem);
-
-
-        byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
         byte[] TamanhoEImagem = concat(byteTamanhoImagem, byteImagem);
 
-        byte[] DadosImagem = concat(TamanhoEDados, TamanhoEImagem);
+        if (byteImagem2 != null) {
 
-        int tamanhoPacote = DadosImagem.length;
-        byte[] byteTamanho = toBytes(tamanhoPacote);
-        byte[] byteFinal = concat(byteTamanho, DadosImagem);
+            String dados2 = "ImagemOcorrencia " + "2 " + IDOcor + " " + CPF;
 
-        String retorno = Bytes(byteFinal);
+            byte[] byteDados2 = dados2.getBytes();
+            int tamanhoDados2 = byteDados2.length;
+            byte[] byteTamanhoDados2 = toBytes(tamanhoDados2);
 
-        if (retorno.equals("erro")) {
-            return "erro";
+            byte[] TamanhoEDados = concat(byteTamanhoDados2, byteDados2);
+            byte[] DadosEImagem2 = concat(TamanhoEDados, TamanhoEImagem);
+
+            int tamanhoImagem22 = byteImagem2.length;
+            byte[] byteTamanhoImagem22 = toBytes(tamanhoImagem22);
+            byte[] TamanhoEImagem22 = concat(byteTamanhoImagem22, byteImagem2);
+
+            byte[] DadosImagemImg2 = concat(DadosEImagem2, TamanhoEImagem22);
+
+            if (byteImagem3 != null) {
+
+                String dados3 = "ImagemOcorrencia " + "3 " + IDOcor + " " + CPF;
+
+                byte[] byteDados3 = dados3.getBytes();
+                int tamanhoDados3 = byteDados3.length;
+                byte[] byteTamanhoDados3 = toBytes(tamanhoDados3);
+                byte[] TamanhoEDados3 = concat(byteTamanhoDados3, byteDados3);
+                byte[] DadosEPriImg = concat(TamanhoEDados3, TamanhoEImagem);
+
+
+                int tamanhoImagem33 = byteImagem2.length;
+                byte[] byteTamanhoImagem33 = toBytes(tamanhoImagem33);
+                byte[] TamanhoEImagem33 = concat(byteTamanhoImagem33, byteImagem2);
+                byte[] DadosImg1eImg2 = concat(DadosEPriImg, TamanhoEImagem33);
+
+
+                int tamanhoImagem333 = byteImagem3.length;
+                byte[] byteTamanhoImagem333 = toBytes(tamanhoImagem333);
+                byte[] TamanhoEImagem333 = concat(byteTamanhoImagem333, byteImagem3);
+                byte[] DadosImg1Img2eImg3 = concat(DadosImg1eImg2, TamanhoEImagem333);
+
+
+                int tamanhoPacote3 = DadosImg1Img2eImg3.length;
+                byte[] byteTamanho3 = toBytes(tamanhoPacote3);
+                byte[] byteFinal3 = concat(byteTamanho3, DadosImg1Img2eImg3);
+
+                String retorno = Bytes(byteFinal3, Ip, Porta);
+
+                if (retorno.equals("erro")) {
+                    return "erro";
+                } else {
+                    return "true";
+                }
+            } else {
+
+                int tamanhoPacote2 = DadosImagemImg2.length;
+                byte[] byteTamanho2 = toBytes(tamanhoPacote2);
+                byte[] byteFinal2 = concat(byteTamanho2, DadosImagemImg2);
+
+                String retorno = Bytes(byteFinal2, Ip, Porta);
+
+                if (retorno.equals("erro")) {
+                    return "erro";
+                } else {
+                    return "true";
+                }
+
+            }
+
         } else {
-            return "true";
+            String dados = "ImagemOcorrencia " + "1 " + IDOcor + " " + CPF;
+
+            byte[] byteDados = dados.getBytes();
+            int tamanhoDados = byteDados.length;
+            byte[] byteTamanhoDados = toBytes(tamanhoDados);
+            byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
+            byte[] DadosImagem = concat(TamanhoEDados, TamanhoEImagem);
+
+            int tamanhoPacote = DadosImagem.length;
+            byte[] byteTamanho = toBytes(tamanhoPacote);
+            byte[] byteFinal = concat(byteTamanho, DadosImagem);
+            String retorno = Bytes(byteFinal, Ip, Porta);
+
+            if (retorno.equals("erro")) {
+                return "erro";
+            } else {
+                return "true";
+            }
         }
     }
 
 
-    public static String envia_Img_Perfil(String CPF, String nomeImg, byte[] byteImagem) throws IOException {
+    public static String envia_Img_Perfil(String CPF, String nomeImg, byte[] byteImagem, String Ip, int Porta) throws IOException {
 
         String dados = "ImagemPerfil " + CPF + " " + nomeImg;
 
@@ -801,7 +914,7 @@ public class ProcessaSocket {
         byte[] byteTamanho = toBytes(tamanhoPacote);
         byte[] byteFinal = concat(byteTamanho, DadosImagem);
 
-        String retorno = Bytes(byteFinal);
+        String retorno = Bytes(byteFinal, Ip, Porta);
 
         if (retorno.equals("erro")) {
             return "erro";

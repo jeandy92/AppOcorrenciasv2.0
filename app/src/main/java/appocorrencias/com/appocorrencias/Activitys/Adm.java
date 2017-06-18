@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
+
+import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 
 
@@ -18,7 +22,8 @@ public class Adm extends AppCompatActivity {
 
     private Button btnSair,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
-    private String nomeAdm, cpfAdm, bairro;
+    private String nomeAdm, cpfAdm, bairro, Ip;
+    private int Porta;
     private TextView txtTesteAdm;
 
 
@@ -40,6 +45,26 @@ public class Adm extends AppCompatActivity {
 
         txtTesteAdm = (TextView) findViewById(R.id.txtTesteAdm);
         txtTesteAdm.setText(nomeAdm);
+
+        String DadosServidor = null;
+
+
+        try {
+            DadosServidor = ProcessaSocket.BuscarServidor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (DadosServidor.equals("erro")) {
+            Toast.makeText(this, "Erro na Conexão DNS", Toast.LENGTH_SHORT).show();
+        } else {
+            if (DadosServidor != null) {
+                String retorno2[] = DadosServidor.split("//");
+                Ip = retorno2[0];
+                Porta = Integer.parseInt(retorno2[1]);
+            }
+        }
+
     }
 
     public void evCadastrarUsuario(View view) {
@@ -77,6 +102,8 @@ public class Adm extends AppCompatActivity {
         bundle.putString("cpf" , cpfAdm);
         bundle.putString("bairro" , bairro);
         bundle.putString("tela" , "Adm");
+        bundle.putString("ip", Ip);
+        bundle.putInt("porta", Porta);
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
@@ -93,6 +120,8 @@ public class Adm extends AppCompatActivity {
         bundle.putString("cpf" , cpfAdm);
         bundle.putString("bairro" , bairro);
         bundle.putString("tela" , "Adm");
+        bundle.putString("ip", Ip);
+        bundle.putInt("porta", Porta);
 
         buscarOcorrencia.putExtras(bundle);
         this.startActivity(buscarOcorrencia);
@@ -101,7 +130,15 @@ public class Adm extends AppCompatActivity {
     }
 
     public void evBuscarUsuario(View v){
-        this.startActivity(new Intent(this,BuscarUsuarios.class));
+        Intent buscarUsuario = new Intent(this, BuscarUsuarios.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("ip", Ip);
+        bundle.putInt("porta", Porta);
+
+        buscarUsuario.putExtras(bundle);
+        this.startActivity(buscarUsuario);
+
         this.finish();
     }
 

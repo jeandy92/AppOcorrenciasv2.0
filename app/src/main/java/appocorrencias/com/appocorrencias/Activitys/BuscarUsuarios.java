@@ -38,12 +38,19 @@ public class BuscarUsuarios extends AppCompatActivity {
     private ListView lvUsuariosEncontrados;
     private ArrayList<DadosUsuarios> listaUsuariosEncontrados;
     ProcessaSocket processa = new ProcessaSocket();
+    private String Ip;
+    private int Porta;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busca_de_usuarios);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Ip = bundle.getString("ip");
+        Porta = bundle.getInt("porta");
 
         //List View para mostrar os usuários
         lvUsuariosEncontrados = (ListView) findViewById(R.id.lv_usuarios_encontrados);
@@ -223,7 +230,7 @@ public class BuscarUsuarios extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(buscaUsuarioCPF);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(buscaUsuarioCPF, Ip, Porta);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há usuarios cadastrados com esse cpfAdm", Toast.LENGTH_SHORT).show();
@@ -266,7 +273,7 @@ public class BuscarUsuarios extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
 
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarUsuarioNome);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarUsuarioNome, Ip, Porta);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há usuarios cadastrados com esse nomeBuscarOcorrencia", Toast.LENGTH_SHORT).show();
@@ -320,6 +327,8 @@ public class BuscarUsuarios extends AppCompatActivity {
         bundle.putString("nome", "Administrador");
         bundle.putString("cpf", "33333333333");
         bundle.putString("bairro", "Adm");
+        bundle.putString("ip", Ip);
+        bundle.putInt("porta", Porta);
 
         adm.putExtras(bundle);
         this.startActivity(adm);

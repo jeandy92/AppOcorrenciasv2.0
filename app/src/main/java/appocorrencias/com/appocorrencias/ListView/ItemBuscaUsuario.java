@@ -23,12 +23,18 @@ public class ItemBuscaUsuario extends AppCompatActivity {
     AdapterCustomSwiper adapterCustomSwiper;
     private static ProcessaSocket processa = new ProcessaSocket();
 
-    String nome, telefone, cpfUsuario, email, rua, bairro, uf, cidade, nascimento;
+    String nome, telefone, cpfUsuario, email, rua, bairro, uf, cidade, nascimento, Ip;
+    int Porta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_item_busca_usuario);
+
+        Intent intent2 = getIntent();
+        Bundle bundle = intent2.getExtras();
+        Ip = bundle.getString("ip");
+        Porta = bundle.getInt("porta");
 
         TextView tvNome = (TextView) findViewById(R.id.txtCampoNome);
         TextView tvNascimento = (TextView) findViewById(R.id.txtCampoNascimento);
@@ -78,7 +84,7 @@ public class ItemBuscaUsuario extends AppCompatActivity {
     public void evExcluirUsuario(View view) throws IOException {
 
         String ExcluirUsuario = "ExcluirUsuario " + cpfUsuario;
-        String retornoExclusao = processa.primeiroCadastroNoServidor(ExcluirUsuario);
+        String retornoExclusao = processa.primeiroCadastroNoServidor(ExcluirUsuario, Ip, Porta);
 
         if (retornoExclusao.equals("true")) {
             ArrayUsuariosEncontrados.deleteAllArrayUsuarios();
