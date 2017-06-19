@@ -28,13 +28,13 @@ public class ProcessaSocket {
     static Socket socket;
 
 
-    private static String ip_conexao = "172.20.10.3";// "52.34.140.131";
+    private static String ip_conexao = "192.168.1.17";// "52.34.140.131";
     //private static String ip_conexao = "52.34.140.131";
     private static int porta_conexao = 2222;//63200;
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
-        byte[] buff = new byte[8192];
+        byte[] buff = new byte[4096];
         int k = 0;
         String str = null;
         StringBuilder sb = new StringBuilder();
@@ -53,52 +53,26 @@ public class ProcessaSocket {
     }
 
 
-    public static String receber_comentarios(InputStream in) throws IOException {
-
-        // ler
-        byte[] buff = new byte[4];
-        int k = 0, lidos = 0, lidos_total = 0;
+    public static String recebe_dados_img(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
-
-        int k2 = 0;
-        String str2 = null;
+        byte[] buff = new byte[4096];
+        int k = 0;
+        String str = null;
         StringBuilder sb = new StringBuilder();
 
-        k2 = in.read(buff, 0, buff.length);
-
-        int ttotal = valor_to_int(buff);
-        Log.i("Tamanho total recebido", "------------------------" + String.valueOf(ttotal));
-        // le o resto do pacote
-        byte[] pacote2 = new byte[ttotal];
-        byte[] tmp2 = new byte[ttotal];
-        //lidos = in.read(pacote, 0, ttotal);
-        while (lidos_total < ttotal) {
-            lidos = in.read(tmp2, 0, ttotal - lidos_total);
-            if (lidos > 0) {
-                System.arraycopy(tmp2, 0, pacote2, lidos_total, lidos);
-                lidos_total += lidos;
-            } else {
-                break;
-            }
-        }
-
-        byte[] tbuff = new byte[pacote2.length];
-        System.arraycopy(pacote2, 0, tbuff, 0, pacote2.length);
-        //System.arraycopy(buff, 0, tbuff, resulBuff.length, k2);
+        k = in.read(buff, 0, buff.length);
+        byte[] tbuff = new byte[resulBuff.length + k];
+        System.arraycopy(resulBuff, 0, tbuff, 0, resulBuff.length);
+        System.arraycopy(buff, 0, tbuff, resulBuff.length, k);
         resulBuff = tbuff;
         for (int i = 0; i < resulBuff.length; i++) {
             char t = (char) tbuff[i];
             sb.append(t);
-            str2 = sb.toString();
+            str = sb.toString();
         }
 
-        Log.i("Teste de Receber Coment", "------------------------" + str2);
+        return str;
 
-        if (str2.equals("fals")) {
-            return "false";
-        } else {
-            return str2;
-        }
     }
 
 
@@ -111,6 +85,7 @@ public class ProcessaSocket {
 
 
     public static void receber_imagem(InputStream in) throws IOException {
+
         // ler
         byte[] buff = new byte[4];
         int k = 0, lidos = 0, lidos_total = 0;
@@ -141,25 +116,41 @@ public class ProcessaSocket {
         int qtd_imagens = valor_to_int(pacote);
         byte[][] imagens = new byte[qtd_imagens][];
 
+        Log.i("Bytes lidos", "------------------------" + String.valueOf(lidos));
         Log.i("IMAGENS Processa", "------------------------" + String.valueOf(qtd_imagens));
+
 
         int deslocamento = 4; //ignora 4 primeiros bytes da qtd de imagens
 
+        Log.i("IMAGENS Processa FOR", "------------------------" + String.valueOf(qtd_imagens));
+        Log.i("PACOTE Processa FOR", "------------------------" + String.valueOf(pacote.length));
+
         for (int i = 0; i < qtd_imagens; i++) {
+            Log.i("I Processa FOR", "------------------------" + String.valueOf(i));
             // copia tamanho da imagem
             System.arraycopy(pacote, deslocamento, buff, 0, 4);
             deslocamento += 4;
 
+            Log.i("bUFF Processa FOR", "------------------------" + String.valueOf(buff.length));
+            Log.i("bUFF2 Processa FOR", "------------------------" + String.valueOf(valor_to_int(buff)));
             // copia imagem
             imagens[i] = new byte[valor_to_int(buff)];
             Log.i("IMAGEMTA Processa FOR", "------------------------" + String.valueOf(imagens[i].length));
+            Log.i("DESLOCAMENTO 1 Processa", "------------------------" + String.valueOf(deslocamento));
             System.arraycopy(pacote, deslocamento, imagens[i], 0, valor_to_int(buff));
 
             imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, valor_to_int(buff));
             ArrayImagens.adicionarImg(imagem_convertida);
+
             // desloca imagem e o seu tamanho (4 bytes)
+
             deslocamento += imagens[i].length;//valor_to_int(buff);
+
+            Log.i("DESLOCAMENTO Processa", "------------------------" + String.valueOf(deslocamento));
+
+
         }
+
     }
 
 
@@ -213,7 +204,10 @@ public class ProcessaSocket {
             // desloca imagem e o seu tamanho (4 bytes)
 
             deslocamento += imagens[i].length;//valor_to_int(buff);
+
+
         }
+
     }
 
 
@@ -287,6 +281,8 @@ public class ProcessaSocket {
 
                 String cpfDecode2 = new String(cpf[i], "UTF-8");
 
+                Log.i("Valor cpfBusca Processa", "------------------------" + cpfDecode2);
+
                 deslocamento += cpf[i].length;//valor_to_int(buff);
 
                 // copia tamanho da imagem
@@ -300,12 +296,17 @@ public class ProcessaSocket {
                 imagem_convertida = BitmapFactory.decodeByteArray(imagens[i], 0, valor_to_int(buff));
 
                 String cpfDecode = new String(cpf[i], "UTF-8");
+
+                Log.i("Valor cpf Processa", "------------------------" + cpfDecode);
+
                 DadosImagensComentarios dados = new DadosImagensComentarios(cpfDecode, imagem_convertida);
+
                 ArrayImagensPerfilComentarios.adicionarImg(dados);
 
                 // desloca imagem e o seu tamanho (4 bytes)
 
                 deslocamento += imagens[i].length;//valor_to_int(buff);
+
             }
         }
         return "true";
@@ -348,7 +349,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String primeiroCadastroNoServidor(String dados) throws IOException {
+    public static String cadastrar1_no_server(String dados) throws IOException {
         String str = null;
         Socket cliente2 = new Socket();
 
@@ -392,7 +393,7 @@ public class ProcessaSocket {
     }
 
 
-    public static String buscarDadosImagensServer(String dados) throws IOException {
+    public static String buscar_dados_imagens_server(String dados) throws IOException {
         String str = null;
         Socket cliente2 = new Socket();
 
@@ -427,7 +428,7 @@ public class ProcessaSocket {
             if (str.equals("false")) {
                 return "false";
             } else {
-                str = receber_comentarios(canalEntrada);
+                str = recebe_dados(canalEntrada);
             }
 
             canalSaida.flush();
@@ -528,12 +529,9 @@ public class ProcessaSocket {
     }
 
     public static void enviandoNotificacaoGrupo(String tokenUsuario, String bairroUsu) {
-        Socket socket = new Socket();
-        int millisecondsTimeOut = 3000;
-        InetSocketAddress adress = new InetSocketAddress("52.34.140.131", 63300);
-
         try {
-            socket.connect(adress, millisecondsTimeOut);
+
+            socket = new Socket("52.34.140.131", 63300);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
 
@@ -545,6 +543,7 @@ public class ProcessaSocket {
                 out.writeUTF("Novo Crime Registrado");
                 out.writeUTF("Assalto");
                 out.writeUTF(bairroUsu);
+
 
                 Boolean resultado_servidor = in.readBoolean();
 
@@ -699,13 +698,13 @@ public class ProcessaSocket {
 
         String ComentarioDescricao = "ComentarioDescricao" + " " + IDComentario + " " + convDescricao;
 
-        String retorno = primeiroCadastroNoServidor(CadastrarComentario);
+        String retorno = cadastrar1_no_server(CadastrarComentario);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                retorno = primeiroCadastroNoServidor(ComentarioDescricao);
+                retorno = cadastrar1_no_server(ComentarioDescricao);
                 if (retorno.equals("erro")) {
                     return "erro";
                 } else {

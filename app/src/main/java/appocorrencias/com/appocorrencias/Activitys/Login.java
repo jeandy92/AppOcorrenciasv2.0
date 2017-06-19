@@ -32,14 +32,19 @@ public class Login extends AppCompatActivity {
 
     private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
 
+    private byte[] imagem;
     private String nome, SENHA, LoginServer, CPF, Nome, Bairro;
     private String convCpf, Status;
     private static ProcessaSocket processa = new ProcessaSocket();
     private String retorno;
+    private View view;
+    private String nomecompleto = "Jeanderson de Almeeida Dyorgenes";
     private EditText txtUsuario, txtSenha;
     private CheckBox salvarlogin;
     private Button btnCadastrarCli;
     private static final String PREF_NAME = "MainActivityPreferences";
+    private int count1;
+    private int count2;
     private static final String TAG = "Login";
 
     //private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
@@ -87,6 +92,9 @@ public class Login extends AppCompatActivity {
         salvarlogin = (CheckBox) findViewById(R.id.ckSalvarLogin);
         btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
 
+        //Quando usuário clicar nos campos de login e senha ele apaga os dados default para o preenchimento
+
+
         //Insere a mascara no cpf
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", txtUsuario);
         txtUsuario.addTextChangedListener(maskCPF);
@@ -115,6 +123,7 @@ public class Login extends AppCompatActivity {
 
         txtUsuario.setText(CPF);
         txtSenha.setText(SENHA);
+
 
     }
 
@@ -203,7 +212,7 @@ public class Login extends AppCompatActivity {
                     Log.i("evEntrar(ELSE)", CPF);
                     Log.i("evEntrar(ELSE)", SENHA);
 
-                    retorno = processa.primeiroCadastroNoServidor(LoginServer);
+                    retorno = processa.cadastrar1_no_server(LoginServer);
                     String retorno2[] = retorno.split("/");
                     Status = retorno2[0];
 
@@ -263,7 +272,7 @@ public class Login extends AppCompatActivity {
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " + Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
 
         if (retorno.equals("false")) {
             // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();

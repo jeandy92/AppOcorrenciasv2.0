@@ -44,8 +44,9 @@ public class BuscarOcorrencias extends AppCompatActivity {
     private TextInputLayout tinpBairro;
     private EditText edtFoco, edtBairroText;
     private ListView lvFeedOcorrencias;
-    public static String nomeBuscarOcorrencia, cpfBuscarOcorrencia, bairroBuscarOcorrencia, telaBuscarOcorrencia;
+    public static String nomeBuscarOcorrencia, cpfBuscarOcorrencia, bairroBuscarOcorrencia, telaBuscarOcorrencia , Ip;
     public static ProcessaSocket processa = new ProcessaSocket();
+    public static int Porta;
 
 
     @Override
@@ -60,6 +61,8 @@ public class BuscarOcorrencias extends AppCompatActivity {
         cpfBuscarOcorrencia = bundle.getString("cpf");
         bairroBuscarOcorrencia = bundle.getString("bairro");
         telaBuscarOcorrencia = bundle.getString("tela");
+        Ip = bundle.getString("ip");
+        Porta = bundle.getInt("porta");
 
 
         edtFoco = (EditText) findViewById(R.id.edtFoco);
@@ -131,12 +134,14 @@ public class BuscarOcorrencias extends AppCompatActivity {
                     i.putExtra("desc_ocorrencia", descOcorrencia);
                     i.putExtra("tipocrime", tipoCrime);
                     i.putExtra("tela", tela);
+                    i.putExtra("ip", Ip);
+                    i.putExtra("porta", Porta);
 
                     deleteAllArrayComentarios();
 
                     try {
-                        evBuscarImagens(idOcorrencia, "ocorrencia");
-                        evBuscarComentario(idOcorrencia);
+                        evBuscarImagens(idOcorrencia, "ocorrencia", Ip, Porta);
+                        evBuscarComentario(idOcorrencia, Ip, Porta);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -178,7 +183,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
 
         if (rbtBairro.isChecked()) {
             String bairroBusca = edtBairroText.getText().toString();
-            evBuscarOcorrenciasBairro(bairroBusca);
+            evBuscarOcorrenciasBairro(bairroBusca, Ip, Porta);
 
             ArrayList<DadosOcorrencias> listaFeedOcorrencias = getListaOcorrencia();
 
@@ -218,12 +223,12 @@ public class BuscarOcorrencias extends AppCompatActivity {
     }
 
 
-    public void evBuscarOcorrenciasBairro(String segundoBairro) throws IOException {
+    public void evBuscarOcorrenciasBairro(String segundoBairro, String Ip, int Porta) throws IOException {
 
         String buscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " + segundoBairro;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(buscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(buscarOcorrenciasRegistradas, Ip, Porta);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há ocorrências cadastradas neste bairro", Toast.LENGTH_SHORT).show();
@@ -265,7 +270,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
 
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas);
+        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip,Porta );
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há ocorrencias cadastradas com esse tipo", Toast.LENGTH_SHORT).show();
@@ -310,7 +315,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         super.onBackPressed();
 
 
-        if (telaBuscarOcorrencia.equals("Adm")) {
+        if (telaBuscarOcorrencia.equals("Adm") || telaBuscarOcorrencia.equals("Busca") ) {
             Intent adm = new Intent(this, Adm.class);
 
             Bundle bundle = new Bundle();
@@ -327,13 +332,15 @@ public class BuscarOcorrencias extends AppCompatActivity {
             deleteAllArray();
 
             try {
-                Login.evBuscarOcorrenciasBairro(bairroBuscarOcorrencia);
+                Login.evBuscarOcorrenciasBairro(bairroBuscarOcorrencia, Ip, Porta);
 
                 Intent cliente = new Intent(this, Cliente.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("nome", nomeBuscarOcorrencia);
                 bundle.putString("cpf", cpfBuscarOcorrencia);
                 bundle.putString("bairro", bairroBuscarOcorrencia);
+                bundle.putString("ip", Ip);
+                bundle.putInt("porta", Porta);
 
                 cliente.putExtras(bundle);
                 this.startActivity(cliente);

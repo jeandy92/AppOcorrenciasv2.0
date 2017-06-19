@@ -105,7 +105,8 @@
             <ImageView
                 android:id="@+id/ivCliente"
                 android:layout_width="140dp"
-
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_height="140dp"
                 android:layout_marginTop="7dp"
                 android:bottomLeftRadius="50dp"
@@ -268,6 +269,8 @@
                 android:layout_marginTop="110dp"
                 android:animationCache="false"
                 android:paddingLeft="4dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

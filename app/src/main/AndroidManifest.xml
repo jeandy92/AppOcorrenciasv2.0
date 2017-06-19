@@ -75,7 +75,6 @@
 
         <activity android:name=".ListView.ItemBuscaUsuario" />
         <activity android:name=".ExampleUnitTest$Notificacoes" />
-        <activity android:name=".Notificacoes"></activity>
     </application>
 
 </manifest>
