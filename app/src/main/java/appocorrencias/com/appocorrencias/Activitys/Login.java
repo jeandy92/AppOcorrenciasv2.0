@@ -32,19 +32,15 @@ public class Login extends AppCompatActivity {
 
     private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
 
-    private byte[] imagem;
-    private String nome, SENHA, LoginServer, CPF, Nome, Bairro;
+    private String nome, SENHA, LoginServer, CPF, Nome, Bairro, IpServer;
+    int PortaServer;
     private String convCpf, Status;
     private static ProcessaSocket processa = new ProcessaSocket();
     private String retorno;
-    private View view;
-    private String nomecompleto = "Jeanderson de Almeeida Dyorgenes";
     private EditText txtUsuario, txtSenha;
     private CheckBox salvarlogin;
     private Button btnCadastrarCli;
     private static final String PREF_NAME = "MainActivityPreferences";
-    private int count1;
-    private int count2;
     private static final String TAG = "Login";
 
     //private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
@@ -92,9 +88,6 @@ public class Login extends AppCompatActivity {
         salvarlogin = (CheckBox) findViewById(R.id.ckSalvarLogin);
         btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
 
-        //Quando usuário clicar nos campos de login e senha ele apaga os dados default para o preenchimento
-
-
         //Insere a mascara no cpf
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", txtUsuario);
         txtUsuario.addTextChangedListener(maskCPF);
@@ -124,7 +117,6 @@ public class Login extends AppCompatActivity {
         txtUsuario.setText(CPF);
         txtSenha.setText(SENHA);
 
-
     }
 
 
@@ -149,8 +141,7 @@ public class Login extends AppCompatActivity {
         Log.d(TAG, token);
 
         //Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
-        ProcessaSocket.enviandoNotificacaoGrupo(token,"Jardim lok");
-
+        ProcessaSocket.enviandoNotificacaoGrupo(token, "Jardim lok");
 
 
         SENHA = txtSenha.getText().toString();
@@ -201,54 +192,75 @@ public class Login extends AppCompatActivity {
             } else {
 
                 if (CadastrarUsuario.validarCPF(CPF)) {
-                    txtUsuario.setError("cpfAdm Inválido");
+                    txtUsuario.setError("CPF Inválido");
                     txtUsuario.setFocusable(true);
                     txtUsuario.requestFocus();
                     Log.i("evEntrar(IF2)", CPF);
                     Log.i("evEntrar(IF2)", SENHA);
                 } else {
 
-                    LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
-                    Log.i("evEntrar(ELSE)", CPF);
-                    Log.i("evEntrar(ELSE)", SENHA);
+                    String DadosServidor = null;
 
-                    retorno = processa.cadastrar1_no_server(LoginServer);
-                    String retorno2[] = retorno.split("/");
-                    Status = retorno2[0];
+                    try {
+                        DadosServidor = ProcessaSocket.BuscarServidor();
+                        Log.i("evEntrar(Servidor)", DadosServidor);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-                    if (Status.equals("erro")) {
-                        Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
-
+                    if (DadosServidor.equals("erro")) {
+                        Toast.makeText(this, "Erro na Conexão DNS", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (Status.equals("false")) {
-                            txtUsuario.setError("Usuario ou senha Invalido");
-                            txtUsuario.setFocusable(true);
-                            txtUsuario.requestFocus();
-                        } else {
-                            if (Status.equals("true")) {
-                                CPF = retorno2[1];
-                                Nome = retorno2[2];
-                                String Bairro2 = retorno2[3];
+                        if (DadosServidor != null) {
+                            String retorno2[] = DadosServidor.split("//");
+                            IpServer = retorno2[0];
+                            PortaServer = Integer.parseInt(retorno2[1]);
 
-                                String retornoBairro = evBuscarOcorrenciasBairro(Bairro2);
-                                if (retornoBairro.equals("erro")) {
-                                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                            LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
+                            Log.i("evEntrar(ELSE)", CPF);
+                            Log.i("evEntrar(ELSE)", SENHA);
+
+                            retorno = processa.primeiroCadastroNoServidor(LoginServer, IpServer, PortaServer);
+                            String retornoCadastro[] = retorno.split("/");
+                            Status = retornoCadastro[0];
+
+                            if (Status.equals("erro")) {
+                                Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                if (Status.equals("false")) {
+                                    txtUsuario.setError("Usuario ou senha Invalido");
+                                    txtUsuario.setFocusable(true);
+                                    txtUsuario.requestFocus();
                                 } else {
-                                    if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
-                                        String retornoImagem = evBuscarImagens(CPF, "cpf");
-                                        if (retornoImagem.equals("erro")) {
+                                    if (Status.equals("true")) {
+                                        CPF = retornoCadastro[1];
+                                        Nome = retornoCadastro[2];
+                                        String Bairro2 = retornoCadastro[3];
+
+                                        String retornoBairro = evBuscarOcorrenciasBairro(Bairro2, IpServer, PortaServer);
+                                        if (retornoBairro.equals("erro")) {
                                             Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
-                                                Intent cliente = new Intent(this, Cliente.class);
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString("nome", Nome);
-                                                bundle.putString("cpf", CPF);
-                                                bundle.putString("bairro", Bairro2);
+                                            if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
+                                                String retornoImagem = evBuscarImagens(CPF, "cpf", IpServer, PortaServer);
+                                                if (retornoImagem.equals("erro")) {
+                                                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
+                                                        Intent cliente = new Intent(this, Cliente.class);
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("nome", Nome);
+                                                        bundle.putString("cpf", CPF);
+                                                        bundle.putString("bairro", Bairro2);
+                                                        bundle.putString("ip", IpServer);
+                                                        bundle.putInt("porta", PortaServer);
 
-                                                cliente.putExtras(bundle);
-                                                this.startActivity(cliente);
-                                                this.finish();
+                                                        cliente.putExtras(bundle);
+                                                        this.startActivity(cliente);
+                                                        this.finish();
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -267,77 +279,80 @@ public class Login extends AppCompatActivity {
     }
 
 
-    public static String evBuscarOcorrenciasBairro(String Bairro2) throws IOException {
 
-        String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " + Bairro2;
+
+
+public static String evBuscarOcorrenciasBairro(String Bairro2,String IpServer,int PortaServer)throws IOException{
+
+        String BuscarOcorrenciasRegistradas="BuscarOcorrenciasRegistradasBairro "+Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscar_dados_imagens_server(BuscarOcorrenciasRegistradas);
+        String retorno=ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas,IpServer,PortaServer);
 
-        if (retorno.equals("false")) {
-            // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
-            return "false";
-        } else {
-            if (retorno.equals("erro")) {
-                // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
-                return "erro";
-            } else {
-                // Pegando quantidade de Ocorrencias
-                int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
+        if(retorno.equals("false")){
+        // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
+        return"false";
+        }else{
+        if(retorno.equals("erro")){
+        // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
+        return"erro";
+        }else{
+        // Pegando quantidade de Ocorrencias
+        int qtdOcorrencia=ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
 
-                // Pegando dados e Adicioanando dados no Array
-                for (int i = 0; i < qtdOcorrencia; i++) {
-                    String TodasOcorrencias[] = retorno.split("///");
+        // Pegando dados e Adicioanando dados no Array
+        for(int i=0;i<qtdOcorrencia; i++){
+        String TodasOcorrencias[]=retorno.split("///");
 
-                    String Ocorrencia = TodasOcorrencias[i];
-                    String OcorrenciaUm[] = Ocorrencia.split("//");
-                    String Nr = OcorrenciaUm[1];
-                    String CPFOco = OcorrenciaUm[2];
-                    String Rua = OcorrenciaUm[3];
-                    String Bairro = OcorrenciaUm[4];
-                    String Cidade = OcorrenciaUm[5];
-                    String UF = OcorrenciaUm[6];
-                    String Descricao = OcorrenciaUm[7];
-                    String Data = OcorrenciaUm[8];
-                    String Tipo = OcorrenciaUm[9];
-                    String Anonimo = OcorrenciaUm[10];
-                    String Apelido = OcorrenciaUm[11];
+        String Ocorrencia=TodasOcorrencias[i];
+        String OcorrenciaUm[]=Ocorrencia.split("//");
+        String Nr=OcorrenciaUm[1];
+        String CPFOco=OcorrenciaUm[2];
+        String Rua=OcorrenciaUm[3];
+        String Bairro=OcorrenciaUm[4];
+        String Cidade=OcorrenciaUm[5];
+        String UF=OcorrenciaUm[6];
+        String Descricao=OcorrenciaUm[7];
+        String Data=OcorrenciaUm[8];
+        String Tipo=OcorrenciaUm[9];
+        String Anonimo=OcorrenciaUm[10];
+        String Apelido=OcorrenciaUm[11];
 
-                    DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
+        DadosOcorrencias dado=new DadosOcorrencias(Nr,CPFOco,Rua,Bairro,Cidade,UF,Descricao,Data,Tipo,Anonimo,Apelido);
 
-                    ArrayOcorrenciasRegistradas.adicionar(dado);
-                }
-                //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
-            }
+        ArrayOcorrenciasRegistradas.adicionar(dado);
         }
-        return "true";
-    }
+        //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
+        }
+        }
+        return"true";
+        }
 
 
-    @Override
-    protected void onRestart() {
+@Override
+protected void onRestart(){
         super.onRestart();
-    }
+        }
 
-    @Override
-    public void onBackPressed() {
+@Override
+public void onBackPressed(){
         super.onBackPressed();
         finish();
 
-    }
+        }
 
-    @Override
-    protected void onDestroy() {
+@Override
+protected void onDestroy(){
         super.onDestroy();
         setContentView(R.layout.activity_login);
 
-        SharedPreferences sp1 = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        convCpf = sp1.getString("login", "");
-        Log.i("INonDestroy", convCpf);
+        SharedPreferences sp1=getSharedPreferences(PREF_NAME,MODE_PRIVATE);
+        convCpf=sp1.getString("login","");
+        Log.i("INonDestroy",convCpf);
 
 
-        SharedPreferences.Editor editor = sp1.edit();
-        editor.putString("login", convCpf);
+        SharedPreferences.Editor editor=sp1.edit();
+        editor.putString("login",convCpf);
         editor.commit();
 
 
@@ -346,28 +361,28 @@ public class Login extends AppCompatActivity {
 //        editor =sp2.edit();
 //        editor.putInt("count_2",count2+1);
 //        editor.commit();
-    }
+        }
 
-    @Override
-    protected void onStop() {
+@Override
+protected void onStop(){
         super.onStop();
 
-    }
+        }
 
 
-    @Override
-    protected void onPause() {
+@Override
+protected void onPause(){
         super.onPause();
 
 
-    }
+        }
 
-    @Override
-    protected void onResume() {
+@Override
+protected void onResume(){
         super.onResume();
 
 
-    }
-}
+        }
+        }
 
 

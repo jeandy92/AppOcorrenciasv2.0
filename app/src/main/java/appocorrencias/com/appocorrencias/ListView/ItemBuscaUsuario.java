@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.Activitys.BuscarUsuarios;
+import appocorrencias.com.appocorrencias.Activitys.ListarOcorrencias;
 import appocorrencias.com.appocorrencias.Adapters.AdapterCustomSwiper;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
@@ -23,18 +24,13 @@ public class ItemBuscaUsuario extends AppCompatActivity {
     AdapterCustomSwiper adapterCustomSwiper;
     private static ProcessaSocket processa = new ProcessaSocket();
 
-    String nome, telefone, cpfUsuario, email, rua, bairro, uf, cidade, nascimento, Ip;
-    int Porta;
+    public static String nome, telefone, cpfUsuario, email, rua, bairro, uf, cidade, nascimento, Ip;
+    public static int Porta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_item_busca_usuario);
-
-        Intent intent2 = getIntent();
-        Bundle bundle = intent2.getExtras();
-        Ip = bundle.getString("ip");
-        Porta = bundle.getInt("porta");
 
         TextView tvNome = (TextView) findViewById(R.id.txtCampoNome);
         TextView tvNascimento = (TextView) findViewById(R.id.txtCampoNascimento);
@@ -46,10 +42,11 @@ public class ItemBuscaUsuario extends AppCompatActivity {
         TextView tvBairro = (TextView) findViewById(R.id.txtCampoBairro);
         Button btnExcluir = (Button) findViewById(R.id.btnExcluir);
 
-
         Intent intent = getIntent();
-
         Bundle dados = intent.getExtras();
+
+        Ip = dados.getString("ip");
+        Porta = dados.getInt("porta");
 
         cpfUsuario  = dados.getString("cpfUsuario").toString();
         rua         = ArrayUsuariosEncontrados.getRuaCPF(cpfUsuario);
@@ -91,6 +88,11 @@ public class ItemBuscaUsuario extends AppCompatActivity {
             Toast.makeText(this, "Usuario Excluído ", Toast.LENGTH_SHORT).show();
 
             Intent cliente = new Intent(this, BuscarUsuarios.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("ip", Ip);
+            bundle.putInt("porta", Porta);
+
+            cliente.putExtras(bundle);
             this.startActivity(cliente);
 
 
@@ -99,6 +101,11 @@ public class ItemBuscaUsuario extends AppCompatActivity {
                 Toast.makeText(this, "Erro de Conexão", Toast.LENGTH_SHORT).show();
 
                 Intent cliente = new Intent(this, BuscarUsuarios.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("ip", Ip);
+                bundle.putInt("porta", Porta);
+
+                cliente.putExtras(bundle);
                 this.startActivity(cliente);
             }
         }
@@ -110,6 +117,11 @@ public class ItemBuscaUsuario extends AppCompatActivity {
         ArrayImagens.deleteBitmap();
 
         Intent cliente = new Intent(this, BuscarUsuarios.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("ip", Ip);
+        bundle.putInt("porta", Porta);
+
+        cliente.putExtras(bundle);
         this.startActivity(cliente);
 
     }

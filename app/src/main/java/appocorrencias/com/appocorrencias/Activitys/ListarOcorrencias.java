@@ -32,14 +32,6 @@ public class ListarOcorrencias extends AppCompatActivity {
     public String loginNome, loginCpf, loginBairro, Ip;
     public int Porta;
 
-    static byte[] primeiraImagem;
-    static byte[] segundaImagem;
-    static byte[] terceiraImagem;
-
-
-    static Bitmap primeiraImagemConvertida;
-    static Bitmap segundaImagemConvertida;
-    static Bitmap terceiraImagemConvertida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +72,9 @@ public class ListarOcorrencias extends AppCompatActivity {
                     i.putExtra("bairro", loginBairro);
                     i.putExtra("id_ocorrencia", idocorrencia);
                     i.putExtra("tela", tela);
+                    i.putExtra("telaBusca", "Busca");
                     i.putExtra("ip", Ip);
                     i.putExtra("porta", Porta);
-
 
                     deleteAllArrayComentarios();
 
@@ -117,20 +109,16 @@ public class ListarOcorrencias extends AppCompatActivity {
                         // Disallow ScrollView to intercept touch events.
                         v.getParent().requestDisallowInterceptTouchEvent(true);
                         break;
-
                     case MotionEvent.ACTION_UP:
                         // Allow ScrollView to intercept touch events.
                         v.getParent().requestDisallowInterceptTouchEvent(false);
                         break;
                 }
-
                 // Handle ListView touch events.
                 v.onTouchEvent(event);
                 return true;
             }
         });
-
-
     }
 
 
@@ -159,6 +147,4 @@ public class ListarOcorrencias extends AppCompatActivity {
         this.startActivity(cliente);
         this.finish();
     }
-
-
 }

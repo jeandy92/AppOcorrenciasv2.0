@@ -114,12 +114,12 @@ public class Adm extends AppCompatActivity {
     public void evBuscarOcorrencia(View v){
 
         Intent buscarOcorrencia = new Intent(this, BuscarOcorrencias.class);
-
         Bundle bundle = new Bundle();
         bundle.putString("nome", nomeAdm);
         bundle.putString("cpf" , cpfAdm);
         bundle.putString("bairro" , bairro);
         bundle.putString("tela" , "Adm");
+        bundle.putString("telaBusca", "Busca");
         bundle.putString("ip", Ip);
         bundle.putInt("porta", Porta);
 
