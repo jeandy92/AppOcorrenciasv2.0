@@ -32,7 +32,6 @@ import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import appocorrencias.com.appocorrencias.ClassesSA.BuscarCep;
 import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
@@ -73,8 +72,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     private String convDesSalvarOcorre, convEndSalvarOcorre, convCidSalvarOcorre, convBaiSalvarOcorre, segundoTipoDeCrime;
 
 
-    private String Anonimo, Ip;
-    private int Porta;
+    public static String Anonimo, Ip;
+    public static int Porta;
     private byte[] byteImagem = null, byteImagem2 = null, byteImagem3 = null;
 
 
@@ -99,8 +98,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         nomeCliente = bundle.getString("nome");
         cpfCliente = bundle.getString("cpf");
         bairroCliente = bundle.getString("bairro");
-        tokenUsuario = bundle.getString("token");
-        telaCliente = bundle.getString("telaCliente");
+        telaCliente = bundle.getString("tela");
         Ip = bundle.getString("ip");
         Porta = bundle.getInt("porta");
 
@@ -293,7 +291,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
     private void selecionandoLocalidadeAtual() {
 
-        Toast.makeText(this, "Sua Localidade", Toast.LENGTH_SHORT).show();
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -532,19 +529,25 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                         Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                     } else {
                                         if (retornoImg.equals("true")) {
-                                            Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
+
 
                                             String retornoBairro = evBuscarOcorrenciasBairro(bairroCliente, Ip, Porta);
                                             if (retornoBairro.equals("erro")) {
                                                 Toast.makeText(this, "Erro na Conexão Com o Servidor", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
+
+                                                    //processaSocket.criandoGrupoNotificacao(tokenUsuario,convBairro,convBairro);
+                                                    //  processaSocket.enviandoNotificacaoGrupo(tokenUsuario,convBairro);
+
                                                     Intent cliente = new Intent(this, Cliente.class);
 
                                                     Bundle bundle = new Bundle();
                                                     bundle.putString("nome", nomeCliente);
                                                     bundle.putString("cpf", cpfCliente);
                                                     bundle.putString("bairro", bairroCliente);
+
+                                                    Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
 
                                                     cliente.putExtras(bundle);
                                                     this.startActivity(cliente);
@@ -570,7 +573,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         if (telaCliente.equals("Adm")) {
             Intent adm = new Intent(this, Adm.class);
 
@@ -606,6 +608,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             this.finish();
         }
     }
+
 }
 
 

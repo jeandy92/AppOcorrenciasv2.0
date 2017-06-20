@@ -40,7 +40,7 @@ public class ArrayOcorrenciasRegistradas {
         return bairro.toString();
     }
 
-   public static String getAllData() {
+    public static String getAllData() {
         StringBuilder data = new StringBuilder();
         for (DadosOcorrencias x : dados) {
             data.append(x.data + "/");

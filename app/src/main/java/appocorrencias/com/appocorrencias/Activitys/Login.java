@@ -141,7 +141,7 @@ public class Login extends AppCompatActivity {
         Log.d(TAG, token);
 
         //Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
-        ProcessaSocket.enviandoNotificacaoGrupo(token, "Jardim lok");
+        //ProcessaSocket.enviandoNotificacaoGrupo(token, "Jardim lok");
 
 
         SENHA = txtSenha.getText().toString();
@@ -282,7 +282,7 @@ public class Login extends AppCompatActivity {
 
 
 
-public static String evBuscarOcorrenciasBairro(String Bairro2,String IpServer,int PortaServer)throws IOException{
+    public static String evBuscarOcorrenciasBairro(String Bairro2,String IpServer,int PortaServer)throws IOException{
 
         String BuscarOcorrenciasRegistradas="BuscarOcorrenciasRegistradasBairro "+Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
@@ -290,59 +290,59 @@ public static String evBuscarOcorrenciasBairro(String Bairro2,String IpServer,in
         String retorno=ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas,IpServer,PortaServer);
 
         if(retorno.equals("false")){
-        // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
-        return"false";
+            // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
+            return"false";
         }else{
-        if(retorno.equals("erro")){
-        // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
-        return"erro";
-        }else{
-        // Pegando quantidade de Ocorrencias
-        int qtdOcorrencia=ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
+            if(retorno.equals("erro")){
+                // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
+                return"erro";
+            }else{
+                // Pegando quantidade de Ocorrencias
+                int qtdOcorrencia=ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
 
-        // Pegando dados e Adicioanando dados no Array
-        for(int i=0;i<qtdOcorrencia; i++){
-        String TodasOcorrencias[]=retorno.split("///");
+                // Pegando dados e Adicioanando dados no Array
+                for(int i=0;i<qtdOcorrencia; i++){
+                    String TodasOcorrencias[]=retorno.split("///");
 
-        String Ocorrencia=TodasOcorrencias[i];
-        String OcorrenciaUm[]=Ocorrencia.split("//");
-        String Nr=OcorrenciaUm[1];
-        String CPFOco=OcorrenciaUm[2];
-        String Rua=OcorrenciaUm[3];
-        String Bairro=OcorrenciaUm[4];
-        String Cidade=OcorrenciaUm[5];
-        String UF=OcorrenciaUm[6];
-        String Descricao=OcorrenciaUm[7];
-        String Data=OcorrenciaUm[8];
-        String Tipo=OcorrenciaUm[9];
-        String Anonimo=OcorrenciaUm[10];
-        String Apelido=OcorrenciaUm[11];
+                    String Ocorrencia=TodasOcorrencias[i];
+                    String OcorrenciaUm[]=Ocorrencia.split("//");
+                    String Nr=OcorrenciaUm[1];
+                    String CPFOco=OcorrenciaUm[2];
+                    String Rua=OcorrenciaUm[3];
+                    String Bairro=OcorrenciaUm[4];
+                    String Cidade=OcorrenciaUm[5];
+                    String UF=OcorrenciaUm[6];
+                    String Descricao=OcorrenciaUm[7];
+                    String Data=OcorrenciaUm[8];
+                    String Tipo=OcorrenciaUm[9];
+                    String Anonimo=OcorrenciaUm[10];
+                    String Apelido=OcorrenciaUm[11];
 
-        DadosOcorrencias dado=new DadosOcorrencias(Nr,CPFOco,Rua,Bairro,Cidade,UF,Descricao,Data,Tipo,Anonimo,Apelido);
+                    DadosOcorrencias dado=new DadosOcorrencias(Nr,CPFOco,Rua,Bairro,Cidade,UF,Descricao,Data,Tipo,Anonimo,Apelido);
 
-        ArrayOcorrenciasRegistradas.adicionar(dado);
-        }
-        //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
-        }
+                    ArrayOcorrenciasRegistradas.adicionar(dado);
+                }
+                //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
+            }
         }
         return"true";
-        }
+    }
 
 
-@Override
-protected void onRestart(){
+    @Override
+    protected void onRestart(){
         super.onRestart();
-        }
+    }
 
-@Override
-public void onBackPressed(){
+    @Override
+    public void onBackPressed(){
         super.onBackPressed();
         finish();
 
-        }
+    }
 
-@Override
-protected void onDestroy(){
+    @Override
+    protected void onDestroy(){
         super.onDestroy();
         setContentView(R.layout.activity_login);
 
@@ -361,28 +361,28 @@ protected void onDestroy(){
 //        editor =sp2.edit();
 //        editor.putInt("count_2",count2+1);
 //        editor.commit();
-        }
+    }
 
-@Override
-protected void onStop(){
+    @Override
+    protected void onStop(){
         super.onStop();
 
-        }
+    }
 
 
-@Override
-protected void onPause(){
+    @Override
+    protected void onPause(){
         super.onPause();
 
 
-        }
+    }
 
-@Override
-protected void onResume(){
+    @Override
+    protected void onResume(){
         super.onResume();
 
 
-        }
-        }
+    }
+}
 
 

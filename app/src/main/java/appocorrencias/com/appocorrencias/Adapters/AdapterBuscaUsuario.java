@@ -38,7 +38,7 @@ public class AdapterBuscaUsuario extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-       return listaDeUsuarios.get(position);
+        return listaDeUsuarios.get(position);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class AdapterBuscaUsuario extends BaseAdapter{
         }
 
 
-    return  view;
+        return  view;
 
     }
 }

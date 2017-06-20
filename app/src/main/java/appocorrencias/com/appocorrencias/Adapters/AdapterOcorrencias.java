@@ -63,17 +63,17 @@ public class AdapterOcorrencias extends BaseAdapter {
 
         tipodecrime.setText(String.valueOf(listaOcorrenciasRegistradas.getTipo()));
         descricao.setText(listaOcorrenciasRegistradas.getDescricao());
-        endereco.setText("Ocorreu na"+ listaOcorrenciasRegistradas.getRua() + " no dia " + listaOcorrenciasRegistradas.getData());
+        endereco.setText("Ocorreu na "+ listaOcorrenciasRegistradas.getRua() + " no dia " + listaOcorrenciasRegistradas.getData());
         idocorrencia.setText(String.valueOf(listaOcorrenciasRegistradas.getNrOcorrencia()));
 
         String CPF = listaOcorrenciasRegistradas.getCPF();
 
-            Bitmap img = ArrayImagensPerfilComentarios.getImgPerfil(CPF);
-            if(img != null) {
-                imagem.setImageBitmap(img);
-            }else{
-                imagem.setImageResource(R.drawable.ic_app);
-            }
+        Bitmap img = ArrayImagensPerfilComentarios.getImgPerfil(CPF);
+        if(img != null) {
+            imagem.setImageBitmap(img);
+        }else{
+            imagem.setImageResource(R.drawable.ic_app);
+        }
 
         return view;
     }

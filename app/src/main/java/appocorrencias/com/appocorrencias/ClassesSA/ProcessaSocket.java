@@ -26,9 +26,6 @@ public class ProcessaSocket {
     static InputStream canalEntrada = null;
     static Socket socket;
 
-    private static String ip_conexao = "10.12.56.32";
-    private static int porta_conexao = 3333;
-
 
     public static String recebe_dados(InputStream in) throws IOException {
         byte[] resulBuff = new byte[0];
@@ -392,8 +389,8 @@ public class ProcessaSocket {
         String str = null;
         Socket cliente2 = new Socket();
 
-        String IpDNS = "10.12.56.32";
-        int portaDNS = 4444;
+        String IpDNS = "192.168.43.98";
+        int portaDNS = 63202;
 
         String dados = "ClienteLogin teste";
         byte[] byteDados = dados.getBytes();
@@ -485,13 +482,16 @@ public class ProcessaSocket {
         return str;
     }
 
-    //Mé
-    public static void adicionandoUsuarioNotificacao(String token_usuario, String bairro_usu) {
+
+    public static String adicionandoUsuarioNotificacao(String token_usuario, String bairro_usu) {
+
+        Socket socket = new Socket();
+
+        int millisecondsTimeOut = 3000;
+        InetSocketAddress adress = new InetSocketAddress("52.34.140.131", 63300);
 
         try {
-
-            socket = new Socket(ip_conexao, 63300);
-
+            socket.connect(adress, millisecondsTimeOut);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
 
@@ -515,28 +515,33 @@ public class ProcessaSocket {
                 if (resultado_servidor) {
 
                     System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO " + bairro_usu);
+                    return "true";
 
                 } else {
                     System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO " + bairro_usu);
+                    return "false";
                 }
 
             }
 
-
         } catch (IOException e) {
             e.printStackTrace();
-
+            return "erro";
         }
+        return "true";
 
     }
 
 
-    public static void criandoGrupoNotificacao(String token_usuario, String nomeGrupoNotificacao, String bairroUsuario) {
+    public static String criandoGrupoNotificacao(String token_usuario, String nomeGrupoNotificacao, String bairroUsuario) {
+
+        Socket socket = new Socket();
+
+        int millisecondsTimeOut = 3000;
+        InetSocketAddress adress = new InetSocketAddress("52.34.140.131", 63300);
 
         try {
-
-            socket = new Socket(ip_conexao, 63300);
-
+            socket.connect(adress, millisecondsTimeOut);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
 
@@ -557,8 +562,11 @@ public class ProcessaSocket {
 
                     System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO" + bairroUsuario);
 
+                    return "true";
+
                 } else {
                     System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO" + bairroUsuario);
+                    return "false";
                 }
 
             }
@@ -566,11 +574,12 @@ public class ProcessaSocket {
         } catch (IOException e) {
             System.out.println("Erro ao se conectar com o servidor \n");
             System.out.println(e.getMessage());
-
+            return "erro";
         }
+        return "true";
     }
 
-    public static void enviandoNotificacaoGrupo(String tokenUsuario, String bairroUsu) {
+    public static String enviandoNotificacaoGrupo(String tokenUsuario, String bairroUsu) {
 
         Socket socket = new Socket();
 
@@ -596,9 +605,11 @@ public class ProcessaSocket {
                 if (resultado_servidor) {
 
                     System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO  JARDIM SILVEIRA");
+                    return "true";
 
                 } else {
                     System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO  JARDIM SILVEIRA");
+                    return "false";
                 }
 
             } else {
@@ -608,9 +619,10 @@ public class ProcessaSocket {
         } catch (IOException e) {
             System.out.println("Erro ao se conectar com o servidor \n");
             System.out.println(e.getMessage());
+            return "erro";
 
         }
-
+        return "true";
     }
 
 
@@ -731,8 +743,9 @@ public class ProcessaSocket {
         } else {
             if (retorno.equals("true")) {
                 return "true";
+            }else {
+                return "false";
             }
-            return "false";
         }
     }
 
@@ -742,23 +755,38 @@ public class ProcessaSocket {
         String CadastrarComentario = "CadastrarComentario" + " " + IDComentario + " " + IDOcorrencia + " " + CPFCliente + " " + Data +
                 " " + Hora + " " + Apelido;
 
-        String ComentarioDescricao = "ComentarioDescricao" + " " + IDComentario + " " + convDescricao;
+        byte[] byteDados1 = CadastrarComentario.getBytes();
 
-        String retorno = primeiroCadastroNoServidor(CadastrarComentario, Ip, Porta);
+        byte[] byteDescricao = convDescricao.getBytes();
+
+        int tamanhoDado1, tamanhoDescricao;
+
+        tamanhoDado1 = byteDados1.length;
+        tamanhoDescricao = byteDescricao.length;
+
+        byte[] byteTamanhoDado1 = toBytes(tamanhoDado1);
+        byte[] byteTamanhoDescricao = toBytes(tamanhoDescricao);
+
+        byte[] TamanhoEDado1 = concat(byteTamanhoDado1, byteDados1);
+        byte[] TamanhoEDescricao = concat(byteTamanhoDescricao, byteDescricao);
+
+
+        byte[] DadoDescricao = concat(TamanhoEDado1, TamanhoEDescricao);
+
+        int tamanhoPacote = DadoDescricao.length;
+        byte[] byteTamanhoPct = toBytes(tamanhoPacote);
+        byte[] byteFinal = concat(byteTamanhoPct, DadoDescricao);
+
+        String retorno = Bytes(byteFinal, Ip, Porta);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
-                retorno = primeiroCadastroNoServidor(ComentarioDescricao, Ip, Porta);
-                if (retorno.equals("erro")) {
-                    return "erro";
-                } else {
-                    return "true";
-                }
+                return "true";
             }
+            return "false";
         }
-        return "false";
     }
 
 

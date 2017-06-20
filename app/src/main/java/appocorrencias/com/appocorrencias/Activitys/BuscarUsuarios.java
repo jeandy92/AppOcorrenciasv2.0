@@ -307,6 +307,7 @@ public class BuscarUsuarios extends AppCompatActivity {
                 //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
 

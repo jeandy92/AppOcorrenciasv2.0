@@ -1,7 +1,6 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -29,8 +28,8 @@ import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evB
 public class ListarOcorrencias extends AppCompatActivity {
 
     private ListView lista;
-    public String loginNome, loginCpf, loginBairro, Ip;
-    public int Porta;
+    public static String loginNome, loginCpf, loginBairro, Ip;
+    public static int Porta;
 
 
     @Override
