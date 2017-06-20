@@ -44,7 +44,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
     private TextInputLayout tinpBairro;
     private EditText edtFoco, edtBairroText;
     private ListView lvFeedOcorrencias;
-    public static String nomeBuscarOcorrencia, cpfBuscarOcorrencia, bairroBuscarOcorrencia, telaBuscarOcorrencia , Ip;
+    public static String nomeBuscarOcorrencia, cpfBuscarOcorrencia, bairroBuscarOcorrencia, telaBuscarOcorrencia, telaBusca , Ip;
     public static ProcessaSocket processa = new ProcessaSocket();
     public static int Porta;
 
@@ -61,6 +61,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         cpfBuscarOcorrencia = bundle.getString("cpf");
         bairroBuscarOcorrencia = bundle.getString("bairro");
         telaBuscarOcorrencia = bundle.getString("tela");
+        telaBusca = bundle.getString("telaBusca");
         Ip = bundle.getString("ip");
         Porta = bundle.getInt("porta");
 
@@ -126,14 +127,14 @@ public class BuscarOcorrencias extends AppCompatActivity {
                     String descOcorrencia = ((TextView) view.findViewById(R.id.txt_desc_comentario)).getText().toString();
                     String tipoCrime = ((TextView) view.findViewById(R.id.tv_bairro)).getText().toString();
 
-                    String tela = "Busca";
                     i.putExtra("cpf", cpfBuscarOcorrencia);
                     i.putExtra("nome", nomeBuscarOcorrencia);
                     i.putExtra("bairro", bairroBuscarOcorrencia);
                     i.putExtra("id_ocorrencia", idOcorrencia);
                     i.putExtra("desc_ocorrencia", descOcorrencia);
                     i.putExtra("tipocrime", tipoCrime);
-                    i.putExtra("tela", tela);
+                    i.putExtra("tela", telaBuscarOcorrencia);
+                    i.putExtra("telaBusca", "Busca");
                     i.putExtra("ip", Ip);
                     i.putExtra("porta", Porta);
 
@@ -315,7 +316,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         super.onBackPressed();
 
 
-        if (telaBuscarOcorrencia.equals("Adm") || telaBuscarOcorrencia.equals("Busca") ) {
+        if (telaBuscarOcorrencia.equals("Adm") ) {
             Intent adm = new Intent(this, Adm.class);
 
             Bundle bundle = new Bundle();

@@ -36,10 +36,8 @@ public class BuscarUsuarios extends AppCompatActivity {
     private TextInputLayout tinpCPF, tinpNome;
     private EditText edtFoco, edtCPF, edtNome;
     private ListView lvUsuariosEncontrados;
-    private ArrayList<DadosUsuarios> listaUsuariosEncontrados;
-    ProcessaSocket processa = new ProcessaSocket();
-    private String Ip;
-    private int Porta;
+    public static String Ip;
+    public static int Porta;
 
 
     @Override
@@ -54,11 +52,8 @@ public class BuscarUsuarios extends AppCompatActivity {
 
         //List View para mostrar os usuários
         lvUsuariosEncontrados = (ListView) findViewById(R.id.lv_usuarios_encontrados);
-
         ArrayList<DadosUsuarios> listaUsuariosEncontrados = getListaUsuarios();
-
         AdapterBuscaUsuario adapter = new AdapterBuscaUsuario(this, listaUsuariosEncontrados);
-
         lvUsuariosEncontrados.setAdapter(adapter);
 
 
@@ -68,12 +63,11 @@ public class BuscarUsuarios extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(view.getContext(), ItemBuscaUsuario.class);
-
                 String cpfUsuario = ((TextView) view.findViewById(R.id.txt_CPF)).getText().toString();
-
                 //deleteAllArrayUsuarios();
-
                 intent.putExtra("cpfUsuario", cpfUsuario);
+                intent.putExtra("ip", Ip);
+                intent.putExtra("porta", Porta);
 
                 startActivity(intent);
 
@@ -313,7 +307,6 @@ public class BuscarUsuarios extends AppCompatActivity {
                 //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
 
