@@ -68,7 +68,6 @@ public class AdapterComentarios extends BaseAdapter {
 
         imagem.setImageBitmap(imgPerfil);
 
-
         return view;
     }
 }

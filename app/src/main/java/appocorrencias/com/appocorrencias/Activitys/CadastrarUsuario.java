@@ -128,7 +128,6 @@ public class CadastrarUsuario extends AppCompatActivity {
             }
         }
 
-
         String segundaRua = edtRua.getText().toString();
         String segundoBairro = edtBairro.getText().toString();
         String segundaCidade = edtCidade.getText().toString();
@@ -189,7 +188,7 @@ public class CadastrarUsuario extends AppCompatActivity {
                                 if (retorno.equals("erro")) {
                                     Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    if (retorno.equals("true")) {
+                                    if (retorno.equals("true")){
                                         //String not = processa.adicionandoUsuarioNotificacao(getInstance().getToken(),convBairro);
                                         Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
 

@@ -78,7 +78,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
 
 
     //VARIAVEIS STATICAS
-    private static String nomeCliente, cpfCliente, bairroCliente, telaCliente, tokenUsuario;
+    public static String nomeCliente, cpfCliente, bairroCliente, telaCliente, tokenUsuario;
 
     //OBEJTOS STATICOS
     public static ProcessaSocket processaSocket = new ProcessaSocket();
@@ -148,17 +148,19 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             iv1.setImageBitmap(null);
             iv1.setBackgroundResource(R.drawable.cam1);
             cont--;
+            byteImagem = null;
 
         } else if (cont == 3) {
             iv2.setImageBitmap(null);
             iv2.setBackgroundResource(R.drawable.cam1);
             cont--;
+            byteImagem2 = null;
 
         } else if (cont == 4) {
             iv3.setImageBitmap(null);
             iv3.setBackgroundResource(R.drawable.cam1);
             cont--;
-
+            byteImagem3 = null;
         }
     }
 
@@ -530,30 +532,50 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                     } else {
                                         if (retornoImg.equals("true")) {
 
+                                            if (telaCliente.equals("Cliente")) {
+                                                Intent cliente = new Intent(this, Cliente.class);
 
-                                            String retornoBairro = evBuscarOcorrenciasBairro(bairroCliente, Ip, Porta);
-                                            if (retornoBairro.equals("erro")) {
-                                                Toast.makeText(this, "Erro na Conexão Com o Servidor", Toast.LENGTH_SHORT).show();
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("nome", nomeCliente);
+                                                bundle.putString("cpf", cpfCliente);
+                                                bundle.putString("bairro", bairroCliente);
+                                                bundle.putString("ip", Ip);
+                                                bundle.putInt("porta", Porta);
+
+                                                cliente.putExtras(bundle);
+
+
+                                                String retornoBairro = evBuscarOcorrenciasBairro(bairroCliente, Ip, Porta);
+                                                // if (retornoBairro.equals("erro")) {
+                                                //  Toast.makeText(this, "Erro na Conexão Com o Servidor", Toast.LENGTH_SHORT).show();
+                                                // } else {
+                                                // if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
+
+                                                //processaSocket.criandoGrupoNotificacao(tokenUsuario,convBairro,convBairro);
+                                                //  processaSocket.enviandoNotificacaoGrupo(tokenUsuario,convBairro);
+                                                Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
+
+
+                                                this.startActivity(cliente);
+                                                this.finish();
                                             } else {
-                                                if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
+                                                Intent adm = new Intent(this, Adm.class);
 
-                                                    //processaSocket.criandoGrupoNotificacao(tokenUsuario,convBairro,convBairro);
-                                                    //  processaSocket.enviandoNotificacaoGrupo(tokenUsuario,convBairro);
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("nome", "Administrador");
+                                                bundle.putString("cpf", "33333333333");
+                                                bundle.putString("bairro", "Adm");
 
-                                                    Intent cliente = new Intent(this, Cliente.class);
+                                                Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
+                                                adm.putExtras(bundle);
+                                                this.startActivity(adm);
+                                                this.finish();
 
-                                                    Bundle bundle = new Bundle();
-                                                    bundle.putString("nome", nomeCliente);
-                                                    bundle.putString("cpf", cpfCliente);
-                                                    bundle.putString("bairro", bairroCliente);
-
-                                                    Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
-
-                                                    cliente.putExtras(bundle);
-                                                    this.startActivity(cliente);
-                                                    this.finish();
-                                                }
                                             }
+                                            //  }
+                                            //  }
+                                        } else {
+                                            Toast.makeText(this, "Falha no cadastro de Imagem", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 } else {
@@ -608,7 +630,6 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             this.finish();
         }
     }
-
 }
 
 

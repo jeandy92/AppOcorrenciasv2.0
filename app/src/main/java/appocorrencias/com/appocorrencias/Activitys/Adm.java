@@ -22,8 +22,8 @@ public class Adm extends AppCompatActivity {
 
     private Button btnSair,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
-    private String nomeAdm, cpfAdm, bairro, Ip;
-    private int Porta;
+    public static  String nomeAdm, cpfAdm, bairro, Ip;
+    public static int Porta;
     private TextView txtTesteAdm;
 
 

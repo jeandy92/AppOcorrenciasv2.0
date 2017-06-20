@@ -332,7 +332,6 @@ public class BuscarOcorrencias extends AppCompatActivity {
 
             deleteAllArray();
 
-
             try {
                 Login.evBuscarOcorrenciasBairro(bairroBuscarOcorrencia, Ip, Porta);
 

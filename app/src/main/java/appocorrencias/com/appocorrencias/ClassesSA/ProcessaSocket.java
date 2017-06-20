@@ -334,6 +334,40 @@ public class ProcessaSocket {
 
             cliente2.close();
 
+            return "true";
+
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static String BytesCdastro(byte[] bites, String Ip, int Porta) {
+        String str = null;
+        Socket cliente2 = new Socket();
+
+        int millisecondsTimeOut = 5000;
+        InetSocketAddress adress = new InetSocketAddress(Ip, Porta);
+
+        try {
+            cliente2.connect(adress, millisecondsTimeOut);
+        } catch (Exception e) {
+            str = "erro";
+            return str;
+        }
+        try {
+
+            canalSaida = cliente2.getOutputStream();
+            canalEntrada = cliente2.getInputStream();
+            canalSaida.write(bites, 0, bites.length);
+            str = recebe_dados(canalEntrada);
+
+            canalSaida.flush();
+            canalSaida.close();
+            canalEntrada.close();
+            cliente2.close();
+            return str;
         } catch (Exception e) {
             //FIXME Tratar a Exception.
             e.printStackTrace();
@@ -389,8 +423,8 @@ public class ProcessaSocket {
         String str = null;
         Socket cliente2 = new Socket();
 
-        String IpDNS = "192.168.43.98";
-        int portaDNS = 63202;
+        String IpDNS = "10.12.56.32";
+        int portaDNS = 2222;
 
         String dados = "ClienteLogin teste";
         byte[] byteDados = dados.getBytes();
@@ -433,9 +467,6 @@ public class ProcessaSocket {
 
 
     public static String buscarDadosImagensServer(String dados, String IpServer, int PortaServer) throws IOException {
-        String str = null;
-        Socket cliente2 = new Socket();
-
 
         byte[] byteDados = dados.getBytes();
         int tamanhoDados = byteDados.length;
@@ -447,8 +478,10 @@ public class ProcessaSocket {
         byte[] byteTamanhoPct = toBytes(tamanhoPacote);
         byte[] byteFinal = concat(byteTamanhoPct, TamanhoEDados);
 
+        String str = null;
+        Socket cliente2 = new Socket();
 
-        int millisecondsTimeOut = 5000;
+        int millisecondsTimeOut = 3000;
         InetSocketAddress adress = new InetSocketAddress(IpServer, PortaServer);
 
         try {
@@ -468,12 +501,12 @@ public class ProcessaSocket {
                 return "false";
             } else {
                 str = receber_comentarios(canalEntrada);
-            }
 
-            canalSaida.flush();
-            canalSaida.close();
-            canalEntrada.close();
-            cliente2.close();
+                canalSaida.flush();
+                canalSaida.close();
+                canalEntrada.close();
+                cliente2.close();
+            }
 
         } catch (Exception e) {
             //FIXME Tratar a Exception.
@@ -736,14 +769,14 @@ public class ProcessaSocket {
         byte[] byteTamanhoPct = toBytes(tamanhoPacote);
         byte[] byteFinal = concat(byteTamanhoPct, DadoRuaBairCidNomComp);
 
-        String retorno = Bytes(byteFinal, Ip, Porta);
+        String retorno = BytesCdastro(byteFinal, Ip, Porta);
 
         if (retorno.equals("erro")) {
             return "erro";
         } else {
             if (retorno.equals("true")) {
                 return "true";
-            }else {
+            } else {
                 return "false";
             }
         }
@@ -819,96 +852,100 @@ public class ProcessaSocket {
 
     ////////////// enviar os bytes
     public static String envia_Img(String IDOcor, String CPF, byte[] byteImagem, byte[] byteImagem2, byte[] byteImagem3, String Ip, int Porta) throws IOException {
-
-        int tamanhoImagem = byteImagem.length;
-        byte[] byteTamanhoImagem = toBytes(tamanhoImagem);
-        byte[] TamanhoEImagem = concat(byteTamanhoImagem, byteImagem);
-
-        if (byteImagem2 != null) {
-
-            String dados2 = "ImagemOcorrencia " + "2 " + IDOcor + " " + CPF;
-
-            byte[] byteDados2 = dados2.getBytes();
-            int tamanhoDados2 = byteDados2.length;
-            byte[] byteTamanhoDados2 = toBytes(tamanhoDados2);
-
-            byte[] TamanhoEDados = concat(byteTamanhoDados2, byteDados2);
-            byte[] DadosEImagem2 = concat(TamanhoEDados, TamanhoEImagem);
-
-            int tamanhoImagem22 = byteImagem2.length;
-            byte[] byteTamanhoImagem22 = toBytes(tamanhoImagem22);
-            byte[] TamanhoEImagem22 = concat(byteTamanhoImagem22, byteImagem2);
-
-            byte[] DadosImagemImg2 = concat(DadosEImagem2, TamanhoEImagem22);
-
-            if (byteImagem3 != null) {
-
-                String dados3 = "ImagemOcorrencia " + "3 " + IDOcor + " " + CPF;
-
-                byte[] byteDados3 = dados3.getBytes();
-                int tamanhoDados3 = byteDados3.length;
-                byte[] byteTamanhoDados3 = toBytes(tamanhoDados3);
-                byte[] TamanhoEDados3 = concat(byteTamanhoDados3, byteDados3);
-                byte[] DadosEPriImg = concat(TamanhoEDados3, TamanhoEImagem);
-
-
-                int tamanhoImagem33 = byteImagem2.length;
-                byte[] byteTamanhoImagem33 = toBytes(tamanhoImagem33);
-                byte[] TamanhoEImagem33 = concat(byteTamanhoImagem33, byteImagem2);
-                byte[] DadosImg1eImg2 = concat(DadosEPriImg, TamanhoEImagem33);
-
-
-                int tamanhoImagem333 = byteImagem3.length;
-                byte[] byteTamanhoImagem333 = toBytes(tamanhoImagem333);
-                byte[] TamanhoEImagem333 = concat(byteTamanhoImagem333, byteImagem3);
-                byte[] DadosImg1Img2eImg3 = concat(DadosImg1eImg2, TamanhoEImagem333);
-
-
-                int tamanhoPacote3 = DadosImg1Img2eImg3.length;
-                byte[] byteTamanho3 = toBytes(tamanhoPacote3);
-                byte[] byteFinal3 = concat(byteTamanho3, DadosImg1Img2eImg3);
-
-                String retorno = Bytes(byteFinal3, Ip, Porta);
-
-                if (retorno.equals("erro")) {
-                    return "erro";
-                } else {
-                    return "true";
-                }
-            } else {
-
-                int tamanhoPacote2 = DadosImagemImg2.length;
-                byte[] byteTamanho2 = toBytes(tamanhoPacote2);
-                byte[] byteFinal2 = concat(byteTamanho2, DadosImagemImg2);
-
-                String retorno = Bytes(byteFinal2, Ip, Porta);
-
-                if (retorno.equals("erro")) {
-                    return "erro";
-                } else {
-                    return "true";
-                }
-
-            }
-
+        if (byteImagem == null) {
+            return "true";
         } else {
-            String dados = "ImagemOcorrencia " + "1 " + IDOcor + " " + CPF;
 
-            byte[] byteDados = dados.getBytes();
-            int tamanhoDados = byteDados.length;
-            byte[] byteTamanhoDados = toBytes(tamanhoDados);
-            byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
-            byte[] DadosImagem = concat(TamanhoEDados, TamanhoEImagem);
+            int tamanhoImagem = byteImagem.length;
+            byte[] byteTamanhoImagem = toBytes(tamanhoImagem);
+            byte[] TamanhoEImagem = concat(byteTamanhoImagem, byteImagem);
 
-            int tamanhoPacote = DadosImagem.length;
-            byte[] byteTamanho = toBytes(tamanhoPacote);
-            byte[] byteFinal = concat(byteTamanho, DadosImagem);
-            String retorno = Bytes(byteFinal, Ip, Porta);
+            if (byteImagem2 != null) {
 
-            if (retorno.equals("erro")) {
-                return "erro";
+                String dados2 = "ImagemOcorrencia " + "2 " + IDOcor + " " + CPF;
+
+                byte[] byteDados2 = dados2.getBytes();
+                int tamanhoDados2 = byteDados2.length;
+                byte[] byteTamanhoDados2 = toBytes(tamanhoDados2);
+
+                byte[] TamanhoEDados = concat(byteTamanhoDados2, byteDados2);
+                byte[] DadosEImagem2 = concat(TamanhoEDados, TamanhoEImagem);
+
+                int tamanhoImagem22 = byteImagem2.length;
+                byte[] byteTamanhoImagem22 = toBytes(tamanhoImagem22);
+                byte[] TamanhoEImagem22 = concat(byteTamanhoImagem22, byteImagem2);
+
+                byte[] DadosImagemImg2 = concat(DadosEImagem2, TamanhoEImagem22);
+
+                if (byteImagem3 != null) {
+
+                    String dados3 = "ImagemOcorrencia " + "3 " + IDOcor + " " + CPF;
+
+                    byte[] byteDados3 = dados3.getBytes();
+                    int tamanhoDados3 = byteDados3.length;
+                    byte[] byteTamanhoDados3 = toBytes(tamanhoDados3);
+                    byte[] TamanhoEDados3 = concat(byteTamanhoDados3, byteDados3);
+                    byte[] DadosEPriImg = concat(TamanhoEDados3, TamanhoEImagem);
+
+
+                    int tamanhoImagem33 = byteImagem2.length;
+                    byte[] byteTamanhoImagem33 = toBytes(tamanhoImagem33);
+                    byte[] TamanhoEImagem33 = concat(byteTamanhoImagem33, byteImagem2);
+                    byte[] DadosImg1eImg2 = concat(DadosEPriImg, TamanhoEImagem33);
+
+
+                    int tamanhoImagem333 = byteImagem3.length;
+                    byte[] byteTamanhoImagem333 = toBytes(tamanhoImagem333);
+                    byte[] TamanhoEImagem333 = concat(byteTamanhoImagem333, byteImagem3);
+                    byte[] DadosImg1Img2eImg3 = concat(DadosImg1eImg2, TamanhoEImagem333);
+
+
+                    int tamanhoPacote3 = DadosImg1Img2eImg3.length;
+                    byte[] byteTamanho3 = toBytes(tamanhoPacote3);
+                    byte[] byteFinal3 = concat(byteTamanho3, DadosImg1Img2eImg3);
+
+                    String retorno = Bytes(byteFinal3, Ip, Porta);
+
+                    if (retorno.equals("erro")) {
+                        return "erro";
+                    } else {
+                        return "true";
+                    }
+                } else {
+
+                    int tamanhoPacote2 = DadosImagemImg2.length;
+                    byte[] byteTamanho2 = toBytes(tamanhoPacote2);
+                    byte[] byteFinal2 = concat(byteTamanho2, DadosImagemImg2);
+
+                    String retorno = Bytes(byteFinal2, Ip, Porta);
+
+                    if (retorno.equals("erro")) {
+                        return "erro";
+                    } else {
+                        return "true";
+                    }
+
+                }
+
             } else {
-                return "true";
+                String dados = "ImagemOcorrencia " + "1 " + IDOcor + " " + CPF;
+
+                byte[] byteDados = dados.getBytes();
+                int tamanhoDados = byteDados.length;
+                byte[] byteTamanhoDados = toBytes(tamanhoDados);
+                byte[] TamanhoEDados = concat(byteTamanhoDados, byteDados);
+                byte[] DadosImagem = concat(TamanhoEDados, TamanhoEImagem);
+
+                int tamanhoPacote = DadosImagem.length;
+                byte[] byteTamanho = toBytes(tamanhoPacote);
+                byte[] byteFinal = concat(byteTamanho, DadosImagem);
+                String retorno = Bytes(byteFinal, Ip, Porta);
+
+                if (retorno.equals("erro")) {
+                    return "erro";
+                } else {
+                    return "true";
+                }
             }
         }
     }

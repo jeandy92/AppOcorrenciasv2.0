@@ -61,8 +61,6 @@ public class Cliente extends AppCompatActivity {
     public static int Porta;
 
 
-    ProcessaSocket processa = new ProcessaSocket();
-
     private static final int REQUEST_PERMISSIONS_CODE = 128;
 
     private static final String TAG = "LOG";
@@ -130,7 +128,7 @@ public class Cliente extends AppCompatActivity {
                     i.putExtra("desc_ocorrencia", descocorrencia);
                     i.putExtra("tipocrime", tipocrime);
                     i.putExtra("tela", tela);
-                    i.putExtra("telaBusca", "Busca");
+                    i.putExtra("telaBusca", "Cliente");
 
 
                     deleteAllArrayComentarios();
