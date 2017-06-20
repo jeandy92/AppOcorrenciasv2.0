@@ -9,7 +9,7 @@ public class Usuario {
 
 
     public Usuario(){}
-    
+
     private String cpfUsuario;
     private String senhaUsuario;
     private String nomeUsuario;
@@ -19,7 +19,7 @@ public class Usuario {
 
 
 
-//SETS
+    //SETS
     public void setCpfUsuario(String cpfUsuario) {
         this.cpfUsuario = cpfUsuario;
     }
@@ -42,7 +42,7 @@ public class Usuario {
 
 
 
-//GETS
+    //GETS
     public String getSenhaUsuario() {
         return senhaUsuario;
     }

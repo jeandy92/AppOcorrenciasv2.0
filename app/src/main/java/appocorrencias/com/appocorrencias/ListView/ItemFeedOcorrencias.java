@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -331,7 +330,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
             } else {
                 if (retorno.equals("true")) {
-                    Toast.makeText(this, "Comantario Salvo com sucesso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Comentário Salvo com sucesso", Toast.LENGTH_SHORT).show();
 
                     deleteAllArrayComentarios();
                     evBuscarComentario(idOcorrencia, Ip, Porta);

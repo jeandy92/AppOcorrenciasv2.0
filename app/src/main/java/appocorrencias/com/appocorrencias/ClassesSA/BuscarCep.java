@@ -37,9 +37,9 @@ public class BuscarCep {
             return status;
         }
         Elements urlPesquisa = doc.select("span[itemprop=streetAddress]");
-                for(Element urlEndereco : urlPesquisa) {
-                    return urlEndereco.text();
-            }
+        for(Element urlEndereco : urlPesquisa) {
+            return urlEndereco.text();
+        }
         return pCep;
     }
 

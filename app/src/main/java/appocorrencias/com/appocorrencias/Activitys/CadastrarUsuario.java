@@ -190,6 +190,7 @@ public class CadastrarUsuario extends AppCompatActivity {
                                     Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                 } else {
                                     if (retorno.equals("true")) {
+                                        //String not = processa.adicionandoUsuarioNotificacao(getInstance().getToken(),convBairro);
                                         Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
 
                                         setContentView(R.layout.activity_login);

@@ -67,9 +67,9 @@ public class AdapterFeed extends BaseAdapter {
             apelido.setText(String.valueOf(listaFeedOcorrencias.getApelido())+":");
         }
 
-         tipodecrime.setText(String.valueOf(listaFeedOcorrencias.getTipo()));
-           descricao.setText(listaFeedOcorrencias.getDescricao());
-            endereco.setText("Ocorreu na"+ listaFeedOcorrencias.getRua() + " no dia " + listaFeedOcorrencias.getData());
+        tipodecrime.setText(String.valueOf(listaFeedOcorrencias.getTipo()));
+        descricao.setText(listaFeedOcorrencias.getDescricao());
+        endereco.setText("Ocorreu na "+ listaFeedOcorrencias.getRua() + " no dia " + listaFeedOcorrencias.getData());
         idocorrencia.setText(String.valueOf(listaFeedOcorrencias.getNrOcorrencia()));
 
         String CPF = listaFeedOcorrencias.getCPF();
