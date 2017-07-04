@@ -227,7 +227,7 @@ public class BuscarUsuarios extends AppCompatActivity {
         String retorno = ProcessaSocket.buscarDadosImagensServer(buscaUsuarioCPF, Ip, Porta);
 
         if (retorno.equals("false")) {
-            Toast.makeText(this, "Não há usuarios cadastrados com esse cpfAdm", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Não há usuarios cadastrados com esse CPF", Toast.LENGTH_SHORT).show();
         } else {
             // Pegando quantidade de usuarios
             int qtdUsuario = ArrayUsuariosEncontrados.getQuantidadeUsuarios(retorno);

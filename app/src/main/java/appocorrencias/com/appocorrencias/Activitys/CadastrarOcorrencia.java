@@ -40,6 +40,7 @@ import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
 
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
+import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
 
 public class CadastrarOcorrencia extends AppCompatActivity implements LocationListener {
 
@@ -552,7 +553,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                                 // if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
 
                                                 //processaSocket.criandoGrupoNotificacao(tokenUsuario,convBairro,convBairro);
-                                                //  processaSocket.enviandoNotificacaoGrupo(tokenUsuario,convBairro);
+                                                processaSocket.enviandoNotificacaoGrupo(getInstance().getToken(),convBairro);
                                                 Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
 
 

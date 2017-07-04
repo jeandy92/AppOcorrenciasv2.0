@@ -423,7 +423,7 @@ public class ProcessaSocket {
         String str = null;
         Socket cliente2 = new Socket();
 
-        String IpDNS = "10.12.56.32";
+        String IpDNS = "192.168.43.98";
         int portaDNS = 2222;
 
         String dados = "ClienteLogin teste";
@@ -516,15 +516,22 @@ public class ProcessaSocket {
     }
 
 
-    public static String adicionandoUsuarioNotificacao(String token_usuario, String bairro_usu) {
+    public static void  adicionandoUsuarioNotificacao(String token_usuario, String bairro_usu) {
 
         Socket socket = new Socket();
+        String str = null;
 
         int millisecondsTimeOut = 3000;
         InetSocketAddress adress = new InetSocketAddress("52.34.140.131", 63300);
 
         try {
             socket.connect(adress, millisecondsTimeOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+            str = "erro";
+        }
+        try{
+
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
 
@@ -542,42 +549,42 @@ public class ProcessaSocket {
                 out.writeUTF(bairro_usu);
                 //out.writeUTF("APA91bFnTL6jR5rgFwnXz63t47TAXVIpfuiZIjx0gggLkjAmgLwiTmTUxhG7kaXESIo2al3wEcbqB3heUq7wP66AvBLbIcFv9JyNCGz1U7vFJQmBrxtj5vAk8F23JVY97gn0Ji0cHNb7");
 
-
                 Boolean resultado_servidor = in.readBoolean();
-
                 if (resultado_servidor) {
 
                     System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO " + bairro_usu);
-                    return "true";
 
                 } else {
                     System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO " + bairro_usu);
-                    return "false";
+
                 }
-
             }
-
-        } catch (IOException e) {
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
             e.printStackTrace();
-            return "erro";
         }
-        return "true";
 
     }
 
 
-    public static String criandoGrupoNotificacao(String token_usuario, String nomeGrupoNotificacao, String bairroUsuario) {
+    public static void criandoGrupoNotificacao(String token_usuario, String nomeGrupoNotificacao, String bairroUsuario) {
 
         Socket socket = new Socket();
+        String str = null;
 
         int millisecondsTimeOut = 3000;
         InetSocketAddress adress = new InetSocketAddress("52.34.140.131", 63300);
 
         try {
             socket.connect(adress, millisecondsTimeOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+            str = "eroo";
+        }
+        try{
+
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
-
 
             out.writeUTF("CRIAR_GRUPO_NOTIFICACAO");
 
@@ -587,40 +594,40 @@ public class ProcessaSocket {
                 out.writeUTF(nomeGrupoNotificacao);
                 out.writeUTF(bairroUsuario);
 
-
                 Boolean resultado_servidor = in.readBoolean();
-
 
                 if (resultado_servidor) {
 
                     System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO" + bairroUsuario);
 
-                    return "true";
 
                 } else {
                     System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO" + bairroUsuario);
-                    return "false";
+
                 }
-
             }
-
-        } catch (IOException e) {
-            System.out.println("Erro ao se conectar com o servidor \n");
-            System.out.println(e.getMessage());
-            return "erro";
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
         }
-        return "true";
+
     }
 
-    public static String enviandoNotificacaoGrupo(String tokenUsuario, String bairroUsu) {
+    public static void enviandoNotificacaoGrupo(String tokenUsuario, String bairroUsu) {
 
         Socket socket = new Socket();
+        String str = null;
 
         int millisecondsTimeOut = 3000;
         InetSocketAddress adress = new InetSocketAddress("52.34.140.131", 63300);
 
         try {
             socket.connect(adress, millisecondsTimeOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+            str =  "erro";
+        }
+        try{
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
 
@@ -630,7 +637,7 @@ public class ProcessaSocket {
 
                 out.writeUTF(tokenUsuario);
                 out.writeUTF("Novo Crime Registrado");
-                out.writeUTF("Assalto");
+                out.writeUTF("Crime");
                 out.writeUTF(bairroUsu);
 
                 Boolean resultado_servidor = in.readBoolean();
@@ -638,11 +645,10 @@ public class ProcessaSocket {
                 if (resultado_servidor) {
 
                     System.out.println("USUÁRIO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO  JARDIM SILVEIRA");
-                    return "true";
 
                 } else {
                     System.out.println("USUÁRIO NÃO ADICIONADO AO GRUPO DE NOTIFICAÇÕES DO  BAIRRO  JARDIM SILVEIRA");
-                    return "false";
+
                 }
 
             } else {
@@ -652,10 +658,8 @@ public class ProcessaSocket {
         } catch (IOException e) {
             System.out.println("Erro ao se conectar com o servidor \n");
             System.out.println(e.getMessage());
-            return "erro";
 
         }
-        return "true";
     }
 
 

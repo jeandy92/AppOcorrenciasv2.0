@@ -18,6 +18,8 @@ import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 
+import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
+
 public class CadastrarUsuario extends AppCompatActivity {
 
     //Variavel para gerar log
@@ -151,6 +153,9 @@ public class CadastrarUsuario extends AppCompatActivity {
         convDataNasc = edtDataNasc.getText().toString();
         String segundoComplemento = edtComplemento.getText().toString();
         convComplemento = removerAcentos(segundoComplemento);
+        if (convComplemento.isEmpty()) {
+            convComplemento = "casa";
+        }
 
         Log.i(TAG, "Cadastrar...." + convCpf);
 
@@ -159,46 +164,53 @@ public class CadastrarUsuario extends AppCompatActivity {
             edtCpf.setFocusable(true);
             edtCpf.requestFocus();
         } else {
-            if (validarCPF(convCpf)) {
-                edtCpf.setError("cpf Inválido");
-                edtCpf.setFocusable(true);
-                edtCpf.requestFocus();
+            if (convNome.isEmpty()) {
+                edtNome.setError("Faltou preencher nome ");
+                edtNome.setFocusable(true);
+                edtNome.requestFocus();
             } else {
-                if (!validarEmail(convEmail)) {
-                    edtEmail.setError("Faltou preencher E-mail");
-                    edtEmail.setFocusable(true);
-                    edtEmail.requestFocus();
+                if (validarCPF(convCpf)) {
+                    edtCpf.setError("cpf Inválido");
+                    edtCpf.setFocusable(true);
+                    edtCpf.requestFocus();
                 } else {
-                    if (convCep.isEmpty()) {
-                        edtCep.setError("edtCep Inválido");
-                        edtCep.setFocusable(true);
-                        edtCep.requestFocus();
+                    if (!validarEmail(convEmail)) {
+                        edtEmail.setError("Faltou preencher E-mail");
+                        edtEmail.setFocusable(true);
+                        edtEmail.requestFocus();
                     } else {
-                        if (convSenha.isEmpty()) {
-                            edtSenha.setError("Faltou preencher a edtSenha ");
-                            edtSenha.setFocusable(true);
-                            edtSenha.requestFocus();
+                        if (convCep.isEmpty()) {
+                            edtCep.setError("edtCep Inválido");
+                            edtCep.setFocusable(true);
+                            edtCep.requestFocus();
                         } else {
-                            if (convSenha.equals(convConfirmarSenha) == false) {
-                                edtConfirmarSenha.setError("A senha digitada nao corresponde");
-                                edtConfirmarSenha.setFocusable(true);
-                                edtConfirmarSenha.requestFocus();
+                            if (convSenha.isEmpty()) {
+                                edtSenha.setError("Faltou preencher a edtSenha ");
+                                edtSenha.setFocusable(true);
+                                edtSenha.requestFocus();
                             } else {
-                                String retorno = processa.cadastrarUsuario(convCpf, convSenha, convEmail, convTelefone, convCep, convUf, convNumero, convRua, convBairro, convCidade, convNome, convDataNasc, convComplemento, Ip, Porta);
-                                if (retorno.equals("erro")) {
-                                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                                if (convSenha.equals(convConfirmarSenha) == false) {
+                                    edtConfirmarSenha.setError("A senha digitada nao corresponde");
+                                    edtConfirmarSenha.setFocusable(true);
+                                    edtConfirmarSenha.requestFocus();
                                 } else {
-                                    if (retorno.equals("true")){
-                                        //String not = processa.adicionandoUsuarioNotificacao(getInstance().getToken(),convBairro);
-                                        Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
-
-                                        setContentView(R.layout.activity_login);
-                                        this.startActivity(new Intent(this, Login.class));
-                                        this.finish();
+                                    String retorno = processa.cadastrarUsuario(convCpf, convSenha, convEmail, convTelefone, convCep, convUf, convNumero, convRua, convBairro, convCidade, convNome, convDataNasc, convComplemento, Ip, Porta);
+                                    if (retorno.equals("erro")) {
+                                        Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        edtCpf.setError("cpf Já Cadastrado");
-                                        edtCpf.setFocusable(true);
-                                        edtCpf.requestFocus();
+                                        if (retorno.equals("true")) {
+                                            processa.criandoGrupoNotificacao(getInstance().getToken(), convBairro, convBairro);
+                                            processa.adicionandoUsuarioNotificacao(getInstance().getToken(), convBairro);
+                                            Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
+
+                                            setContentView(R.layout.activity_login);
+                                            this.startActivity(new Intent(this, Login.class));
+                                            this.finish();
+                                        } else {
+                                            edtCpf.setError("cpf Já Cadastrado");
+                                            edtCpf.setFocusable(true);
+                                            edtCpf.requestFocus();
+                                        }
                                     }
                                 }
                             }
