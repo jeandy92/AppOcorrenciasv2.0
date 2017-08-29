@@ -61,8 +61,8 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     ViewPager viewPager;
     AdapterCustomSwiper adapterCustomSwiper;
     private static ProcessaSocket processa = new ProcessaSocket();
-    String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia, tela, Ip, telaBusca;
-    int Porta;
+    public static String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia, tela, Ip, telaBusca;
+    public static int Porta;
     ListView listaComentarios;
 
     @Override
@@ -225,65 +225,87 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         String ExcluirOcorrencia = "ExcluirOcorrencia " + idOcorrencia;
         String retornoExclusao = processa.primeiroCadastroNoServidor(ExcluirOcorrencia, Ip, Porta);
 
-        if (retornoExclusao.equals("true")) {
+        if (tela.equals("Adm")){
+            Intent buscarOcorrencia = new Intent(this, BuscarOcorrencias.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("nome", "Administrador");
+            bundle.putString("cpf", "33333333333");
+            bundle.putString("bairro", "Adm");
+            bundle.putString("tela" , "Adm");
+            bundle.putString("telaBusca", "Busca");
+            bundle.putString("ip", Ip);
+            bundle.putInt("porta", Porta);
 
-            ArrayOcorrenciasRegistradas.deleteAllArray();
+            buscarOcorrencia.putExtras(bundle);
+            this.startActivity(buscarOcorrencia);
 
-            String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
+            this.finish();
 
-            Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
+        }else {
 
-            ArrayImagensPerfilComentarios.deleteBitmap();
-            String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
+            if (retornoExclusao.equals("true")) {
 
-            if (retorno.equals("false")) {
-                Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
-                Intent cliente = new Intent(this, ListarOcorrencias.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("nome", Nome);
-                bundle.putString("cpf", CPF);
-                bundle.putString("bairro", BairroCli);
+                ArrayOcorrenciasRegistradas.deleteAllArray();
 
-                cliente.putExtras(bundle);
-                this.startActivity(cliente);
+                String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
 
-            } else {
-                // Pegando quantidade de Ocorrencias
-                int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
-                // Pegando dados e Adicioanando dados no Array
-                for (int i = 0; i < qtdOcorrencia; i++) {
-                    String TodasOcorrencias[] = retorno.split("///");
+                Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
-                    String Ocorrencia = TodasOcorrencias[i];
-                    String OcorrenciaUm[] = Ocorrencia.split("//");
-                    String Nr = OcorrenciaUm[1];
-                    String CPFOco = OcorrenciaUm[2];
-                    String Rua = OcorrenciaUm[3];
-                    String Bairro = OcorrenciaUm[4];
-                    String Cidade = OcorrenciaUm[5];
-                    String UF = OcorrenciaUm[6];
-                    String Descricao = OcorrenciaUm[7];
-                    String Data = OcorrenciaUm[8];
-                    String Tipo = OcorrenciaUm[9];
-                    String Anonimo = OcorrenciaUm[10];
-                    String Apelido = OcorrenciaUm[11];
-                    DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
-                    ArrayOcorrenciasRegistradas.adicionar(dado);
+                ArrayImagensPerfilComentarios.deleteBitmap();
+                String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
+
+                if (retorno.equals("false")) {
+                    Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
+                    Intent cliente = new Intent(this, ListarOcorrencias.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("nome", Nome);
+                    bundle.putString("cpf", CPF);
+                    bundle.putString("bairro", BairroCli);
+                    bundle.putString("ip", Ip);
+                    bundle.putInt("porta", Porta);
+
+                    cliente.putExtras(bundle);
+                    this.startActivity(cliente);
+
+                } else {
+                    // Pegando quantidade de Ocorrencias
+                    int qtdOcorrencia = ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
+                    // Pegando dados e Adicioanando dados no Array
+                    for (int i = 0; i < qtdOcorrencia; i++) {
+                        String TodasOcorrencias[] = retorno.split("///");
+
+                        String Ocorrencia = TodasOcorrencias[i];
+                        String OcorrenciaUm[] = Ocorrencia.split("//");
+                        String Nr = OcorrenciaUm[1];
+                        String CPFOco = OcorrenciaUm[2];
+                        String Rua = OcorrenciaUm[3];
+                        String Bairro = OcorrenciaUm[4];
+                        String Cidade = OcorrenciaUm[5];
+                        String UF = OcorrenciaUm[6];
+                        String Descricao = OcorrenciaUm[7];
+                        String Data = OcorrenciaUm[8];
+                        String Tipo = OcorrenciaUm[9];
+                        String Anonimo = OcorrenciaUm[10];
+                        String Apelido = OcorrenciaUm[11];
+                        DadosOcorrencias dado = new DadosOcorrencias(Nr, CPFOco, Rua, Bairro, Cidade, UF, Descricao, Data, Tipo, Anonimo, Apelido);
+                        ArrayOcorrenciasRegistradas.adicionar(dado);
+                    }
+                    Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
+
+                    Intent cliente = new Intent(this, ListarOcorrencias.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("nome", Nome);
+                    bundle.putString("cpf", CPF);
+                    bundle.putString("bairro", BairroCli);
+                    bundle.putString("ip", Ip);
+                    bundle.putInt("porta", Porta);
+
+                    cliente.putExtras(bundle);
+                    this.startActivity(cliente);
                 }
-                Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
-
-                Intent cliente = new Intent(this, ListarOcorrencias.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putString("nome", Nome);
-                bundle.putString("cpf", CPF);
-                bundle.putString("bairro", BairroCli);
-
-                cliente.putExtras(bundle);
-                this.startActivity(cliente);
             }
         }
-
     }
 
     public void evEnviarComentario(View view) throws IOException {
