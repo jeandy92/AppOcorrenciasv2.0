@@ -33,8 +33,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import appocorrencias.com.appocorrencias.ClassesSA.BuscarCep;
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ClassesSA.BuscaCep;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -42,7 +42,7 @@ import me.drakeet.materialdialog.MaterialDialog;
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
 import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
 
-public class CadastrarOcorrencia extends AppCompatActivity implements LocationListener {
+public class CadastraOcorrencia extends AppCompatActivity implements LocationListener {
 
     //CONSTANTES
     //Váriaveis para realizar o controle do ResultActivity
@@ -62,7 +62,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     //VARIAVEIS DE ACTIVITYS
     private ImageButton imgBtnAdd, imgBtnDel;
     private ImageView iv1, iv2, iv3;
-    private Button btnSalvarOcorrencia;
+    private Button btnSalvaOcorrencia;
     private EditText edtRua, edtCidade, edtEstado, edtDescricao, edtDataOcorrencia, edtBairro, edtReferencia;
     private CheckBox btnAnonimo;
     private Spinner spinner;
@@ -70,7 +70,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     //VARIAVEIS LOCAIS
     private int cont = 1;
     private String convDataOcorrencia, convDescricao, convEndereco, convCidade, convBairro, convTipoCrime, convUf;
-    private String convDesSalvarOcorre, convEndSalvarOcorre, convCidSalvarOcorre, convBaiSalvarOcorre, segundoTipoDeCrime;
+    private String convDesSalvaOcorre, convEndSalvarOcorre, convCidSalvarOcorre, convBaiSalvarOcorre, segundoTipoDeCrime;
 
 
     public static String Anonimo, Ip;
@@ -82,10 +82,10 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
     public static String nomeCliente, cpfCliente, bairroCliente, telaCliente, tokenUsuario;
 
     //OBEJTOS STATICOS
-    public static ProcessaSocket processaSocket = new ProcessaSocket();
+    public static ProtocoloErlang protocoloErlang = new ProtocoloErlang();
 
     //OBJETOS
-    private BuscarCep buscauf = new BuscarCep();
+    private BuscaCep buscauf = new BuscaCep();
     private Date data;
 
     @Override
@@ -121,7 +121,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         edtDataOcorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
         spinner = (Spinner) findViewById(R.id.spinner);
         btnAnonimo = (CheckBox) findViewById((R.id.rdBtnAnonimo));
-        btnSalvarOcorrencia = (Button) findViewById(R.id.btnSalvaOcorrencia);
+        btnSalvaOcorrencia = (Button) findViewById(R.id.btnSalvaOcorrencia);
 
 
         // Inserindo Mascaras.
@@ -356,7 +356,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                 // Log.i(TAG, endereco.getAddressLine(1));
                 // Log.i(TAG, endereco.getSubLocality());
 
-                BuscarCep buscar_cep = new BuscarCep();
+                BuscaCep buscar_cep = new BuscaCep();
 
                 edtCidade.setText(endereco.getLocality());
                 edtEstado.setText(endereco.getAdminArea());
@@ -418,7 +418,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
             @Override
             public void onClick(View v) {
 
-                ActivityCompat.requestPermissions(CadastrarOcorrencia.this, permissions, REQUEST_PERMISSIONS_CODE);
+                ActivityCompat.requestPermissions(CadastraOcorrencia.this, permissions, REQUEST_PERMISSIONS_CODE);
                 mMaterialDialog.dismiss();
             }
         });
@@ -467,7 +467,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         segundoTipoDeCrime = spinner.getSelectedItem().toString();
         convUf = edtEstado.getText().toString();
         convDataOcorrencia = edtDataOcorrencia.getText().toString();
-        convDesSalvarOcorre = edtDescricao.getText().toString();
+        convDesSalvaOcorre = edtDescricao.getText().toString();
         convEndSalvarOcorre = edtRua.getText().toString();
         convCidSalvarOcorre = edtCidade.getText().toString();
         convBaiSalvarOcorre = edtBairro.getText().toString();
@@ -476,7 +476,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
         String PriNome = ArrayNome[0];
 
         convTipoCrime = removerAcentos(segundoTipoDeCrime);
-        convDescricao = removerAcentos(convDesSalvarOcorre);
+        convDescricao = removerAcentos(convDesSalvaOcorre);
         convEndereco = removerAcentos(convEndSalvarOcorre);
         convCidade = removerAcentos(convCidSalvarOcorre);
         convBairro = removerAcentos(convBaiSalvarOcorre);
@@ -516,9 +516,9 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                         } else {
 
                             String BuscaId = "IDocorrencia teste";
-                            String IDserver = processaSocket.primeiroCadastroNoServidor(BuscaId, Ip, Porta);
+                            String IDserver = protocoloErlang.primeiroCadastroNoServidor(BuscaId, Ip, Porta);
 
-                            String retorno = processaSocket.cadastrar_Ocorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
+                            String retorno = protocoloErlang.cadastrar_Ocorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
                                     convEndereco, convCidade, convBairro, Anonimo, PriNome, Ip, Porta);
 
                             if (retorno.equals("erro")) {
@@ -526,7 +526,7 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                             } else {
                                 if (retorno.equals("true")) {
 
-                                    String retornoImg = processaSocket.envia_Img(IDserver, cpfCliente, byteImagem, byteImagem2, byteImagem3, Ip, Porta);
+                                    String retornoImg = protocoloErlang.envia_Img(IDserver, cpfCliente, byteImagem, byteImagem2, byteImagem3, Ip, Porta);
 
                                     if (retornoImg.equals("erro")) {
                                         Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
@@ -552,8 +552,8 @@ public class CadastrarOcorrencia extends AppCompatActivity implements LocationLi
                                                 // } else {
                                                 // if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
 
-                                                //processaSocket.criandoGrupoNotificacao(tokenUsuario,convBairro,convBairro);
-                                                processaSocket.enviandoNotificacaoGrupo(getInstance().getToken(),convBairro);
+                                                //protocoloErlang.criandoGrupoNotificacao(tokenUsuario,convBairro,convBairro);
+                                                protocoloErlang.enviandoNotificacaoGrupo(getInstance().getToken(),convBairro);
                                                 Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
 
 

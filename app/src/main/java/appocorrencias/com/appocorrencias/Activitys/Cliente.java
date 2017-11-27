@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterFeed;
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagens;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfil;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
@@ -42,7 +42,7 @@ import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
 import appocorrencias.com.appocorrencias.R;
 import me.drakeet.materialdialog.MaterialDialog;
 
-import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.processaSocket;
+import static appocorrencias.com.appocorrencias.Activitys.CadastraOcorrencia.protocoloErlang;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
@@ -222,7 +222,7 @@ public class Cliente extends AppCompatActivity {
         Bundle b = new Bundle();
         b.putString("tipocrime", "roubo");
 
-        this.startActivity(new Intent(this, CadastrarOcorrencia.class));
+        this.startActivity(new Intent(this, CadastraOcorrencia.class));
         this.finish();
     }
 
@@ -236,13 +236,13 @@ public class Cliente extends AppCompatActivity {
 
     public void onUpdateCliente() {
 
-        this.startActivity(new Intent(this, CadastrarUsuario.class));
+        this.startActivity(new Intent(this, CadastraUsuario.class));
     }
 
 
     public void evBuscarOcorrencias(View v) {
 
-        Intent cliente = new Intent(this, BuscarOcorrencias.class);
+        Intent cliente = new Intent(this, BuscaOcorrencias.class);
         Bundle bundle = new Bundle();
         bundle.putString("nome", Nome);
         bundle.putString("cpf", CPF);
@@ -260,7 +260,7 @@ public class Cliente extends AppCompatActivity {
     public void evCadastrarOcorrencia(View view) {
         deleteAllArray();
 
-        Intent cadastrarOcorrencia = new Intent(this, CadastrarOcorrencia.class);
+        Intent cadastrarOcorrencia = new Intent(this, CadastraOcorrencia.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("nome", Nome);
@@ -285,13 +285,13 @@ public class Cliente extends AppCompatActivity {
         Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
+        String retorno = ProtocoloErlang.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
 
         if (retorno.equals("false")) {
 
             Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
 
-            Intent cliente = new Intent(this, ListarOcorrencias.class);
+            Intent cliente = new Intent(this, ListaOcorrencias.class);
 
             Bundle bundle = new Bundle();
             bundle.putString("nome", Nome);
@@ -334,7 +334,7 @@ public class Cliente extends AppCompatActivity {
 
             Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
 
-            Intent cliente = new Intent(this, ListarOcorrencias.class);
+            Intent cliente = new Intent(this, ListaOcorrencias.class);
 
             Bundle bundle = new Bundle();
             bundle.putString("nome", Nome);
@@ -531,7 +531,7 @@ public class Cliente extends AppCompatActivity {
 
     public String enviarImgPerfil() throws IOException {
 
-        String retornoImg = processaSocket.envia_Img_Perfil(CPF, "Img1", byteImagem, Ip, Porta);
+        String retornoImg = protocoloErlang.envia_Img_Perfil(CPF, "Img1", byteImagem, Ip, Porta);
 
         if (retornoImg.equals("erro")) {
             return "erro";

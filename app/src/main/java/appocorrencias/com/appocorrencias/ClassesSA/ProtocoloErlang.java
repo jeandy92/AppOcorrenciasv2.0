@@ -21,7 +21,7 @@ import appocorrencias.com.appocorrencias.ListView.DadosImagensComentarios;
  * Created by Jeanderson on 12/04/2017.
  */
 
-public class ProcessaSocket {
+public class ProtocoloErlang {
     static OutputStream canalSaida = null;
     static InputStream canalEntrada = null;
     static Socket socket;
@@ -423,7 +423,7 @@ public class ProcessaSocket {
         String str = null;
         Socket cliente2 = new Socket();
 
-        String IpDNS = "192.168.43.98";
+        String IpDNS = "52";
         int portaDNS = 2222;
 
         String dados = "ClienteLogin teste";
@@ -667,7 +667,7 @@ public class ProcessaSocket {
                                               String UF, String convDescricao, String convEndereco, String convCidade,
                                               String convBairro, String Anonimo, String PriNome, String Ip, int Porta) throws IOException {
         //Envio de dados
-        String CadastrarOcorrencia = "CadastrarOcorrencia" + " " + ID + " " + CPFCliente + " " + UF + " " + convDataOcorrencia +
+        String CadastrarOcorrencia = "CadastraOcorrencia" + " " + ID + " " + CPFCliente + " " + UF + " " + convDataOcorrencia +
                 " " + Anonimo + " " + PriNome;
 
         byte[] byteDados1 = CadastrarOcorrencia.getBytes();
@@ -985,4 +985,11 @@ public class ProcessaSocket {
             return "true";
         }
     }
-}
+
+
+
+    }
+
+
+
+

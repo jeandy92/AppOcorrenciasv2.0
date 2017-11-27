@@ -42,20 +42,20 @@
         <activity android:name=".Activitys.Adm" />
         <activity android:name=".Activitys.Cliente" />
         <activity
-            android:name=".Activitys.CadastrarUsuario"
+            android:name=".Activitys.CadastraUsuario"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Activitys.CadastrarOcorrencia"
+            android:name=".Activitys.CadastraOcorrencia"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Activitys.ListarOcorrencias" />
+        <activity android:name=".Activitys.ListaOcorrencias" />
         <activity
             android:name=".ListView.ItemFeedOcorrencias"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Activitys.BuscarOcorrencias"
+            android:name=".Activitys.BuscaOcorrencias"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Activitys.BuscarUsuarios"
+            android:name=".Activitys.BuscaUsuarios"
             android:windowSoftInputMode="stateHidden" />
 
         <service

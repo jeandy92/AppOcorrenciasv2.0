@@ -23,21 +23,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterFeed;
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
 import appocorrencias.com.appocorrencias.R;
 
-import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.removerAcentos;
+import static appocorrencias.com.appocorrencias.Activitys.CadastraOcorrencia.removerAcentos;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
 import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
 import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
 
-public class BuscarOcorrencias extends AppCompatActivity {
+public class BuscaOcorrencias extends AppCompatActivity {
 
     private RadioButton rbtTipoOcorrencia, rbtBairro;
     private Spinner spnTipoOcorrencia;
@@ -45,7 +45,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
     private EditText edtFoco, edtBairroText;
     private ListView lvFeedOcorrencias;
     public static String nomeBuscarOcorrencia, cpfBuscarOcorrencia, bairroBuscarOcorrencia, telaBuscarOcorrencia, telaBusca , Ip;
-    public static ProcessaSocket processa = new ProcessaSocket();
+    public static ProtocoloErlang processa = new ProtocoloErlang();
     public static int Porta;
 
 
@@ -229,7 +229,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         String buscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradasBairro " + segundoBairro;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(buscarOcorrenciasRegistradas, Ip, Porta);
+        String retorno = ProtocoloErlang.buscarDadosImagensServer(buscarOcorrenciasRegistradas, Ip, Porta);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há ocorrências cadastradas neste bairro", Toast.LENGTH_SHORT).show();
@@ -271,7 +271,7 @@ public class BuscarOcorrencias extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
 
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip,Porta );
+        String retorno = ProtocoloErlang.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip,Porta );
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há ocorrencias cadastradas com esse tipo", Toast.LENGTH_SHORT).show();

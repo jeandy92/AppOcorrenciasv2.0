@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.text.ParseException;
 
-public class BuscarCep {
+public class BuscaCep {
 
     public String getEndereco(String pCep) throws IOException{
         String status = null;

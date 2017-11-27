@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterBuscaUsuario;
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.ArrayUsuariosEncontrados;
 import appocorrencias.com.appocorrencias.ListView.DadosUsuarios;
@@ -30,7 +30,7 @@ import appocorrencias.com.appocorrencias.R;
 import static appocorrencias.com.appocorrencias.ListView.ArrayUsuariosEncontrados.deleteAllArrayUsuarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayUsuariosEncontrados.getListaUsuarios;
 
-public class BuscarUsuarios extends AppCompatActivity {
+public class BuscaUsuarios extends AppCompatActivity {
 
     private RadioButton rbtCPF, rbtNome;
     private TextInputLayout tinpCPF, tinpNome;
@@ -224,7 +224,7 @@ public class BuscarUsuarios extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(buscaUsuarioCPF, Ip, Porta);
+        String retorno = ProtocoloErlang.buscarDadosImagensServer(buscaUsuarioCPF, Ip, Porta);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há usuarios cadastrados com esse CPF", Toast.LENGTH_SHORT).show();
@@ -267,7 +267,7 @@ public class BuscarUsuarios extends AppCompatActivity {
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
 
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarUsuarioNome, Ip, Porta);
+        String retorno = ProtocoloErlang.buscarDadosImagensServer(BuscarUsuarioNome, Ip, Porta);
 
         if (retorno.equals("false")) {
             Toast.makeText(this, "Não há usuarios cadastrados com esse nomeBuscarOcorrencia", Toast.LENGTH_SHORT).show();

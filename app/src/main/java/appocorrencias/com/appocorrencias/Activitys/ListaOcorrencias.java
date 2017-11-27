@@ -25,7 +25,7 @@ import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evB
 import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
 
 
-public class ListarOcorrencias extends AppCompatActivity {
+public class ListaOcorrencias extends AppCompatActivity {
 
     private ListView lista;
     public static String loginNome, loginCpf, loginBairro, Ip;

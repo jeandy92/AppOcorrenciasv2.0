@@ -30,20 +30,20 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.TimeZone;
 
-import appocorrencias.com.appocorrencias.Activitys.BuscarOcorrencias;
+import appocorrencias.com.appocorrencias.Activitys.BuscaOcorrencias;
 import appocorrencias.com.appocorrencias.Activitys.Cliente;
-import appocorrencias.com.appocorrencias.Activitys.ListarOcorrencias;
+import appocorrencias.com.appocorrencias.Activitys.ListaOcorrencias;
 import appocorrencias.com.appocorrencias.Adapters.AdapterComentarios;
 import appocorrencias.com.appocorrencias.Adapters.AdapterCustomSwiper;
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.R;
 
-import static appocorrencias.com.appocorrencias.Activitys.CadastrarOcorrencia.removerAcentos;
+import static appocorrencias.com.appocorrencias.Activitys.CadastraOcorrencia.removerAcentos;
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.concat;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.receber_imagem_perfil;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket.toBytes;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang.concat;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang.receber_imagem;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang.receber_imagem_perfil;
+import static appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang.toBytes;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.getImagens;
@@ -60,7 +60,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
     private EditText txtComentario;
     ViewPager viewPager;
     AdapterCustomSwiper adapterCustomSwiper;
-    private static ProcessaSocket processa = new ProcessaSocket();
+    private static ProtocoloErlang processa = new ProtocoloErlang();
     public static String idOcorrencia, descricao, rua, bairro, uf, cidade, data, tipo, CPF, Nome, BairroCli, convComentario, CPFOcorrencia, tela, Ip, telaBusca;
     public static int Porta;
     ListView listaComentarios;
@@ -226,7 +226,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         String retornoExclusao = processa.primeiroCadastroNoServidor(ExcluirOcorrencia, Ip, Porta);
 
         if (tela.equals("Adm")){
-            Intent buscarOcorrencia = new Intent(this, BuscarOcorrencias.class);
+            Intent buscarOcorrencia = new Intent(this, BuscaOcorrencias.class);
             Bundle bundle = new Bundle();
             bundle.putString("nome", "Administrador");
             bundle.putString("cpf", "33333333333");
@@ -252,11 +252,11 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                 Toast.makeText(this, "Minhas Ocorrencias Registradas ", Toast.LENGTH_SHORT).show();
 
                 ArrayImagensPerfilComentarios.deleteBitmap();
-                String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
+                String retorno = ProtocoloErlang.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
 
                 if (retorno.equals("false")) {
                     Toast.makeText(this, "Não há ocorrencias cadastradas", Toast.LENGTH_SHORT).show();
-                    Intent cliente = new Intent(this, ListarOcorrencias.class);
+                    Intent cliente = new Intent(this, ListaOcorrencias.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("nome", Nome);
                     bundle.putString("cpf", CPF);
@@ -292,7 +292,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                     }
                     Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
 
-                    Intent cliente = new Intent(this, ListarOcorrencias.class);
+                    Intent cliente = new Intent(this, ListaOcorrencias.class);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("nome", Nome);
@@ -375,7 +375,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         String BuscarComentariosRegistrados = "BuscarComentariosRegistrados " + IDOcorrencia;
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarComentariosRegistrados, IpServer, PortaServer);
+        String retorno = ProtocoloErlang.buscarDadosImagensServer(BuscarComentariosRegistrados, IpServer, PortaServer);
 
         if (retorno.equals("erro")) {
             return "erro";
@@ -420,7 +420,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         String BuscarOcorrenciasRegistradas = "BuscarOcorrenciasRegistradas" + " " + CPF;
 
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
+        String retorno = ProtocoloErlang.buscarDadosImagensServer(BuscarOcorrenciasRegistradas, Ip, Porta);
 
         if (retorno.equals("false")) {
 
@@ -465,7 +465,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         ArrayImagens.deleteBitmap();
 
         if (tela.equals("ListarOcorrencia")) {
-            Intent cliente = new Intent(this, ListarOcorrencias.class);
+            Intent cliente = new Intent(this, ListaOcorrencias.class);
 
             deleteAllArray();
             try {
@@ -511,7 +511,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
 
             } else {
                 if (tela.equals("Cliente") && telaBusca.equals("Busca")) {
-                    Intent cliente = new Intent(this, BuscarOcorrencias.class);
+                    Intent cliente = new Intent(this, BuscaOcorrencias.class);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("nome", Nome);
@@ -527,7 +527,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                     this.finish();
                 } else {
                     if (tela.equals("Adm") && telaBusca.equals("Busca")) {
-                        Intent cliente = new Intent(this, BuscarOcorrencias.class);
+                        Intent cliente = new Intent(this, BuscaOcorrencias.class);
 
                         Bundle bundle = new Bundle();
                         bundle.putString("nome", Nome);

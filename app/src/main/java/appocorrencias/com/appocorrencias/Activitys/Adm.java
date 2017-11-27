@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.R;
 
 
@@ -22,8 +22,8 @@ public class Adm extends AppCompatActivity {
 
     private Button btnSair,btnCadastrarOcorrencias;
     private TextView txvRetornoSocket;
-    public static  String nomeAdm, cpfAdm, bairro, Ip;
-    public static int Porta;
+    public static String nomeAdm, cpfAdm, bairro, Ip;
+    public static int porta;
     private TextView txtTesteAdm;
 
 
@@ -50,7 +50,7 @@ public class Adm extends AppCompatActivity {
 
 
         try {
-            DadosServidor = ProcessaSocket.BuscarServidor();
+            DadosServidor = ProtocoloErlang.BuscarServidor();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class Adm extends AppCompatActivity {
             if (DadosServidor != null) {
                 String retorno2[] = DadosServidor.split("//");
                 Ip = retorno2[0];
-                Porta = Integer.parseInt(retorno2[1]);
+                porta = Integer.parseInt(retorno2[1]);
             }
         }
 
@@ -70,7 +70,7 @@ public class Adm extends AppCompatActivity {
     public void evCadastrarUsuario(View view) {
         evCriarNotificacao();
 
-        Intent cadastrar = new Intent(this, CadastrarUsuario.class);
+        Intent cadastrar = new Intent(this, CadastraUsuario.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("tela" , "Adm");
@@ -95,7 +95,7 @@ public class Adm extends AppCompatActivity {
 
     public void evCadastrarOcorrencia(View v){
 
-        Intent cadastrarOcorrencia = new Intent(this, CadastrarOcorrencia.class);
+        Intent cadastrarOcorrencia = new Intent(this, CadastraOcorrencia.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("nome", nomeAdm);
@@ -103,7 +103,7 @@ public class Adm extends AppCompatActivity {
         bundle.putString("bairro" , bairro);
         bundle.putString("tela" , "Adm");
         bundle.putString("ip", Ip);
-        bundle.putInt("porta", Porta);
+        bundle.putInt("porta", porta);
 
         cadastrarOcorrencia.putExtras(bundle);
         this.startActivity(cadastrarOcorrencia);
@@ -113,7 +113,7 @@ public class Adm extends AppCompatActivity {
 
     public void evBuscarOcorrencia(View v){
 
-        Intent buscarOcorrencia = new Intent(this, BuscarOcorrencias.class);
+        Intent buscarOcorrencia = new Intent(this, BuscaOcorrencias.class);
         Bundle bundle = new Bundle();
         bundle.putString("nome", nomeAdm);
         bundle.putString("cpf" , cpfAdm);
@@ -121,7 +121,7 @@ public class Adm extends AppCompatActivity {
         bundle.putString("tela" , "Adm");
         bundle.putString("telaBusca", "Busca");
         bundle.putString("ip", Ip);
-        bundle.putInt("porta", Porta);
+        bundle.putInt("porta", porta);
 
         buscarOcorrencia.putExtras(bundle);
         this.startActivity(buscarOcorrencia);
@@ -130,11 +130,11 @@ public class Adm extends AppCompatActivity {
     }
 
     public void evBuscarUsuario(View v){
-        Intent buscarUsuario = new Intent(this, BuscarUsuarios.class);
+        Intent buscarUsuario = new Intent(this, BuscaUsuarios.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("ip", Ip);
-        bundle.putInt("porta", Porta);
+        bundle.putInt("porta", porta);
 
         buscarUsuario.putExtras(bundle);
         this.startActivity(buscarUsuario);

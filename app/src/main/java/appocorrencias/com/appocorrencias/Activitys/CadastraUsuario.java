@@ -1,6 +1,7 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -10,17 +11,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.text.Normalizer;
+import com.google.gson.Gson;
 
-import appocorrencias.com.appocorrencias.ClassesSA.BuscarCep;
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.Normalizer;
+import java.text.SimpleDateFormat;
+
+import appocorrencias.com.appocorrencias.ClassesSA.BuscaCep;
+import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
-
-public class CadastrarUsuario extends AppCompatActivity {
+public class CadastraUsuario extends AppCompatActivity {
 
     //Variavel para gerar log
     private static final String TAG = "LOG";
@@ -40,9 +49,12 @@ public class CadastrarUsuario extends AppCompatActivity {
 
 
     //Dados para o envio do socket.
-    private ProcessaSocket processa = new ProcessaSocket();
+    private ProtocoloErlang processa = new ProtocoloErlang();
     private boolean retorno;
     private String telaCadUsuario;
+
+    private final String ipConexao = "http://192.168.0.16:62001";
+    private final String endpointCadastrarUsuario = "/RestWO/services/WebserviceOcorrencia/buscarUsuario/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +103,7 @@ public class CadastrarUsuario extends AppCompatActivity {
 
         convCep = edtCep.getText().toString().replaceAll("[^0123456789]", "");
 
-        BuscarCep busca = new BuscarCep();
+        BuscaCep busca = new BuscaCep();
 
         String Status = busca.getEndereco(convCep);
         if (Status.equals("erro")) {
@@ -109,13 +121,13 @@ public class CadastrarUsuario extends AppCompatActivity {
     }
 
     //Cadastrar usuário no servidor
-    public void evCadastrarUsuario(View v) throws IOException {
+    /*public void evCadastrarUsuario(View v) throws IOException {
 
         String DadosServidor = null;
 
 
         try {
-            DadosServidor = ProcessaSocket.BuscarServidor();
+            DadosServidor = ProtocoloErlang.BuscarServidor();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -220,9 +232,67 @@ public class CadastrarUsuario extends AppCompatActivity {
             }
         }
     }
+*/
+    public void evCadastrarUsuario(View v) {
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                MDUsuario usu = new MDUsuario();
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Gson gson =  new Gson();
+
+                try {
+
+                    usu.setCpf(edtCpf.getText().toString());
+                    usu.setNome(edtNome.getText().toString());
+                    usu.setTelefone(edtTelefone.getText().toString());
+                    // usu.setDataDeNascimento(df.parse(dtNascimento.getText().toString()));
+                    usu.setCep(edtCep.getText().toString());
+                    usu.setRua(edtRua.getText().toString());
+                    usu.setNumero(edtNumero.getText().toString());
+                    usu.setComplemento(edtComplemento.getText().toString());
+                    usu.setBairro(edtBairro.getText().toString());
+                    usu.setCidade(edtCidade.getText().toString());
+                    usu.setEmail(edtEmail.getText().toString());
+                    usu.setSenha(edtSenha.getText().toString());
+                    usu.setConfirmarSenha(edtConfirmarSenha.getText().toString());
+                    usu.setUf(edtUf.getText().toString());
+
+                    OkHttpClient client = new OkHttpClient();
+
+
+                    Request.Builder builder = new Request.Builder();
+
+                    builder.url(ipConexao + endpointCadastrarUsuario);
+
+                    MediaType mediaType =
+                            MediaType.parse("application/json; charset=utf-8");
+
+
+                    RequestBody body = RequestBody.create(mediaType, gson.toJson(usu));
+
+                    builder.post(body);
+
+                    Request request = builder.build();
+                    Response response = null;
+
+                    response = client.newCall(request).execute();
+                    final String jsonDeResposta = response.body().string();
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+
+
 
     //Método para Validar cpf
-
     public static boolean validarCPF(String validaCpf) {
         if (validaCpf.equals("00000000000") || validaCpf.equals("11111111111")
                 || validaCpf.equals("22222222222") || validaCpf.equals("33333333333")

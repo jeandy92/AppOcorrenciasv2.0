@@ -17,7 +17,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.io.IOException;
 
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
 import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
     private String nome, SENHA, LoginServer, CPF, Nome, Bairro, IpServer;
     int PortaServer;
     private String convCpf, Status;
-    private static ProcessaSocket processa = new ProcessaSocket();
+    private static ProtocoloErlang processa = new ProtocoloErlang();
     private String retorno;
     private EditText txtUsuario, txtSenha;
     private CheckBox salvarlogin;
@@ -122,7 +122,7 @@ public class Login extends AppCompatActivity {
 
     public void evCadastrarSe(View view) {
 
-        Intent cadastrar = new Intent(this, CadastrarUsuario.class);
+        Intent cadastrar = new Intent(this, CadastraUsuario.class);
 
         Bundle bundle = new Bundle();
         bundle.putString("tela", "Cliente");
@@ -141,7 +141,7 @@ public class Login extends AppCompatActivity {
         Log.d(TAG, token);
 
         //Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
-        //ProcessaSocket.enviandoNotificacaoGrupo(token, "Jardim lok");
+        //ProtocoloErlang.enviandoNotificacaoGrupo(token, "Jardim lok");
 
 
         SENHA = txtSenha.getText().toString();
@@ -191,7 +191,7 @@ public class Login extends AppCompatActivity {
 
             } else {
 
-                if (CadastrarUsuario.validarCPF(CPF)) {
+                if (CadastraUsuario.validarCPF(CPF)) {
                     txtUsuario.setError("CPF Inválido");
                     txtUsuario.setFocusable(true);
                     txtUsuario.requestFocus();
@@ -202,7 +202,7 @@ public class Login extends AppCompatActivity {
                     String DadosServidor = null;
 
                     try {
-                        DadosServidor = ProcessaSocket.BuscarServidor();
+                        DadosServidor = ProtocoloErlang.BuscarServidor();
                         Log.i("evEntrar(Servidor)", DadosServidor);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -287,7 +287,7 @@ public class Login extends AppCompatActivity {
         String BuscarOcorrenciasRegistradas="BuscarOcorrenciasRegistradasBairro "+Bairro2;
         //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
         ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno=ProcessaSocket.buscarDadosImagensServer(BuscarOcorrenciasRegistradas,IpServer,PortaServer);
+        String retorno= ProtocoloErlang.buscarDadosImagensServer(BuscarOcorrenciasRegistradas,IpServer,PortaServer);
 
         if(retorno.equals("false")){
             // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();

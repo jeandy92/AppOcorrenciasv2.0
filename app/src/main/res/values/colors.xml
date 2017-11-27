@@ -3,7 +3,7 @@
 
     <resources>
         <color name="colorPrimary">#212121</color>
-        <color name="colorPrimaryDark">#616161</color>
+        <color name="colorPrimaryDark">#b2b2b2</color>
         <color name="primary_light">#ffffff</color>
         <color name="colorAccent">#607D8B</color>
         <color name="primary_text">#212121</color>

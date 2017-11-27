@@ -12,17 +12,16 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import appocorrencias.com.appocorrencias.Activitys.BuscarUsuarios;
-import appocorrencias.com.appocorrencias.Activitys.ListarOcorrencias;
+import appocorrencias.com.appocorrencias.Activitys.BuscaUsuarios;
 import appocorrencias.com.appocorrencias.Adapters.AdapterCustomSwiper;
-import appocorrencias.com.appocorrencias.ClassesSA.ProcessaSocket;
+import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.R;
 
 public class ItemBuscaUsuario extends AppCompatActivity {
 
     ViewPager viewPager;
     AdapterCustomSwiper adapterCustomSwiper;
-    private static ProcessaSocket processa = new ProcessaSocket();
+    private static ProtocoloErlang processa = new ProtocoloErlang();
 
     public static String nome, telefone, cpfUsuario, email, rua, bairro, uf, cidade, nascimento, Ip;
     public static int Porta;
@@ -87,7 +86,7 @@ public class ItemBuscaUsuario extends AppCompatActivity {
             ArrayUsuariosEncontrados.deleteAllArrayUsuarios();
             Toast.makeText(this, "Usuario Excluído ", Toast.LENGTH_SHORT).show();
 
-            Intent cliente = new Intent(this, BuscarUsuarios.class);
+            Intent cliente = new Intent(this, BuscaUsuarios.class);
             Bundle bundle = new Bundle();
             bundle.putString("ip", Ip);
             bundle.putInt("porta", Porta);
@@ -100,7 +99,7 @@ public class ItemBuscaUsuario extends AppCompatActivity {
             if (retornoExclusao.equals("erro")) {
                 Toast.makeText(this, "Erro de Conexão", Toast.LENGTH_SHORT).show();
 
-                Intent cliente = new Intent(this, BuscarUsuarios.class);
+                Intent cliente = new Intent(this, BuscaUsuarios.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("ip", Ip);
                 bundle.putInt("porta", Porta);
@@ -116,7 +115,7 @@ public class ItemBuscaUsuario extends AppCompatActivity {
 
         ArrayImagens.deleteBitmap();
 
-        Intent cliente = new Intent(this, BuscarUsuarios.class);
+        Intent cliente = new Intent(this, BuscaUsuarios.class);
         Bundle bundle = new Bundle();
         bundle.putString("ip", Ip);
         bundle.putInt("porta", Porta);
