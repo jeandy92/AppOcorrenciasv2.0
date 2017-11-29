@@ -29,6 +29,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
+
 public class CadastraUsuario extends AppCompatActivity {
 
     //Variavel para gerar log
@@ -53,8 +55,8 @@ public class CadastraUsuario extends AppCompatActivity {
     private boolean retorno;
     private String telaCadUsuario;
 
-    private final String ipConexao = "http://192.168.0.16:62001";
-    private final String endpointCadastrarUsuario = "/RestWO/services/WebserviceOcorrencia/buscarUsuario/";
+    private final String ipConexao = "http://192.168.53.86:62001";
+    private final String endpointCadastrarUsuario = "/RestWO/services/WebserviceOcorrencia/cadastrarUsuario/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,20 +72,36 @@ public class CadastraUsuario extends AppCompatActivity {
         btnCadastarUsuario = (Button) findViewById(R.id.CadastrarUsuario);
 
         //Váriaveis para o cadastro
-        edtNome = (EditText) findViewById(R.id.edtNome);
-        edtCpf = (EditText) findViewById(R.id.edtCPF);
-        edtSenha = (EditText) findViewById(R.id.edtSenha);
+        edtNome     = (EditText) findViewById(R.id.edtNome);
+        edtCpf      = (EditText) findViewById(R.id.edtCPF);
+        edtSenha    = (EditText) findViewById(R.id.edtSenha);
         edtDataNasc = (EditText) findViewById(R.id.edtDataNasc);
-        edtRua = (EditText) findViewById(R.id.edtRua);
+        edtRua      = (EditText) findViewById(R.id.edtRua);
         edtTelefone = (EditText) findViewById(R.id.edtTelefone);
-        edtCep = (EditText) findViewById(R.id.edtCep);
-        edtBairro = (EditText) findViewById(R.id.edtBairro);
+        edtCep      = (EditText) findViewById(R.id.edtCep);
+        edtBairro    = (EditText) findViewById(R.id.edtBairro);
         edtCidade = (EditText) findViewById(R.id.edtCidade);
         edtUf = (EditText) findViewById(R.id.edtUF);
         edtNumero = (EditText) findViewById(R.id.edtNumero);
-        edtEmail = (EditText) findViewById(R.id.edtEmail);
+        edtEmail          = (EditText) findViewById(R.id.edtEmail);
         edtConfirmarSenha = (EditText) findViewById(R.id.edtConfirmarSenha);
-        edtComplemento = (EditText) findViewById(R.id.edtComplemento);
+        edtComplemento    = (EditText) findViewById(R.id.edtComplemento);
+
+        //Setar default
+        edtNome 	      .setText("Jeanderson");
+        edtCpf 	 		  .setText("43131386843");
+        edtSenha 	      .setText("1234");
+        edtDataNasc 	  .setText("22/03/2017");
+        edtRua 			  .setText("Joaquim Abreu");
+        edtTelefone 	  .setText("1141622246");
+        edtCep 			  .setText("06433210");
+        edtBairro 		  .setText("Jardim Silveira");
+        edtCidade	      .setText("Barueri");
+        edtUf 			  .setText("SP");
+        edtNumero 		  .setText("54");
+        edtEmail 		  .setText("jeand@hotmail.com");
+        edtConfirmarSenha .setText("1234");
+        edtComplemento 	  .setText("casa1");
 
         // Inserindo Mascaras.
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", edtCpf);
@@ -120,119 +138,6 @@ public class CadastraUsuario extends AppCompatActivity {
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
-    //Cadastrar usuário no servidor
-    /*public void evCadastrarUsuario(View v) throws IOException {
-
-        String DadosServidor = null;
-
-
-        try {
-            DadosServidor = ProtocoloErlang.BuscarServidor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (DadosServidor.equals("erro")) {
-            Toast.makeText(this, "Erro na Conexão DNS", Toast.LENGTH_SHORT).show();
-        } else {
-            if (DadosServidor != null) {
-                String retorno2[] = DadosServidor.split("//");
-                Ip = retorno2[0];
-                Porta = Integer.parseInt(retorno2[1]);
-            }
-        }
-
-        String segundaRua = edtRua.getText().toString();
-        String segundoBairro = edtBairro.getText().toString();
-        String segundaCidade = edtCidade.getText().toString();
-        convUf = edtUf.getText().toString();
-
-        convRua = removerAcentos(segundaRua);
-        convBairro = removerAcentos(segundoBairro);
-        convCidade = removerAcentos(segundaCidade);
-
-        //Tirando a mascara dos campos
-        convCpf = edtCpf.getText().toString().replaceAll("[^0123456789]", "");
-        convTelefone = edtTelefone.getText().toString().replaceAll("[^0123456789]", "");
-        convCep = edtCep.getText().toString().replaceAll("[^0123456789]", "");
-
-        //Retirando referencia null
-        convEmail = edtEmail.getText().toString();
-        convSenha = edtSenha.getText().toString();
-        convNumero = edtNumero.getText().toString();
-        convNome = edtNome.getText().toString();
-        convConfirmarSenha = edtConfirmarSenha.getText().toString();
-        convDataNasc = edtDataNasc.getText().toString();
-        String segundoComplemento = edtComplemento.getText().toString();
-        convComplemento = removerAcentos(segundoComplemento);
-        if (convComplemento.isEmpty()) {
-            convComplemento = "casa";
-        }
-
-        Log.i(TAG, "Cadastrar...." + convCpf);
-
-        if (convCpf.isEmpty()) {
-            edtCpf.setError("Faltou preencher cpf ");
-            edtCpf.setFocusable(true);
-            edtCpf.requestFocus();
-        } else {
-            if (convNome.isEmpty()) {
-                edtNome.setError("Faltou preencher nome ");
-                edtNome.setFocusable(true);
-                edtNome.requestFocus();
-            } else {
-                if (validarCPF(convCpf)) {
-                    edtCpf.setError("cpf Inválido");
-                    edtCpf.setFocusable(true);
-                    edtCpf.requestFocus();
-                } else {
-                    if (!validarEmail(convEmail)) {
-                        edtEmail.setError("Faltou preencher E-mail");
-                        edtEmail.setFocusable(true);
-                        edtEmail.requestFocus();
-                    } else {
-                        if (convCep.isEmpty()) {
-                            edtCep.setError("edtCep Inválido");
-                            edtCep.setFocusable(true);
-                            edtCep.requestFocus();
-                        } else {
-                            if (convSenha.isEmpty()) {
-                                edtSenha.setError("Faltou preencher a edtSenha ");
-                                edtSenha.setFocusable(true);
-                                edtSenha.requestFocus();
-                            } else {
-                                if (convSenha.equals(convConfirmarSenha) == false) {
-                                    edtConfirmarSenha.setError("A senha digitada nao corresponde");
-                                    edtConfirmarSenha.setFocusable(true);
-                                    edtConfirmarSenha.requestFocus();
-                                } else {
-                                    String retorno = processa.cadastrarUsuario(convCpf, convSenha, convEmail, convTelefone, convCep, convUf, convNumero, convRua, convBairro, convCidade, convNome, convDataNasc, convComplemento, Ip, Porta);
-                                    if (retorno.equals("erro")) {
-                                        Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        if (retorno.equals("true")) {
-                                            processa.criandoGrupoNotificacao(getInstance().getToken(), convBairro, convBairro);
-                                            processa.adicionandoUsuarioNotificacao(getInstance().getToken(), convBairro);
-                                            Toast.makeText(this, "Cadastro feito com sucesso", Toast.LENGTH_SHORT).show();
-
-                                            setContentView(R.layout.activity_login);
-                                            this.startActivity(new Intent(this, Login.class));
-                                            this.finish();
-                                        } else {
-                                            edtCpf.setError("cpf Já Cadastrado");
-                                            edtCpf.setFocusable(true);
-                                            edtCpf.requestFocus();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-*/
     public void evCadastrarUsuario(View v) {
 
         AsyncTask.execute(new Runnable() {
@@ -240,15 +145,21 @@ public class CadastraUsuario extends AppCompatActivity {
             public void run() {
                 MDUsuario usu = new MDUsuario();
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Gson gson =  new Gson();
+                Gson gson = new Gson();
+
+
+                //Tirando a mascara dos campos
+                convCpf = edtCpf.getText().toString().replaceAll("[^0123456789]", "");
+                convTelefone = edtTelefone.getText().toString().replaceAll("[^0123456789]", "");
+                convCep = edtCep.getText().toString().replaceAll("[^0123456789]", "");
+
 
                 try {
-
-                    usu.setCpf(edtCpf.getText().toString());
+                    usu.setCpf(convCpf);
                     usu.setNome(edtNome.getText().toString());
-                    usu.setTelefone(edtTelefone.getText().toString());
+                    usu.setTelefone(convTelefone);
                     // usu.setDataDeNascimento(df.parse(dtNascimento.getText().toString()));
-                    usu.setCep(edtCep.getText().toString());
+                    usu.setCep(convCep);
                     usu.setRua(edtRua.getText().toString());
                     usu.setNumero(edtNumero.getText().toString());
                     usu.setComplemento(edtComplemento.getText().toString());
@@ -278,17 +189,47 @@ public class CadastraUsuario extends AppCompatActivity {
                     Response response = null;
 
                     response = client.newCall(request).execute();
-                    final String jsonDeResposta = response.body().string();
+                    final String jsonDeResposta =response.body().string();
 
+
+                    CadastraUsuario.this.runOnUiThread(new Runnable() {
+                        public void run() {
+
+
+                            if (jsonDeResposta.equals("USUARIO CADASTRADO COM SUCESSO !!")) {
+
+
+                                processa.criandoGrupoNotificacao(getInstance().getToken(), edtBairro.getText().toString(), edtBairro.getText().toString());
+                                processa.adicionandoUsuarioNotificacao(getInstance().getToken(), edtBairro.getText().toString());
+                                Toast.makeText(CadastraUsuario.this, "USUARIO CADASTRADO COM SUCESSO !!", Toast.LENGTH_SHORT).show();
+
+                                setContentView(R.layout.activity_login);
+                                CadastraUsuario.this.startActivity(new Intent(CadastraUsuario.this, Login.class));
+                                CadastraUsuario.this.finish();
+
+                            } else {
+                                if (jsonDeResposta.equals("CPF JÁ CADASTRADO"))
+                                {
+                                    Toast.makeText(CadastraUsuario.this, "CPF JÁ CADASTRADO !!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (jsonDeResposta.isEmpty())
+                                    {
+                                        Toast.makeText(CadastraUsuario.this, "ERRO DE CONEXÃO COM O SERVIDOR !", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+
+                        }
+                    });
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        });
+            }});
+
+
     }
-
-
 
 
 

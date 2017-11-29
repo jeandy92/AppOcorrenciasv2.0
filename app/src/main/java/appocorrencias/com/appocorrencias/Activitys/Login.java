@@ -2,6 +2,7 @@ package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +15,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
+import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
 import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
 import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
@@ -24,9 +30,11 @@ import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.Network.FCMFirebaseInstanceIDService;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
-
-import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
-import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Login extends AppCompatActivity {
 
@@ -42,6 +50,9 @@ public class Login extends AppCompatActivity {
     private Button btnCadastrarCli;
     private static final String PREF_NAME = "MainActivityPreferences";
     private static final String TAG = "Login";
+    private final String ipConexao = "http://192.168.53.86:62001";
+    private final String endpointLogar = "/RestWO/services/WebserviceOcorrencia/logarUsuario/";
+
 
     //private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
 
@@ -98,7 +109,7 @@ public class Login extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         //Cria shared preference para armazenar os dados de preferencid do usuário
-        SharedPreferences sp1 = getSharedPreferences(PREF_NAME, MODE_APPEND);
+        SharedPreferences sp1 = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
 
         //Retirando a referencia  nulla
@@ -131,9 +142,143 @@ public class Login extends AppCompatActivity {
         this.startActivity(cadastrar);
     }
 
+public void evEntrar (View view) {
+
+    //Armazena os dados
+    CPF = txtUsuario.getText().toString();
+    SENHA = txtSenha.getText().toString();
+
+    //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E SENHA E TIRANDO A  MASCARA DO CAMPO cpfAdm
+    CPF = CPF.replaceAll("[^0-9]", "");
+
+    // Verifica se os dados fora preenchidos corretamente
+    if(CPF.isEmpty()||SENHA.isEmpty()) {
+
+        txtUsuario.setError("Usuario ou senha em branco");
+        txtUsuario.setFocusable(true);
+        txtUsuario.requestFocus();
+
+    }
+
+    //Aramazena os dados na shared preferences em modo privato, impossibilitando que outra atividade altere esta preference.
+    SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+    SharedPreferences.Editor editor = sp.edit();
+
+
+    //Colocando os dados no shared prefence
+    editor.putString("login", CPF);
+    editor.putString("senha", SENHA);
+
+    editor.commit();
+    AsyncTask.execute(new Runnable() {
+        @Override
+        public void run() {
+
+            Gson gson = new Gson();
+            MDUsuario usuario = new MDUsuario();
+
+            try {
+
+                OkHttpClient client = new OkHttpClient();
+
+
+                //String url = "http://192.168.0.16:62001/RestWO/services/WebserviceOcorrencia/logarUsuario/"+"{"+login.getText()+"}"+"-"+"{"+senha.getText()+"}";
+            /*runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            desc.setText(jsonDeResposta);
+
+                        }
+                    });*/
+
+                Request.Builder builder = new Request.Builder();
+
+
+                System.out.println("cpf:"+CPF+"SENHA"+SENHA);
+
+
+                builder.url(ipConexao + endpointLogar  + CPF  + "-" + SENHA );
+
+                MediaType mediaType =
+                        MediaType.parse("application/json; charset=utf-8");
+
+                RequestBody body = RequestBody.create(mediaType, gson.toJson(usuario));
+
+                builder.post(body);
+
+                Request request = builder.build();
+                Response response = null;
+
+                response = client.newCall(request).execute();
+                final String jsonDeResposta = response.body().string();
+                System.out.println(jsonDeResposta);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        if (jsonDeResposta.equals("SENHA INCORRETA!"))
+                        {
+                            Toast.makeText(Login.this, "SENHA INCORRETA", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+
+                        {
+
+                            if (jsonDeResposta.equals("USUÁRIO NÃO CADASTRADO NA BASE DE DADOS"))
+
+                            {
+                                Toast.makeText(Login.this, "Cadastre-se, usuário não encontrado", Toast.LENGTH_SHORT).show();
+                            }
+
+                            else
+
+                            {
+
+                                try {
+
+                                    JSONObject json = new JSONObject(jsonDeResposta);
+
+
+
+                                Toast.makeText(Login.this, "Bem vindo !!", Toast.LENGTH_SHORT).show();
+
+                                Intent cliente = new Intent(Login.this, Cliente.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("nome", json.getString("nome"));
+                                bundle.putString("cpf", json.getString("cpf"));
+                                bundle.putString("bairro", json.getString("bairro"));
+                                bundle.putString("ip", IpServer);
+                                bundle.putInt("porta", PortaServer);
+
+
+                                cliente.putExtras(bundle);
+                                Login.this.startActivity(cliente);
+                                Login.this.finish();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }
+                    }});
+
+            }
+            catch(IOException e)
+
+            {
+                e.printStackTrace();
+            }
+
+
+        }
+    });
+}
 
     ///////////////////////////////////////////////////////////////////////////////////////////
-    public void evEntrar(View view) throws IOException {
+ /*   public void evEntrar(View view) throws IOException {
 
         String token = getInstance().getToken();
 
@@ -278,7 +423,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-
+*/
 
 
 
