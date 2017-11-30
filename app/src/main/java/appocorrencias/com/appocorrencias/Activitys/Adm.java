@@ -8,11 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-
-import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.R;
 
 
@@ -46,26 +42,12 @@ public class Adm extends AppCompatActivity {
         txtTesteAdm = (TextView) findViewById(R.id.txtTesteAdm);
         txtTesteAdm.setText(nomeAdm);
 
-        String DadosServidor = null;
 
 
-        try {
-            DadosServidor = ProtocoloErlang.BuscarServidor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        if (DadosServidor.equals("erro")) {
-            Toast.makeText(this, "Erro na Conexão DNS", Toast.LENGTH_SHORT).show();
-        } else {
-            if (DadosServidor != null) {
-                String retorno2[] = DadosServidor.split("//");
-                Ip = retorno2[0];
-                porta = Integer.parseInt(retorno2[1]);
             }
-        }
 
-    }
+
 
     public void evCadastrarUsuario(View view) {
         evCriarNotificacao();

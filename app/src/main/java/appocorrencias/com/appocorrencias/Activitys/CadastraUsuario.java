@@ -140,96 +140,207 @@ public class CadastraUsuario extends AppCompatActivity {
 
     public void evCadastrarUsuario(View v) {
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                MDUsuario usu = new MDUsuario();
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Gson gson = new Gson();
+        if (edtCpf.getText().toString().isEmpty()) {
+            edtCpf.setError("Faltou Preencher");
+            edtCpf.setFocusable(true);
+            edtCpf.requestFocus();
 
+        } else {
 
-                //Tirando a mascara dos campos
-                convCpf = edtCpf.getText().toString().replaceAll("[^0123456789]", "");
-                convTelefone = edtTelefone.getText().toString().replaceAll("[^0123456789]", "");
-                convCep = edtCep.getText().toString().replaceAll("[^0123456789]", "");
+            if (edtNome.getText().toString().isEmpty()) {
+                edtNome.setError("Faltou Preencher");
+                edtNome.setFocusable(true);
+                edtNome.requestFocus();
+            } else {
+                if (edtSenha.getText().toString().isEmpty()) {
+                    edtSenha.setError("Faltou Preencher");
+                    edtSenha.setFocusable(true);
+                    edtSenha.requestFocus();
+                } else {
 
+                    if (edtConfirmarSenha.getText().toString().isEmpty()) {
 
-                try {
-                    usu.setCpf(convCpf);
-                    usu.setNome(edtNome.getText().toString());
-                    usu.setTelefone(convTelefone);
-                    // usu.setDataDeNascimento(df.parse(dtNascimento.getText().toString()));
-                    usu.setCep(convCep);
-                    usu.setRua(edtRua.getText().toString());
-                    usu.setNumero(edtNumero.getText().toString());
-                    usu.setComplemento(edtComplemento.getText().toString());
-                    usu.setBairro(edtBairro.getText().toString());
-                    usu.setCidade(edtCidade.getText().toString());
-                    usu.setEmail(edtEmail.getText().toString());
-                    usu.setSenha(edtSenha.getText().toString());
-                    usu.setConfirmarSenha(edtConfirmarSenha.getText().toString());
-                    usu.setUf(edtUf.getText().toString());
+                        edtConfirmarSenha.setError("Faltou Preencher");
+                        edtConfirmarSenha.setFocusable(true);
+                        edtConfirmarSenha.requestFocus();
 
-                    OkHttpClient client = new OkHttpClient();
-
-
-                    Request.Builder builder = new Request.Builder();
-
-                    builder.url(ipConexao + endpointCadastrarUsuario);
-
-                    MediaType mediaType =
-                            MediaType.parse("application/json; charset=utf-8");
-
-
-                    RequestBody body = RequestBody.create(mediaType, gson.toJson(usu));
-
-                    builder.post(body);
-
-                    Request request = builder.build();
-                    Response response = null;
-
-                    response = client.newCall(request).execute();
-                    final String jsonDeResposta =response.body().string();
-
-
-                    CadastraUsuario.this.runOnUiThread(new Runnable() {
-                        public void run() {
-
-
-                            if (jsonDeResposta.equals("USUARIO CADASTRADO COM SUCESSO !!")) {
-
-
-                                processa.criandoGrupoNotificacao(getInstance().getToken(), edtBairro.getText().toString(), edtBairro.getText().toString());
-                                processa.adicionandoUsuarioNotificacao(getInstance().getToken(), edtBairro.getText().toString());
-                                Toast.makeText(CadastraUsuario.this, "USUARIO CADASTRADO COM SUCESSO !!", Toast.LENGTH_SHORT).show();
-
-                                setContentView(R.layout.activity_login);
-                                CadastraUsuario.this.startActivity(new Intent(CadastraUsuario.this, Login.class));
-                                CadastraUsuario.this.finish();
-
-                            } else {
-                                if (jsonDeResposta.equals("CPF JÁ CADASTRADO"))
-                                {
-                                    Toast.makeText(CadastraUsuario.this, "CPF JÁ CADASTRADO !!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    if (jsonDeResposta.isEmpty())
-                                    {
-                                        Toast.makeText(CadastraUsuario.this, "ERRO DE CONEXÃO COM O SERVIDOR !", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
+                    } else {
+                        if (!edtSenha.equals(edtConfirmarSenha)) {
+                            edtConfirmarSenha.setError("Senhas não conferem");
+                            edtConfirmarSenha.setFocusable(true);
+                            edtConfirmarSenha.requestFocus();
+                        } else {
 
 
                         }
-                    });
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                    }
+                    if (edtDataNasc.getText().toString().isEmpty()) {
+                        edtDataNasc.setError("Faltou Preencher");
+                        edtDataNasc.setFocusable(true);
+                        edtDataNasc.requestFocus();
+                    } else {
+                        if (edtRua.getText().toString().isEmpty()) {
+                            edtRua.setError("Faltou Preencher");
+                            edtRua.setFocusable(true);
+                            edtRua.requestFocus();
+                        } else {
+
+                            if (edtTelefone.getText().toString().isEmpty()) {
+                                edtTelefone.setError("Faltou Preencher");
+                                edtTelefone.setFocusable(true);
+                                edtTelefone.requestFocus();
+                            } else {
+                                if (edtCep.getText().toString().isEmpty()) {
+                                    edtCep.setError("Faltou Preencher");
+                                    edtCep.setFocusable(true);
+                                    edtCep.requestFocus();
+                                } else {
+                                    if (edtBairro.getText().toString().isEmpty()) {
+                                        edtBairro.setError("Faltou Preencher");
+                                        edtBairro.setFocusable(true);
+                                        edtBairro.requestFocus();
+                                    } else {
+                                        if (edtCidade.getText().toString().isEmpty()) {
+                                            edtCidade.setError("Faltou Preencher");
+                                            edtCidade.setFocusable(true);
+                                            edtCidade.requestFocus();
+                                        } else {
+                                            if (edtUf.getText().toString().isEmpty()) {
+                                                edtUf.setError("Faltou Preencher");
+                                                edtUf.setFocusable(true);
+                                                edtUf.requestFocus();
+                                            } else {
+                                                if (edtNumero.getText().toString().isEmpty()) {
+                                                    edtNumero.setError("Faltou Preencher");
+                                                    edtNumero.setFocusable(true);
+                                                    edtNumero.requestFocus();
+                                                } else {
+                                                    if (edtEmail.getText().toString().isEmpty()) {
+                                                        edtEmail.setError("Faltou Preencher");
+                                                        edtEmail.setFocusable(true);
+                                                        edtEmail.requestFocus();
+                                                    } else {
+
+                                                        if (edtComplemento.getText().toString().isEmpty()) {
+                                                            edtComplemento.setError("Faltou Preencher");
+                                                            edtComplemento.setFocusable(true);
+                                                            edtComplemento.requestFocus();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-            }});
+            }
+        }
+
+            if(!edtCpf.getText().toString().isEmpty()&&validarCPF(edtCpf.getText().toString())){
+                System.out.println("Inválidooooooooooooo");
+                edtCpf.setError("cpf inválido");
+                edtCpf.setFocusable(true);
+                edtCpf.requestFocus();
+            } else {
 
 
-    }
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        MDUsuario usu = new MDUsuario();
+                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        Gson gson = new Gson();
+
+
+                        //Tirando a mascara dos campos
+                        convCpf = edtCpf.getText().toString().replaceAll("[^0123456789]", "");
+                        convTelefone = edtTelefone.getText().toString().replaceAll("[^0123456789]", "");
+                        convCep = edtCep.getText().toString().replaceAll("[^0123456789]", "");
+
+
+                        try {
+                            usu.setCpf(convCpf);
+                            usu.setNome(edtNome.getText().toString());
+                            usu.setTelefone(convTelefone);
+                            // usu.setDataDeNascimento(df.parse(dtNascimento.getText().toString()));
+                            usu.setCep(convCep);
+                            usu.setRua(edtRua.getText().toString());
+                            usu.setNumero(edtNumero.getText().toString());
+                            usu.setComplemento(edtComplemento.getText().toString());
+                            usu.setBairro(edtBairro.getText().toString());
+                            usu.setCidade(edtCidade.getText().toString());
+                            usu.setEmail(edtEmail.getText().toString());
+                            usu.setSenha(edtSenha.getText().toString());
+                            usu.setConfirmarSenha(edtConfirmarSenha.getText().toString());
+                            usu.setUf(edtUf.getText().toString());
+
+                            OkHttpClient client = new OkHttpClient();
+
+
+                            Request.Builder builder = new Request.Builder();
+
+                            builder.url(ipConexao + endpointCadastrarUsuario);
+
+                            MediaType mediaType =
+                                    MediaType.parse("application/json; charset=utf-8");
+
+
+                            RequestBody body = RequestBody.create(mediaType, gson.toJson(usu));
+
+                            builder.post(body);
+
+                            Request request = builder.build();
+                            Response response = null;
+
+                            response = client.newCall(request).execute();
+                            final String jsonDeResposta = response.body().string();
+
+
+                            CadastraUsuario.this.runOnUiThread(new Runnable() {
+                                public void run() {
+
+
+                                    if (jsonDeResposta.equals("USUARIO CADASTRADO COM SUCESSO !!")) {
+
+
+                                        processa.criandoGrupoNotificacao(getInstance().getToken(), edtBairro.getText().toString(), edtBairro.getText().toString());
+                                        processa.adicionandoUsuarioNotificacao(getInstance().getToken(), edtBairro.getText().toString());
+                                        Toast.makeText(CadastraUsuario.this, "USUARIO CADASTRADO COM SUCESSO !!", Toast.LENGTH_SHORT).show();
+
+                                        setContentView(R.layout.activity_login);
+                                        CadastraUsuario.this.startActivity(new Intent(CadastraUsuario.this, Login.class));
+                                        CadastraUsuario.this.finish();
+
+                                    } else {
+                                        if (jsonDeResposta.equals("CPF JÁ CADASTRADO")) {
+                                            Toast.makeText(CadastraUsuario.this, "CPF JÁ CADASTRADO !!", Toast.LENGTH_SHORT).show();
+                                            edtCpf.setError("Cpf já cadastrado");
+                                            edtCpf.setFocusable(true);
+                                            edtCpf.requestFocus();
+                                        } else {
+                                            if (jsonDeResposta.isEmpty()) {
+                                                Toast.makeText(CadastraUsuario.this, "ERRO DE CONEXÃO COM O SERVIDOR !", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+
+
+                                }
+                            });
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }}
+
 
 
 
