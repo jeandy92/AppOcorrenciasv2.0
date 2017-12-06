@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 
 import appocorrencias.com.appocorrencias.ClassesSA.BuscaCep;
@@ -42,20 +41,14 @@ public class CadastraUsuario extends AppCompatActivity {
     private EditText edtNome, edtCpf, edtTelefone, edtEmail, edtSenha, edtRua, edtBairro, edtCidade, edtNumero, edtCep, edtUf, edtDataNasc, edtConfirmarSenha, edtComplemento;
 
     //Variaveis para conversão e  referencia nula
-    private String convCpf, convTelefone, convCep, convEmail, convSenha,
-            convNumero, convRua, convBairro, convCidade, convUf, convNome, convDataNasc, convConfirmarSenha, convComplemento, Ip;
-    private int Porta;
-
-    //Váriaveis para serem utilizadas  no envio do cadastro
-    protected String primeiroCadastro, cadastroNome, cadastroRua, cadastroBairro, cadastroCidade;
-
+    private String convCpf, convTelefone, convCep;
 
     //Dados para o envio do socket.
     private ProtocoloErlang processa = new ProtocoloErlang();
     private boolean retorno;
     private String telaCadUsuario;
 
-    private final String ipConexao = "http://192.168.53.86:62001";
+    private final String ipConexao = "http://192.168.53.92:62001";
     private final String endpointCadastrarUsuario = "/RestWO/services/WebserviceOcorrencia/cadastrarUsuario/";
 
     @Override
@@ -72,23 +65,23 @@ public class CadastraUsuario extends AppCompatActivity {
         btnCadastarUsuario = (Button) findViewById(R.id.CadastrarUsuario);
 
         //Váriaveis para o cadastro
-        edtNome     = (EditText) findViewById(R.id.edtNome);
-        edtCpf      = (EditText) findViewById(R.id.edtCPF);
-        edtSenha    = (EditText) findViewById(R.id.edtSenha);
-        edtDataNasc = (EditText) findViewById(R.id.edtDataNasc);
-        edtRua      = (EditText) findViewById(R.id.edtRua);
-        edtTelefone = (EditText) findViewById(R.id.edtTelefone);
-        edtCep      = (EditText) findViewById(R.id.edtCep);
-        edtBairro    = (EditText) findViewById(R.id.edtBairro);
-        edtCidade = (EditText) findViewById(R.id.edtCidade);
-        edtUf = (EditText) findViewById(R.id.edtUF);
-        edtNumero = (EditText) findViewById(R.id.edtNumero);
+        edtNome           = (EditText) findViewById(R.id.edtNome);
+        edtCpf            = (EditText) findViewById(R.id.edtCPF);
+        edtSenha          = (EditText) findViewById(R.id.edtSenha);
+        edtDataNasc       = (EditText) findViewById(R.id.edtDataNasc);
+        edtRua            = (EditText) findViewById(R.id.edtRua);
+        edtTelefone       = (EditText) findViewById(R.id.edtTelefone);
+        edtCep            = (EditText) findViewById(R.id.edtCep);
+        edtBairro         = (EditText) findViewById(R.id.edtBairro);
+        edtCidade         = (EditText) findViewById(R.id.edtCidade);
+        edtUf             = (EditText) findViewById(R.id.edtUF);
+        edtNumero         = (EditText) findViewById(R.id.edtNumero);
         edtEmail          = (EditText) findViewById(R.id.edtEmail);
         edtConfirmarSenha = (EditText) findViewById(R.id.edtConfirmarSenha);
         edtComplemento    = (EditText) findViewById(R.id.edtComplemento);
 
         //Setar default
-        edtNome 	      .setText("Jeanderson");
+        /*edtNome 	      .setText("Jeanderson");
         edtCpf 	 		  .setText("43131386843");
         edtSenha 	      .setText("1234");
         edtDataNasc 	  .setText("22/03/2017");
@@ -101,7 +94,7 @@ public class CadastraUsuario extends AppCompatActivity {
         edtNumero 		  .setText("54");
         edtEmail 		  .setText("jeand@hotmail.com");
         edtConfirmarSenha .setText("1234");
-        edtComplemento 	  .setText("casa1");
+        edtComplemento 	  .setText("casa1");*/
 
         // Inserindo Mascaras.
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", edtCpf);
@@ -134,10 +127,9 @@ public class CadastraUsuario extends AppCompatActivity {
         }
     }
 
-    public static String removerAcentos(String str) {
-        return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
-    }
 
+
+    //Método para cadastrar usuario
     public void evCadastrarUsuario(View v) {
 
         if (edtCpf.getText().toString().isEmpty()) {
@@ -241,7 +233,7 @@ public class CadastraUsuario extends AppCompatActivity {
             }
         }
 
-            if(!edtCpf.getText().toString().isEmpty()&&validarCPF(edtCpf.getText().toString())){
+            if(edtCpf.getText().toString().isEmpty()&&validarCPF(edtCpf.getText().toString())){
                 System.out.println("Inválidooooooooooooo");
                 edtCpf.setError("cpf inválido");
                 edtCpf.setFocusable(true);
@@ -249,12 +241,12 @@ public class CadastraUsuario extends AppCompatActivity {
             } else {
 
 
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        MDUsuario usu = new MDUsuario();
-                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                        Gson gson = new Gson();
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            MDUsuario usu = new MDUsuario();
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            Gson gson = new Gson();
 
 
                         //Tirando a mascara dos campos
@@ -340,8 +332,6 @@ public class CadastraUsuario extends AppCompatActivity {
                 });
 
             }}
-
-
 
 
     //Método para Validar cpf

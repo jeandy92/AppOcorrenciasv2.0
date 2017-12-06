@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
-import appocorrencias.com.appocorrencias.ListView.DadosUsuarios;
 import appocorrencias.com.appocorrencias.R;
 
 /**
@@ -21,10 +21,10 @@ import appocorrencias.com.appocorrencias.R;
 public class AdapterBuscaUsuario extends BaseAdapter{
 
 
-    private ArrayList<DadosUsuarios> listaDeUsuarios;
+    private ArrayList<MDUsuario> listaDeUsuarios;
     private final Activity act;
 
-    public AdapterBuscaUsuario( Activity act , ArrayList<DadosUsuarios> listaDeUsuarios ) {
+    public AdapterBuscaUsuario( Activity act , ArrayList<MDUsuario> listaDeUsuarios ) {
         this.listaDeUsuarios = listaDeUsuarios;
         this.act =act;
     }
@@ -50,7 +50,7 @@ public class AdapterBuscaUsuario extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View view = act.getLayoutInflater().inflate(R.layout.activity_item_busca_usuario,parent,false);
-        DadosUsuarios usuariosEcontrados  = listaDeUsuarios.get(position);
+        MDUsuario usuariosEcontrados  = listaDeUsuarios.get(position);
 
 
 
@@ -64,10 +64,10 @@ public class AdapterBuscaUsuario extends BaseAdapter{
 
 
         cpf.setText(usuariosEcontrados.getCpf());
-        nome.setText(usuariosEcontrados.getUsuNome());
+        nome.setText(usuariosEcontrados.getNome());
         cidade.setText(usuariosEcontrados.getCidade());
         bairro.setText(usuariosEcontrados.getBairro());
-        endereco.setText(String.valueOf( usuariosEcontrados.getRua()+ " N° "+usuariosEcontrados.getNumeroCasa() ) );
+        endereco.setText(String.valueOf( usuariosEcontrados.getRua()+ " N° "+usuariosEcontrados.getNumero() ) );
         //imagemUsuario.setImageResource(R.drawable.ic_app);
 
         String cpfR = usuariosEcontrados.getCpf();

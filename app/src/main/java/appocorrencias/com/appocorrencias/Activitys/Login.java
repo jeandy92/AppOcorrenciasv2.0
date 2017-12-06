@@ -24,9 +24,6 @@ import java.io.IOException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
 import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
-import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
-import appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas;
-import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.Network.FCMFirebaseInstanceIDService;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -50,7 +47,7 @@ public class Login extends AppCompatActivity {
     private Button btnCadastrarCli;
     private static final String PREF_NAME = "MainActivityPreferences";
     private static final String TAG = "Login";
-    private final String ipConexao = "http://192.168.53.86:62001";
+    private final String ipConexao = "http://192.168.53.92:62001";
     private final String endpointLogar = "/RestWO/services/WebserviceOcorrencia/logarUsuario/";
 
 
@@ -135,6 +132,7 @@ public class Login extends AppCompatActivity {
 
         Intent cadastrar = new Intent(this, CadastraUsuario.class);
 
+        //Tratamento diferenciado quando  a tela for de cliente
         Bundle bundle = new Bundle();
         bundle.putString("tela", "Cliente");
 
@@ -142,7 +140,7 @@ public class Login extends AppCompatActivity {
         this.startActivity(cadastrar);
     }
 
-public void evEntrar (View view) {
+    public void evEntrar (View view) {
 
     //Armazena os dados
     CPF = txtUsuario.getText().toString();
@@ -199,15 +197,6 @@ public void evEntrar (View view) {
                 OkHttpClient client = new OkHttpClient();
 
 
-                //String url = "http://192.168.0.16:62001/RestWO/services/WebserviceOcorrencia/logarUsuario/"+"{"+login.getText()+"}"+"-"+"{"+senha.getText()+"}";
-            /*runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            desc.setText(jsonDeResposta);
-
-                        }
-                    });*/
-
                 Request.Builder builder = new Request.Builder();
 
 
@@ -248,9 +237,6 @@ public void evEntrar (View view) {
                             } else {
 
 
-
-
-
                                 try {
 
                                     JSONObject json = new JSONObject(jsonDeResposta);
@@ -289,202 +275,14 @@ public void evEntrar (View view) {
 
         }
     });
-}
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
- /*   public void evEntrar(View view) throws IOException {
-
-        String token = getInstance().getToken();
-
-
-        Log.d(TAG, token);
-
-        //Toast.makeText(Login.this, token, Toast.LENGTH_SHORT).show();
-        //ProtocoloErlang.enviandoNotificacaoGrupo(token, "Jardim lok");
-
-
-        SENHA = txtSenha.getText().toString();
-        CPF = txtUsuario.getText().toString();
-
-        //ARMAZEANDO DADOS ESCRITOS NO CAMPOS USUÁRIO E SENHA E TIRANDO A  MASCARA DO CAMPO cpfAdm
-        CPF = CPF.replaceAll("[^0-9]", "");
-
-
-        //ARMAZENANDO LOG DOS DADOS FORNECIDOS PELO USUÁRIO
-        Log.i("evEntrar", CPF);
-        Log.i("evEntrar", SENHA);
-
-        if (salvarlogin.isChecked()) {
-
-            Log.i("isCheck", CPF);
-            Log.i("isCheck", SENHA);
-
-            //Aramazena os dados na shared preferences em modo privato, impossibilitando que outra atividade altere esta preference.
-            SharedPreferences sp = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
-
-
-            //Colocando os dados no shared prefence
-            editor.putString("login", CPF);
-            editor.putString("senha", SENHA);
-
-            editor.commit();
-
-        }
-
-
-        if (txtUsuario.getText().toString() != null && txtSenha.getText().toString() != null) {
-
-            if (CPF.equals("33333333333") && SENHA.equals("1234")) {
-
-                Intent adm = new Intent(this, Adm.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putString("nome", "Administrador");
-                bundle.putString("cpf", "33333333333");
-                bundle.putString("bairro", "Adm");
-
-                adm.putExtras(bundle);
-                this.startActivity(adm);
-                this.finish();
-
-            } else {
-
-                if (CadastraUsuario.validarCPF(CPF)) {
-                    txtUsuario.setError("CPF Inválido");
-                    txtUsuario.setFocusable(true);
-                    txtUsuario.requestFocus();
-                    Log.i("evEntrar(IF2)", CPF);
-                    Log.i("evEntrar(IF2)", SENHA);
-                } else {
-
-                    String DadosServidor = null;
-
-                    try {
-                        DadosServidor = ProtocoloErlang.BuscarServidor();
-                        Log.i("evEntrar(Servidor)", DadosServidor);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (DadosServidor.equals("erro")) {
-                        Toast.makeText(this, "Erro na Conexão DNS", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (DadosServidor != null) {
-                            String retorno2[] = DadosServidor.split("//");
-                            IpServer = retorno2[0];
-                            PortaServer = Integer.parseInt(retorno2[1]);
-
-                            LoginServer = "LoginServer" + " " + CPF + " " + SENHA;
-                            Log.i("evEntrar(ELSE)", CPF);
-                            Log.i("evEntrar(ELSE)", SENHA);
-
-                            retorno = processa.primeiroCadastroNoServidor(LoginServer, IpServer, PortaServer);
-                            String retornoCadastro[] = retorno.split("/");
-                            Status = retornoCadastro[0];
-
-                            if (Status.equals("erro")) {
-                                Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                if (Status.equals("false")) {
-                                    txtUsuario.setError("Usuario ou senha Invalido");
-                                    txtUsuario.setFocusable(true);
-                                    txtUsuario.requestFocus();
-                                } else {
-                                    if (Status.equals("true")) {
-                                        CPF = retornoCadastro[1];
-                                        Nome = retornoCadastro[2];
-                                        String Bairro2 = retornoCadastro[3];
-
-                                        String retornoBairro = evBuscarOcorrenciasBairro(Bairro2, IpServer, PortaServer);
-                                        if (retornoBairro.equals("erro")) {
-                                            Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
-                                                String retornoImagem = evBuscarImagens(CPF, "cpf", IpServer, PortaServer);
-                                                if (retornoImagem.equals("erro")) {
-                                                    Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
-                                                        Intent cliente = new Intent(this, Cliente.class);
-                                                        Bundle bundle = new Bundle();
-                                                        bundle.putString("nome", Nome);
-                                                        bundle.putString("cpf", CPF);
-                                                        bundle.putString("bairro", Bairro2);
-                                                        bundle.putString("ip", IpServer);
-                                                        bundle.putInt("porta", PortaServer);
-
-                                                        cliente.putExtras(bundle);
-                                                        this.startActivity(cliente);
-                                                        this.finish();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-
-            txtUsuario.setError("Usuario ou senha em branco");
-            txtUsuario.setFocusable(true);
-            txtUsuario.requestFocus();
-        }
     }
 
-*/
 
 
 
     public static String evBuscarOcorrenciasBairro(String Bairro2,String IpServer,int PortaServer)throws IOException{
 
-        String BuscarOcorrenciasRegistradas="BuscarOcorrenciasRegistradasBairro "+Bairro2;
-        //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
-        ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno= ProtocoloErlang.buscarDadosImagensServer(BuscarOcorrenciasRegistradas,IpServer,PortaServer);
-
-        if(retorno.equals("false")){
-            // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
-            return"false";
-        }else{
-            if(retorno.equals("erro")){
-                // Toast.makeText(this, "Não há ocorrencias cadastradas no seu bairro", Toast.LENGTH_SHORT).show();
-                return"erro";
-            }else{
-                // Pegando quantidade de Ocorrencias
-                int qtdOcorrencia=ArrayOcorrenciasRegistradas.getQuantidadeOcorrencia(retorno);
-
-                // Pegando dados e Adicioanando dados no Array
-                for(int i=0;i<qtdOcorrencia; i++){
-                    String TodasOcorrencias[]=retorno.split("///");
-
-                    String Ocorrencia=TodasOcorrencias[i];
-                    String OcorrenciaUm[]=Ocorrencia.split("//");
-                    String Nr=OcorrenciaUm[1];
-                    String CPFOco=OcorrenciaUm[2];
-                    String Rua=OcorrenciaUm[3];
-                    String Bairro=OcorrenciaUm[4];
-                    String Cidade=OcorrenciaUm[5];
-                    String UF=OcorrenciaUm[6];
-                    String Descricao=OcorrenciaUm[7];
-                    String Data=OcorrenciaUm[8];
-                    String Tipo=OcorrenciaUm[9];
-                    String Anonimo=OcorrenciaUm[10];
-                    String Apelido=OcorrenciaUm[11];
-
-                    DadosOcorrencias dado=new DadosOcorrencias(Nr,CPFOco,Rua,Bairro,Cidade,UF,Descricao,Data,Tipo,Anonimo,Apelido);
-
-                    ArrayOcorrenciasRegistradas.adicionar(dado);
-                }
-                //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
-            }
-        }
-        return"true";
+        return "true";
     }
 
 

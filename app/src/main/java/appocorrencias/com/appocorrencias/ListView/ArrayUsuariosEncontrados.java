@@ -1,13 +1,29 @@
 package appocorrencias.com.appocorrencias.ListView;
 
+import android.os.AsyncTask;
+
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+
+import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Jeanderson on 28/05/2017.
  */
 
 public class ArrayUsuariosEncontrados {
+
+    private static final String ipConexao = "http://192.168.53.92:62001";
+    private static final String endpointBuscarCpf = "/RestWO/services/WebserviceOcorrencia/buscarUsuario/";
 
     static ArrayList<DadosUsuarios> dados = new ArrayList();
 
@@ -193,11 +209,76 @@ public class ArrayUsuariosEncontrados {
         dados.clear();
     }
 
-    public static ArrayList<DadosUsuarios> getListaUsuarios () {
-        {
-            return dados;
-        }
+    public static ArrayList<MDUsuario> getListaUsuarios (final String pTipoBusca) {
 
-    }
+        final ArrayList<MDUsuario> usuarios = new ArrayList<MDUsuario>();
+
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+                    Gson gson = new Gson();
+                    MDUsuario usuario = new MDUsuario();
+
+
+                        String url = ipConexao + endpointBuscarCpf + pTipoBusca;
+
+                        OkHttpClient client = new OkHttpClient();
+
+                        Request request = new Request.Builder().url(url).build();
+
+                        Response response = client.newCall(request).execute();
+
+                        String jsonDeResposta = response.body().string();
+
+                        System.out.println(jsonDeResposta);
+
+                        JSONObject json = new JSONObject(jsonDeResposta);
+
+                        //PEGA O ARRAY QUE VEM DO JSON
+                        JSONArray array = json.getJSONArray("myArrayList");
+
+                        for(int i = 0;i<=array.length();i++) {
+
+                            MDUsuario usu = gson.fromJson(array.getJSONObject(i).toString(), MDUsuario.class);
+                            usuarios.add(usu);
+
+                        }
+
+
+
+                         System.out.println("=---------------"+array.toString());
+                        https://www.leveluplunch.com/java/examples/convert-json-array-to-arraylist-gson/
+
+                        System.out.println("---------------------------------------------------"+array.get(2));
+
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+    });
+
+        return usuarios;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

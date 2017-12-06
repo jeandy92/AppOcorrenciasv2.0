@@ -1,6 +1,9 @@
 package appocorrencias.com.appocorrencias.ClassesSA;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Jeanderson on 25/11/2017.
@@ -29,6 +32,9 @@ public class MDUsuario {
     private String email;
     private String senha;
     private String confirmarSenha;
+
+    @SerializedName("myArrayList")
+    public List<MDUsuario> lista;
 
     public String getNome() {
         return nome;

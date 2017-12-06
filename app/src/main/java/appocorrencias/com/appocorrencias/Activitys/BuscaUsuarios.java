@@ -2,6 +2,7 @@ package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,16 +17,20 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterBuscaUsuario;
-import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
-import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfilComentarios;
-import appocorrencias.com.appocorrencias.ListView.ArrayUsuariosEncontrados;
-import appocorrencias.com.appocorrencias.ListView.DadosUsuarios;
+import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
 import appocorrencias.com.appocorrencias.ListView.ItemBuscaUsuario;
 import appocorrencias.com.appocorrencias.R;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static appocorrencias.com.appocorrencias.ListView.ArrayUsuariosEncontrados.deleteAllArrayUsuarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayUsuariosEncontrados.getListaUsuarios;
@@ -38,6 +43,8 @@ public class BuscaUsuarios extends AppCompatActivity {
     private ListView lvUsuariosEncontrados;
     public static String Ip;
     public static int Porta;
+    private final String ipConexao = "http://192.168.53.92:62001";
+    private final String endpointBuscar = "/RestWO/services/WebserviceOcorrencia/buscarUsuarios/";
 
 
     @Override
@@ -52,8 +59,11 @@ public class BuscaUsuarios extends AppCompatActivity {
 
         //List View para mostrar os usuários
         lvUsuariosEncontrados = (ListView) findViewById(R.id.lv_usuarios_encontrados);
-        ArrayList<DadosUsuarios> listaUsuariosEncontrados = getListaUsuarios();
+
+        ArrayList<MDUsuario> listaUsuariosEncontrados = getListaUsuarios(null);
+
         AdapterBuscaUsuario adapter = new AdapterBuscaUsuario(this, listaUsuariosEncontrados);
+
         lvUsuariosEncontrados.setAdapter(adapter);
 
 
@@ -184,7 +194,7 @@ public class BuscaUsuarios extends AppCompatActivity {
             String usuarioBusca = edtCPF.getText().toString();
             evBuscarUsuarioCpf(usuarioBusca);
 
-            ArrayList<DadosUsuarios> listaUsuarios = getListaUsuarios();
+            ArrayList<MDUsuario> listaUsuarios = getListaUsuarios(usuarioBusca);
 
             AdapterBuscaUsuario adapter = new AdapterBuscaUsuario(this, listaUsuarios);
 
@@ -198,7 +208,7 @@ public class BuscaUsuarios extends AppCompatActivity {
 
                 evBuscarUsuarioNome(nome);
 
-                ArrayList<DadosUsuarios> listaUsuarios = getListaUsuarios();
+                ArrayList<MDUsuario> listaUsuarios = getListaUsuarios(nome);
 
                 AdapterBuscaUsuario adapter = new AdapterBuscaUsuario(this, listaUsuarios);
 
@@ -218,95 +228,93 @@ public class BuscaUsuarios extends AppCompatActivity {
 
     }
 
-    public void evBuscarUsuarioCpf(String cpfBuscarUsuario) throws IOException {
+    public void evBuscarUsuarioCpf(final String cpfBuscarUsuario) throws IOException {
 
-        String buscaUsuarioCPF = "BuscarUsuariosCPF " + cpfBuscarUsuario;
-        //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
 
-        ArrayImagensPerfilComentarios.deleteBitmap();
-        String retorno = ProtocoloErlang.buscarDadosImagensServer(buscaUsuarioCPF, Ip, Porta);
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Gson gson = new Gson();
+                    MDUsuario usuario = new MDUsuario();
 
-        if (retorno.equals("false")) {
-            Toast.makeText(this, "Não há usuarios cadastrados com esse CPF", Toast.LENGTH_SHORT).show();
-        } else {
-            // Pegando quantidade de usuarios
-            int qtdUsuario = ArrayUsuariosEncontrados.getQuantidadeUsuarios(retorno);
 
-            // Pegando dados e Adicioanando dados no Array
-            for (int i = 0; i < qtdUsuario; i++) {
-                String todosUsuarios[] = retorno.split("///");
+                    OkHttpClient client = new OkHttpClient();
 
-                String usuario = todosUsuarios[i];
-                String primeiroUsuario[] = usuario.split("//");
-                String cpfUsuario = primeiroUsuario[1];
-                String senhaUsuario = primeiroUsuario[2];
-                String nomeUsuario = primeiroUsuario[3];
-                String telefoneUsuario = primeiroUsuario[4];
-                String emailUsuario = primeiroUsuario[5];
-                String ruaUsuario = primeiroUsuario[6];
-                String numeroUsuario = primeiroUsuario[7];
-                String bairroUsuario = primeiroUsuario[8];
-                String cidadeUsuario = primeiroUsuario[9];
-                String cepUsuario = primeiroUsuario[10];
-                String ufUsuario = primeiroUsuario[11];
-                String complementoUsuario = primeiroUsuario[12];
-                String nascimentoUsuario = primeiroUsuario[13];
 
-                DadosUsuarios dado = new DadosUsuarios(cpfUsuario, senhaUsuario, nomeUsuario, telefoneUsuario, emailUsuario, ruaUsuario, numeroUsuario, bairroUsuario,
-                        cidadeUsuario, cepUsuario, ufUsuario, complementoUsuario, nascimentoUsuario);
+                    Request.Builder builder = new Request.Builder();
 
-                ArrayUsuariosEncontrados.adicionar(dado);
-            }
-            //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
-        }
-    }
+                    builder.url(ipConexao + endpointBuscar + cpfBuscarUsuario);
 
-    public void evBuscarUsuarioNome(String nomeBuscarUsuarioNome) throws IOException {
+                    MediaType mediaType =
+                            MediaType.parse("application/json; charset=utf-8");
 
-        String BuscarUsuarioNome = "BuscarUsuariosNome " + nomeBuscarUsuarioNome;
-        //Toast.makeText(this, "Ocorrencias Registradas no meu bairro ", Toast.LENGTH_SHORT).show();
-        ArrayImagensPerfilComentarios.deleteBitmap();
+                    RequestBody body = RequestBody.create(mediaType, gson.toJson(usuario));
 
-        String retorno = ProtocoloErlang.buscarDadosImagensServer(BuscarUsuarioNome, Ip, Porta);
+                    builder.post(body);
 
-        if (retorno.equals("false")) {
-            Toast.makeText(this, "Não há usuarios cadastrados com esse nomeBuscarOcorrencia", Toast.LENGTH_SHORT).show();
-        } else {
-            if (retorno.equals("erro")) {
-                Toast.makeText(this, "Erro de Conexao", Toast.LENGTH_SHORT).show();
-            } else {
-                // Pegando quantidade de Ocorrencias
-                int qtdUsuario = ArrayUsuariosEncontrados.getQuantidadeUsuarios(retorno);
+                    Request request = builder.build();
+                    Response response = null;
 
-                // Pegando dados e Adicioanando dados no Array
-                for (int i = 0; i < qtdUsuario; i++) {
-                    String TodosUsuarios[] = retorno.split("///");
 
-                    String Usuario = TodosUsuarios[i];
-                    String UsuarioUm[] = Usuario.split("//");
-                    String CPFUsu = UsuarioUm[1];
-                    String Senha = UsuarioUm[2];
-                    String NomeRetorno = UsuarioUm[3];
-                    String Telefone = UsuarioUm[4];
-                    String Email = UsuarioUm[5];
-                    String RuaUsu = UsuarioUm[6];
-                    String Numero = UsuarioUm[7];
-                    String BairroUsu = UsuarioUm[8];
-                    String CidadeUsu = UsuarioUm[9];
-                    String Cep = UsuarioUm[10];
-                    String UFUsu = UsuarioUm[11];
-                    String Complemento = UsuarioUm[12];
-                    String Nascimento = UsuarioUm[13];
+                    response = client.newCall(request).execute();
 
-                    DadosUsuarios dado = new DadosUsuarios(CPFUsu, Senha, NomeRetorno, Telefone, Email, RuaUsu, Numero, BairroUsu,
-                            CidadeUsu, Cep, UFUsu, Complemento, Nascimento);
+                    final String jsonDeResposta = response.body().string();
+                    System.out.println(jsonDeResposta);
 
-                    ArrayUsuariosEncontrados.adicionar(dado);
 
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                //Toast.makeText(this, "Mostrando Ocorrencias no seu bairro ", Toast.LENGTH_SHORT).show();
-            }
+
         }
+    });
+
+
+}
+
+    public void evBuscarUsuarioNome(final String nomeBuscarUsuarioNome) throws IOException {
+
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Gson gson = new Gson();
+                    MDUsuario usuario = new MDUsuario();
+
+
+                    OkHttpClient client = new OkHttpClient();
+
+
+                    Request.Builder builder = new Request.Builder();
+
+                    builder.url(ipConexao + endpointBuscar + nomeBuscarUsuarioNome);
+
+                    MediaType mediaType =
+                            MediaType.parse("application/json; charset=utf-8");
+
+                    RequestBody body = RequestBody.create(mediaType, gson.toJson(usuario));
+
+                    builder.post(body);
+
+                    Request request = builder.build();
+                    Response response = null;
+
+
+                    response = client.newCall(request).execute();
+
+                    final String jsonDeResposta = response.body().string();
+                    System.out.println(jsonDeResposta);
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
 
 
