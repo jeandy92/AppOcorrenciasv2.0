@@ -2,7 +2,6 @@ package appocorrencias.com.appocorrencias.ClassesSA;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,7 +16,7 @@ public class MDUsuario {
 
     private String nome;
     private String telefone;
-    private Date dataDeNascimento;
+    private String dataDeNascimento;
 
     //DADOS DE ENDERECOS
     private String cep;
@@ -52,11 +51,11 @@ public class MDUsuario {
         this.telefone = telefone;
     }
 
-    public Date getDataDeNascimento() {
+    public String getDataDeNascimento() {
         return dataDeNascimento;
     }
 
-    public void setDataDeNascimento(Date dataDeNascimento) {
+    public void setDataDeNascimento(String dataDeNascimento) {
         this.dataDeNascimento = dataDeNascimento;
     }
 

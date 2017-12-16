@@ -112,16 +112,20 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
         iv3 = (ImageView) findViewById(R.id.imageView3);
 
 
-        edtCidade = (EditText) findViewById(R.id.edtCidade);
-        edtRua = (EditText) findViewById(R.id.edtRua);
-        edtBairro = (EditText) findViewById(R.id.edtBairro);
-        edtEstado = (EditText) findViewById(R.id.edtEstado);
-        edtReferencia = (EditText) findViewById(R.id.edtReferencia);
-        edtDescricao = (EditText) findViewById(R.id.edtDescricao);
-        edtDataOcorrencia = (EditText) findViewById((R.id.edtData_Ocorrencia));
-        spinner = (Spinner) findViewById(R.id.spinner);
-        btnAnonimo = (CheckBox) findViewById((R.id.rdBtnAnonimo));
-        btnSalvaOcorrencia = (Button) findViewById(R.id.btnSalvaOcorrencia);
+        edtCidade          = (EditText) findViewById(R.id.edtCidade);
+        edtRua             = (EditText) findViewById(R.id.edtRua);
+        edtBairro          = (EditText) findViewById(R.id.edtBairro);
+        edtEstado          = (EditText) findViewById(R.id.edtEstado);
+        edtReferencia      = (EditText) findViewById(R.id.edtReferencia);
+        edtDescricao       = (EditText) findViewById(R.id.edtDescricao);
+        edtDataOcorrencia  = (EditText) findViewById(R.id.edtData_Ocorrencia);
+
+        //Spinner
+        spinner            = (Spinner)  findViewById(R.id.spinner);
+
+        //Botões
+        btnAnonimo         = (CheckBox) findViewById(R.id.rdBtnAnonimo);
+        btnSalvaOcorrencia = (Button)   findViewById(R.id.btnSalvaOcorrencia);
 
 
         // Inserindo Mascaras.
@@ -224,7 +228,6 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
 
 
     //// Bitmap em bytes
-
     public void toByte1(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -462,15 +465,17 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 
-    public void salvarOcorrencia(View v) throws IOException {
+    public void evCadastrarOcorrencia(View v) throws IOException {
 
-        segundoTipoDeCrime = spinner.getSelectedItem().toString();
-        convUf = edtEstado.getText().toString();
-        convDataOcorrencia = edtDataOcorrencia.getText().toString();
-        convDesSalvaOcorre = edtDescricao.getText().toString();
-        convEndSalvarOcorre = edtRua.getText().toString();
-        convCidSalvarOcorre = edtCidade.getText().toString();
-        convBaiSalvarOcorre = edtBairro.getText().toString();
+
+
+        segundoTipoDeCrime  = spinner           .getSelectedItem().toString();
+        convUf              = edtEstado         .getText()        .toString();
+        convDataOcorrencia  = edtDataOcorrencia .getText()        .toString();
+        convDesSalvaOcorre  = edtDescricao      .getText()        .toString();
+        convEndSalvarOcorre = edtRua            .getText()        .toString();
+        convCidSalvarOcorre = edtCidade         .getText()        .toString();
+        convBaiSalvarOcorre = edtBairro         .getText()        .toString();
 
         String ArrayNome[] = nomeCliente.split(" ");
         String PriNome = ArrayNome[0];
@@ -530,6 +535,10 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
 
                                     if (retornoImg.equals("erro")) {
                                         Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+
+
+
+
                                     } else {
                                         if (retornoImg.equals("true")) {
 

@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import appocorrencias.com.appocorrencias.ClassesSA.BuscaCep;
 import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
@@ -48,7 +46,7 @@ public class CadastraUsuario extends AppCompatActivity {
     private boolean retorno;
     private String telaCadUsuario;
 
-    private final String ipConexao = "http://192.168.53.92:62001";
+    private final String ipConexao = "http://192.168.0.74:62001";
     private final String endpointCadastrarUsuario = "/RestWO/services/WebserviceOcorrencia/cadastrarUsuario/";
 
     @Override
@@ -81,7 +79,7 @@ public class CadastraUsuario extends AppCompatActivity {
         edtComplemento    = (EditText) findViewById(R.id.edtComplemento);
 
         //Setar default
-        /*edtNome 	      .setText("Jeanderson");
+        edtNome 	      .setText("Jeanderson");
         edtCpf 	 		  .setText("43131386843");
         edtSenha 	      .setText("1234");
         edtDataNasc 	  .setText("22/03/2017");
@@ -94,7 +92,7 @@ public class CadastraUsuario extends AppCompatActivity {
         edtNumero 		  .setText("54");
         edtEmail 		  .setText("jeand@hotmail.com");
         edtConfirmarSenha .setText("1234");
-        edtComplemento 	  .setText("casa1");*/
+        edtComplemento 	  .setText("casa1");
 
         // Inserindo Mascaras.
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", edtCpf);
@@ -157,12 +155,10 @@ public class CadastraUsuario extends AppCompatActivity {
                         edtConfirmarSenha.requestFocus();
 
                     } else {
-                        if (!edtSenha.equals(edtConfirmarSenha)) {
+                        if (!edtSenha.getText().toString().equals(edtConfirmarSenha.getText().toString())) {
                             edtConfirmarSenha.setError("Senhas não conferem");
                             edtConfirmarSenha.setFocusable(true);
                             edtConfirmarSenha.requestFocus();
-                        } else {
-
 
                         }
 
@@ -245,8 +241,7 @@ public class CadastraUsuario extends AppCompatActivity {
                         @Override
                         public void run() {
                             MDUsuario usu = new MDUsuario();
-                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                            Gson gson = new Gson();
+                                                     Gson gson = new Gson();
 
 
                         //Tirando a mascara dos campos
@@ -259,7 +254,7 @@ public class CadastraUsuario extends AppCompatActivity {
                             usu.setCpf(convCpf);
                             usu.setNome(edtNome.getText().toString());
                             usu.setTelefone(convTelefone);
-                            // usu.setDataDeNascimento(df.parse(dtNascimento.getText().toString()));
+                            usu.setDataDeNascimento(edtDataNasc.getText().toString());
                             usu.setCep(convCep);
                             usu.setRua(edtRua.getText().toString());
                             usu.setNumero(edtNumero.getText().toString());

@@ -79,7 +79,6 @@ public class BuscaUsuarios extends AppCompatActivity {
                 intent.putExtra("ip", Ip);
                 intent.putExtra("porta", Porta);
 
-                startActivity(intent);
 
             }
         });
@@ -96,6 +95,7 @@ public class BuscaUsuarios extends AppCompatActivity {
         edtCPF = (EditText) findViewById(R.id.edtCPF);
         edtNome = (EditText) findViewById(R.id.edtNome);
 
+        startActivity(intent);
         tinpCPF.setVisibility(View.INVISIBLE);
         tinpCPF.setEnabled(false);
 
