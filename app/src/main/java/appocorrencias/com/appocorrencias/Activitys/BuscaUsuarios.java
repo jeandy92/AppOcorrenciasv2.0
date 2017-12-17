@@ -43,8 +43,8 @@ public class BuscaUsuarios extends AppCompatActivity {
     private ListView lvUsuariosEncontrados;
     public static String Ip;
     public static int Porta;
-    private final String ipConexao = "http://192.168.53.92:62001";
-    private final String endpointBuscar = "/RestWO/services/WebserviceOcorrencia/buscarUsuarios/";
+
+
 
 
     @Override
@@ -244,7 +244,7 @@ public class BuscaUsuarios extends AppCompatActivity {
 
                     Request.Builder builder = new Request.Builder();
 
-                    builder.url(ipConexao + endpointBuscar + cpfBuscarUsuario);
+                    builder.url( getResources().getString(R.string.ipConexao) + getResources().getString(R.string.endpointBuscar)  + cpfBuscarUsuario);
 
                     MediaType mediaType =
                             MediaType.parse("application/json; charset=utf-8");
@@ -289,7 +289,7 @@ public class BuscaUsuarios extends AppCompatActivity {
 
                     Request.Builder builder = new Request.Builder();
 
-                    builder.url(ipConexao + endpointBuscar + nomeBuscarUsuarioNome);
+                    builder.url(getResources().getString(R.string.ipConexao)  + getResources().getString(R.string.endpointBuscar) + nomeBuscarUsuarioNome);
 
                     MediaType mediaType =
                             MediaType.parse("application/json; charset=utf-8");

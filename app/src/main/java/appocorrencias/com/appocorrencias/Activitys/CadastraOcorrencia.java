@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -26,6 +27,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.Normalizer;
@@ -34,10 +39,17 @@ import java.util.Date;
 import java.util.List;
 
 import appocorrencias.com.appocorrencias.ClassesSA.BuscaCep;
+import appocorrencias.com.appocorrencias.ClassesSA.MDOcorrencia;
+import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
 import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import me.drakeet.materialdialog.MaterialDialog;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
 import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
@@ -69,11 +81,14 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
 
     //VARIAVEIS LOCAIS
     private int cont = 1;
-    private String convDataOcorrencia, convDescricao, convEndereco, convCidade, convBairro, convTipoCrime, convUf;
-    private String convDesSalvaOcorre, convEndSalvarOcorre, convCidSalvarOcorre, convBaiSalvarOcorre, segundoTipoDeCrime;
+
+
+
+
 
 
     public static String Anonimo, Ip;
+
     public static int Porta;
     private byte[] byteImagem = null, byteImagem2 = null, byteImagem3 = null;
 
@@ -112,20 +127,28 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
         iv3 = (ImageView) findViewById(R.id.imageView3);
 
 
-        edtCidade          = (EditText) findViewById(R.id.edtCidade);
-        edtRua             = (EditText) findViewById(R.id.edtRua);
-        edtBairro          = (EditText) findViewById(R.id.edtBairro);
-        edtEstado          = (EditText) findViewById(R.id.edtEstado);
-        edtReferencia      = (EditText) findViewById(R.id.edtReferencia);
-        edtDescricao       = (EditText) findViewById(R.id.edtDescricao);
-        edtDataOcorrencia  = (EditText) findViewById(R.id.edtData_Ocorrencia);
+        edtCidade = (EditText) findViewById(R.id.edtCidade);
+        edtRua = (EditText) findViewById(R.id.edtRua);
+        edtBairro = (EditText) findViewById(R.id.edtBairro);
+        edtEstado = (EditText) findViewById(R.id.edtEstado);
+        edtReferencia = (EditText) findViewById(R.id.edtReferencia);
+        edtDescricao = (EditText) findViewById(R.id.edtDescricao);
+        edtDataOcorrencia = (EditText) findViewById(R.id.edtData_Ocorrencia);
+
+        //preenchimento automático
+        edtDescricao.setText("Assalto a mão armada");
+        edtRua.setText("Rua Joaquim de Abreu ");
+        edtBairro.setText("Jardim Silveira");
+        edtCidade.setText("Barueri");
+        edtReferencia.setText("Nenhuma ReferÊncia");
+        edtEstado.setText("SP");
 
         //Spinner
-        spinner            = (Spinner)  findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
 
         //Botões
-        btnAnonimo         = (CheckBox) findViewById(R.id.rdBtnAnonimo);
-        btnSalvaOcorrencia = (Button)   findViewById(R.id.btnSalvaOcorrencia);
+        btnAnonimo = (CheckBox) findViewById(R.id.rdBtnAnonimo);
+        btnSalvaOcorrencia = (Button) findViewById(R.id.btnSalvaOcorrencia);
 
 
         // Inserindo Mascaras.
@@ -468,24 +491,6 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
     public void evCadastrarOcorrencia(View v) throws IOException {
 
 
-
-        segundoTipoDeCrime  = spinner           .getSelectedItem().toString();
-        convUf              = edtEstado         .getText()        .toString();
-        convDataOcorrencia  = edtDataOcorrencia .getText()        .toString();
-        convDesSalvaOcorre  = edtDescricao      .getText()        .toString();
-        convEndSalvarOcorre = edtRua            .getText()        .toString();
-        convCidSalvarOcorre = edtCidade         .getText()        .toString();
-        convBaiSalvarOcorre = edtBairro         .getText()        .toString();
-
-        String ArrayNome[] = nomeCliente.split(" ");
-        String PriNome = ArrayNome[0];
-
-        convTipoCrime = removerAcentos(segundoTipoDeCrime);
-        convDescricao = removerAcentos(convDesSalvaOcorre);
-        convEndereco = removerAcentos(convEndSalvarOcorre);
-        convCidade = removerAcentos(convCidSalvarOcorre);
-        convBairro = removerAcentos(convBaiSalvarOcorre);
-
         btnAnonimo = (CheckBox) findViewById(R.id.rdBtnAnonimo);
 
         Anonimo = "false";
@@ -493,105 +498,166 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
         if (btnAnonimo.isChecked()) {
             Anonimo = "true";
         }
-
-        if (convDescricao.isEmpty()) {
-            edtDescricao.setError("Faltou preencher Descrição ");
-            edtDescricao.setFocusable(true);
-            edtDescricao.requestFocus();
+        if (spinner.getSelectedItem().toString().isEmpty()) {
+            edtEstado.setError("Faltou preencher tipo crime ");
+            edtEstado.setFocusable(true);
+            edtEstado.requestFocus();
         } else {
-            if (convEndereco.isEmpty()) {
-                edtRua.setError("Faltou preencher Rua ");
-                edtRua.setFocusable(true);
-                edtRua.requestFocus();
+            if (edtDescricao.getText().toString().isEmpty()) {
+                edtDescricao.setError("Faltou preencher Descrição ");
+                edtDescricao.setFocusable(true);
+                edtDescricao.requestFocus();
             } else {
-                if (convCidade.isEmpty()) {
-                    edtCidade.setError("Faltou preencher Cidade ");
-                    edtCidade.setFocusable(true);
-                    edtCidade.requestFocus();
+                if (edtRua.getText().toString().isEmpty()) {
+                    edtRua.setError("Faltou preencher Rua ");
+                    edtRua.setFocusable(true);
+                    edtRua.requestFocus();
                 } else {
-                    if (convBairro.isEmpty()) {
-                        edtBairro.setError("Faltou preencher bairro ");
-                        edtBairro.setFocusable(true);
-                        edtBairro.requestFocus();
+                    if (edtCidade.getText().toString().isEmpty()) {
+                        edtCidade.setError("Faltou preencher Cidade ");
+                        edtCidade.setFocusable(true);
+                        edtCidade.requestFocus();
                     } else {
-                        if (convUf.isEmpty()) {
-                            edtEstado.setError("Faltou preencher convUf ");
-                            edtEstado.setFocusable(true);
-                            edtEstado.requestFocus();
+                        if (edtBairro.getText().toString().isEmpty()) {
+                            edtBairro.setError("Faltou preencher bairro ");
+                            edtBairro.setFocusable(true);
+                            edtBairro.requestFocus();
                         } else {
-
-                            String BuscaId = "IDocorrencia teste";
-                            String IDserver = protocoloErlang.primeiroCadastroNoServidor(BuscaId, Ip, Porta);
-
-                            String retorno = protocoloErlang.cadastrar_Ocorrencia(IDserver, cpfCliente, convTipoCrime, convDataOcorrencia, convUf, convDescricao,
-                                    convEndereco, convCidade, convBairro, Anonimo, PriNome, Ip, Porta);
-
-                            if (retorno.equals("erro")) {
-                                Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
+                            if (edtEstado.getText().toString().isEmpty()) {
+                                edtEstado.setError("Faltou preencher UF ");
+                                edtEstado.setFocusable(true);
+                                edtEstado.requestFocus();
                             } else {
-                                if (retorno.equals("true")) {
-
-                                    String retornoImg = protocoloErlang.envia_Img(IDserver, cpfCliente, byteImagem, byteImagem2, byteImagem3, Ip, Porta);
-
-                                    if (retornoImg.equals("erro")) {
-                                        Toast.makeText(this, "Erro na Conexão com o Servidor", Toast.LENGTH_SHORT).show();
 
 
+                            //Cadastrando ocorrencia pela API
+                                AsyncTask.execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+
+                                            String url = getResources().getString(R.string.ipConexao) + getResources().getString(R.string.endpointBuscarUsuarioOcorrencia) + cpfCliente;
+
+                                            MDOcorrencia ocor = new MDOcorrencia();
+                                            MDUsuario     usu ;
+
+                                            Gson gson = new Gson();
+
+                                            OkHttpClient clientbusca = new OkHttpClient();
+
+                                            Request requestbusca = new Request.Builder().url(url).build();
+
+                                            Response responsebusca = clientbusca.newCall(requestbusca).execute();
+
+                                            String jsonDeRespostaBusca = responsebusca.body().string();
+
+                                            System.out.println(jsonDeRespostaBusca);
+
+                                            JSONObject json = new JSONObject(jsonDeRespostaBusca);
+
+                                            usu = gson.fromJson(jsonDeRespostaBusca, MDUsuario.class);
+
+                                            System.out.println("----------------" +usu.getCpf());
 
 
-                                    } else {
-                                        if (retornoImg.equals("true")) {
-
-                                            if (telaCliente.equals("Cliente")) {
-                                                Intent cliente = new Intent(this, Cliente.class);
-
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString("nome", nomeCliente);
-                                                bundle.putString("cpf", cpfCliente);
-                                                bundle.putString("bairro", bairroCliente);
-                                                bundle.putString("ip", Ip);
-                                                bundle.putInt("porta", Porta);
-
-                                                cliente.putExtras(bundle);
-
-
-                                                String retornoBairro = evBuscarOcorrenciasBairro(bairroCliente, Ip, Porta);
-                                                // if (retornoBairro.equals("erro")) {
-                                                //  Toast.makeText(this, "Erro na Conexão Com o Servidor", Toast.LENGTH_SHORT).show();
-                                                // } else {
-                                                // if (retornoBairro.equals("true") || retornoBairro.equals("false")) {
-
-                                                //protocoloErlang.criandoGrupoNotificacao(tokenUsuario,convBairro,convBairro);
-                                                protocoloErlang.enviandoNotificacaoGrupo(getInstance().getToken(),convBairro);
-                                                Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
-
-
-                                                this.startActivity(cliente);
-                                                this.finish();
-                                            } else {
-                                                Intent adm = new Intent(this, Adm.class);
-
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString("nome", "Administrador");
-                                                bundle.putString("cpf", "33333333333");
-                                                bundle.putString("bairro", "Adm");
-
-                                                Toast.makeText(this, "Ocorrencia Salva com sucesso", Toast.LENGTH_SHORT).show();
-                                                adm.putExtras(bundle);
-                                                this.startActivity(adm);
-                                                this.finish();
-
-                                            }
-                                            //  }
-                                            //  }
+                                        String referencia;
+                                        if (edtReferencia.getText().toString().isEmpty()){
+                                             referencia = "Nenhuma Referência";
                                         } else {
-                                            Toast.makeText(this, "Falha no cadastro de Imagem", Toast.LENGTH_SHORT).show();
+                                            referencia = edtReferencia.getText().toString();
                                         }
+
+
+                                            ocor.setTipo      ( spinner           .getSelectedItem().toString() );
+                                            ocor.setDescricao ( edtDescricao      .getText()        .toString() );
+                                            ocor.setRua       ( edtRua            .getText()        .toString() );
+                                            ocor.setBairro    ( edtBairro         .getText()        .toString() );
+                                            ocor.setCidade    ( edtCidade         .getText()        .toString() );
+                                            ocor.setUf        ( edtEstado         .getText()        .toString() );
+                                            ocor.setData      ( edtDataOcorrencia .getText()        .toString() );
+                                            ocor.setUsuario   (  usu );
+                                            ocor.setReferencia( referencia );
+
+
+                                        OkHttpClient client = new OkHttpClient();
+
+
+                                        Request.Builder builder = new Request.Builder();
+
+                                        builder.url(getResources().getString(R.string.ipConexao) + getResources().getString(R.string.endpointCadastrarOcorrencia));
+
+
+                                        MediaType mediaType =
+                                                MediaType.parse("application/json; charset=utf-8");
+
+
+                                        RequestBody body = RequestBody.create(mediaType, gson.toJson(ocor));
+
+                                        builder.post(body);
+
+                                        Request request = builder.build();
+                                        Response response = null;
+
+                                        response = client.newCall(request).execute();
+                                        final String jsonDeResposta = response.body().string();
+                                            System.out.println("Usuario id "+ usu.getId());
+
+                                        CadastraOcorrencia.this.runOnUiThread(new Runnable() {
+                                            public void run() {
+
+                                                if(jsonDeResposta.equals("OCORRÊNCIA CADASTRADO COM SUCESSO !!")){
+                                                    Toast.makeText(CadastraOcorrencia.this, "ocorrencia cadstrada com sucesso", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    if (jsonDeResposta.equals("ERRO AO CADASTRAR OCORRENCIA")){
+                                                        Toast.makeText(CadastraOcorrencia.this, "Erro ao cadastrar ocorrencia, entre em contato com adimistrador", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+
+                                                if (telaCliente.equals("Cliente")) {
+
+
+                                                    Intent cliente = new Intent(CadastraOcorrencia.this, Cliente.class);
+
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("nome", nomeCliente);
+                                                    bundle.putString("cpf", cpfCliente);
+                                                    bundle.putString("bairro", bairroCliente);
+                                                    bundle.putString("ip", Ip);
+                                                    bundle.putInt("porta", Porta);
+
+                                                    cliente.putExtras(bundle);
+
+
+                                                    protocoloErlang.enviandoNotificacaoGrupo(getInstance().getToken(), edtBairro.getText().toString());
+                                                    Toast.makeText(CadastraOcorrencia.this, "Ocorrência salva com sucesso", Toast.LENGTH_SHORT).show();
+
+
+                                                    CadastraOcorrencia.this.startActivity(cliente);
+                                                    CadastraOcorrencia.this.finish();
+                                                } else
+
+                                                {
+
+                                                    Intent adm = new Intent(CadastraOcorrencia.this, Adm.class);
+
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("nome", "Administrador");
+                                                    bundle.putString("cpf", "33333333333");
+                                                    bundle.putString("bairro", "Adm");
+
+                                                    Toast.makeText(CadastraOcorrencia.this, "ADM - Ocorrência Salva com sucesso", Toast.LENGTH_SHORT).show();
+                                                    adm.putExtras(bundle);
+                                                    CadastraOcorrencia.this.startActivity(adm);
+                                                    CadastraOcorrencia.this.finish();
+                                                }
+                                            }
+                                        });
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                } else {
-                                    edtRua.setError("Erro Retorno do Server False");
-                                    edtRua.setFocusable(true);
-                                    edtRua.requestFocus();
+                                }
+                            });
                                 }
                             }
                         }
@@ -599,7 +665,9 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
                 }
             }
         }
-    }
+
+
+
 
 
     @Override

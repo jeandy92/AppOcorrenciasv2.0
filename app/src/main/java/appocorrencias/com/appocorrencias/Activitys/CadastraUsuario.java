@@ -43,11 +43,11 @@ public class CadastraUsuario extends AppCompatActivity {
 
     //Dados para o envio do socket.
     private ProtocoloErlang processa = new ProtocoloErlang();
-    private boolean retorno;
+
     private String telaCadUsuario;
 
-    private final String ipConexao = "http://192.168.0.74:62001";
-    private final String endpointCadastrarUsuario = "/RestWO/services/WebserviceOcorrencia/cadastrarUsuario/";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,19 +79,19 @@ public class CadastraUsuario extends AppCompatActivity {
         edtComplemento    = (EditText) findViewById(R.id.edtComplemento);
 
         //Setar default
-        edtNome 	      .setText("Jeanderson");
-        edtCpf 	 		  .setText("43131386843");
-        edtSenha 	      .setText("1234");
-        edtDataNasc 	  .setText("22/03/2017");
-        edtRua 			  .setText("Joaquim Abreu");
+        edtNome 	      .setText("Vinícius Mendes");
+        edtCpf 	 		  .setText("34103982870");
+        edtSenha 	      .setText("123456");
+        edtConfirmarSenha .setText("123456");
+        edtDataNasc 	  .setText("01/06/1981");
+        edtRua 			  .setText("Rua Professora Nina Stocco - de 561/562 ao fim");
         edtTelefone 	  .setText("1141622246");
-        edtCep 			  .setText("06433210");
-        edtBairro 		  .setText("Jardim Silveira");
+        edtCep 			  .setText("05767001");
+        edtBairro 		  .setText("Jardim Catanduva");
         edtCidade	      .setText("Barueri");
         edtUf 			  .setText("SP");
-        edtNumero 		  .setText("54");
-        edtEmail 		  .setText("jeand@hotmail.com");
-        edtConfirmarSenha .setText("1234");
+        edtNumero 		  .setText("596");
+        edtEmail 		  .setText("vinicius.mendes@benner.com.br");
         edtComplemento 	  .setText("casa1");
 
         // Inserindo Mascaras.
@@ -245,9 +245,9 @@ public class CadastraUsuario extends AppCompatActivity {
 
 
                         //Tirando a mascara dos campos
-                        convCpf = edtCpf.getText().toString().replaceAll("[^0123456789]", "");
+                        convCpf      = edtCpf.getText().toString().replaceAll("[^0123456789]", "");
                         convTelefone = edtTelefone.getText().toString().replaceAll("[^0123456789]", "");
-                        convCep = edtCep.getText().toString().replaceAll("[^0123456789]", "");
+                        convCep      = edtCep.getText().toString().replaceAll("[^0123456789]", "");
 
 
                         try {
@@ -271,7 +271,7 @@ public class CadastraUsuario extends AppCompatActivity {
 
                             Request.Builder builder = new Request.Builder();
 
-                            builder.url(ipConexao + endpointCadastrarUsuario);
+                            builder.url(getResources().getString(R.string.ipConexao)  + getResources().getString(R.string.endpointCadastrarUsuario));
 
                             MediaType mediaType =
                                     MediaType.parse("application/json; charset=utf-8");

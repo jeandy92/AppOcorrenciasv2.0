@@ -47,8 +47,10 @@ public class Login extends AppCompatActivity {
     private Button btnCadastrarCli;
     private static final String PREF_NAME = "MainActivityPreferences";
     private static final String TAG = "Login";
-    private final String ipConexao = "http://192.168.53.92:62001";
-    private final String endpointLogar = "/RestWO/services/WebserviceOcorrencia/logarUsuario/";
+
+
+
+
 
 
     //private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
@@ -203,7 +205,7 @@ public class Login extends AppCompatActivity {
                 System.out.println("cpf:" + CPF + "SENHA" + SENHA);
 
 
-                builder.url(ipConexao + endpointLogar + CPF + "-" + SENHA);
+                builder.url(getResources().getString(R.string.ipConexao) + getResources().getString(R.string.endpointLogar) + CPF + "-" + SENHA);
 
                 MediaType mediaType =
                         MediaType.parse("application/json; charset=utf-8");

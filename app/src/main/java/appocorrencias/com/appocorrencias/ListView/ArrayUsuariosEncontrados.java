@@ -22,7 +22,7 @@ import okhttp3.Response;
 
 public class ArrayUsuariosEncontrados {
 
-    private static final String ipConexao = "http://192.168.53.92:62001";
+    private static final String ipConexao =  "http://192.168.53.92:62001";
     private static final String endpointBuscarCpf = "/RestWO/services/WebserviceOcorrencia/buscarUsuario/";
 
     static ArrayList<DadosUsuarios> dados = new ArrayList();

@@ -1,11 +1,5 @@
 package appocorrencias.com.appocorrencias.ClassesSA;
 
-import java.util.Date;
-
-
-
-
-
 /**
  * Created by Jeanderson on 07/12/2017.
  */
@@ -13,121 +7,111 @@ import java.util.Date;
 public class MDOcorrencia {
 
 
+    private Integer id;
 
 
-        private Integer id;
+    private String rua;
+    private String bairro;
+    private String cidade;
+    private String uf;
+    private String descricao;
+
+    private String data;
+    private String tipo;
+    private String anonimo;
 
 
+    private MDUsuario usuario;
 
-        private String rua;
-        private String bairro;
-        private String cidade;
-        private String uf;
-        private String descricao;
+    private String referencia;
 
-        private Date data;
-        private String tipo;
-        private String anonimo;
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-        private MDUsuario usuario;
+    public String getRua() {
+        return rua;
+    }
 
-        private String referencia;
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
 
-        public Integer getId() {
-            return id;
-        }
+    public String getBairro() {
+        return bairro;
+    }
 
-        public void setId(Integer id) {
-            this.id = id;
-        }
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
 
-        public String getRua() {
-            return rua;
-        }
+    public String getCidade() {
+        return cidade;
+    }
 
-        public void setRua(String rua) {
-            this.rua = rua;
-        }
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
 
-        public String getBairro() {
-            return bairro;
-        }
+    public String getUf() {
+        return uf;
+    }
 
-        public void setBairro(String bairro) {
-            this.bairro = bairro;
-        }
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
 
-        public String getCidade() {
-            return cidade;
-        }
+    public String getDescricao() {
+        return descricao;
+    }
 
-        public void setCidade(String cidade) {
-            this.cidade = cidade;
-        }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-        public String getUf() {
-            return uf;
-        }
+    public String getData() {
+        return data;
+    }
 
-        public void setUf(String uf) {
-            this.uf = uf;
-        }
+    public void setData(String date) {
+        this.data = date;
+    }
 
-        public String getDescricao() {
-            return descricao;
-        }
+    public String getTipo() {
+        return tipo;
+    }
 
-        public void setDescricao(String descricao) {
-            this.descricao = descricao;
-        }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-        public Date getData() {
-            return data;
-        }
+    public String getAnonimo() {
+        return anonimo;
+    }
 
-        public void setData(Date date) {
-            this.data = date;
-        }
+    public void setAnonimo(String anonimo) {
+        this.anonimo = anonimo;
+    }
 
-        public String getTipo() {
-            return tipo;
-        }
+    public MDUsuario getUsuario() {
+        return usuario;
+    }
 
-        public void setTipo(String tipo) {
-            this.tipo = tipo;
-        }
+    public void setUsuario(MDUsuario usuario) {
+        this.usuario = usuario;
+    }
 
-        public String getAnonimo() {
-            return anonimo;
-        }
+    public String getReferencia() {
+        return referencia;
+    }
 
-        public void setAnonimo(String anonimo) {
-            this.anonimo = anonimo;
-        }
-
-        public MDUsuario getUsuario() {
-            return usuario;
-        }
-
-        public void setUsuario(MDUsuario usuario) {
-            this.usuario = usuario;
-        }
-
-        public String getReferencia() {
-            return referencia;
-        }
-
-        public void setReferencia(String referencia) {
-            this.referencia = referencia;
-        }
-
-
-
-
-
-
-
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
 
 
 }
