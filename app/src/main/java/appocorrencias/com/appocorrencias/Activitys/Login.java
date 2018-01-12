@@ -2,10 +2,12 @@ package appocorrencias.com.appocorrencias.Activitys;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -219,7 +221,7 @@ public class Login extends AppCompatActivity {
 
                 response = client.newCall(request).execute();
                 final String jsonDeResposta = response.body().string();
-                System.out.println(jsonDeResposta);
+                //System.out.println(jsonDeResposta);
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -243,16 +245,20 @@ public class Login extends AppCompatActivity {
 
                                     JSONObject json = new JSONObject(jsonDeResposta);
 
+                                    byte[] imgRecebida = Base64.decode(json.getString("ft_perfil"), Base64.DEFAULT);
+
 
                                     Toast.makeText(Login.this, "Bem vindo !!", Toast.LENGTH_SHORT).show();
 
                                     Intent cliente = new Intent(Login.this, Cliente.class);
                                     Bundle bundle = new Bundle();
+                                    bundle.putString("imgperfil",json.getString("ft_perfil"));
                                     bundle.putString("nome", json.getString("nome"));
                                     bundle.putString("cpf", json.getString("cpf"));
                                     bundle.putString("bairro", json.getString("bairro"));
                                     bundle.putString("ip", IpServer);
                                     bundle.putInt("porta", PortaServer);
+
 
 
                                     cliente.putExtras(bundle);

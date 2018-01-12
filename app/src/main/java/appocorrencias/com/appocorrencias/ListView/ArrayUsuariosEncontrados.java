@@ -22,7 +22,7 @@ import okhttp3.Response;
 
 public class ArrayUsuariosEncontrados {
 
-    private static final String ipConexao =  "http://192.168.53.92:62001";
+    private static final String ipConexao =  "http://192.168.0.50:62001";
     private static final String endpointBuscarCpf = "/RestWO/services/WebserviceOcorrencia/buscarUsuario/";
 
     static ArrayList<DadosUsuarios> dados = new ArrayList();
@@ -222,7 +222,7 @@ public class ArrayUsuariosEncontrados {
                     MDUsuario usuario = new MDUsuario();
 
 
-                        String url = ipConexao + endpointBuscarCpf + pTipoBusca;
+                        String url = ipConexao + endpointBuscarCpf + "Jeanderson";
 
                         OkHttpClient client = new OkHttpClient();
 
@@ -239,8 +239,12 @@ public class ArrayUsuariosEncontrados {
                         //PEGA O ARRAY QUE VEM DO JSON
                         JSONArray array = json.getJSONArray("myArrayList");
 
-                        for(int i = 0;i<=array.length();i++) {
 
+                        System.out.println("Tamanho do array"+array.length());
+
+                        for(int i=0;i<array.length();i++) {
+
+                            System.out.println("Valor do i ===== "+i);
                             MDUsuario usu = gson.fromJson(array.getJSONObject(i).toString(), MDUsuario.class);
                             usuarios.add(usu);
 
@@ -249,9 +253,9 @@ public class ArrayUsuariosEncontrados {
 
 
                          System.out.println("=---------------"+array.toString());
-                        https://www.leveluplunch.com/java/examples/convert-json-array-to-arraylist-gson/
+                        //https://www.leveluplunch.com/java/examples/convert-json-array-to-arraylist-gson/
 
-                        System.out.println("---------------------------------------------------"+array.get(2));
+
 
 
 
@@ -259,6 +263,7 @@ public class ArrayUsuariosEncontrados {
                         e.printStackTrace();
                     } catch (JSONException e) {
                         e.printStackTrace();
+
                     }
                 }
 

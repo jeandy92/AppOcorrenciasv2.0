@@ -60,11 +60,11 @@ public class BuscaUsuarios extends AppCompatActivity {
         //List View para mostrar os usuários
         lvUsuariosEncontrados = (ListView) findViewById(R.id.lv_usuarios_encontrados);
 
-        ArrayList<MDUsuario> listaUsuariosEncontrados = getListaUsuarios(null);
+        //ArrayList<MDUsuario> listaUsuariosEncontrados = getListaUsuarios(null);
 
-        AdapterBuscaUsuario adapter = new AdapterBuscaUsuario(this, listaUsuariosEncontrados);
+        //AdapterBuscaUsuario adapter = new AdapterBuscaUsuario(this, listaUsuariosEncontrados);
 
-        lvUsuariosEncontrados.setAdapter(adapter);
+      //  lvUsuariosEncontrados.setAdapter(adapter);
 
 
         lvUsuariosEncontrados.setOnItemClickListener(new AdapterView.OnItemClickListener() {

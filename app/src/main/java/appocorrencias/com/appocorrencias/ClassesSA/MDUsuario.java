@@ -25,6 +25,9 @@ private Long id;
     private String nome;
     private String telefone;
     private String dataDeNascimento;
+    private String  ft_perfil;
+
+
 
     //DADOS DE ENDERECOS
     private String cep;
@@ -35,6 +38,7 @@ private Long id;
     private String cidade;
     private String uf;
 
+
     //DADOS DE ACESSO
     private String email;
     private String senha;
@@ -42,6 +46,14 @@ private Long id;
 
     @SerializedName("myArrayList")
     public List<MDUsuario> lista;
+
+    public String getFt_perfil() {
+        return ft_perfil;
+    }
+
+    public void setFt_perfil(String ft_perfil) {
+        this.ft_perfil = ft_perfil;
+    }
 
     public String getNome() {
         return nome;

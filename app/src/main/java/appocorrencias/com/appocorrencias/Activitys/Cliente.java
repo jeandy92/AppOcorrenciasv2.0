@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,11 +30,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import appocorrencias.com.appocorrencias.Adapters.AdapterFeed;
+import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
 import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagens;
 import appocorrencias.com.appocorrencias.ListView.ArrayImagensPerfil;
@@ -41,6 +47,11 @@ import appocorrencias.com.appocorrencias.ListView.DadosOcorrencias;
 import appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias;
 import appocorrencias.com.appocorrencias.R;
 import me.drakeet.materialdialog.MaterialDialog;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static appocorrencias.com.appocorrencias.Activitys.CadastraOcorrencia.protocoloErlang;
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
@@ -57,7 +68,7 @@ public class Cliente extends AppCompatActivity {
     private ListView lvFeedOcorrencias;
     private TextView tvnomecompleto;
     private FloatingActionButton btnOcorrenciasRegistradas, btnCadastrarOcorrencias, btnBuscarOcorrencias;
-    public static String Nome, CPF, Bairro, Ip;
+    public static String Nome, CPF, Bairro, Ip,Imagemperfil;
     public static int Porta;
 
 
@@ -69,7 +80,8 @@ public class Cliente extends AppCompatActivity {
     private ImageView ivCliente;
 
     byte[] byteImagem = null;
-
+    byte[] imagemPerfil;
+    String imgArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +92,15 @@ public class Cliente extends AppCompatActivity {
         //Pegando valores que vem do Login  - TEM Q MANTER DESSA FORMA SE NAO QUANDO LOGAR COM OUTRO USUARIO O Cpf MANTEM O MESMO
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Nome = bundle.getString("nome");
-        CPF = bundle.getString("cpf");
-        Bairro = bundle.getString("bairro");
-        Ip = bundle.getString("ip");
-        Porta = bundle.getInt("porta");
+
+        Nome          = bundle.getString   ( "nome"   );
+        CPF           = bundle.getString   ( "cpf"    );
+        Bairro        = bundle.getString   ( "bairro" );
+        Ip            = bundle.getString   ( "ip"     );
+        Porta         = bundle.getInt      ( "porta"  );
+        Imagemperfil = bundle.getString     ("imgperfil");
+
+
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);
@@ -94,13 +110,24 @@ public class Cliente extends AppCompatActivity {
         ivCliente = (ImageView) findViewById(R.id.ivCliente);
 
 
-        ArrayList<Bitmap> listaImagens = ArrayImagensPerfil.getImagens();
-        Bitmap[] images = new Bitmap[listaImagens.size()];
+       // ArrayList<Bitmap> listaImagens = ArrayImagensPerfil.getImagens();
+      //  Bitmap[] images = new Bitmap[imagemperfil];
+        //Picasso.with(Cliente.this). load("http://i.imgur.com/DvpvklR.png").into(ivCliente);
 
-        if (listaImagens.size() > 0) {
-            images[0] = listaImagens.get(0);
-            ivCliente.setImageBitmap(images[0]);
+        try {
+            ImageView imgView = new ImageView(this);
+            byte[] decodedBytes = Base64.decode(Imagemperfil.getBytes(),Base64.DEFAULT);//Campo do tipo String recuperado do banco
+            BitmapFactory factory = new BitmapFactory();
+            Bitmap bitmap = factory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            ivCliente.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            Log.e("Teste", "Erro: " + e.getMessage());
         }
+       /* byte[] imgRecebida = imagemPerfil;
+        Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
+        ivCliente.setImageBitmap(bitNew);*/
+
+
 
 
         ArrayList<DadosOcorrencias> listafeedocorrencias = getListaOcorrencia();
@@ -506,7 +533,7 @@ public class Cliente extends AppCompatActivity {
                 ivCliente.setBackground(null);
                 toByte1(bitmap);
             } catch (Exception err) {
-                Log.d("Imag", err.getMessage());
+                Log.d("Imag", err+"o");
             }
         }
     }
@@ -515,11 +542,21 @@ public class Cliente extends AppCompatActivity {
     //// Bitmap em bytes
 
     public void toByte1(Bitmap bitmap) throws IOException {
+
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+
+
+
         byte[] byteArray = stream.toByteArray();
-        byteImagem = byteArray;
+
+        imgArray = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+
         String retorno = enviarImgPerfil();
+
         if (retorno.equals("erro")) {
             Toast.makeText(getApplicationContext(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
         } else {
@@ -530,6 +567,60 @@ public class Cliente extends AppCompatActivity {
     }
 
     public String enviarImgPerfil() throws IOException {
+
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                MDUsuario usu = new MDUsuario();
+                Gson gson = new Gson();
+
+                try {
+                usu.setCpf(CPF);
+                usu.setFt_perfil(imgArray);
+
+                OkHttpClient client = new OkHttpClient();
+
+
+                Request.Builder builder = new Request.Builder();
+
+                builder.url(getResources().getString(R.string.ipConexao)  + getResources().getString(R.string.endpointCadastrarImagemPerfil));
+
+                MediaType mediaType =
+                        MediaType.parse("application/json; charset=utf-8");
+
+
+                RequestBody body = RequestBody.create(mediaType, gson.toJson(usu));
+
+                builder.post(body);
+
+                Request request = builder.build();
+                Response response = null;
+
+                response = client.newCall(request).execute();
+                final String jsonDeResposta = response.body().string();
+
+
+
+                Cliente.this.runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        if (jsonDeResposta.equals("USUARIO ALTERADO  COM SUCESSO !!")){
+                            Toast.makeText(Cliente.this, "FOTO ALTERADA", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(Cliente.this, "FOTO NÃO ALTERADA", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }});
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }});
+
+
 
         String retornoImg = protocoloErlang.envia_Img_Perfil(CPF, "Img1", byteImagem, Ip, Porta);
 

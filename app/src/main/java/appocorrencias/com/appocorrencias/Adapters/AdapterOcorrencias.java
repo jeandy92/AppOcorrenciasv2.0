@@ -50,6 +50,7 @@ public class AdapterOcorrencias extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View view = act.getLayoutInflater().inflate(R.layout.activity_item_ocorrencias_registradas,parent,false);
         DadosOcorrencias listaOcorrenciasRegistradas = ocorrenciasRegistradas.get(position);
 
@@ -84,3 +85,4 @@ public class AdapterOcorrencias extends BaseAdapter {
         act.startActivity(act.getIntent());
     }
 }
+
