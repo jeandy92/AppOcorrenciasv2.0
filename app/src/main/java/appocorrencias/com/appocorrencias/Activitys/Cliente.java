@@ -17,7 +17,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -71,7 +73,7 @@ public class Cliente extends AppCompatActivity {
     public static String Nome, CPF, Bairro, Ip,Imagemperfil;
     public static int Porta;
 
-
+    Bitmap bitmap;
     private static final int REQUEST_PERMISSIONS_CODE = 128;
 
     private static final String TAG = "LOG";
@@ -98,7 +100,7 @@ public class Cliente extends AppCompatActivity {
         Bairro        = bundle.getString   ( "bairro" );
         Ip            = bundle.getString   ( "ip"     );
         Porta         = bundle.getInt      ( "porta"  );
-        Imagemperfil = bundle.getString     ("imgperfil");
+        //Imagemperfil = bundle.getString     ("imgperfil");
 
 
 
@@ -111,22 +113,17 @@ public class Cliente extends AppCompatActivity {
 
 
        // ArrayList<Bitmap> listaImagens = ArrayImagensPerfil.getImagens();
-      //  Bitmap[] images = new Bitmap[imagemperfil];
-        //Picasso.with(Cliente.this). load("http://i.imgur.com/DvpvklR.png").into(ivCliente);
+        //Bitmap[] images = new Bitmap[Imagemperfil];
 
-        try {
-            ImageView imgView = new ImageView(this);
-            byte[] decodedBytes = Base64.decode(Imagemperfil.getBytes(),Base64.DEFAULT);//Campo do tipo String recuperado do banco
-            BitmapFactory factory = new BitmapFactory();
-            Bitmap bitmap = factory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-            ivCliente.setImageBitmap(bitmap);
-        } catch (Exception e) {
-            Log.e("Teste", "Erro: " + e.getMessage());
-        }
+
+
+
+           buscarImagemPerfil();
+
+
        /* byte[] imgRecebida = imagemPerfil;
         Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
         ivCliente.setImageBitmap(bitNew);*/
-
 
 
 
@@ -241,6 +238,63 @@ public class Cliente extends AppCompatActivity {
         });
 
     }
+
+    private Bitmap buscarImagemPerfil() {
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                MDUsuario usu = new MDUsuario();
+                Gson gson = new Gson();
+
+                try {
+
+                    String url = getResources().getString(R.string.ipConexao) + getResources().getString(R.string.endpointBuscarUsuarioOcorrencia) + CPF;
+
+                    OkHttpClient clientbusca = new OkHttpClient();
+
+                    Request requestbusca = new Request.Builder().url(url).build();
+
+                    Response responsebusca = null;
+
+                    responsebusca = clientbusca.newCall(requestbusca).execute();
+
+                    String jsonDeRespostaBusca = responsebusca.body().string();
+
+                    System.out.println(jsonDeRespostaBusca);
+
+                    JSONObject json = new JSONObject(jsonDeRespostaBusca);
+
+                    usu = gson.fromJson(jsonDeRespostaBusca, MDUsuario.class);
+
+                    ImageView imgView = new ImageView(Cliente.this);
+                    byte[] decodedBytes = Base64.decode(usu.getFt_perfil().getBytes(), Base64.DEFAULT);//Campo do tipo String recuperado do banco
+                    BitmapFactory factory = new BitmapFactory();
+                    bitmap = factory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                    ivCliente.setImageBitmap(bitmap);
+                    Log.e("Imagem Perfi", usu.getFt_perfil());
+
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                } catch (Exception e) {
+                    Log.e("Teste", "Erro: " + e.getMessage());
+                }
+
+
+            }
+        });
+
+        return bitmap;
+    }
+
+
+
+
+
+
 
 
     public void cadastrarroubo(View v) {

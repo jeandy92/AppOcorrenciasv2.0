@@ -15,7 +15,7 @@
         tenis Branco e calça Jeans
     </string>
 
-    <string name="ipConexao">http://192.168.53.99:62001</string>
+    <string name="ipConexao">http://192.168.0.14:62001</string>
     <string name="endpointLogar">"/RestWO/services/WebserviceOcorrencia/logarUsuario/</string>
     <string name ="endpointBuscarUsuarioOcorrencia">/RestWO/services/WebserviceOcorrencia/buscarUsuarioOcorrencia/</string>
     <string name="endpointBuscar">/RestWO/services/WebserviceOcorrencia/buscarUsuarios/</string>

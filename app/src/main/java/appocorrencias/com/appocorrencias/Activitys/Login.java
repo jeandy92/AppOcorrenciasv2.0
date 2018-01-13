@@ -252,7 +252,7 @@ public class Login extends AppCompatActivity {
 
                                     Intent cliente = new Intent(Login.this, Cliente.class);
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("imgperfil",json.getString("ft_perfil"));
+                                 //   bundle.putString("imgperfil",json.getString("ft_perfil"));
                                     bundle.putString("nome", json.getString("nome"));
                                     bundle.putString("cpf", json.getString("cpf"));
                                     bundle.putString("bairro", json.getString("bairro"));
