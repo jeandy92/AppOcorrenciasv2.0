@@ -102,7 +102,7 @@
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintTop_creator="1" />
 
-            <ImageView
+            <appocorrencias.com.appocorrencias.Componentes.ArredondaImagem
                 android:id="@+id/ivCliente"
                 android:layout_width="140dp"
                 android:focusable="true"

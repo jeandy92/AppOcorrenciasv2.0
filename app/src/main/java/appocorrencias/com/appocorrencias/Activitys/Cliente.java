@@ -98,10 +98,6 @@ public class Cliente extends AppCompatActivity {
         Nome = bundle.getString("nome");
         CPF = bundle.getString("cpf");
         Bairro = bundle.getString("bairro");
-        Ip = bundle.getString("ip");
-        Porta = bundle.getInt("porta");
-        //Imagemperfil = bundle.getString     ("imgperfil");
-
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
         btnCadastrarOcorrencias = (FloatingActionButton) findViewById(R.id.btnCadastrarOcorrencias);

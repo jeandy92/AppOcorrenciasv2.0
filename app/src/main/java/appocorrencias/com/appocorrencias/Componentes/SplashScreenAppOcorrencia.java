@@ -1,10 +1,11 @@
-package appocorrencias.com.appocorrencias;
+package appocorrencias.com.appocorrencias.Componentes;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import appocorrencias.com.appocorrencias.Activitys.Login;
+import appocorrencias.com.appocorrencias.R;
 
 public class SplashScreenAppOcorrencia extends AppCompatActivity {
 

@@ -1,6 +1,5 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -26,7 +25,6 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
-import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.Network.FCMFirebaseInstanceIDService;
 import appocorrencias.com.appocorrencias.R;
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
@@ -39,16 +37,15 @@ import okhttp3.Response;
 public class Login extends AppCompatActivity {
 
     private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
-    private ProgressDialog dialogo;
-    private String nome, SENHA, LoginServer, CPF, Nome, Bairro, IpServer;
-    int PortaServer;
+    private String nome,SENHA, CPF;
+
     private String convCpf, Status;
-    private static ProtocoloErlang processa = new ProtocoloErlang();
-    private String retorno;
-    DelayedProgressDialog progressDialog;
+    private DelayedProgressDialog progressDialog;
     private EditText txtUsuario, txtSenha;
     private CheckBox salvarlogin;
+
     private Button btnCadastrarCli,dialog,btnEntrar;
+
     private static final String PREF_NAME = "MainActivityPreferences";
     private static final String TAG = "Login";
 
@@ -142,10 +139,6 @@ public class Login extends AppCompatActivity {
 
         txtUsuario.setText(CPF);
         txtSenha.setText(SENHA);
-
-
-
-
     }
 
 
@@ -160,8 +153,6 @@ public class Login extends AppCompatActivity {
         cadastrar.putExtras(bundle);
         this.startActivity(cadastrar);
     }
-
-
 
     public void evEntrar (View view) {
 
@@ -281,8 +272,7 @@ public class Login extends AppCompatActivity {
                                     bundle.putString("nome", json.getString("nome"));
                                     bundle.putString("cpf", json.getString("cpf"));
                                     bundle.putString("bairro", json.getString("bairro"));
-                                    bundle.putString("ip", IpServer);
-                                    bundle.putInt("porta", PortaServer);
+
 
 
 
@@ -326,7 +316,6 @@ public class Login extends AppCompatActivity {
     });
 
     }
-
 
     public static String evBuscarOcorrenciasBairro(String Bairro2,String IpServer,int PortaServer)throws IOException{
 
