@@ -1,8 +1,8 @@
 package appocorrencias.com.appocorrencias.Activitys;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import appocorrencias.com.appocorrencias.ClassesSA.MDUsuario;
 import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
@@ -38,26 +39,23 @@ import okhttp3.Response;
 public class Login extends AppCompatActivity {
 
     private int PLAY_SERVICES_RESOLUTION_REQUEST = 9001;
-
+    private ProgressDialog dialogo;
     private String nome, SENHA, LoginServer, CPF, Nome, Bairro, IpServer;
     int PortaServer;
     private String convCpf, Status;
     private static ProtocoloErlang processa = new ProtocoloErlang();
     private String retorno;
+    DelayedProgressDialog progressDialog;
     private EditText txtUsuario, txtSenha;
     private CheckBox salvarlogin;
-    private Button btnCadastrarCli;
+    private Button btnCadastrarCli,dialog,btnEntrar;
     private static final String PREF_NAME = "MainActivityPreferences";
     private static final String TAG = "Login";
 
 
-
-
-
-
     //private DatabaseReference firebasereferencia = FirebaseDatabase.getInstance().getReference();
 
-//******Create by Jeanderson  22/04/2017*****//
+        //******Create by Jeanderson  22/04/2017*****//
 
 
     private SharedPreferences.OnSharedPreferenceChangeListener callback = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -99,6 +97,22 @@ public class Login extends AppCompatActivity {
         txtSenha = (EditText) findViewById(R.id.password);
         salvarlogin = (CheckBox) findViewById(R.id.ckSalvarLogin);
         btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
+        btnEntrar  = (Button) findViewById(R.id.btnEntrar);
+        dialog = (Button) findViewById(R.id.dialog);
+
+        btnEntrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+                    public void onClick(View v) {
+
+
+                progressDialog = new DelayedProgressDialog();
+                progressDialog.show(getSupportFragmentManager(), "tag");
+
+                evEntrar(v);
+
+
+                }
+            });
 
         //Insere a mascara no cpf
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", txtUsuario);
@@ -129,6 +143,9 @@ public class Login extends AppCompatActivity {
         txtUsuario.setText(CPF);
         txtSenha.setText(SENHA);
 
+
+
+
     }
 
 
@@ -144,7 +161,12 @@ public class Login extends AppCompatActivity {
         this.startActivity(cadastrar);
     }
 
+
+
     public void evEntrar (View view) {
+
+
+
 
     //Armazena os dados
     CPF = txtUsuario.getText().toString();
@@ -189,7 +211,10 @@ public class Login extends AppCompatActivity {
     }
 
             editor.commit();
+
+
     AsyncTask.execute(new Runnable() {
+
         @Override
         public void run() {
 
@@ -274,6 +299,22 @@ public class Login extends AppCompatActivity {
                     }
                 });
 
+            } catch (SocketTimeoutException e) {
+                AsyncTask.execute(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        progressDialog.cancel();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(Login.this, "Servidor Offline", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+
             } catch (IOException e)
 
             {
@@ -283,9 +324,8 @@ public class Login extends AppCompatActivity {
 
         }
     });
+
     }
-
-
 
 
     public static String evBuscarOcorrenciasBairro(String Bairro2,String IpServer,int PortaServer)throws IOException{
@@ -327,6 +367,7 @@ public class Login extends AppCompatActivity {
 //        editor.putInt("count_2",count2+1);
 //        editor.commit();
     }
+
 
     @Override
     protected void onStop(){

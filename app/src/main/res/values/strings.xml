@@ -17,7 +17,7 @@
 
     <string name="ipConexao">http://192.168.0.14:62001</string>
     <string name="endpointLogar">"/RestWO/services/WebserviceOcorrencia/logarUsuario/</string>
-    <string name ="endpointBuscarUsuarioOcorrencia">/RestWO/services/WebserviceOcorrencia/buscarUsuarioOcorrencia/</string>
+    <string name="endpointBuscarUsuarioOcorrencia">/RestWO/services/WebserviceOcorrencia/buscarUsuarioOcorrencia/</string>
     <string name="endpointBuscar">/RestWO/services/WebserviceOcorrencia/buscarUsuarios/</string>
     <string name="endpointCadastrarUsuario">/RestWO/services/WebserviceOcorrencia/cadastrarUsuario/</string>
     <string name="endpointBuscarCpf">/RestWO/services/WebserviceOcorrencia/buscarUsuario/</string>

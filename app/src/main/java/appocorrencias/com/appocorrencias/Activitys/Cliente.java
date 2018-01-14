@@ -70,7 +70,7 @@ public class Cliente extends AppCompatActivity {
     private ListView lvFeedOcorrencias;
     private TextView tvnomecompleto;
     private FloatingActionButton btnOcorrenciasRegistradas, btnCadastrarOcorrencias, btnBuscarOcorrencias;
-    public static String Nome, CPF, Bairro, Ip,Imagemperfil;
+    public static String Nome, CPF, Bairro, Ip, Imagemperfil;
     public static int Porta;
 
     Bitmap bitmap;
@@ -95,13 +95,12 @@ public class Cliente extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        Nome          = bundle.getString   ( "nome"   );
-        CPF           = bundle.getString   ( "cpf"    );
-        Bairro        = bundle.getString   ( "bairro" );
-        Ip            = bundle.getString   ( "ip"     );
-        Porta         = bundle.getInt      ( "porta"  );
+        Nome = bundle.getString("nome");
+        CPF = bundle.getString("cpf");
+        Bairro = bundle.getString("bairro");
+        Ip = bundle.getString("ip");
+        Porta = bundle.getInt("porta");
         //Imagemperfil = bundle.getString     ("imgperfil");
-
 
 
         btnOcorrenciasRegistradas = (FloatingActionButton) findViewById(R.id.btnOcorrenciasRegistradasPorUsuario);
@@ -111,20 +110,8 @@ public class Cliente extends AppCompatActivity {
         tvnomecompleto = (TextView) findViewById(R.id.tv_nome_completo);
         ivCliente = (ImageView) findViewById(R.id.ivCliente);
 
-
-       // ArrayList<Bitmap> listaImagens = ArrayImagensPerfil.getImagens();
-        //Bitmap[] images = new Bitmap[Imagemperfil];
-
-
-
-
-           buscarImagemPerfil();
-
-
-       /* byte[] imgRecebida = imagemPerfil;
-        Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
-        ivCliente.setImageBitmap(bitNew);*/
-
+        // Método para buscar a imagem de perfil do usuário
+        buscarImagemPerfil();
 
 
         ArrayList<DadosOcorrencias> listafeedocorrencias = getListaOcorrencia();
@@ -289,12 +276,6 @@ public class Cliente extends AppCompatActivity {
 
         return bitmap;
     }
-
-
-
-
-
-
 
 
     public void cadastrarroubo(View v) {
@@ -587,7 +568,7 @@ public class Cliente extends AppCompatActivity {
                 ivCliente.setBackground(null);
                 toByte1(bitmap);
             } catch (Exception err) {
-                Log.d("Imag", err+"o");
+                Log.d("Imag", err + "o");
             }
         }
     }
@@ -601,7 +582,6 @@ public class Cliente extends AppCompatActivity {
 
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-
 
 
         byte[] byteArray = stream.toByteArray();
@@ -630,50 +610,49 @@ public class Cliente extends AppCompatActivity {
                 Gson gson = new Gson();
 
                 try {
-                usu.setCpf(CPF);
-                usu.setFt_perfil(imgArray);
+                    usu.setCpf(CPF);
+                    usu.setFt_perfil(imgArray);
 
-                OkHttpClient client = new OkHttpClient();
-
-
-                Request.Builder builder = new Request.Builder();
-
-                builder.url(getResources().getString(R.string.ipConexao)  + getResources().getString(R.string.endpointCadastrarImagemPerfil));
-
-                MediaType mediaType =
-                        MediaType.parse("application/json; charset=utf-8");
+                    OkHttpClient client = new OkHttpClient();
 
 
-                RequestBody body = RequestBody.create(mediaType, gson.toJson(usu));
+                    Request.Builder builder = new Request.Builder();
 
-                builder.post(body);
+                    builder.url(getResources().getString(R.string.ipConexao) + getResources().getString(R.string.endpointCadastrarImagemPerfil));
 
-                Request request = builder.build();
-                Response response = null;
-
-                response = client.newCall(request).execute();
-                final String jsonDeResposta = response.body().string();
+                    MediaType mediaType =
+                            MediaType.parse("application/json; charset=utf-8");
 
 
+                    RequestBody body = RequestBody.create(mediaType, gson.toJson(usu));
 
-                Cliente.this.runOnUiThread(new Runnable() {
-                    public void run() {
+                    builder.post(body);
 
-                        if (jsonDeResposta.equals("USUARIO ALTERADO  COM SUCESSO !!")){
-                            Toast.makeText(Cliente.this, "FOTO ALTERADA", Toast.LENGTH_SHORT).show();
+                    Request request = builder.build();
+                    Response response = null;
+
+                    response = client.newCall(request).execute();
+                    final String jsonDeResposta = response.body().string();
+
+
+                    Cliente.this.runOnUiThread(new Runnable() {
+                        public void run() {
+
+                            if (jsonDeResposta.equals("USUARIO ALTERADO  COM SUCESSO !!")) {
+                                Toast.makeText(Cliente.this, "FOTO ALTERADA", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Cliente.this, "FOTO NÃO ALTERADA", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
-                        else {
-                            Toast.makeText(Cliente.this, "FOTO NÃO ALTERADA", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }});
+                    });
 
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }});
-
+            }
+        });
 
 
         String retornoImg = protocoloErlang.envia_Img_Perfil(CPF, "Img1", byteImagem, Ip, Porta);
