@@ -3,7 +3,6 @@ package appocorrencias.com.appocorrencias.Activitys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,8 +20,7 @@ import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenc
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
-import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
-import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
+
 
 
 public class ListaOcorrencias extends AppCompatActivity {
@@ -76,49 +74,12 @@ public class ListaOcorrencias extends AppCompatActivity {
                     i.putExtra("porta", Porta);
 
                     deleteAllArrayComentarios();
+                }}});
 
-                    String retornoImagem = null;
-                    try {
-                        retornoImagem = evBuscarImagens(idocorrencia, "ocorrencia", Ip, Porta);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (retornoImagem.equals("true") || retornoImagem.equals("false")) {
-                        String retornoComent = null;
-                        try {
-                            retornoComent = evBuscarComentario(idocorrencia, Ip, Porta);
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        if (retornoComent.equals("true") || retornoComent.equals("false")) {
-                            startActivity(i);
-                        }
-                    }
-                }
-            }
-        });
-
-        lista.setOnTouchListener(new ListView.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        // Allow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                // Handle ListView touch events.
-                v.onTouchEvent(event);
-                return true;
-            }
-        });
     }
+
+
 
 
     @Override

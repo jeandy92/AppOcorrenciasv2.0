@@ -95,7 +95,7 @@ public class Login extends AppCompatActivity {
         salvarlogin = (CheckBox) findViewById(R.id.ckSalvarLogin);
         btnCadastrarCli = (Button) findViewById(R.id.btnCadastrarCli);
         btnEntrar  = (Button) findViewById(R.id.btnEntrar);
-        dialog = (Button) findViewById(R.id.dialog);
+
 
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,6 +194,7 @@ public class Login extends AppCompatActivity {
             bundle.putString("nome", "Administrador");
             bundle.putString("cpf", "33333333333");
             bundle.putString("bairro", "Adm");
+            bundle.putString("tela","adm");
 
             adm.putExtras(bundle);
             this.startActivity(adm);
@@ -272,6 +273,7 @@ public class Login extends AppCompatActivity {
                                     bundle.putString("nome", json.getString("nome"));
                                     bundle.putString("cpf", json.getString("cpf"));
                                     bundle.putString("bairro", json.getString("bairro"));
+                                    bundle.putString("tela","login");
 
 
 

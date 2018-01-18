@@ -137,13 +137,4 @@
         android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="@+id/imageView2" />
 
-    <Button
-        android:id="@+id/dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="205dp"
-        tools:layout_editor_absoluteY="278dp" />
-
-
 </android.support.constraint.ConstraintLayout>

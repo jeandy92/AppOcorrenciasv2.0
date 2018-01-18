@@ -1,53 +1,18 @@
 package appocorrencias.com.appocorrencias.ListView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.Random;
-import java.util.TimeZone;
-
-import appocorrencias.com.appocorrencias.Activitys.BuscaOcorrencias;
-import appocorrencias.com.appocorrencias.Activitys.Cliente;
-import appocorrencias.com.appocorrencias.Activitys.ListaOcorrencias;
-import appocorrencias.com.appocorrencias.Adapters.AdapterComentarios;
 import appocorrencias.com.appocorrencias.Adapters.AdapterCustomSwiper;
 import appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang;
 import appocorrencias.com.appocorrencias.R;
 
-import static appocorrencias.com.appocorrencias.Activitys.CadastraOcorrencia.removerAcentos;
-import static appocorrencias.com.appocorrencias.Activitys.Login.evBuscarOcorrenciasBairro;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang.concat;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang.receber_imagem;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang.receber_imagem_perfil;
-import static appocorrencias.com.appocorrencias.ClassesSA.ProtocoloErlang.toBytes;
-import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
-import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.getListaComentarios;
-import static appocorrencias.com.appocorrencias.ListView.ArrayImagens.getImagens;
-import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getBairroNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getCidadeNr;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getDataNr;
@@ -91,8 +56,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         BairroCli = dados.getString("bairro").toString();
         tela = dados.getString("tela").toString();
         telaBusca = dados.getString("telaBusca").toString();
-        Ip = dados.getString("ip").toString();
-        Porta = dados.getInt("porta");
+
 
 
         descricao = getDescricaoNr(idOcorrencia);
@@ -102,11 +66,7 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         cidade = getCidadeNr(idOcorrencia);
         data = getDataNr(idOcorrencia);
         tipo = getTipoNr(idOcorrencia);
-        CPFOcorrencia = ArrayOcorrenciasRegistradas.getCPFNr(idOcorrencia);
 
-        if (CPFOcorrencia.equals(CPF) || CPF.equals("33333333333")) {
-            btnExcluir.setVisibility(View.VISIBLE);
-        }
 
         Tv_Id_Ocorrencia.setText(idOcorrencia);
         Tv_Tipo_Crime.setText(tipo);
@@ -115,50 +75,9 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
         Tv_Rua_Bairro.setText(rua + "," + bairro);
         Tv_Cidade_UF.setText(cidade + ", " + uf);
 
-        ArrayList<DadosComentarios> listadecomentarios = getListaComentarios();
-        Collections.sort(listadecomentarios);
-        AdapterComentarios adapter = new AdapterComentarios(this, listadecomentarios);
 
-        listaComentarios = (ListView) findViewById(R.id.list_comentarios);
-        listaComentarios.setAdapter(adapter);
-
-
-        listaComentarios.setOnTouchListener(new ListView.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        // Allow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-
-                // Handle ListView touch events.
-                v.onTouchEvent(event);
-                return true;
-            }
-        });
-
-        ArrayList<Bitmap> listaImagens = getImagens();
-        Bitmap[] images = new Bitmap[listaImagens.size()];
-
-        if (listaImagens.size() > 0) {
-
-            for (int i = 0; i < listaImagens.size(); i++) {
-                images[i] = listaImagens.get(i);
-            }
-        }
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        adapterCustomSwiper = new AdapterCustomSwiper(this, images);
-        viewPager.setAdapter(adapterCustomSwiper);
     }
-
+/*
     public static String evBuscarImagens(String IDOcorrencia, String tipo, String IpServer, int PortaServer) throws IOException {
 
         String BuscarImagensOcorrencia;
@@ -458,11 +377,11 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
             Toast.makeText(this, "Mostrando suas Ocorrencias ", Toast.LENGTH_SHORT).show();
         }
     }
-
+*/
     public void onBackPressed() {
         super.onBackPressed();
 
-        ArrayImagens.deleteBitmap();
+       /* ArrayImagens.deleteBitmap();
 
         if (tela.equals("ListarOcorrencia")) {
             Intent cliente = new Intent(this, ListaOcorrencias.class);
@@ -544,6 +463,6 @@ public class ItemFeedOcorrencias extends AppCompatActivity {
                     }
                 }
             }
-        }
+        }*/
     }
 }

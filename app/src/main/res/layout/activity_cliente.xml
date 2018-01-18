@@ -191,7 +191,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ivCliente"
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1" />
-
+            <!--android:onClick="evCadastrarOcorrencia"-->
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/btnCadastrarOcorrencias"
                 android:layout_width="50dp"
@@ -201,7 +201,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:clickable="true"
-                android:onClick="evCadastrarOcorrencia"
+                android:onClick="carregarOcorBairro"
                 android:src="@drawable/ic_note_add"
                 android:text="Cadastrar Ocorrência"
                 android:theme="@style/botaopadrao"

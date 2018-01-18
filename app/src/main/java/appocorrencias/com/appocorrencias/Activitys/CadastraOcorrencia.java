@@ -672,6 +672,7 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
 
     @Override
     public void onBackPressed() {
+
         super.onBackPressed();
         if (telaCliente.equals("Adm")) {
             Intent adm = new Intent(this, Adm.class);
@@ -680,8 +681,7 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
             bundle.putString("nome", nomeCliente);
             bundle.putString("cpf", cpfCliente);
             bundle.putString("bairro", bairroCliente);
-            bundle.putString("ip", Ip);
-            bundle.putInt("porta", Porta);
+            bundle.putString("tela","adm");
 
             adm.putExtras(bundle);
             this.startActivity(adm);
@@ -700,8 +700,8 @@ public class CadastraOcorrencia extends AppCompatActivity implements LocationLis
             bundle.putString("nome", nomeCliente);
             bundle.putString("cpf", cpfCliente);
             bundle.putString("bairro", bairroCliente);
-            bundle.putString("ip", Ip);
-            bundle.putInt("porta", Porta);
+            bundle.putString("tela","CadstrarOcorrencia");
+
 
             cliente.putExtras(bundle);
             this.startActivity(cliente);

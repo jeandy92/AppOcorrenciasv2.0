@@ -34,8 +34,6 @@ import static appocorrencias.com.appocorrencias.Activitys.CadastraOcorrencia.rem
 import static appocorrencias.com.appocorrencias.ListView.ArrayComentariosRegistrados.deleteAllArrayComentarios;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.deleteAllArray;
 import static appocorrencias.com.appocorrencias.ListView.ArrayOcorrenciasRegistradas.getListaOcorrencia;
-import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarComentario;
-import static appocorrencias.com.appocorrencias.ListView.ItemFeedOcorrencias.evBuscarImagens;
 
 public class BuscaOcorrencias extends AppCompatActivity {
 
@@ -140,12 +138,6 @@ public class BuscaOcorrencias extends AppCompatActivity {
 
                     deleteAllArrayComentarios();
 
-                    try {
-                        evBuscarImagens(idOcorrencia, "ocorrencia", Ip, Porta);
-                        evBuscarComentario(idOcorrencia, Ip, Porta);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                     startActivity(i);
 
